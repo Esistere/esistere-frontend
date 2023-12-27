@@ -1,8 +1,26 @@
-import React from 'react';
 import logo from 'app/assets/logo.svg';
 import 'app/css/gestione_app/App.css';
+import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
+import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import React, { useEffect, useState } from 'react';
 
 function App(): JSX.Element {
+  const [pazienti, setPazienti] = useState<Paziente[]>([]);
+  const fetchData = async (): Promise<void> => {
+    const pazienteService = new PazienteService();
+
+    try {
+      const data = await pazienteService.fetchPazienti();
+      setPazienti(data);
+    } catch (error) {
+      console.error('Error fetching pazienti:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,6 +28,13 @@ function App(): JSX.Element {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <ul>
+          {pazienti.map((paziente, index) => (
+            <li key={index}>
+              {paziente.nome} {paziente.cognome}
+            </li>
+          ))}
+        </ul>
         <a
           className="App-link"
           href="https://reactjs.org"

@@ -26,6 +26,26 @@ class PazienteService {
       else throw new Error('Unknown error occurred while fetching pazienti.');
     }
   }
+
+  async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
+    const url = `${this.baseUrl}/salva_dati`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datiPaziente),
+      });
+
+      if (!response.ok) {
+        throw new Error('Server returnd ${response.status}');
+      }
+    } catch (error) {
+      throw new Error('Errore');
+    }
+  }
 }
 
 export default PazienteService;

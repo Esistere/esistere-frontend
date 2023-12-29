@@ -45,12 +45,14 @@ const FormElement: React.FC = () => {
   return (
     <form method="post" onSubmit={handleSubmit}>
       <input
+        required
         type="text"
         placeholder="Codice Fiscale"
         name="codice_fiscale"
         onChange={handleChange}
       />
       <input
+        required
         type="text"
         placeholder="Nome"
         name="nome"
@@ -58,15 +60,22 @@ const FormElement: React.FC = () => {
       />
       <br />
       <input
+        required
         type="text"
         placeholder="Cognome"
         name="cognome"
         onChange={handleChange}
       />
       <br />
-      <input type="date" name="data_di_nascita" onChange={handleChange} />
+      <input
+        required
+        type="date"
+        name="data_di_nascita"
+        onChange={handleChange}
+      />
       <br />
       <input
+        required
         type="text"
         placeholder="Caregiver o Familiare"
         name="cg_fam"
@@ -74,6 +83,7 @@ const FormElement: React.FC = () => {
       />
       <br />
       <input
+        required
         type="text"
         placeholder="Medico"
         name="med"

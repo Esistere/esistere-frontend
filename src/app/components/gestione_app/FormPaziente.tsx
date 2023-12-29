@@ -8,8 +8,8 @@ const FormElement: React.FC = () => {
     nome: '',
     cognome: '',
     data_di_nascita: '',
+    med: '',
     cg_fam: '',
-    medico: '',
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -20,75 +20,65 @@ const FormElement: React.FC = () => {
     });
   };
 
-  // Al submit stampa in console i campi del form
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const paziente : Paziente = {
+    const paziente: Paziente = {
       codice_fiscale: formData.codice_fiscale,
       nome: formData.nome,
       cognome: formData.cognome,
       data_di_nascita: new Date(formData.data_di_nascita),
+      med: Number(formData.med),
       cg_fam: Number(formData.cg_fam),
-      med: Number(formData.medico)
     };
-    
+
     const pazienteService = new PazienteService();
-    pazienteService.inviaDatiPaziente(paziente).then(() =>{
-      console.log('Dati inviati con successo' + paziente);
-    }).catch((e) => {
-      console.error('Dati non inviati correttamente' + e);
-    });
+    pazienteService
+      .inviaDatiPaziente(paziente)
+      .then(() => {
+        console.log('Dati inviati con successo');
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
-  // formData.<qualcosa> rappresenta
-  // l'attributo che sta nel default value di useState()
   return (
-    <form onSubmit={handleSubmit}>
+    <form method="post" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Codice Fiscale"
         name="codice_fiscale"
-        value={formData.codice_fiscale}
         onChange={handleChange}
-      ></input>{' '}
+      />
       <input
         type="text"
         placeholder="Nome"
         name="nome"
-        value={formData.nome}
         onChange={handleChange}
-      ></input>{' '}
+      />
       <br />
       <input
         type="text"
         placeholder="Cognome"
         name="cognome"
-        value={formData.cognome}
         onChange={handleChange}
-      ></input>{' '}
+      />
       <br />
-      <input
-        type="date"
-        name="data_di_nascita"
-        value={formData.data_di_nascita}
-        onChange={handleChange}
-      ></input>{' '}
+      <input type="date" name="data_di_nascita" onChange={handleChange} />
       <br />
       <input
         type="text"
         placeholder="Caregiver o Familiare"
         name="cg_fam"
-        value={formData.cg_fam}
         onChange={handleChange}
       />
       <br />
       <input
         type="text"
         placeholder="Medico"
-        name="medico"
-        value={formData.medico}
+        name="med"
         onChange={handleChange}
-      ></input>{' '}
+      />
       <br />
       <input type="submit" value="Submit"></input> <br />
     </form>

@@ -3,7 +3,7 @@ import { WEBSERVER } from 'app/config';
 
 export default class PazienteService {
   private baseUrl: string;
-  
+
   constructor() {
     this.baseUrl = WEBSERVER;
   }
@@ -28,8 +28,6 @@ export default class PazienteService {
   }
 
   async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
-    console.log(`${this.baseUrl}`);
-
     const url = `${this.baseUrl}/salva_dati`;
 
     try {
@@ -41,10 +39,8 @@ export default class PazienteService {
         body: JSON.stringify(datiPaziente),
       });
 
-      console.log('sono qui');
-
       if (!response.ok) {
-        throw new Error('Server returnd ${response.status}');
+        throw new Error('Server returned ${response.status}');
       }
     } catch (error) {
       throw new Error('Errore');

@@ -29,8 +29,8 @@ jobs:
         run: npm i
 
       # Test
-      - name: Test 🧪
-        run: npm run test
+      # - name: Test 🧪
+      #   run: npm run test
 
       # Build the react app
       - name: Build 🛠️

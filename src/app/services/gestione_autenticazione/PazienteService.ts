@@ -1,9 +1,9 @@
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { WEBSERVER } from 'app/config';
 
-class PazienteService {
+export default class PazienteService {
   private baseUrl: string;
-
+  
   constructor() {
     this.baseUrl = WEBSERVER;
   }
@@ -28,6 +28,8 @@ class PazienteService {
   }
 
   async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
+    console.log(`${this.baseUrl}`);
+
     const url = `${this.baseUrl}/salva_dati`;
 
     try {
@@ -39,6 +41,8 @@ class PazienteService {
         body: JSON.stringify(datiPaziente),
       });
 
+      console.log('sono qui');
+
       if (!response.ok) {
         throw new Error('Server returnd ${response.status}');
       }
@@ -47,5 +51,3 @@ class PazienteService {
     }
   }
 }
-
-export default PazienteService;

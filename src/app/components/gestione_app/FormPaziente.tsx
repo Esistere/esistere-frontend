@@ -1,11 +1,13 @@
+import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useState } from 'react';
+import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
 
 const FormElement: React.FC = () => {
   const [formData, setFormData] = useState({
+    codice_fiscale: '',
     nome: '',
     cognome: '',
-    email: '',
-    password: '',
+    data_di_nascita: '',
     cg_fam: '',
     medico: '',
   });
@@ -21,13 +23,34 @@ const FormElement: React.FC = () => {
   // Al submit stampa in console i campi del form
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(formData);
+    const paziente : Paziente = {
+      codice_fiscale: formData.codice_fiscale,
+      nome: formData.nome,
+      cognome: formData.cognome,
+      data_di_nascita: new Date(formData.data_di_nascita),
+      cg_fam: Number(formData.cg_fam),
+      med: Number(formData.medico)
+    };
+    
+    const pazienteService = new PazienteService();
+    pazienteService.inviaDatiPaziente(paziente).then(() =>{
+      console.log('Dati inviati con successo' + paziente);
+    }).catch((e) => {
+      console.error('Dati non inviati correttamente' + e);
+    });
   };
 
-  //formData.<qualcosa> rappresenta
+  // formData.<qualcosa> rappresenta
   // l'attributo che sta nel default value di useState()
   return (
     <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Codice Fiscale"
+        name="codice_fiscale"
+        value={formData.codice_fiscale}
+        onChange={handleChange}
+      ></input>{' '}
       <input
         type="text"
         placeholder="Nome"
@@ -45,20 +68,11 @@ const FormElement: React.FC = () => {
       ></input>{' '}
       <br />
       <input
-        type="text"
-        placeholder="Email"
-        name="email"
-        value={formData.email}
+        type="date"
+        name="data_di_nascita"
+        value={formData.data_di_nascita}
         onChange={handleChange}
       ></input>{' '}
-      <br />
-      <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      ></input>
       <br />
       <input
         type="text"

@@ -28,7 +28,7 @@ export default class PazienteService {
   }
 
   async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
-    const url = `${this.baseUrl}/salva_dati`;
+    const url = `${this.baseUrl}/salva_paziente`;
 
     try {
       const response = await fetch(url, {

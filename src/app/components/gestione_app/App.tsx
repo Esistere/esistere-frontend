@@ -1,15 +1,18 @@
-import 'app/css/gestione_app/App.css';
 import React from 'react';
-import ListaPazienti from './ListaPazienti';
-import FormElement from './FormPaziente';
+import { createRoot } from 'react-dom/client';
+import AppRouter from './AppRouter';
 
 function App(): JSX.Element {
   return (
-    <div>
-      <ListaPazienti />
-      <FormElement />
-    </div>
+    <React.StrictMode>
+      <AppRouter />
+    </React.StrictMode>
   );
+}
+
+const root = document.getElementById('root');
+if (root) {
+  createRoot(root).render(<App />);
 }
 
 export default App;

@@ -1,0 +1,26 @@
+.elemento {
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: blueviolet;
+  border-width: 1px;
+  width: 20em;
+  height: 6em;
+  background: #fefefe;
+  display: flex;
+  align-items: center;
+}
+.elemento:hover {
+  border-color: rgb(86, 6, 161);
+  border-width: 3px;
+  background: linear-gradient(to top, #d3c1e9, #fefefe);
+  cursor: pointer;
+}
+.propiclist {
+  width: 5em;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.pp {
+  font-size: 1em;
+}

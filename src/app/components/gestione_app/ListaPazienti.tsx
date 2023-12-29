@@ -1,4 +1,3 @@
-import 'app/css/gestione_app/App.css';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
 import React, { useEffect, useState } from 'react';

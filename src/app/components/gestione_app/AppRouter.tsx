@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Appp from './home';
+import Appp from './Home';
 import FormElement from './FormPaziente';
 import ListaPazienti from './ListaPazienti';
 import NavBar from './NavBar';

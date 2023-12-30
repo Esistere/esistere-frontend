@@ -15,7 +15,7 @@ function Navbar(): JSX.Element {
         <Link to={`/${HOME}/registrazione`}>Registrazione</Link>
       </li>
       <li>
-        <Link to={`/${HOME}/formPaziente`}>FormPaziente</Link>
+        <p>Logout</p>
       </li>
     </ul>
   );

@@ -45,7 +45,6 @@ function FormPaziente(): JSX.Element {
 
   return (
     <>
-      <Navbar />
       <form method="post" onSubmit={handleSubmit}>
         <input
           required

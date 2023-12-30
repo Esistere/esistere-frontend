@@ -48,12 +48,14 @@ function FormPaziente(): JSX.Element {
       <Navbar />
       <form method="post" onSubmit={handleSubmit}>
         <input
+          required
           type="text"
           placeholder="Codice Fiscale"
           name="codice_fiscale"
           onChange={handleChange}
         />
         <input
+          required
           type="text"
           placeholder="Nome"
           name="nome"
@@ -61,15 +63,22 @@ function FormPaziente(): JSX.Element {
         />
         <br />
         <input
+          required
           type="text"
           placeholder="Cognome"
           name="cognome"
           onChange={handleChange}
         />
         <br />
-        <input type="date" name="data_di_nascita" onChange={handleChange} />
+        <input
+          required
+          type="date"
+          name="data_di_nascita"
+          onChange={handleChange}
+        />
         <br />
         <input
+          required
           type="text"
           placeholder="Caregiver o Familiare"
           name="cg_fam"
@@ -77,6 +86,7 @@ function FormPaziente(): JSX.Element {
         />
         <br />
         <input
+          required
           type="text"
           placeholder="Medico"
           name="med"

@@ -1,15 +1,15 @@
-import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
+import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { WEBSERVER } from 'app/config';
 
-class PazienteService {
+class MedicoService {
   private baseUrl: string;
 
   constructor() {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchPazienti(): Promise<Paziente[]> {
-    const url = `${this.baseUrl}/visualizza_pazienti`;
+  async fetchPazienti(): Promise<Medico[]> {
+    const url = `${this.baseUrl}/visualizza_medico`;
 
     try {
       const response = await fetch(url);
@@ -18,7 +18,7 @@ class PazienteService {
         throw new Error(`Server returned ${response.status}`);
       }
 
-      const data: Paziente[] = await response.json();
+      const data: Medico[] = await response.json();
       return data;
     } catch (error) {
       if (error instanceof Error)
@@ -27,8 +27,8 @@ class PazienteService {
     }
   }
 
-  async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
-    const url = `${this.baseUrl}/salva_paziente`;
+  async inviaDatiPaziente(datiMedico: Medico): Promise<void> {
+    const url = `${this.baseUrl}/salva_medico`;
 
     try {
       const response = await fetch(url, {
@@ -36,7 +36,7 @@ class PazienteService {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(datiPaziente),
+        body: JSON.stringify(datiMedico),
       });
 
       if (!response.ok) {
@@ -48,4 +48,4 @@ class PazienteService {
   }
 }
 
-export default PazienteService;
+export default MedicoService;

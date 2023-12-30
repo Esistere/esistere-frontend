@@ -4,6 +4,8 @@ import Appp from './Home';
 import FormElement from './FormPaziente';
 import ListaPazienti from './ListaPazienti';
 import NavBar from './NavBar';
+import LoginElement from './Login';
+import SignUpElement from './SignUp';
 
 const AppRouter: React.FC = () => {
   return (
@@ -13,6 +15,8 @@ const AppRouter: React.FC = () => {
         <Route path="/" element={<Appp />} />
         <Route path="/Form" element={<FormElement />} />
         <Route path="/Lista" element={<ListaPazienti />} />
+        <Route path="/SignUp" element={<SignUpElement />} />
+        <Route path="/Login" element={<LoginElement />} />
       </Routes>
     </BrowserRouter>
   );

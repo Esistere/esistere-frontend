@@ -13,6 +13,12 @@ function NavBar(): JSX.Element {
       <li>
         <Link to={'/Lista'}>Lista</Link>
       </li>
+      <li>
+        <Link to={'/SignUp'}>SignUp</Link>
+      </li>
+      <li>
+        <Link to={'/Login'}>Login</Link>
+      </li>
     </ul>
   );
 }

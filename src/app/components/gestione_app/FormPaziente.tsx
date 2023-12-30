@@ -1,8 +1,9 @@
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useState } from 'react';
 import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import Navbar from '../Navbar';
 
-const FormElement: React.FC = () => {
+function FormPaziente(): JSX.Element {
   const [formData, setFormData] = useState({
     codice_fiscale: '',
     nome: '',
@@ -43,46 +44,49 @@ const FormElement: React.FC = () => {
   };
 
   return (
-    <form method="post" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Codice Fiscale"
-        name="codice_fiscale"
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        placeholder="Nome"
-        name="nome"
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Cognome"
-        name="cognome"
-        onChange={handleChange}
-      />
-      <br />
-      <input type="date" name="data_di_nascita" onChange={handleChange} />
-      <br />
-      <input
-        type="text"
-        placeholder="Caregiver o Familiare"
-        name="cg_fam"
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        type="text"
-        placeholder="Medico"
-        name="med"
-        onChange={handleChange}
-      />
-      <br />
-      <input type="submit" value="Submit"></input> <br />
-    </form>
+    <>
+      <Navbar />
+      <form method="post" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Codice Fiscale"
+          name="codice_fiscale"
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          placeholder="Nome"
+          name="nome"
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Cognome"
+          name="cognome"
+          onChange={handleChange}
+        />
+        <br />
+        <input type="date" name="data_di_nascita" onChange={handleChange} />
+        <br />
+        <input
+          type="text"
+          placeholder="Caregiver o Familiare"
+          name="cg_fam"
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Medico"
+          name="med"
+          onChange={handleChange}
+        />
+        <br />
+        <input type="submit" value="Submit"></input> <br />
+      </form>
+    </>
   );
-};
+}
 
-export default FormElement;
+export default FormPaziente;

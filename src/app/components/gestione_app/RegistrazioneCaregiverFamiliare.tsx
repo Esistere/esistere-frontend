@@ -32,7 +32,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       indirizzo: formData.indirizzo,
       citta: formData.citta,
       numero_civico: formData.numero_civico,
-      data_di_nascita: formData.data_di_nascita,
+      data_di_nascita: new Date(formData.data_di_nascita),
       numero_telefono: formData.numero_telefono,
       email: formData.email,
       passwd: formData.passwd,
@@ -126,12 +126,14 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
         <br />
         <input
           type="password"
-          name="password"
+          name="passwd"
           id="outlined-password-input"
           placeholder="Password"
           required
           onChange={handleChange}
         />
+        <br />
+        <input type="submit" value="Registrati" />
       </form>
     </>
   );

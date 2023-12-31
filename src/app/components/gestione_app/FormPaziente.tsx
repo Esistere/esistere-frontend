@@ -52,6 +52,7 @@ function FormPaziente(): JSX.Element {
           name="codice_fiscale"
           onChange={handleChange}
         />
+        <br />
         <input
           required
           type="text"

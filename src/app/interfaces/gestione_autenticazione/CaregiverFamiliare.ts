@@ -5,7 +5,7 @@ export interface CaregiverFamiliare {
   indirizzo: string,
   citta: string,
   numero_civico: string,
-  data_di_nascita: string,
+  data_di_nascita: Date,
   numero_telefono: string,
   email: string,
   passwd: string

@@ -1,7 +1,6 @@
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useState } from 'react';
 import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
-import Navbar from '../Navbar';
 
 function FormPaziente(): JSX.Element {
   const [formData, setFormData] = useState({
@@ -92,7 +91,7 @@ function FormPaziente(): JSX.Element {
           onChange={handleChange}
         />
         <br />
-        <input type="submit" value="Submit"></input> <br />
+        <input type="submit" value="Salva Dati Pazienti"></input> <br />
       </form>
     </>
   );

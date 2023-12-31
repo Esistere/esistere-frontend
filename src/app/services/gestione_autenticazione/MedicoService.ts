@@ -8,9 +8,8 @@ class MedicoService {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchPazienti(): Promise<Medico[]> {
+  async fetchMedici(): Promise<Medico[]> {
     const url = `${this.baseUrl}/visualizza_medico`;
-
     try {
       const response = await fetch(url);
 
@@ -27,8 +26,9 @@ class MedicoService {
     }
   }
 
-  async inviaDatiPaziente(datiMedico: Medico): Promise<void> {
+  async inviaDatiMedico(datiMedico: Medico): Promise<void> {
     const url = `${this.baseUrl}/salva_medico`;
+    console.log(datiMedico);
 
     try {
       const response = await fetch(url, {

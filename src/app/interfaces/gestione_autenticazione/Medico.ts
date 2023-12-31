@@ -1,5 +1,5 @@
 export interface Medico {
-  codice_identificativo?:number;
+  codice_identificativo?: number | undefined;
   nome: string;
   cognome: string;
   indirizzo_studio: string;

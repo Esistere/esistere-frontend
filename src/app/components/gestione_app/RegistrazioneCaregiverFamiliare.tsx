@@ -1,8 +1,7 @@
 import React from 'react';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
-import { Box } from '@mui/material';
-import Navbar from '../Navbar';
 import { useState } from 'react';
+import CaregiverFamiliareService from 'app/services/gestione_autenticazione/CaregiverFamiliareService';
 
 const RegistrazioneCaregiverFamiliare: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -38,89 +37,102 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       email: formData.email,
       passwd: formData.passwd,
     };
+
+    const caregiverFamiliareService: CaregiverFamiliareService =
+      new CaregiverFamiliareService();
+    caregiverFamiliareService
+      .inviaDatiCaregiverFamiliare(caregiverFamiliare)
+      .then(() => {
+        console.log('Dati inviati correttamente' + caregiverFamiliare);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (
     <>
-      <Box
-        component="form"
-        sx={{ '& .MuiTextField-root': { m: 2, width: '25ch' } }}
-        noValidate
-        autoComplete="off"
-      >
-        <form method="post" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="nome"
-            id="outlined-nome-input"
-            required
-            placeholder="Nome"
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            type="text"
-            name="cognome"
-            id="outlined-cognome-input"
-            placeholder="Cognome"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            name="indirizzo"
-            id="outlined-indirizzo-input"
-            placeholder="Indirizzo"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            name="citta"
-            id="outlined-citta-input"
-            placeholder="Città"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            name="numero_civico"
-            id="outlined-num-civico-input"
-            placeholder="Numero Civico"
-            required
-          />
-          <br />
-          <input 
-            type="date" 
-            name="data_di_nascita" 
-            id="" 
-            required />
-          <br />
-          <input
-            type="text"
-            name="numero_telefono"
-            id="outlined-num-telefono-input"
-            placeholder="Numero Telefono"
-            required
-          />
-          <br />
-          <input
-            type="email"
-            name="email"
-            id="outlined-email-input"
-            placeholder="Email"
-            required
-          />
-          <br />
-          <input
-            type="password"
-            name="password"
-            id="outlined-password-input"
-            placeholder="Password"
-            required
-          />
-        </form>
-      </Box>
+      <form method="post" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="nome"
+          id="outlined-nome-input"
+          required
+          placeholder="Nome"
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          name="cognome"
+          id="outlined-cognome-input"
+          placeholder="Cognome"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          name="indirizzo"
+          id="outlined-indirizzo-input"
+          placeholder="Indirizzo"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          name="citta"
+          id="outlined-citta-input"
+          placeholder="Città"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          name="numero_civico"
+          id="outlined-num-civico-input"
+          placeholder="Numero Civico"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="date"
+          name="data_di_nascita"
+          id=""
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="text"
+          name="numero_telefono"
+          id="outlined-num-telefono-input"
+          placeholder="Numero Telefono"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="email"
+          name="email"
+          id="outlined-email-input"
+          placeholder="Email"
+          required
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          type="password"
+          name="password"
+          id="outlined-password-input"
+          placeholder="Password"
+          required
+          onChange={handleChange}
+        />
+      </form>
     </>
   );
 };

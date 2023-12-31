@@ -10,10 +10,10 @@ const Registrazione: React.FC = () => {
       <Navbar />
       <h2>Medico</h2>
       <RegistrazioneMedico />
-      {/* <h2>Caregiver/Familiare</h2>
+      <h2>Caregiver/Familiare</h2>
       <RegistrazioneCaregiverFamiliare />
       <h2>Paziente</h2>
-      <FormPaziente /> */}
+      <FormPaziente />
     </>
   );
 };

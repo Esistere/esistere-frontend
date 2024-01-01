@@ -45,8 +45,9 @@ class CaregiverFamiliareService {
       if (!response.ok) {
         throw new Error('Server returned ${response.status}');
       }
-      const codice_identificativo: number = await response.json();
-      return codice_identificativo;
+
+      const codice_identificativoJSON = await response.json();
+      return codice_identificativoJSON.codice_identificativo;
     } catch (error) {
       throw new Error('Errore');
     }

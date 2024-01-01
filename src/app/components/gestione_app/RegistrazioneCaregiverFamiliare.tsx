@@ -66,9 +66,6 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
 
     const codice_identificativo = caregiverFamiliareService
       .inviaDatiCaregiverFamiliare(caregiverFamiliare)
-      .then(() => {
-        console.log('Dati inviati correttamente' + caregiverFamiliare);
-      })
       .catch((e) => {
         console.error(e);
       });
@@ -79,15 +76,12 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       cognome: formDataPaziente.cognome,
       data_di_nascita: new Date(formDataPaziente.data_di_nascita),
       med: Number(formDataPaziente.med),
-      cg_fam: Number(codice_identificativo)
+      cg_fam: Number(codice_identificativo),
     };
 
     const pazienteService: PazienteService = new PazienteService();
     try {
       pazienteService.inviaDatiPaziente(paziente);
-      console.log(
-        'Dati inviati correttamente \n' + paziente + '\n' + caregiverFamiliare
-      );
     } catch (e) {
       console.error(e);
     }

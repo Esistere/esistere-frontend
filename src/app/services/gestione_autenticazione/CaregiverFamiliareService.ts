@@ -31,8 +31,6 @@ class CaregiverFamiliareService {
   ): Promise<number> {
     const url = `${this.baseUrl}/salva_caregiver_familiare`;
 
-    console.log(datiCaregiverFamiliare);
-
     try {
       const response = await fetch(url, {
         method: 'POST',

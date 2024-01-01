@@ -47,7 +47,9 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     const caregiverFamiliare: CaregiverFamiliare = {
       nome: formDataCaregiverFamiliare.nome,
@@ -64,11 +66,10 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
     const caregiverFamiliareService: CaregiverFamiliareService =
       new CaregiverFamiliareService();
 
-    const codice_identificativo = caregiverFamiliareService
-      .inviaDatiCaregiverFamiliare(caregiverFamiliare)
-      .catch((e) => {
-        console.error(e);
-      });
+    const codice_identificativo =
+      await caregiverFamiliareService.inviaDatiCaregiverFamiliare(
+        caregiverFamiliare
+      );
 
     const paziente: Paziente = {
       codice_fiscale: formDataPaziente.codice_fiscale,
@@ -81,7 +82,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
 
     const pazienteService: PazienteService = new PazienteService();
     try {
-      pazienteService.inviaDatiPaziente(paziente);
+      await pazienteService.inviaDatiPaziente(paziente);
     } catch (e) {
       console.error(e);
     }

@@ -1,10 +1,12 @@
 import React from 'react';
-import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 import { useState } from 'react';
+import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
+import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import CaregiverFamiliareService from 'app/services/gestione_autenticazione/CaregiverFamiliareService';
+import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
 
 const RegistrazioneCaregiverFamiliare: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formDataCaregiverFamiliare, setFormDataCaregiverFamiliare] = useState({
     nome: '',
     cognome: '',
     indirizzo: '',
@@ -16,10 +18,31 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
     passwd: '',
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const [formDataPaziente, setFormDataPaziente] = useState({
+    codice_fiscale: '',
+    nome: '',
+    cognome: '',
+    data_di_nascita: '',
+    med: '',
+    cg_fam: '',
+  });
+
+  const handleChangeCaregiverFamiliare = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
+  };
+
+  const handleChangePaziente = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, value } = event.target;
+    setFormDataPaziente({
+      ...formDataPaziente,
       [name]: value,
     });
   };
@@ -27,20 +50,21 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const caregiverFamiliare: CaregiverFamiliare = {
-      nome: formData.nome,
-      cognome: formData.cognome,
-      indirizzo: formData.indirizzo,
-      citta: formData.citta,
-      numero_civico: formData.numero_civico,
-      data_di_nascita: new Date(formData.data_di_nascita),
-      numero_telefono: formData.numero_telefono,
-      email: formData.email,
-      passwd: formData.passwd,
+      nome: formDataCaregiverFamiliare.nome,
+      cognome: formDataCaregiverFamiliare.cognome,
+      indirizzo: formDataCaregiverFamiliare.indirizzo,
+      citta: formDataCaregiverFamiliare.citta,
+      numero_civico: formDataCaregiverFamiliare.numero_civico,
+      data_di_nascita: new Date(formDataCaregiverFamiliare.data_di_nascita),
+      numero_telefono: formDataCaregiverFamiliare.numero_telefono,
+      email: formDataCaregiverFamiliare.email,
+      passwd: formDataCaregiverFamiliare.passwd,
     };
 
     const caregiverFamiliareService: CaregiverFamiliareService =
       new CaregiverFamiliareService();
-    caregiverFamiliareService
+
+    const codice_identificativo = caregiverFamiliareService
       .inviaDatiCaregiverFamiliare(caregiverFamiliare)
       .then(() => {
         console.log('Dati inviati correttamente' + caregiverFamiliare);
@@ -48,6 +72,25 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       .catch((e) => {
         console.error(e);
       });
+
+    const paziente: Paziente = {
+      codice_fiscale: formDataPaziente.codice_fiscale,
+      nome: formDataPaziente.nome,
+      cognome: formDataPaziente.cognome,
+      data_di_nascita: new Date(formDataPaziente.data_di_nascita),
+      med: Number(formDataPaziente.med),
+      cg_fam: Number(codice_identificativo)
+    };
+
+    const pazienteService: PazienteService = new PazienteService();
+    try {
+      pazienteService.inviaDatiPaziente(paziente);
+      console.log(
+        'Dati inviati correttamente \n' + paziente + '\n' + caregiverFamiliare
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -59,7 +102,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-nome-input"
           required
           placeholder="Nome"
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -68,7 +111,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-cognome-input"
           placeholder="Cognome"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -77,7 +120,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-indirizzo-input"
           placeholder="Indirizzo"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -86,7 +129,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-citta-input"
           placeholder="Città"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -95,7 +138,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-num-civico-input"
           placeholder="Numero Civico"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -103,7 +146,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           name="data_di_nascita"
           id=""
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -112,7 +155,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-num-telefono-input"
           placeholder="Numero Telefono"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -121,7 +164,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-email-input"
           placeholder="Email"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
         />
         <br />
         <input
@@ -130,7 +173,47 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-password-input"
           placeholder="Password"
           required
-          onChange={handleChange}
+          onChange={handleChangeCaregiverFamiliare}
+        />
+        <br />
+        <h2>Paziente</h2>
+        <input
+          required
+          type="text"
+          placeholder="Codice Fiscale"
+          name="codice_fiscale"
+          onChange={handleChangePaziente}
+        />
+        <br />
+        <input
+          required
+          type="text"
+          placeholder="Nome"
+          name="nome"
+          onChange={handleChangePaziente}
+        />
+        <br />
+        <input
+          required
+          type="text"
+          placeholder="Cognome"
+          name="cognome"
+          onChange={handleChangePaziente}
+        />
+        <br />
+        <input
+          required
+          type="date"
+          name="data_di_nascita"
+          onChange={handleChangePaziente}
+        />
+        <br />
+        <input
+          required
+          type="text"
+          placeholder="Medico"
+          name="med"
+          onChange={handleChangePaziente}
         />
         <br />
         <input type="submit" value="Registrati" />

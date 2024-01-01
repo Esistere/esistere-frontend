@@ -8,6 +8,25 @@ class PazienteService {
     this.baseUrl = WEBSERVER;
   }
 
+  async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
+    const url = `${this.baseUrl}/visualizza_pazienti`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(codice_fiscale),
+      });
+
+      const paziente = await response.json();
+      return paziente;
+    } catch (error) {
+      throw new Error('Error fething paziente');
+    }
+  }
+
   async fetchPazienti(): Promise<Paziente[]> {
     const url = `${this.baseUrl}/visualizza_pazienti`;
 

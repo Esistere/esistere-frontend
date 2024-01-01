@@ -28,9 +28,9 @@ class CaregiverFamiliareService {
 
   async inviaDatiCaregiverFamiliare(
     datiCaregiverFamiliare: CaregiverFamiliare
-  ): Promise<void> {
+  ): Promise<number> {
     const url = `${this.baseUrl}/salva_caregiver_familiare`;
-    
+
     console.log(datiCaregiverFamiliare);
 
     try {
@@ -45,6 +45,8 @@ class CaregiverFamiliareService {
       if (!response.ok) {
         throw new Error('Server returned ${response.status}');
       }
+      const codice_identificativo: number = await response.json();
+      return codice_identificativo;
     } catch (error) {
       throw new Error('Errore');
     }

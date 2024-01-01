@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import React, { useState } from 'react';
 import MedicoService from 'app/services/gestione_autenticazione/MedicoService';

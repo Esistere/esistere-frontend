@@ -14,9 +14,9 @@ function Navbar(): JSX.Element {
       <li>
         <Link to={`/${HOME}/registrazione`}>Registrazione</Link>
       </li>
-      <li>
+      {/* <li>
         <Link to={`/${HOME}/lista`}>Lista Pazienti</Link>
-      </li>
+      </li> */}
       <li>
         <p>Logout</p>
       </li>

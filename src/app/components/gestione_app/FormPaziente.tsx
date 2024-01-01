@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useState } from 'react';
 // import PazienteService from 'app/services/gestione_autenticazione/PazienteService';

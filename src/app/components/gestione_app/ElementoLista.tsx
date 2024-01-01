@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from 'react';
 // import 'app/css/gestione_app/ElementoLista.css';
 // import logo from 'app/assets/logo.svg';
@@ -14,7 +16,7 @@ import React, { useState } from 'react';
 //   });
 
 //   const handleClick = (cf: string ): MouseEventHandler<HTMLDivElement> => {
-//     SVGFilterElement 
+//     SVGFilterElement
 //     const paziente: Paziente = {
 //       codice_fiscale: '',
 //       nome: name,

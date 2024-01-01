@@ -20,10 +20,10 @@ const Login: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const utente: any = {
-      email: formData.email,
-      password: formData.password,
-    };
+    // const utente: any = {
+    //   email: formData.email,
+    //   password: formData.password,
+    // };
   };
 
   return (

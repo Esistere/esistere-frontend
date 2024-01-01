@@ -1,7 +1,6 @@
 import React from 'react';
 import RegistrazioneCaregiverFamiliare from './RegistrazioneCaregiverFamiliare';
 import RegistrazioneMedico from './RegistrazioneMedico';
-// import FormPaziente from './FormPaziente';
 import Navbar from '../Navbar';
 
 const Registrazione: React.FC = () => {
@@ -12,8 +11,6 @@ const Registrazione: React.FC = () => {
       <RegistrazioneMedico />
       <h2>Caregiver/Familiare</h2>
       <RegistrazioneCaregiverFamiliare />
-      {/* <h2>Paziente</h2>
-      <FormPaziente /> */}
     </>
   );
 };

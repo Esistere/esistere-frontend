@@ -5,12 +5,12 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
 
 function ElementoLista({
-  key,
+  index,
   cf,
   name,
   surname,
 }: {
-  key: number;
+  index: number;
   cf: string;
   name: string;
   surname: string;
@@ -39,14 +39,14 @@ function ElementoLista({
   };
 
   return (
-    <div key={key} className="elemento" onClick={handleClick}>
-      <img className="propiclist" src={logo} alt={'paziente ' + { key }} />
-      <p className="pp">
-        {name} {surname}
-      </p>
-      <br />
-      <div>
-        <p>
+    <div key={index} className="elemento" onClick={handleClick}>
+      <img className="propiclist" src={logo} alt={'paziente ' + { index }} />
+      <div style={{ display: 'block', marginTop: '10px' }}>
+        <p className="pp">
+          {name} {surname}
+        </p>
+        <br />
+        <p className="pp" style={{ display: 'block', marginTop: '-30px' }}>
           {paziente?.codice_fiscale} {paziente?.nome}
         </p>
       </div>

@@ -8,25 +8,6 @@ class PazienteService {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
-    const url = `${this.baseUrl}/dati_paziente`;
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(codice_fiscale),
-      });
-
-      const paziente = await response.json();
-      return paziente;
-    } catch (error) {
-      throw new Error('Error fething paziente');
-    }
-  }
-
   async fetchPazienti(): Promise<Paziente[]> {
     const url = `${this.baseUrl}/visualizza_pazienti`;
 
@@ -43,6 +24,25 @@ class PazienteService {
       if (error instanceof Error)
         throw new Error(`Error fetching pazienti: ${error.message}`);
       else throw new Error('Unknown error occurred while fetching pazienti.');
+    }
+  }
+
+  async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
+    const url = `${this.baseUrl}/dati_paziente`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ codice_fiscale }),
+      });
+
+      const paziente = await response.json();
+      return paziente;
+    } catch (error) {
+      throw new Error('Error fetching paziente');
     }
   }
 

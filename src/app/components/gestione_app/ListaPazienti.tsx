@@ -61,6 +61,7 @@ function ListaPazienti(props: Props): JSX.Element {
             pazienti.map((paziente, index) => (
               <ElementoLista
                 key={index}
+                index={index}
                 cf={paziente.codice_fiscale}
                 name={paziente.nome}
                 surname={paziente.cognome}

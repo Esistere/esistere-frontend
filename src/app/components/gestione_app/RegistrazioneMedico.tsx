@@ -1,6 +1,12 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import React, { useState } from 'react';
 import MedicoService from 'app/services/gestione_autenticazione/MedicoService';
+import { TextField, Button } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import CheckIcon from '@mui/icons-material/Check';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const RegistrazioneMedico: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -45,8 +51,8 @@ const RegistrazioneMedico: React.FC = () => {
           nome: '',
           cognome: '',
           indirizzo_studio: '',
-          citta: '',
           numero_civico: '',
+          citta: '',
           numero_telefono_studio: '',
           email: '',
           passwd: '',
@@ -57,82 +63,186 @@ const RegistrazioneMedico: React.FC = () => {
       });
   };
 
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = (): void => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+  };
+  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
+
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
+  };
+
   return (
     <>
-      <form method="post" onSubmit={handleSubmit}>
-        <input
+      <form
+        method="post"
+        style={{ display: 'flex', flexWrap: 'wrap', width: '50%' }}
+        onSubmit={handleSubmit}
+      >
+        <TextField
           type="text"
           name="nome"
           id="outlined-nome-input"
           required
-          placeholder="Nome"
+          label="Nome"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
+        <TextField
           type="text"
           name="cognome"
           id="outlined-cognome-input"
-          placeholder="Cognome"
           required
+          label="Cognome"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
+        <TextField
           type="text"
           name="indirizzo_studio"
           id="outlined-indirizzo-input"
-          placeholder="Indirizzo Studio"
           required
+          label="Indirizzo Studio"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
-          type="text"
-          name="citta"
-          id="outlined-citta-input"
-          placeholder="Città"
-          required
-          onChange={handleChange}
-        />
-        <br />
-        <input
+        <TextField
           type="text"
           name="numero_civico"
           id="outlined-num-civico-input"
-          placeholder="Numero Civico"
           required
+          label="Numero Civico"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
+        <TextField
+          type="text"
+          name="citta"
+          id="outlined-citta-input"
+          required
+          label="Città"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
+          onChange={handleChange}
+        />
+        <br />
+        <TextField
           type="text"
           name="numero_telefono_studio"
           id="outlined-num-telefono-input"
-          placeholder="Numero Telefono (Studio)"
           required
+          label="Telefono Studio"
+          style={{
+            flexBasis: 'calc(26 em)',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
-          type="email"
-          name="email"
-          id="outlined-email-input"
-          placeholder="Email"
-          required
-          onChange={handleChange}
-        />
-        <br />
-        <input
-          type="password"
-          name="passwd"
-          id="outlined-password-input"
-          placeholder="Password"
-          required
-          onChange={handleChange}
-        />
-        <br />
-        <input type="submit" value="Registrati" />
+        <div style={{ width: '100%' }}>
+          <TextField
+            type="email"
+            name="email"
+            id="outlined-email-input"
+            required
+            label="Email"
+            style={{
+              flexBasis: 'calc(26 em)',
+              margin: '1em',
+              boxSizing: 'border-box',
+              marginLeft: '20%',
+              marginRight: '20%',
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" disabled>
+                    <Visibility style={{ opacity: '0' }} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div style={{ width: '100%' }}>
+          <TextField
+            type={showPassword ? 'text' : 'password'}
+            name="passwd"
+            id="outlined-email-input"
+            required
+            label="Password"
+            style={{
+              flexBasis: '26em',
+              margin: '1em',
+              boxSizing: 'border-box',
+              marginLeft: '20%',
+              marginRight: '20%',
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div style={{ width: '100%' }}>
+          <Button
+            style={{
+              background: coloreBottone,
+              marginLeft: '55%',
+              marginRight: '35%',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            endIcon={<CheckIcon />}
+          >
+            Registrati
+          </Button>
+        </div>
       </form>
     </>
   );

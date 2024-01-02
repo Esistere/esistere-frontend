@@ -36,7 +36,29 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       [name]: value,
     });
   };
-
+  //eslint-disable-next-line
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const handleMail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
+    setIsEmailValid(emailRegex.test(value));
+  };
+  //eslint-disable-next-line
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const handlePass = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
+    const passRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
+    setIsPassValid(passRegex.test(value));
+  };
   const handleChangePaziente = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -159,7 +181,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-email-input"
           placeholder="Email"
           required
-          onChange={handleChangeCaregiverFamiliare}
+          onChange={handleMail}
         />
         <br />
         <input
@@ -168,7 +190,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
           id="outlined-password-input"
           placeholder="Password"
           required
-          onChange={handleChangeCaregiverFamiliare}
+          onChange={handlePass}
         />
         <br />
         <h2>Paziente</h2>

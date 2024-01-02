@@ -7,6 +7,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import InputAdornment from '@mui/material/InputAdornment';
+import 'app/css/gestione_app/FormElements.css';
 
 const RegistrazioneMedico: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -91,96 +92,99 @@ const RegistrazioneMedico: React.FC = () => {
 
   return (
     <>
-      <form
-        method="post"
-        style={{ display: 'flex', flexWrap: 'wrap', width: '50%' }}
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          type="text"
-          name="nome"
-          id="outlined-nome-input"
-          required
-          label="Nome"
+      <form method="post" className="formflex" onSubmit={handleSubmit}>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="nome"
+            id="outlined-nome-input"
+            required
+            label="Nome"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            name="cognome"
+            id="outlined-cognome-input"
+            required
+            label="Cognome"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="indirizzo_studio"
+            id="outlined-indirizzo-input"
+            required
+            label="Indirizzo Studio"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            name="numero_civico"
+            id="outlined-num-civico-input"
+            required
+            label="Numero Civico"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="citta"
+            id="outlined-citta-input"
+            required
+            label="Città"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            name="numero_telefono_studio"
+            id="outlined-num-telefono-input"
+            required
+            label="Telefono Studio"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div
           style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="cognome"
-          id="outlined-cognome-input"
-          required
-          label="Cognome"
-          style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="indirizzo_studio"
-          id="outlined-indirizzo-input"
-          required
-          label="Indirizzo Studio"
-          style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="numero_civico"
-          id="outlined-num-civico-input"
-          required
-          label="Numero Civico"
-          style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="citta"
-          id="outlined-citta-input"
-          required
-          label="Città"
-          style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="numero_telefono_studio"
-          id="outlined-num-telefono-input"
-          required
-          label="Telefono Studio"
-          style={{
-            flexBasis: 'calc(26 em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <div style={{ width: '100%' }}>
+        >
           <TextField
             type="email"
             name="email"
@@ -207,7 +211,14 @@ const RegistrazioneMedico: React.FC = () => {
             onChange={handleMail}
           />
         </div>
-        <div style={{ width: '100%' }}>
+        <div
+          style={{
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
           <TextField
             type={showPassword ? 'text' : 'password'}
             name="passwd"
@@ -218,8 +229,6 @@ const RegistrazioneMedico: React.FC = () => {
               flexBasis: '26em',
               margin: '1em',
               boxSizing: 'border-box',
-              marginLeft: '20%',
-              marginRight: '20%',
               backgroundColor: isPassValid ? 'white' : 'lightcoral',
             }}
             InputProps={{

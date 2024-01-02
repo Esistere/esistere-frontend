@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import CaregiverFamiliareService from 'app/services/gestione_autenticazione/CaregiverFamiliareService';
-import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import CaregiverFamiliareService from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
+import PazienteService from 'app/control/gestione_autenticazione/PazienteControl';
 
 const RegistrazioneCaregiverFamiliare: React.FC = () => {
   const [formDataCaregiverFamiliare, setFormDataCaregiverFamiliare] = useState({

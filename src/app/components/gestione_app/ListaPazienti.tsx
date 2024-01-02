@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import PazienteService from 'app/control/gestione_autenticazione/PazienteControl';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import Caricamento from './Caricamento';

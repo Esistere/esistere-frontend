@@ -1,6 +1,6 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import React, { useState } from 'react';
-import MedicoService from 'app/services/gestione_autenticazione/MedicoService';
+import MedicoService from 'app/control/gestione_autenticazione/MedicoControl';
 import { TextField, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';

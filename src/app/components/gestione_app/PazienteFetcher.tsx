@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import PazienteService from 'app/control/gestione_autenticazione/PazienteControl';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 
 interface UseFetchPazienteDataResult {

@@ -1,4 +1,3 @@
-// ElementoLista.tsx
 import React, { useState, useEffect } from 'react';
 import 'app/css/gestione_app/ElementoLista.css';
 import logo from 'app/assets/logo.svg';

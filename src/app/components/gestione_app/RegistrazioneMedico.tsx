@@ -27,6 +27,27 @@ const RegistrazioneMedico: React.FC = () => {
       [name]: value,
     });
   };
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const handleMail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
+    setIsEmailValid(emailRegex.test(value));
+  };
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const handlePass = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    const passRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
+    setIsPassValid(passRegex.test(value));
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -183,6 +204,7 @@ const RegistrazioneMedico: React.FC = () => {
               boxSizing: 'border-box',
               marginLeft: '20%',
               marginRight: '20%',
+              backgroundColor: isEmailValid ? 'white' : 'lightcoral',
             }}
             InputProps={{
               endAdornment: (
@@ -193,14 +215,14 @@ const RegistrazioneMedico: React.FC = () => {
                 </InputAdornment>
               ),
             }}
-            onChange={handleChange}
+            onChange={handleMail}
           />
         </div>
         <div style={{ width: '100%' }}>
           <TextField
             type={showPassword ? 'text' : 'password'}
             name="passwd"
-            id="outlined-email-input"
+            id="outlined-passwd-input"
             required
             label="Password"
             style={{
@@ -209,6 +231,7 @@ const RegistrazioneMedico: React.FC = () => {
               boxSizing: 'border-box',
               marginLeft: '20%',
               marginRight: '20%',
+              backgroundColor: isPassValid ? 'white' : 'lightcoral',
             }}
             InputProps={{
               endAdornment: (
@@ -224,7 +247,7 @@ const RegistrazioneMedico: React.FC = () => {
                 </InputAdornment>
               ),
             }}
-            onChange={handleChange}
+            onChange={handlePass}
           />
         </div>
         <div style={{ width: '100%' }}>

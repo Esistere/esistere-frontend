@@ -1,7 +1,7 @@
 import { WEBSERVER } from 'app/config';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 
-class CaregiverFamiliareService {
+class CaregiverFamiliareControl {
   private baseUrl: string;
 
   constructor() {
@@ -52,4 +52,4 @@ class CaregiverFamiliareService {
   }
 }
 
-export default CaregiverFamiliareService;
+export default CaregiverFamiliareControl;

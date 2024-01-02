@@ -1,7 +1,7 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { WEBSERVER } from 'app/config';
 
-class MedicoService {
+class MedicoControl {
   private baseUrl: string;
 
   constructor() {
@@ -48,4 +48,4 @@ class MedicoService {
   }
 }
 
-export default MedicoService;
+export default MedicoControl;

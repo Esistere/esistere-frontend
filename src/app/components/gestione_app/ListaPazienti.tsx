@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import PazienteService from 'app/control/gestione_autenticazione/PazienteControl';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import Caricamento from './Caricamento';
@@ -28,10 +28,10 @@ function ListaPazienti(props: Props): JSX.Element {
   );
 
   const fetchData = async (): Promise<void> => {
-    const pazienteService = new PazienteService();
+    const pazienteControl = new PazienteControl();
 
     try {
-      const data = await pazienteService.fetchPazienti();
+      const data = await pazienteControl.fetchPazienti();
       setPazienti(data);
       setIsLoading(false);
     } catch (error) {

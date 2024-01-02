@@ -1,6 +1,6 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import React, { useState } from 'react';
-import MedicoService from 'app/control/gestione_autenticazione/MedicoControl';
+import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import { TextField, Button } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -62,8 +62,8 @@ const RegistrazioneMedico: React.FC = () => {
       passwd: formData.passwd,
     };
 
-    const medicoService: MedicoService = new MedicoService();
-    medicoService
+    const medicoControl: MedicoControl = new MedicoControl();
+    medicoControl
       .inviaDatiMedico(medico)
       .then(() => {
         console.log('Dati inviati correttamente' + medico);

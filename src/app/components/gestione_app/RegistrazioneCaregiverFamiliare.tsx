@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import CaregiverFamiliareService from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
-import PazienteService from 'app/control/gestione_autenticazione/PazienteControl';
+import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 
 const RegistrazioneCaregiverFamiliare: React.FC = () => {
   const [formDataCaregiverFamiliare, setFormDataCaregiverFamiliare] = useState({
@@ -85,11 +85,11 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       passwd: formDataCaregiverFamiliare.passwd,
     };
 
-    const caregiverFamiliareService: CaregiverFamiliareService =
-      new CaregiverFamiliareService();
+    const caregiverFamiliareControl: CaregiverFamiliareControl =
+      new CaregiverFamiliareControl();
 
     const codice_identificativo =
-      await caregiverFamiliareService.inviaDatiCaregiverFamiliare(
+      await caregiverFamiliareControl.inviaDatiCaregiverFamiliare(
         caregiverFamiliare
       );
 
@@ -102,9 +102,9 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       cg_fam: Number(codice_identificativo),
     };
 
-    const pazienteService: PazienteService = new PazienteService();
+    const pazienteControl: PazienteControl = new PazienteControl();
     try {
-      await pazienteService.inviaDatiPaziente(paziente);
+      await pazienteControl.inviaDatiPaziente(paziente);
     } catch (e) {
       console.error(e);
     }

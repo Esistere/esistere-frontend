@@ -1,7 +1,7 @@
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { WEBSERVER } from 'app/config';
 
-class PazienteService {
+class PazienteControl {
   private baseUrl: string;
 
   constructor() {
@@ -67,4 +67,4 @@ class PazienteService {
   }
 }
 
-export default PazienteService;
+export default PazienteControl;

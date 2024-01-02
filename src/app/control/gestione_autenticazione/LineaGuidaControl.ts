@@ -1,7 +1,7 @@
 import { LineaGuida } from 'app/interfaces/gestione_autenticazione/LineaGuida';
 import { WEBSERVER } from 'app/config';
 
-class LineaGuidaService {
+class LineaGuidaControl {
   private baseUrl: string;
   constructor() {
     this.baseUrl = WEBSERVER;
@@ -44,4 +44,4 @@ class LineaGuidaService {
   }
 }
 
-export default LineaGuidaService;
+export default LineaGuidaControl;

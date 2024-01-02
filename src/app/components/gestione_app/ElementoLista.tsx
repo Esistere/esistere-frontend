@@ -1,38 +1,25 @@
+// ElementoLista.tsx
 import React, { useState, useEffect } from 'react';
 import 'app/css/gestione_app/ElementoLista.css';
 import logo from 'app/assets/logo.svg';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import PazienteService from 'app/services/gestione_autenticazione/PazienteService';
+import useFetchPazienteData from './PazienteFetcher';
 
 function ElementoLista({
   index,
-  cf,
-  name,
-  surname,
+  patient,
 }: {
   index: number;
-  cf: string;
-  name: string;
-  surname: string;
+  patient: Paziente;
 }): JSX.Element {
-  const [paziente, setPaziente] = useState<Paziente | null>(null);
+  const { paziente, fetchPazienteData } = useFetchPazienteData();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   useEffect(() => {
     if (isButtonPressed) {
-      const fetchData = async (): Promise<void> => {
-        const pazienteService = new PazienteService();
-
-        try {
-          const data = await pazienteService.fetchDatiPaziente(cf);
-          setPaziente(data);
-        } catch (error) {
-          console.error('Error fetching paziente:', error);
-        }
-      };
-      fetchData();
+      fetchPazienteData(patient.codice_fiscale);
     }
-  }, [isButtonPressed, cf]);
+  }, [isButtonPressed, patient, fetchPazienteData]);
 
   const handleClick = (): void => {
     setIsButtonPressed(true);
@@ -43,7 +30,7 @@ function ElementoLista({
       <img className="propiclist" src={logo} alt={'paziente ' + { index }} />
       <div style={{ display: 'block', marginTop: '10px' }}>
         <p className="pp">
-          {name} {surname}
+          {patient.nome} {patient.cognome}
         </p>
         <br />
         <p className="pp" style={{ display: 'block', marginTop: '-30px' }}>

@@ -5,7 +5,7 @@ import 'app/css/gestione_app/Caricamento.css';
 function Caricamento(): JSX.Element {
   return (
     <div className="CircProgContainer">
-      <CircularProgress />
+      <CircularProgress style={{ color: 'blueviolet' }} />
     </div>
   );
 }

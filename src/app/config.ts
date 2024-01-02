@@ -1,2 +1,2 @@
-export const WEBSERVER = 'https://18.159.60.217:3001';
+export const WEBSERVER = 'https://3.125.78.80:3001';
 export const HOME = 'esistere-frontend';

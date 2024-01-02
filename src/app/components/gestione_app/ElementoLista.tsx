@@ -19,6 +19,7 @@ function ElementoLista({
     if (isButtonPressed) {
       fetchPazienteData(patient.codice_fiscale);
     }
+    setIsButtonPressed(false);
   }, [isButtonPressed, patient, fetchPazienteData]);
 
   const handleClick = (): void => {

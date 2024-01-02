@@ -7,6 +7,7 @@ class LineaGuidaControl {
     this.baseUrl = WEBSERVER;
   }
   async fetchLineeGuida(): Promise<LineaGuida[]> {
+    // TODO fix url
     const url = `${this.baseUrl}/visualizza_medico`;
     try {
       const response = await fetch(url);
@@ -24,6 +25,7 @@ class LineaGuidaControl {
     }
   }
   async inviaDatiQuiz(datiLineeGUida: LineaGuida): Promise<void> {
+    // TODO fix url
     const url = `${this.baseUrl}/salva_medico`;
     console.log(datiLineeGUida);
     try {
@@ -39,7 +41,7 @@ class LineaGuidaControl {
         throw new Error('Server returned ${response.status}');
       }
     } catch (error) {
-      throw new Error('Errore');
+      throw new Error('Error');
     }
   }
 }

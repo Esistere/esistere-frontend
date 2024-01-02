@@ -1,13 +1,13 @@
-import { Box } from '@mui/material';
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import Navbar from '../Navbar';
 import { HOME } from 'app/config';
+import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../Navbar';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
+    passwd: '',
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -20,44 +20,43 @@ const Login: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    // const utente: any = {
-    //   email: formData.email,
-    //   password: formData.password,
-    // };
+
+    const utente = {
+      email: formData.email,
+      passwd: formData.passwd,
+    };
+
+    const loginControl = new LoginControl();
+    loginControl
+      .login(utente.email, utente.passwd)
+      .catch((e) => console.log(e));
   };
 
   return (
     <>
       <Navbar />
-      <Box
-        component="form"
-        sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
-        noValidate
-        autoComplete="off"
-      >
-        <form method="post" onSubmit={handleSubmit}>
-          <input
-            required
-            type="email"
-            id="standard-required"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            required
-            type="password"
-            id="standard-required"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-          />
-          <br />
-          <input type="submit" value="Accedi"></input>
-          <br />
-        </form>
-      </Box>
+      <form method="post" onSubmit={handleSubmit}>
+        <input
+          required
+          type="email"
+          id="standard-required"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+        />
+        <br />
+        <input
+          required
+          type="password"
+          id="standard-required"
+          name="passwd"
+          placeholder="Password"
+          onChange={handleChange}
+        />
+        <br />
+        <input type="submit" value="Accedi"></input>
+        <br />
+      </form>
       <label htmlFor="registrazione">Non hai un account? </label>
       <Link to={`/${HOME}/registrazione`}>
         <button name="registrazione">Registrati</button>

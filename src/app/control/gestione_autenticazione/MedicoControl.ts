@@ -43,7 +43,7 @@ class MedicoControl {
         throw new Error('Server returned ${response.status}');
       }
     } catch (error) {
-      throw new Error('Errore');
+      throw new Error('Error');
     }
   }
 }

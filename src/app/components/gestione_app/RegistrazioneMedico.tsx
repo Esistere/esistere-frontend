@@ -67,17 +67,6 @@ const RegistrazioneMedico: React.FC = () => {
       .inviaDatiMedico(medico)
       .then(() => {
         console.log('Dati inviati correttamente' + medico);
-
-        setFormData({
-          nome: '',
-          cognome: '',
-          indirizzo_studio: '',
-          numero_civico: '',
-          citta: '',
-          numero_telefono_studio: '',
-          email: '',
-          passwd: '',
-        });
       })
       .catch((e) => {
         console.error(e);

@@ -1,7 +1,5 @@
 import { HOME } from 'app/config';
-import LoginControl, {
-  TypeUser,
-} from 'app/control/gestione_autenticazione/LoginControl';
+import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';

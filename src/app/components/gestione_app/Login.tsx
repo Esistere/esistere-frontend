@@ -1,5 +1,7 @@
 import { HOME } from 'app/config';
-import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
+import LoginControl, {
+  UserType,
+} from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
@@ -31,7 +33,7 @@ const Login: React.FC = () => {
       .login(utente.email, utente.passwd)
       // TODO routing dedicato
       // .then((value) => {
-      //   switch (value.typeUser) {
+      //   switch (value.userType) {
       //     case UserType.caregiver:
       //       // TODO Routing dedicato al caregiver
       //       break;

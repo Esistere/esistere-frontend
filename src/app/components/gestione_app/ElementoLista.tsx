@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'app/css/gestione_app/ElementoLista.css';
 import logo from 'app/assets/logo.svg';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import useFetchPazienteData from './PazienteFetcher';
+import useFetchPazienteData from './useFetchPazienteData';
 
 function ElementoLista({
   index,

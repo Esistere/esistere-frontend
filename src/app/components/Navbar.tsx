@@ -18,7 +18,8 @@ function Navbar(): JSX.Element {
         <Link to={`/${HOME}/lista`}>Lista Pazienti</Link>
       </li>
       <li>
-        <p>Logout</p>
+        {/* TODO (temporary logout) */}
+        <p onClick={() => localStorage.removeItem('jwt')}>Logout</p>
       </li>
     </ul>
   );

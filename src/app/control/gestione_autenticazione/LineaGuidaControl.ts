@@ -8,7 +8,7 @@ class LineaGuidaControl {
   }
   async fetchLineeGuida(): Promise<LineaGuida[]> {
     // TODO fix url
-    const url = `${this.baseUrl}/visualizza_medico`;
+    const url = `${this.baseUrl}/visualizza_linee_guida`;
     try {
       const response = await fetch(url);
 
@@ -26,7 +26,7 @@ class LineaGuidaControl {
   }
   async inviaDatiQuiz(datiLineeGUida: LineaGuida): Promise<void> {
     // TODO fix url
-    const url = `${this.baseUrl}/salva_medico`;
+    const url = `${this.baseUrl}/salva_linee_guida`;
     console.log(datiLineeGUida);
     try {
       const response = await fetch(url, {

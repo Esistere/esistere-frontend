@@ -9,7 +9,7 @@ class MedicoControl {
   }
 
   async fetchMedici(): Promise<Medico[]> {
-    const url = `${this.baseUrl}/visualizza_medico`;
+    const url = `${this.baseUrl}/visualizza_medici`;
     try {
       const response = await fetch(url);
 

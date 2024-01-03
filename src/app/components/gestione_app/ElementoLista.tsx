@@ -11,7 +11,7 @@ function ElementoLista({
   index: number;
   patient: Paziente;
 }): JSX.Element {
-  const { paziente, fetchPazienteData } = useFetchPazienteData();
+  const { fetchPazienteData } = useFetchPazienteData();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   useEffect(() => {

@@ -32,10 +32,6 @@ function ElementoLista({
         <p className="pp">
           {patient.nome} {patient.cognome}
         </p>
-        <br />
-        <p className="pp" style={{ display: 'block', marginTop: '-30px' }}>
-          {paziente?.codice_fiscale} {paziente?.nome}
-        </p>
       </div>
     </div>
   );

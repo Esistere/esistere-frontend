@@ -1,5 +1,7 @@
 import { HOME } from 'app/config';
-import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
+import LoginControl, {
+  TypeUser,
+} from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
@@ -29,6 +31,17 @@ const Login: React.FC = () => {
     const loginControl = new LoginControl();
     loginControl
       .login(utente.email, utente.passwd)
+      // TODO routing dedicato
+      // .then((value) => {
+      //   switch (value.typeUser) {
+      //     case TypeUser.caregiver:
+      //       // TODO Routing dedicato al caregiver
+      //       break;
+      //     case TypeUser.medico:
+      //       // TODO Routing dedico al medico
+      //       break;
+      //   }
+      // })
       .catch((e) => console.log(e));
   };
 

@@ -1,5 +1,15 @@
 import { WEBSERVER } from 'app/config';
 
+export enum TypeUser {
+  medico,
+  caregiver,
+}
+
+export interface LoginResponse {
+  jwt: string;
+  typeUser: TypeUser;
+}
+
 class LoginControl {
   private baseUrl: string;
 
@@ -7,7 +17,7 @@ class LoginControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async login(email: string, passwd: string): Promise<void> {
+  async login(email: string, passwd: string): Promise<LoginResponse> {
     const url = `${this.baseUrl}/login`;
     try {
       const response = await fetch(url, {
@@ -21,6 +31,11 @@ class LoginControl {
       if (!response.ok) {
         throw new Error('Server returned ${response.status}');
       }
+
+      const data = await response.json();
+
+      localStorage.setItem('jwt', data.jwt);
+      return data as LoginResponse;
     } catch (error) {
       throw new Error('Error');
     }

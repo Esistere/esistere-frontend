@@ -12,7 +12,13 @@ class PazienteControl {
     const url = `${this.baseUrl}/visualizza_pazienti`;
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

@@ -248,12 +248,17 @@ const RegistrazioneMedico: React.FC = () => {
             onChange={handlePass}
           />
         </div>
-        <div style={{ width: '100%' }}>
+        <div
+          style={{
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
           <Button
             style={{
               background: coloreBottone,
-              marginLeft: '55%',
-              marginRight: '35%',
             }}
             type="submit"
             variant="contained"

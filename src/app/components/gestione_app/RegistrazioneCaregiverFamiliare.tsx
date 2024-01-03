@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { useState } from 'react';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
@@ -10,9 +9,12 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 
 const RegistrazioneCaregiverFamiliare: React.FC = () => {
-  const [visibility, setVisibility] = useState('none');
-  //const [isFirstFormValid, setIsFirstFormValid] = useState<boolean>(false);
+  const [visibility, setVisibility] = useState<string>('none');
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isEmailCompiled, setIsEmailCompiled] = useState<boolean>(false);
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const [isPassCompiled, setIsPassCompiled] = useState<boolean>(false);
   const [formDataCaregiverFamiliare, setFormDataCaregiverFamiliare] = useState({
     nome: '',
     cognome: '',
@@ -43,7 +45,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       [name]: value,
     });
 
-    const isFormValid =
+    const isValid =
       JSON.stringify(formDataCaregiverFamiliare.citta) !== JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.cognome) !==
         JSON.stringify('') &&
@@ -58,23 +60,41 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       JSON.stringify(formDataCaregiverFamiliare.numero_telefono) !==
         JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.passwd) !== JSON.stringify('');
-    setIsFormValid(isFormValid);
-    /*isFormValid && isEmailValid && isPassValid
-      ? setVisibility('block')
-      : setVisibility('none');*/
+    setIsFormValid(isValid);
+    const isAllValid =
+      isPassValid &&
+      isEmailValid &&
+      isFormValid &&
+      isPassCompiled &&
+      isEmailCompiled;
+    console.log(
+      'Password: ' +
+        (isPassValid && isPassCompiled) +
+        ', Email: ' +
+        (isEmailValid && isEmailCompiled) +
+        ', form: ' +
+        isFormValid +
+        ', tutto: ' +
+        isAllValid +
+        ', visibility: ' +
+        visibility
+    );
+    isAllValid ? setVisibility('block') : setVisibility('none');
   };
 
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const handleMail = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
     setFormDataCaregiverFamiliare({
       ...formDataCaregiverFamiliare,
       [name]: value,
     });
+    JSON.stringify(formDataCaregiverFamiliare.email) !== JSON.stringify('')
+      ? setIsEmailCompiled(true)
+      : setIsEmailCompiled(false);
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
     setIsEmailValid(emailRegex.test(value));
 
-    const isFormValid =
+    const isValid =
       JSON.stringify(formDataCaregiverFamiliare.citta) !== JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.cognome) !==
         JSON.stringify('') &&
@@ -84,30 +104,47 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       JSON.stringify(formDataCaregiverFamiliare.indirizzo) !==
         JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.nome) !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.numero_civico !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.numero_telefono !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.passwd !== JSON.stringify('');
-    setIsFormValid(isFormValid);
-    /*const isFormValid = Object.values(formDataCaregiverFamiliare).every(
-      (value) => value != ''
-    );*/
-    /*isFormValid && isEmailValid && isPassValid
-      ? setVisibility('block')
-      : setVisibility('none');*/
+      JSON.stringify(formDataCaregiverFamiliare.numero_civico) !==
+        JSON.stringify('') &&
+      JSON.stringify(formDataCaregiverFamiliare.numero_telefono) !==
+        JSON.stringify('') &&
+      JSON.stringify(formDataCaregiverFamiliare.passwd) !== JSON.stringify('');
+    setIsFormValid(isValid);
+    const isAllValid =
+      isPassValid &&
+      isEmailValid &&
+      isFormValid &&
+      isPassCompiled &&
+      isEmailCompiled;
+    console.log(
+      'Password: ' +
+        (isPassValid && isPassCompiled) +
+        ', Email: ' +
+        (isEmailValid && isEmailCompiled) +
+        ', form: ' +
+        isFormValid +
+        ', tutto: ' +
+        isAllValid +
+        ', visibility: ' +
+        visibility
+    );
+    isAllValid ? setVisibility('block') : setVisibility('none');
   };
 
-  const [isPassValid, setIsPassValid] = useState<boolean>(true);
   const handlePass = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
     setFormDataCaregiverFamiliare({
       ...formDataCaregiverFamiliare,
       [name]: value,
     });
+    JSON.stringify(formDataCaregiverFamiliare.passwd) !== JSON.stringify('')
+      ? setIsPassCompiled(true)
+      : setIsPassCompiled(false);
     const passRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
     setIsPassValid(passRegex.test(value));
 
-    const isFormValid =
+    const isValid =
       JSON.stringify(formDataCaregiverFamiliare.citta) !== JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.cognome) !==
         JSON.stringify('') &&
@@ -117,18 +154,31 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       JSON.stringify(formDataCaregiverFamiliare.indirizzo) !==
         JSON.stringify('') &&
       JSON.stringify(formDataCaregiverFamiliare.nome) !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.numero_civico !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.numero_telefono !== JSON.stringify('') &&
-      formDataCaregiverFamiliare.passwd !== JSON.stringify('');
-
-    setIsFormValid(isFormValid);
-    setVisibility(
-      isFormValid && isEmailValid && isPassValid ? 'block' : 'none'
+      JSON.stringify(formDataCaregiverFamiliare.numero_civico) !==
+        JSON.stringify('') &&
+      JSON.stringify(formDataCaregiverFamiliare.numero_telefono) !==
+        JSON.stringify('') &&
+      JSON.stringify(formDataCaregiverFamiliare.passwd) !== JSON.stringify('');
+    setIsFormValid(isValid);
+    const isAllValid =
+      isPassValid &&
+      isEmailValid &&
+      isFormValid &&
+      isPassCompiled &&
+      isEmailCompiled;
+    console.log(
+      'Password: ' +
+        (isPassValid && isPassCompiled) +
+        ', Email: ' +
+        (isEmailValid && isEmailCompiled) +
+        ', form: ' +
+        isFormValid +
+        ', tutto: ' +
+        isAllValid +
+        ', visibility: ' +
+        visibility
     );
-
-    /*isFormValid && isEmailValid && isPassValid
-      ? setVisibility('block')
-      : setVisibility('none');*/
+    isAllValid ? setVisibility('block') : setVisibility('none');
   };
   const handleChangePaziente = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -196,119 +246,101 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
-
+  const [selectedDate, handleDateChange] = useState<Date | null>(null);
   return (
     <>
-      <form
-        method="post"
-        style={{ display: 'flex', flexWrap: 'wrap', width: '50%' }}
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          type="text"
-          name="nome"
-          id="outlined-nome-input"
-          required
-          label="Nome"
+      <form method="post" className="formflex" onSubmit={handleSubmit}>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="nome"
+            id="outlined-nome-input"
+            required
+            label="Nome"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            onChange={handleChangeCaregiverFamiliare}
+          />
+          <TextField
+            type="text"
+            name="cognome"
+            id="outlined-cognome-input"
+            label="Cognome"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            required
+            onChange={handleChangeCaregiverFamiliare}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="indirizzo"
+            id="outlined-indirizzo-input"
+            label="Indirizzo"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            required
+            onChange={handleChangeCaregiverFamiliare}
+          />
+          <TextField
+            type="text"
+            name="citta"
+            id="outlined-citta-input"
+            label="Città"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            required
+            onChange={handleChangeCaregiverFamiliare}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="numero_civico"
+            id="outlined-num-civico-input"
+            label="Numero Civico"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            required
+            onChange={handleChangeCaregiverFamiliare}
+          />
+          <TextField
+            type="date"
+            name="data_di_nascita"
+            id="outlined-birthdate-input"
+            label="Data di Nascita"
+            value={selectedDate ? selectedDate.toISOString().split('T')[0] : ''}
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            required
+            onChange={(event) => handleDateChange(new Date(event.target.value))}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            type="text"
+            name="numero_telefono"
+            id="outlined-num-telefono-input"
+            label="Numero Telefono"
+            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
+            required
+            onChange={handleChangeCaregiverFamiliare}
+          />
+        </div>
+        <div
           style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
           }}
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="cognome"
-          id="outlined-cognome-input"
-          label="Cognome"
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="indirizzo"
-          id="outlined-indirizzo-input"
-          label="Indirizzo"
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="citta"
-          id="outlined-citta-input"
-          label="Città"
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="numero_civico"
-          id="outlined-num-civico-input"
-          label="Numero Civico"
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="date"
-          name="data_di_nascita"
-          id=""
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <TextField
-          type="text"
-          name="numero_telefono"
-          id="outlined-num-telefono-input"
-          label="Numero Telefono"
-          style={{
-            flexBasis: 'calc(26em)',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          required
-          onChange={handleChangeCaregiverFamiliare}
-        />
-        <br />
-        <div style={{ width: '100%' }}>
+        >
           <TextField
             type="email"
             name="email"
             id="outlined-email-input"
             label="Email"
             style={{
-              flexBasis: '26 em',
+              flexBasis: 'calc(26 em)',
               margin: '1em',
               boxSizing: 'border-box',
               marginLeft: '20%',
@@ -328,8 +360,14 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
             onChange={handleMail}
           />
         </div>
-        <br />
-        <div style={{ width: '100%' }}>
+        <div
+          style={{
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
           <TextField
             type={showPassword ? 'text' : 'password'}
             name="passwd"
@@ -339,8 +377,6 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
               flexBasis: '26em',
               margin: '1em',
               boxSizing: 'border-box',
-              marginLeft: '20%',
-              marginRight: '20%',
               backgroundColor: isPassValid ? 'white' : 'lightcoral',
             }}
             InputProps={{
@@ -360,90 +396,94 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
             required
             onChange={handlePass}
           />
-          <button onClick={() => setVisibility('block')}>
-            Mostra Paziente
-          </button>
         </div>
-        <br />
         <div
           style={{
-            display: isFormValid ? 'block' : 'none',
+            display: visibility,
             width: '100%',
           }}
         >
           <h2>Paziente</h2>
-          <TextField
-            required
-            type="text"
-            label="Codice Fiscale"
-            style={{
-              flexBasis: 'calc(26em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="codice_fiscale"
-            onChange={handleChangePaziente}
-          />
-          <br />
-          <TextField
-            required
-            type="text"
-            label="Nome"
-            style={{
-              flexBasis: 'calc(26em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="nome"
-            onChange={handleChangePaziente}
-          />
-          <br />
-          <TextField
-            required
-            type="text"
-            label="Cognome"
-            style={{
-              flexBasis: 'calc(26em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="cognome"
-            onChange={handleChangePaziente}
-          />
-          <br />
-          <TextField
-            required
-            type="date"
-            name="data_di_nascita"
-            style={{
-              flexBasis: 'calc(26em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            onChange={handleChangePaziente}
-          />
-          <br />
-          <TextField
-            required
-            type="text"
-            label="Medico"
-            name="med"
-            style={{
-              flexBasis: 'calc(26em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            onChange={handleChangePaziente}
-          />
+          <div className="riga">
+            <TextField
+              required
+              type="text"
+              label="Codice Fiscale"
+              style={{
+                width: '16.15em',
+                margin: '1em',
+                boxSizing: 'border-box',
+              }}
+              name="codice_fiscale"
+              onChange={handleChangePaziente}
+            />
+            <TextField
+              required
+              type="text"
+              label="Nome"
+              style={{
+                width: '16.15em',
+                margin: '1em',
+                boxSizing: 'border-box',
+              }}
+              name="nome"
+              onChange={handleChangePaziente}
+            />
+          </div>
+          <div className="riga">
+            <TextField
+              required
+              type="text"
+              label="Cognome"
+              style={{
+                width: '16.15em',
+                margin: '1em',
+                boxSizing: 'border-box',
+              }}
+              name="cognome"
+              onChange={handleChangePaziente}
+            />
+            <TextField
+              required
+              type="date"
+              name="data_di_nascita"
+              id="outlined-birthdate-input"
+              label="Data di Nascita"
+              placeholder=""
+              style={{
+                width: '16.15em',
+                margin: '1em',
+                boxSizing: 'border-box',
+              }}
+              onChange={handleChangePaziente}
+            />
+          </div>
+          <div className="riga">
+            <TextField
+              required
+              type="text"
+              label="Medico"
+              name="med"
+              style={{
+                width: '16.15em',
+                margin: '1em',
+                boxSizing: 'border-box',
+              }}
+              onChange={handleChangePaziente}
+            />
+          </div>
         </div>
-        <br />
-        <input type="submit" value="Registrati" />
-        <div style={{ width: '100%' }}>
+        <div
+          style={{
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
           <Button
             style={{
               background: coloreBottone,
-              marginLeft: '55%',
-              marginRight: '35%',
             }}
             type="submit"
             variant="contained"

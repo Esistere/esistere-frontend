@@ -1,13 +1,13 @@
 import { WEBSERVER } from 'app/config';
 
-export enum TypeUser {
+export enum UserType {
   medico,
   caregiver,
 }
 
 export interface LoginResponse {
   jwt: string;
-  typeUser: TypeUser;
+  userType: UserType;
 }
 
 class LoginControl {

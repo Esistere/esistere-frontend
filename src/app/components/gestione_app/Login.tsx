@@ -32,10 +32,10 @@ const Login: React.FC = () => {
       // TODO routing dedicato
       // .then((value) => {
       //   switch (value.typeUser) {
-      //     case TypeUser.caregiver:
+      //     case UserType.caregiver:
       //       // TODO Routing dedicato al caregiver
       //       break;
-      //     case TypeUser.medico:
+      //     case UserType.medico:
       //       // TODO Routing dedico al medico
       //       break;
       //   }

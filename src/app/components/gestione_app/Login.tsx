@@ -1,7 +1,7 @@
 import { HOME } from 'app/config';
 import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 
 const Login: React.FC = () => {
@@ -18,6 +18,8 @@ const Login: React.FC = () => {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -29,6 +31,10 @@ const Login: React.FC = () => {
     const loginControl = new LoginControl();
     loginControl
       .login(utente.email, utente.passwd)
+      .then(() => {
+        navigate(`/${HOME}`);
+        window.location.reload();
+      })
       // TODO routing dedicato
       // .then((value) => {
       //   switch (value.userType) {

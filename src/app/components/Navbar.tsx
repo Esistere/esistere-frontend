@@ -152,12 +152,14 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Lista Pazienti
-                </Button>
+                {userType === 'medico' && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Lista Pazienti
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}`}

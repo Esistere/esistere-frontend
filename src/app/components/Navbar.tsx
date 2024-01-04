@@ -16,14 +16,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MasksIcon from '@mui/icons-material/Masks';
 import CloseIcon from '@mui/icons-material/Close';
+import { useUser } from './gestione_app/UserProvider';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar(): JSX.Element {
+  const { userType } = useUser();
+  console.log(userType);
   const [, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorElUser(event.currentTarget);
   };
@@ -31,7 +36,6 @@ function Navbar(): JSX.Element {
   const handleCloseUserMenu = (): void => {
     setAnchorElUser(null);
   };
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const handleOpenDrawer = (): void => {
     setDrawerOpen(true);
@@ -236,12 +240,14 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={handleCloseDrawer}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Lista Pazienti
-              </Button>
+              {userType === 'medico' && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Lista Pazienti
+                </Button>
+              )}
             </Link>
             <Link
               to={`/${HOME}`}
@@ -250,7 +256,11 @@ function Navbar(): JSX.Element {
               }}
             >
               <Button
-                onClick={handleCloseDrawer}
+                onClick={() => {
+                  handleCloseDrawer;
+                  localStorage.removeItem('jwt');
+                  <Link to={`${HOME}`}></Link>;
+                }}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Logout

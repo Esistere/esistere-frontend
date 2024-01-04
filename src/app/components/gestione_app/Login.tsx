@@ -3,6 +3,7 @@ import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
+import { UserType } from './UserProvider';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -31,21 +32,22 @@ const Login: React.FC = () => {
     const loginControl = new LoginControl();
     loginControl
       .login(utente.email, utente.passwd)
-      .then(() => {
-        navigate(`/${HOME}`);
-        window.location.reload();
+      .then((value) => {
+        console.log('mocc a');
+        console.log(value);
+        switch (value) {
+          case UserType.medico:
+            // TODO Routing dedicato al caregiver
+            console.log('kitemuort');
+            navigate(`/${HOME}`);
+            window.location.reload();
+            break;
+          case UserType.caregiver:
+            // TODO Routing dedico al medico
+            console.log('todo');
+            break;
+        }
       })
-      // TODO routing dedicato
-      // .then((value) => {
-      //   switch (value.userType) {
-      //     case UserType.caregiver:
-      //       // TODO Routing dedicato al caregiver
-      //       break;
-      //     case UserType.medico:
-      //       // TODO Routing dedico al medico
-      //       break;
-      //   }
-      // })
       .catch((e) => console.log(e));
   };
 

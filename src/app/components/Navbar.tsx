@@ -16,12 +16,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MasksIcon from '@mui/icons-material/Masks';
 import CloseIcon from '@mui/icons-material/Close';
-import { useUser } from './gestione_app/UserProvider';
+import { UserType, useUser } from './gestione_app/UserProvider';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar(): JSX.Element {
-  const { userType } = useUser();
+  const { userType, loading } = useUser();
   const [, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -152,14 +152,12 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                {userType === 'medico' && (
-                  <Button
-                    onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
-                  >
-                    Lista Pazienti
-                  </Button>
-                )}
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
+                >
+                  Lista Pazienti
+                </Button>
               </Link>
               <Link
                 to={`/${HOME}`}
@@ -215,12 +213,14 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={handleCloseDrawer}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Login
-              </Button>
+              {!loading && userType === null && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Login
+                </Button>
+              )}
             </Link>
             <Link
               to={`/${HOME}/registrazione`}
@@ -228,12 +228,14 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={handleCloseDrawer}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Registrazione
-              </Button>
+              {!loading && userType === null && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Registrazione
+                </Button>
+              )}
             </Link>
             <Link
               to={`/${HOME}/lista`}
@@ -241,7 +243,7 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              {userType === 'medico' && (
+              {userType === UserType.medico && (
                 <Button
                   onClick={handleCloseDrawer}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -256,16 +258,18 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={() => {
-                  handleCloseDrawer;
-                  localStorage.removeItem('jwt');
-                  <Link to={`${HOME}`}></Link>;
-                }}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Logout
-              </Button>
+              {userType != null && (
+                <Button
+                  onClick={() => {
+                    handleCloseDrawer;
+                    localStorage.removeItem('jwt');
+                    <Link to={`${HOME}`}></Link>;
+                  }}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Logout
+                </Button>
+              )}
             </Link>
           </Box>
 

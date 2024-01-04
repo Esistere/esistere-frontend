@@ -1,14 +1,5 @@
+import { UserType } from 'app/components/gestione_app/UserProvider';
 import { WEBSERVER } from 'app/config';
-
-export enum UserType {
-  medico,
-  caregiver,
-}
-
-export interface LoginResponse {
-  jwt: string;
-  userType: UserType;
-}
 
 class LoginControl {
   private baseUrl: string;
@@ -17,7 +8,7 @@ class LoginControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async login(email: string, passwd: string): Promise<LoginResponse> {
+  async login(email: string, passwd: string): Promise<UserType> {
     const url = `${this.baseUrl}/login`;
     try {
       const response = await fetch(url, {
@@ -35,7 +26,7 @@ class LoginControl {
       const data = await response.json();
 
       localStorage.setItem('jwt', data.jwt);
-      return data as LoginResponse;
+      return data.userType === 'medico' ? UserType.medico : UserType.caregiver;
     } catch (error) {
       throw new Error('Error');
     }

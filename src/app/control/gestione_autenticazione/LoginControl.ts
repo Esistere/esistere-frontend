@@ -40,6 +40,29 @@ class LoginControl {
       throw new Error('Error');
     }
   }
+
+  async userType(): Promise<string> {
+    const url = `${this.baseUrl}/userType`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Server returned ${response.status}');
+      }
+
+      const data = await response.json();
+
+      return data as string;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
 }
 
 export default LoginControl;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
-//import { Attivita } from 'app/interfaces/gestione_todolist/Attivita';
 import 'app/css/gestione_app/FormElements.css';
 import { TextField, Button } from '@mui/material';
 
@@ -8,13 +7,6 @@ function CreaToDoList(): JSX.Element {
   const [NumAttivita, setNumAttivita] = useState<number | null>(null);
   const [attivitaConfermate, setAttivitaConfermate] = useState<number[]>([]);
 
-  /*const handleChangeNum = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { value } = event.target;
-    setNumAttivita(parseInt(value));
-    console.log(JSON.stringify(NumAttivita));
-  };*/
   const handleChangeNum = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {

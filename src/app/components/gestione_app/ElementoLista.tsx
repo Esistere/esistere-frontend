@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'app/css/gestione_app/ElementoLista.css';
 import logo from 'app/assets/logo.svg';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import useFetchPazienteData from './useFetchPazienteData';
+import DatiPaziente from './DatiPaziente';
 
 function ElementoLista({
   index,
@@ -11,7 +11,7 @@ function ElementoLista({
   index: number;
   patient: Paziente;
 }): JSX.Element {
-  const { fetchPazienteData } = useFetchPazienteData();
+  const { fetchPazienteData } = DatiPaziente();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   useEffect(() => {

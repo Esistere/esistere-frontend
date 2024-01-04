@@ -2,12 +2,12 @@ import { useState } from 'react';
 import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 
-interface UseFetchPazienteDataResult {
+interface DatiPazienteResult {
   paziente: Paziente | null;
   fetchPazienteData: (cf: string) => Promise<void>;
 }
 
-const useFetchPazienteData = (): UseFetchPazienteDataResult => {
+const DatiPaziente = (): DatiPazienteResult => {
   const [paziente, setPaziente] = useState<Paziente | null>(null);
 
   const fetchPazienteData = async (cf: string): Promise<void> => {
@@ -24,4 +24,4 @@ const useFetchPazienteData = (): UseFetchPazienteDataResult => {
   return { paziente, fetchPazienteData };
 };
 
-export default useFetchPazienteData;
+export default DatiPaziente;

@@ -9,7 +9,7 @@ class CaregiverFamiliareControl {
   }
 
   async fetchCaregiversFamiliari(): Promise<CaregiverFamiliare[]> {
-    const url = `${this.baseUrl}/visualizza_caregiver_familiare`;
+    const url = `${this.baseUrl}/visualizza_caregiver_familiari`;
     try {
       const response = await fetch(url);
 

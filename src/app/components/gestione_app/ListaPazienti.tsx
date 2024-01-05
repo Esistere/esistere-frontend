@@ -32,7 +32,9 @@ function ListaPazienti(props: Props): JSX.Element {
     const pazienteControl = new PazienteControl();
 
     try {
-      const data = await pazienteControl.fetchPazienti();
+      const data = await pazienteControl.fetchPazienti(
+        Number(localStorage.getItem('id'))
+      );
       setPazienti(data);
       setIsLoading(false);
     } catch (error) {

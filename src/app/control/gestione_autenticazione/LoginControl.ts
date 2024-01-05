@@ -26,6 +26,7 @@ class LoginControl {
       const data = await response.json();
 
       localStorage.setItem('jwt', data.jwt);
+      localStorage.setItem('id', data.id);
       return data.userType === 'medico' ? UserType.medico : UserType.caregiver;
     } catch (error) {
       throw new Error('Error');

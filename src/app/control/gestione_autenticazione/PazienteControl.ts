@@ -8,8 +8,8 @@ class PazienteControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchPazienti(): Promise<Paziente[]> {
-    const url = `${this.baseUrl}/visualizza_pazienti`;
+  async fetchPazienti(id: number): Promise<Paziente[]> {
+    const url = `${this.baseUrl}/visualizza_pazienti_med?` + `id=${id}`;
 
     try {
       const response = await fetch(url, {

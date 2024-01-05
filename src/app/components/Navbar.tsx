@@ -14,9 +14,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
-import MasksIcon from '@mui/icons-material/Masks';
 import CloseIcon from '@mui/icons-material/Close';
 import { UserType, useUser } from './gestione_app/UserProvider';
+import logonavbar from 'app/assets/logonavbar.png';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -57,7 +57,7 @@ function Navbar(): JSX.Element {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
+  console.log(logonavbar);
   return (
     <AppBar
       position="sticky"
@@ -65,7 +65,6 @@ function Navbar(): JSX.Element {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <MasksIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -80,7 +79,7 @@ function Navbar(): JSX.Element {
               textDecoration: 'none',
             }}
           >
-            Esistere
+            <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -174,7 +173,6 @@ function Navbar(): JSX.Element {
               </Link>
             </Drawer>
           </Box>
-          <MasksIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -191,8 +189,9 @@ function Navbar(): JSX.Element {
               textDecoration: 'none',
             }}
           >
-            Esistere
+            <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link
               to={`/${HOME}`}

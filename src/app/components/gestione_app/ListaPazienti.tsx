@@ -58,7 +58,6 @@ function ListaPazienti(props: Props): JSX.Element {
     <div>
       <div>
         <Toolbar />
-        <Navbar />
         <List>
           {isLoading ? (
             <Caricamento />
@@ -79,91 +78,97 @@ function ListaPazienti(props: Props): JSX.Element {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}em)` },
-          ml: { sm: `${drawerWidth}em` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Pazienti
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="pazienti"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
+    <div>
+      <Navbar />
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
+            width: { sm: `calc(100% - ${drawerWidth}em)` },
+            ml: { sm: `${drawerWidth}em` },
+            position: { xs: 'relative', md: 'sticky' },
+            background: 'blueviolet',
+            height: '3.5em',
           }}
         >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        id="datiPaziente"
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}em)` },
-        }}
-      >
-        <Toolbar />
-        {selectedPaziente ? (
-          <div>
-            <Typography variant="h4">
-              {selectedPaziente.codice_fiscale}
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Pazienti
             </Typography>
-            <Typography variant="h6">{selectedPaziente.nome}</Typography>
-          </div>
-        ) : (
-          <Typography paragraph>
-            Seleziona un paziente per visualizzare i dati.
-          </Typography>
-        )}
+          </Toolbar>
+        </AppBar>
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="pazienti"
+        >
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+              },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+              },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>
+        <Box
+          id="datiPaziente"
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            width: { sm: `calc(100% - ${drawerWidth}em)` },
+          }}
+        >
+          <Toolbar />
+          {selectedPaziente ? (
+            <div>
+              <Typography variant="h4">
+                {selectedPaziente.codice_fiscale}
+              </Typography>
+              <Typography variant="h6">{selectedPaziente.nome}</Typography>
+            </div>
+          ) : (
+            <Typography paragraph>
+              Seleziona un paziente per visualizzare i dati.
+            </Typography>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 }
 

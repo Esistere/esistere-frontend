@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import { UserType } from './UserProvider';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     passwd: '',
@@ -18,8 +19,6 @@ const Login: React.FC = () => {
       [name]: value,
     });
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();

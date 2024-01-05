@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HOME } from 'app/config';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,6 +21,7 @@ import logonavbar from 'app/assets/logonavbar.png';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar(): JSX.Element {
+  const navigate = useNavigate();
   const { userType, loading } = useUser();
   const [, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -262,6 +263,8 @@ function Navbar(): JSX.Element {
                   onClick={() => {
                     handleCloseDrawer;
                     localStorage.removeItem('jwt');
+                    navigate(`/${HOME}`);
+                    window.location.reload();
                     <Link to={`${HOME}`}></Link>;
                   }}
                   sx={{ my: 2, color: 'white', display: 'block' }}

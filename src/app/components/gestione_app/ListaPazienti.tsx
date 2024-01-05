@@ -17,6 +17,9 @@ import { Divider } from '@mui/material';
 import { useUser } from './UserProvider';
 import AccessoNegato from './AccessoNegato';
 
+import SignalCellularAltIcon from '@mui/icons-material/Check';
+import Button from '@mui/material/Button';
+
 const drawerWidth = 338;
 
 interface Props {
@@ -29,7 +32,7 @@ function ListaPazienti(props: Props): JSX.Element {
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
     null
   );
-  const { userType } = useUser();
+  const { userType, loading } = useUser();
 
   const fetchData = async (): Promise<void> => {
     const pazienteControl = new PazienteControl();
@@ -81,7 +84,7 @@ function ListaPazienti(props: Props): JSX.Element {
   );
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  if (userType === 1) {
+  if (userType === 0 || loading) {
     return (
       <div>
         <Navbar />
@@ -91,10 +94,11 @@ function ListaPazienti(props: Props): JSX.Element {
             position="fixed"
             sx={{
               width: { sm: `calc(100% - ${drawerWidth}em)` },
-              ml: { sm: `${drawerWidth}em` },
-              position: { xs: 'relative', md: 'sticky' },
+              //ml: { sm: `${drawerWidth}em` },
+              //position: { xs: 'relative', md: 'sticky' },
               background: 'blueviolet',
               height: '3.5em',
+              marginTop: { xs: '3.5em' },
             }}
           >
             <Toolbar>
@@ -155,7 +159,8 @@ function ListaPazienti(props: Props): JSX.Element {
             sx={{
               flexGrow: 1,
               p: 3,
-              width: { sm: `calc(100% - ${drawerWidth}em)` },
+              // width: { sm: `calc(100% - ${drawerWidth}em)` },
+              width: { sm: '100% ', md: `calc(100%- ${drawerWidth}em)` },
             }}
           >
             <Toolbar />
@@ -165,6 +170,22 @@ function ListaPazienti(props: Props): JSX.Element {
                   {selectedPaziente.codice_fiscale}
                 </Typography>
                 <Typography variant="h6">{selectedPaziente.nome}</Typography>
+
+                <div>
+                  <Button
+                    style={{
+                      background: '#ffffff',
+                      color: '#8036a1',
+                      borderColor: '#000000',
+                    }}
+                    variant="outlined"
+                    //onMouseEnter={() => gestisciHover(true)}
+                    //onMouseLeave={() => gestisciHover(false)}
+                    endIcon={<SignalCellularAltIcon />}
+                  >
+                    Andamento
+                  </Button>
+                </div>
               </div>
             ) : (
               <Typography paragraph>

@@ -33,17 +33,15 @@ const Login: React.FC = () => {
     loginControl
       .login(utente.email, utente.passwd)
       .then((value) => {
-        console.log('mocc a');
-        console.log(value);
         switch (value) {
           case UserType.medico:
-            // TODO Routing dedicato al caregiver
-            console.log('kitemuort');
+            // TODO Routing dedicato al medico
+            console.log('medico');
             navigate(`/${HOME}`);
             window.location.reload();
             break;
           case UserType.caregiver:
-            // TODO Routing dedico al medico
+            // TODO Routing dedico al caregiver
             console.log('todo');
             break;
         }

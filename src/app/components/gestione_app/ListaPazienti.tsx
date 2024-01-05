@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import Caricamento from './Caricamento';
 import ElementoLista from './ElementoLista';
+import { Divider } from '@mui/material';
 
 const drawerWidth = 338;
 
@@ -67,6 +68,7 @@ function ListaPazienti(props: Props): JSX.Element {
             pazienti.map((paziente, index) => (
               <div key={index} onClick={() => handlePazienteClick(paziente)}>
                 <ElementoLista key={index} index={index} patient={paziente} />
+                {index < pazienti.length - 1 && <Divider />}
               </div>
             ))
           )}

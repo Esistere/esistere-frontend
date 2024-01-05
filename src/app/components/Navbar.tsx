@@ -109,12 +109,14 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Home
-                </Button>
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Home
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}/login`}
@@ -122,12 +124,14 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Login
-                </Button>
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Login
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}/registrazione`}
@@ -135,16 +139,18 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{
-                    my: 2,
-                    color: 'black',
-                    display: 'block',
-                  }}
-                >
-                  Registrazione
-                </Button>
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                      display: 'block',
+                    }}
+                  >
+                    Registrazione
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}/lista`}
@@ -152,12 +158,14 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Lista Pazienti
-                </Button>
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Lista Pazienti
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}`}
@@ -165,12 +173,14 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Logout
-                </Button>
+                {userType != null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Logout
+                  </Button>
+                )}
               </Link>
             </Drawer>
           </Box>
@@ -200,12 +210,14 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={handleCloseDrawer}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Home
-              </Button>
+              {!loading && userType === null && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Home
+                </Button>
+              )}
             </Link>
             <Link
               to={`/${HOME}/login`}

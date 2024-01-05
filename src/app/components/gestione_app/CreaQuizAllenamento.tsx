@@ -17,7 +17,7 @@ interface QuizQuestion {
   correctAnswer: string;
 }
 
-const QuizCreationPage: React.FC = () => {
+function CreaQuizAllenamento(): JSX.Element {
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
   const [questionData, setQuestionData] = useState<QuizQuestion[]>([]);
 
@@ -157,6 +157,6 @@ const QuizCreationPage: React.FC = () => {
       </Button>
     </div>
   );
-};
+}
 
-export default QuizCreationPage;
+export default CreaQuizAllenamento;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+//eslint-disable-next-line
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import 'app/css/gestione_app/FormElements.css';
 import { TextField, Button } from '@mui/material';

@@ -14,6 +14,11 @@ import Navbar from '../Navbar';
 import Caricamento from './Caricamento';
 import ElementoLista from './ElementoLista';
 import { Divider } from '@mui/material';
+import { useUser } from './UserProvider';
+import AccessoNegato from './AccessoNegato';
+
+import SignalCellularAltIcon from '@mui/icons-material/Check';
+import Button from '@mui/material/Button';
 
 const drawerWidth = 338;
 
@@ -27,6 +32,7 @@ function ListaPazienti(props: Props): JSX.Element {
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
     null
   );
+  const { userType, loading } = useUser();
 
   const fetchData = async (): Promise<void> => {
     const pazienteControl = new PazienteControl();
@@ -80,100 +86,121 @@ function ListaPazienti(props: Props): JSX.Element {
   );
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-  return (
-    <div>
-      <Navbar />
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}em)` },
-            ml: { sm: `${drawerWidth}em` },
-            position: { xs: 'relative', md: 'sticky' },
-            background: 'blueviolet',
-            height: '3.5em',
-          }}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Pazienti
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Box
-          component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          aria-label="pazienti"
-        >
-          <Drawer
-            container={container}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
+  if (userType === 0 || loading) {
+    return (
+      <div>
+        <Navbar />
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
             sx={{
-              display: { xs: 'block', sm: 'none' },
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-              },
+              width: { sm: `calc(100% - ${drawerWidth}em)` },
+              //ml: { sm: `${drawerWidth}em` },
+              //position: { xs: 'relative', md: 'sticky' },
+              background: 'blueviolet',
+              height: '3.5em',
+              marginTop: { xs: '3.5em' },
             }}
           >
-            {drawer}
-          </Drawer>
-          <Drawer
-            variant="permanent"
-            sx={{
-              display: { xs: 'none', sm: 'block' },
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-              },
-            }}
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Box>
-        <Box
-          id="datiPaziente"
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            width: { sm: `calc(100% - ${drawerWidth}em)` },
-          }}
-        >
-          <Toolbar />
-          {selectedPaziente ? (
-            <div>
-              <Typography variant="h4">
-                {selectedPaziente.codice_fiscale}
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                Pazienti
               </Typography>
-              <Typography variant="h6">{selectedPaziente.nome}</Typography>
-            </div>
-          ) : (
-            <Typography paragraph>
-              Seleziona un paziente per visualizzare i dati.
-            </Typography>
-          )}
+            </Toolbar>
+          </AppBar>
+          <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            aria-label="pazienti"
+          >
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true,
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: drawerWidth,
+                },
+              }}
+            >
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: drawerWidth,
+                },
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+          <Box
+            id="datiPaziente"
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              // width: { sm: `calc(100% - ${drawerWidth}em)` },
+              width: { sm: '100% ', md: `calc(100%- ${drawerWidth}em)` },
+            }}
+          >
+            <Toolbar />
+            {selectedPaziente ? (
+              <div>
+                <Typography variant="h4">
+                  {selectedPaziente.codice_fiscale}
+                </Typography>
+                <Typography variant="h6">{selectedPaziente.nome}</Typography>
+
+                <div>
+                  <Button
+                    style={{
+                      background: '#ffffff',
+                      color: '#8036a1',
+                      borderColor: '#000000',
+                    }}
+                    variant="outlined"
+                    //onMouseEnter={() => gestisciHover(true)}
+                    //onMouseLeave={() => gestisciHover(false)}
+                    endIcon={<SignalCellularAltIcon />}
+                  >
+                    Andamento
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Typography paragraph>
+                Seleziona un paziente per visualizzare i dati.
+              </Typography>
+            )}
+          </Box>
         </Box>
-      </Box>
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return <AccessoNegato />;
+  }
 }
 
 export default ListaPazienti;

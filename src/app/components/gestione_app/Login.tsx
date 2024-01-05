@@ -41,7 +41,9 @@ const Login: React.FC = () => {
             break;
           case UserType.caregiver:
             // TODO Routing dedico al caregiver
-            console.log('todo');
+            console.log('caregiver');
+            navigate(`/${HOME}`);
+            window.location.reload();
             break;
         }
       })

@@ -109,55 +109,15 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Home
-                </Button>
-              </Link>
-              <Link
-                to={`/${HOME}/login`}
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Login
-                </Button>
-              </Link>
-              <Link
-                to={`/${HOME}/registrazione`}
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{
-                    my: 2,
-                    color: 'black',
-                    display: 'block',
-                  }}
-                >
-                  Registrazione
-                </Button>
-              </Link>
-              <Link
-                to={`/${HOME}/lista`}
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Lista Pazienti
-                </Button>
+                {!loading && userType === null && (
+                  <Button
+                    disabled
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Home
+                  </Button>
+                )}
               </Link>
               <Link
                 to={`/${HOME}`}
@@ -165,12 +125,84 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'black', display: 'block' }}
-                >
-                  Logout
-                </Button>
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Home
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to={`/${HOME}/login`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Login
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to={`/${HOME}/registrazione`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {!loading && userType === null && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                      display: 'block',
+                    }}
+                  >
+                    Registrazione
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to={`/${HOME}/lista`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Lista Pazienti
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to={`/${HOME}`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType != null && (
+                  <Button
+                    onClick={() => {
+                      handleCloseDrawer;
+                      localStorage.removeItem('jwt');
+                      navigate(`/${HOME}`);
+                      window.location.reload();
+                      <Link to={`${HOME}`}></Link>;
+                    }}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Logout
+                  </Button>
+                )}
               </Link>
             </Drawer>
           </Box>
@@ -200,12 +232,14 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              <Button
-                onClick={handleCloseDrawer}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                Home
-              </Button>
+              {!loading && userType === null && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Home
+                </Button>
+              )}
             </Link>
             <Link
               to={`/${HOME}/login`}

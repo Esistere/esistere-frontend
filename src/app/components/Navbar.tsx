@@ -111,6 +111,22 @@ function Navbar(): JSX.Element {
               >
                 {!loading && userType === null && (
                   <Button
+                    disabled
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Home
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to={`/${HOME}`}
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {!loading && userType === null && (
+                  <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'black', display: 'block' }}
                   >
@@ -175,7 +191,13 @@ function Navbar(): JSX.Element {
               >
                 {userType != null && (
                   <Button
-                    onClick={handleCloseDrawer}
+                    onClick={() => {
+                      handleCloseDrawer;
+                      localStorage.removeItem('jwt');
+                      navigate(`/${HOME}`);
+                      window.location.reload();
+                      <Link to={`${HOME}`}></Link>;
+                    }}
                     sx={{ my: 2, color: 'black', display: 'block' }}
                   >
                     Logout

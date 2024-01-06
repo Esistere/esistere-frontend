@@ -36,15 +36,18 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
     med: '',
     cg_fam: '',
   });
+
   const controlla_mail = (): void => {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
     setIsEmailValid(emailRegex.test(formDataCaregiverFamiliare.email));
   };
+
   const controlla_pass = (): void => {
     const passRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
     setIsPassValid(passRegex.test(formDataCaregiverFamiliare.passwd));
   };
+
   const handleChangeCaregiverFamiliare = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -66,6 +69,7 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       [name]: value,
     });
   };
+
   const handleInserisciPaziente = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
@@ -99,14 +103,14 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       typeof Number(codice_identificativo),
       Number(codice_identificativo)
     );
+
     const paziente: Paziente = {
-      codice_fiscale: formDataPaziente.codice_fiscale,
-      nome: formDataPaziente.nome,
-      cognome: formDataPaziente.cognome,
+      ...formDataPaziente,
       data_di_nascita: new Date(formDataPaziente.data_di_nascita),
       med: Number(formDataPaziente.med),
       cg_fam: codice_identificativo,
     };
+
     const pazienteControl: PazienteControl = new PazienteControl();
     try {
       await pazienteControl.inviaDatiPaziente(paziente);
@@ -124,12 +128,14 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
   ): void => {
     event.preventDefault();
   };
+
   const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
 
   const gestisciHover = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
+
   return (
     <>
       <form className="formflex" style={{ display: visibilityCG }}>

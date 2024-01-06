@@ -45,8 +45,8 @@ class CaregiverFamiliareControl {
       }
 
       const codice_identificativoJSON = await response.json();
-      const CF = codice_identificativoJSON.id.codice_identificativo;
-      return CF;
+      const CI = codice_identificativoJSON.id.codice_identificativo;
+      return CI;
     } catch (error) {
       throw new Error('Error');
     }

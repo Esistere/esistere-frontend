@@ -43,7 +43,6 @@ function Pulsante({
         color: isHover ? testoH : testoNonH,
         borderColor: '#000000',
         backgroundColor: isHover ? sfondoH : sfondoNonH,
-        width: '16.15em',
         margin: '1em',
         boxSizing: 'border-box',
       }}

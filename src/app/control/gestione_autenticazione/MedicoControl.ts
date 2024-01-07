@@ -1,4 +1,5 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
+import { MedicoPerAutocomplete } from 'app/interfaces/utils/MedicoPerAutocomplete';
 import { WEBSERVER } from 'app/config';
 
 class MedicoControl {
@@ -8,7 +9,7 @@ class MedicoControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchMedici(): Promise<Medico[]> {
+  async fetchMedici(): Promise<MedicoPerAutocomplete[]> {
     const url = `${this.baseUrl}/visualizza_medici`;
     try {
       const response = await fetch(url);
@@ -18,7 +19,13 @@ class MedicoControl {
       }
 
       const data: Medico[] = await response.json();
-      return data;
+
+      const mediciOptions: MedicoPerAutocomplete[] = data.map((medico) => ({
+        name: `${medico.nome} ${medico.cognome}`,
+        value: medico.codice_identificativo?.toString() || '',
+      }));
+
+      return mediciOptions;
     } catch (error) {
       if (error instanceof Error)
         throw new Error(`Error fetching pazienti: ${error.message}`);

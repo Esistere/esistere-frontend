@@ -1,5 +1,5 @@
 export interface QuizPreliminare {
-  id: number;
+  id?: number | undefined;
   numero_domande: number;
   sage: boolean;
   punteggio_totale: number;

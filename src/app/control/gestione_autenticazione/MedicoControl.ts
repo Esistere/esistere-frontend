@@ -40,7 +40,7 @@ class MedicoControl {
       });
 
       if (!response.ok) {
-        throw new Error('Server returned ${response.status}');
+        throw new Error(`Server returned ${response.status}`);
       }
     } catch (error) {
       throw new Error('Error');

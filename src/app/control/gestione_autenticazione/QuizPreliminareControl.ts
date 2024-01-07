@@ -26,7 +26,7 @@ class QuizPreliminareControl {
   }
   async inviaDatiQuizPreliminare(
     datiQuizPreliminare: QuizPreliminare
-  ): Promise<number> {
+  ): Promise<void> {
     const url = `${this.baseUrl}/salva_quiz`;
     try {
       const response = await fetch(url, {
@@ -41,7 +41,7 @@ class QuizPreliminareControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const codice_identificativoJSON = await response.json();
-      return codice_identificativoJSON.codice_identificativo;
+      return codice_identificativoJSON.id.codice_identificativo;
     } catch (error) {
       throw new Error('Error');
     }
@@ -64,7 +64,7 @@ class QuizPreliminareControl {
       }
 
       const codice_identificativoJSON = await response.json();
-      return codice_identificativoJSON.codice_identificativo;
+      return codice_identificativoJSON.id.codice_identificativo;
     } catch (error) {
       throw new Error('Error');
     }
@@ -87,7 +87,7 @@ class QuizPreliminareControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const codice_identificativoJSON = await response.json();
-      return codice_identificativoJSON.codice_identificativo;
+      return codice_identificativoJSON.id.codice_identificativo;
     } catch (error) {
       throw new Error('Error');
     }

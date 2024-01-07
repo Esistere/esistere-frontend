@@ -75,9 +75,16 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
   ): void => {
     event.preventDefault();
 
-    if (isEmailValid && isPassValid) {
+    const requiredFieldsFilled = Object.values(
+      formDataCaregiverFamiliare
+    ).every((value) => value !== '');
+
+    if (requiredFieldsFilled && isEmailValid && isPassValid) {
       setVisibilityCG('none');
       setVisibilityPAZ('block');
+    } else {
+      // TODO - better error handling
+      alert('Please fill in all required fields.');
     }
   };
 
@@ -97,12 +104,6 @@ const RegistrazioneCaregiverFamiliare: React.FC = () => {
       await caregiverFamiliareControl.inviaDatiCaregiverFamiliare(
         caregiverFamiliare
       );
-    console.log(
-      typeof codice_identificativo,
-      codice_identificativo,
-      typeof Number(codice_identificativo),
-      Number(codice_identificativo)
-    );
 
     const paziente: Paziente = {
       ...formDataPaziente,

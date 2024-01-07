@@ -58,7 +58,7 @@ function Navbar(): JSX.Element {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  console.log(logonavbar);
+
   return (
     <AppBar
       position="sticky"
@@ -82,7 +82,6 @@ function Navbar(): JSX.Element {
           >
             <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -224,7 +223,6 @@ function Navbar(): JSX.Element {
           >
             <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link
               to={`/${HOME}`}
@@ -308,13 +306,14 @@ function Navbar(): JSX.Element {
               )}
             </Link>
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="" />
-              </IconButton>
-            </Tooltip>
+            {userType != null && (
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="" />
+                </IconButton>
+              </Tooltip>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

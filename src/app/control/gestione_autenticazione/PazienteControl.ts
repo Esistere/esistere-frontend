@@ -34,7 +34,7 @@ class PazienteControl {
   }
 
   async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
-    const url = `${this.baseUrl}/dati_paziente`;
+    const url = `${this.baseUrl}/visualizza_paziente`;
 
     try {
       const response = await fetch(url, {

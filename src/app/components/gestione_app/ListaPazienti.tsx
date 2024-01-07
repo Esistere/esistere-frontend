@@ -8,7 +8,6 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
 import Caricamento from './Caricamento';
@@ -19,6 +18,7 @@ import AccessoNegato from './AccessoNegato';
 
 import SignalCellularAltIcon from '@mui/icons-material/Check';
 import Button from '@mui/material/Button';
+import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 
 const drawerWidth = 338;
 
@@ -35,10 +35,10 @@ function ListaPazienti(props: Props): JSX.Element {
   const { userType, loading } = useUser();
 
   const fetchData = async (): Promise<void> => {
-    const pazienteControl = new PazienteControl();
+    const medicoControl = new MedicoControl();
 
     try {
-      const data = await pazienteControl.fetchPazienti(
+      const data = await medicoControl.fetchPazienti(
         Number(localStorage.getItem('id'))
       );
       setPazienti(data);

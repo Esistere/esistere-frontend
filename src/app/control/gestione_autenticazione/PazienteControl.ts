@@ -8,31 +8,6 @@ class PazienteControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchPazienti(id: number): Promise<Paziente[]> {
-    const url = `${this.baseUrl}/visualizza_pazienti_med?` + `id=${id}`;
-
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
-      }
-
-      const data: Paziente[] = await response.json();
-      return data;
-    } catch (error) {
-      if (error instanceof Error)
-        throw new Error(`Error fetching pazienti: ${error.message}`);
-      else throw new Error('Unknown error occurred while fetching pazienti.');
-    }
-  }
-
   async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
     const url = `${this.baseUrl}/visualizza_paziente`;
 

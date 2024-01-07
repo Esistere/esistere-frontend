@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
+import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 
 interface DatiPazienteResult {
   paziente: Paziente | null;
@@ -11,10 +11,10 @@ const DatiPaziente = (): DatiPazienteResult => {
   const [paziente, setPaziente] = useState<Paziente | null>(null);
 
   const fetchPazienteData = async (cf: string): Promise<void> => {
-    const pazienteControl = new PazienteControl();
+    const medicoControl = new MedicoControl();
 
     try {
-      const data = await pazienteControl.fetchDatiPaziente(cf);
+      const data = await medicoControl.fetchPaziente(cf);
       setPaziente(data);
     } catch (error) {
       console.error('Error fetching paziente:', error);

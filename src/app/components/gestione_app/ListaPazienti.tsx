@@ -16,8 +16,14 @@ import { Divider } from '@mui/material';
 import { useUser } from './UserProvider';
 import AccessoNegato from './AccessoNegato';
 
-import SignalCellularAltIcon from '@mui/icons-material/Check';
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import Button from '@mui/material/Button';
+import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
+import ChecklistIcon from '@mui/icons-material/Checklist'; //todo
+import QuizIcon from '@mui/icons-material/Quiz'; //quiz giornaliero
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; //tac
+import 'app/css/gestione_app/FormElements.css';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 
 const drawerWidth = 338;
@@ -63,6 +69,41 @@ function ListaPazienti(props: Props): JSX.Element {
     setMobileOpen(!mobileOpen);
   };
 
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHoveredAndamento, setIsHoveredAndamento] = useState(false);
+  const [isHoveredQuizPreliminare, setIsHoveredQuizPreliminare] =
+    useState(false);
+  const [isHoveredTodoList, setIsHoveredTodoList] = useState(false);
+  const [isHoveredQuizGiornaliero, setIsHoveredQuizGiornaliero] =
+    useState(false);
+  const [isHoveredCg, setIsHoveredCg] = useState(false);
+  const [isHoveredTac, setIsHoveredTac] = useState(false);
+
+  const gestisciHover = (hovered: boolean): void => {
+    setIsHovered(hovered);
+  };
+  const gestisciHoverAndamento = (hovered: boolean): void => {
+    setIsHoveredAndamento(hovered);
+  };
+
+  const gestisciHoverQuizPreliminare = (hovered: boolean): void => {
+    setIsHoveredQuizPreliminare(hovered);
+  };
+
+  const gestisciHoverTodoList = (hovered: boolean): void => {
+    setIsHoveredTodoList(hovered);
+  };
+  const gestisciHoverQuizGiornaliero = (hovered: boolean): void => {
+    setIsHoveredQuizGiornaliero(hovered);
+  };
+
+  const gestisciHoverCg = (hovered: boolean): void => {
+    setIsHoveredCg(hovered);
+  };
+
+  const gestisciHoverTac = (hovered: boolean): void => {
+    setIsHoveredTac(hovered);
+  };
   const drawer = (
     <div>
       <div>
@@ -96,8 +137,6 @@ function ListaPazienti(props: Props): JSX.Element {
             position="fixed"
             sx={{
               width: { sm: `calc(100% - ${drawerWidth}em)` },
-              //ml: { sm: `${drawerWidth}em` },
-              //position: { xs: 'relative', md: 'sticky' },
               background: 'blueviolet',
               height: '3.5em',
               marginTop: { xs: '3.5em' },
@@ -161,7 +200,6 @@ function ListaPazienti(props: Props): JSX.Element {
             sx={{
               flexGrow: 1,
               p: 3,
-              // width: { sm: `calc(100% - ${drawerWidth}em)` },
               width: { sm: '100% ', md: `calc(100%- ${drawerWidth}em)` },
             }}
           >
@@ -173,21 +211,121 @@ function ListaPazienti(props: Props): JSX.Element {
                 </Typography>
                 <Typography variant="h6">{selectedPaziente.nome}</Typography>
 
-                <div>
-                  <Button
-                    style={{
-                      background: '#ffffff',
-                      color: '#8036a1',
-                      borderColor: '#000000',
-                    }}
-                    variant="outlined"
-                    //onMouseEnter={() => gestisciHover(true)}
-                    //onMouseLeave={() => gestisciHover(false)}
-                    endIcon={<SignalCellularAltIcon />}
-                  >
-                    Andamento
-                  </Button>
-                </div>
+                <form className="formflex">
+                  <div className="riga">
+                    <Button
+                      style={{
+                        color: isHoveredAndamento ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredAndamento
+                          ? '#b2a1c7'
+                          : '#ffffff',
+
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverAndamento(true)}
+                      onMouseLeave={() => gestisciHoverAndamento(false)}
+                      startIcon={<AutoGraphIcon />}
+                    >
+                      Andamento
+                    </Button>
+
+                    <Button
+                      style={{
+                        color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredQuizPreliminare
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
+                      onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
+                      startIcon={<PsychologyIcon />}
+                    >
+                      quiz preliminare
+                    </Button>
+
+                    <Button
+                      style={{
+                        color: isHoveredTodoList ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredTodoList
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverTodoList(true)}
+                      onMouseLeave={() => gestisciHoverTodoList(false)}
+                      startIcon={<ChecklistIcon />}
+                    >
+                      todo list
+                    </Button>
+                  </div>
+                  <div className="riga">
+                    <Button
+                      style={{
+                        color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredQuizGiornaliero
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
+                      onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
+                      startIcon={<QuizIcon />}
+                    >
+                      quiz giornaliero
+                    </Button>
+
+                    <Button
+                      style={{
+                        color: isHoveredCg ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredCg ? '#b2a1c7' : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverCg(true)}
+                      onMouseLeave={() => gestisciHoverCg(false)}
+                      startIcon={<PersonRoundedIcon />}
+                    >
+                      profilo caregiver
+                    </Button>
+
+                    <Button
+                      style={{
+                        color: isHoveredTac ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredTac ? '#b2a1c7' : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverTac(true)}
+                      onMouseLeave={() => gestisciHoverTac(false)}
+                      startIcon={<QuestionMarkIcon />}
+                    >
+                      tac
+                    </Button>
+                  </div>
+                </form>
               </div>
             ) : (
               <Typography paragraph>

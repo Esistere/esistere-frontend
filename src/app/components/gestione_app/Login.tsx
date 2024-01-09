@@ -1,9 +1,16 @@
 import { HOME } from 'app/config';
-import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
+import 'app/css/gestione_app/FormElements.css';
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
+import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import { UserType } from './UserProvider';
+
+import { TextField, IconButton, InputAdornment } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Pulsante from './Pulsante';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -11,14 +18,29 @@ const Login: React.FC = () => {
     email: '',
     passwd: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value,
     });
   };
+
+  const handleClickShowPassword = (): void =>
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+  };
+
+  const [testol] = useState<string>('accedi');
+  const [testo1] = useState<string>('registrati');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -45,6 +67,8 @@ const Login: React.FC = () => {
             navigate(`/${HOME}`);
             window.location.reload();
             break;
+          default:
+            console.error('Tipo di utente non gestito');
         }
       })
       .catch((e) => console.log(e));
@@ -54,30 +78,70 @@ const Login: React.FC = () => {
     <>
       <Navbar />
       <form method="post" onSubmit={handleSubmit}>
-        <input
+        <TextField
           required
           type="email"
-          id="standard-required"
+          id="current-email"
           name="email"
+          label="Email"
           placeholder="Email"
+          style={{
+            width: '16.15em',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           onChange={handleChange}
         />
         <br />
-        <input
+        <TextField
           required
-          type="password"
-          id="standard-required"
+          type={showPassword ? 'text' : 'password'}
+          id="current-password"
           name="passwd"
+          label="Password"
+          style={{
+            width: '16.15em',
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
           placeholder="Password"
-          onChange={handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          onChange={(event) => handleChange(event)}
         />
         <br />
+
         <input type="submit" value="Accedi"></input>
-        <br />
       </form>
-      <label htmlFor="registrazione">Non hai un account? </label>
+      <label
+        htmlFor="registrazione"
+        style={{
+          margin: '1em',
+        }}
+      >
+        Non hai un account?{' '}
+      </label>
       <Link to={`/${HOME}/registrazione`}>
-        <button name="registrazione">Registrati</button>
+        {Pulsante({
+          tipologia: 'chiaro',
+          testo: testo1,
+          nome: 'registrazione',
+          inizio: null,
+          fine: null,
+          borderColor: '#000000',
+        })}
       </Link>
     </>
   );

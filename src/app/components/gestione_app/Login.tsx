@@ -1,4 +1,3 @@
-import { HOME } from 'app/config';
 import 'app/css/gestione_app/FormElements.css';
 
 import React, { useState } from 'react';
@@ -39,7 +38,7 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
-  const [testol] = useState<string>('accedi');
+  // const [testol] = useState<string>('accedi');
   const [testo1] = useState<string>('registrati');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -58,13 +57,13 @@ const Login: React.FC = () => {
           case UserType.medico:
             // TODO Routing dedicato al medico
             console.log('medico');
-            navigate(`/${HOME}`);
+            navigate('/');
             window.location.reload();
             break;
           case UserType.caregiver:
             // TODO Routing dedico al caregiver
             console.log('caregiver');
-            navigate(`/${HOME}`);
+            navigate('/');
             window.location.reload();
             break;
           default:
@@ -133,7 +132,7 @@ const Login: React.FC = () => {
       >
         Non hai un account?{' '}
       </label>
-      <Link to={`/${HOME}/registrazione`}>
+      <Link to="/registrazione">
         {Pulsante({
           tipologia: 'chiaro',
           testo: testo1,

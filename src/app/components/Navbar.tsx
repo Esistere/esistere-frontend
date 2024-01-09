@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HOME } from 'app/config';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -80,7 +79,9 @@ function Navbar(): JSX.Element {
               textDecoration: 'none',
             }}
           >
-            <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
+            <a href="#">
+              <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
+            </a>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -103,7 +104,7 @@ function Navbar(): JSX.Element {
               }}
             >
               <Link
-                to={`/${HOME}`}
+                to="/"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -119,7 +120,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}`}
+                to="/"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -134,7 +135,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}/login`}
+                to="/login"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -149,7 +150,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}/registrazione`}
+                to="/registrazione"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -168,7 +169,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}/medico/lista`}
+                to="/medico/lista"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -183,7 +184,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}`}
+                to="/"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -193,9 +194,9 @@ function Navbar(): JSX.Element {
                     onClick={() => {
                       handleCloseDrawer;
                       localStorage.removeItem('jwt');
-                      navigate(`/${HOME}`);
+                      navigate('/');
                       window.location.reload();
-                      <Link to={`${HOME}`}></Link>;
+                      <Link to="/"></Link>;
                     }}
                     sx={{ my: 2, color: 'black', display: 'block' }}
                   >
@@ -225,7 +226,7 @@ function Navbar(): JSX.Element {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link
-              to={`/${HOME}`}
+              to="/"
               style={{
                 textDecoration: 'none',
               }}
@@ -240,7 +241,7 @@ function Navbar(): JSX.Element {
               )}
             </Link>
             <Link
-              to={`/${HOME}/login`}
+              to="/login"
               style={{
                 textDecoration: 'none',
               }}
@@ -255,7 +256,7 @@ function Navbar(): JSX.Element {
               )}
             </Link>
             <Link
-              to={`/${HOME}/registrazione`}
+              to="/registrazione"
               style={{
                 textDecoration: 'none',
               }}
@@ -270,7 +271,7 @@ function Navbar(): JSX.Element {
               )}
             </Link>
             <Link
-              to={`/${HOME}/medico/lista`}
+              to="/medico/lista"
               style={{
                 textDecoration: 'none',
               }}
@@ -285,7 +286,7 @@ function Navbar(): JSX.Element {
               )}
             </Link>
             <Link
-              to={`/${HOME}`}
+              to="/"
               style={{
                 textDecoration: 'none',
               }}
@@ -295,9 +296,9 @@ function Navbar(): JSX.Element {
                   onClick={() => {
                     handleCloseDrawer;
                     localStorage.removeItem('jwt');
-                    navigate(`/${HOME}`);
+                    navigate('/');
                     window.location.reload();
-                    <Link to={`${HOME}`}></Link>;
+                    <Link to="/"></Link>;
                   }}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >

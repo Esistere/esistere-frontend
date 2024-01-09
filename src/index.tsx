@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import 'app/css/index.css';
 import App from './app/components/App';
 import reportWebVitals from './app/reportWebVitals';
 import Login from './app/components/gestione_app/Login';
 import Registrazione from './app/components/gestione_app/Registrazione';
-import { HOME } from './app/config';
 import ListaPazienti from './app/components/gestione_app/ListaPazienti';
 import CreaQuizAllenamento from './app/components/gestione_app/CreaQuizAllenamento';
 import CreaStoria from './app/components/gestione_app/CreaStoria';
@@ -23,32 +22,26 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <Router>
+      <HashRouter>
         <Routes>
-          <Route path={HOME} element={<App />} />
-          <Route path={`${HOME}/registrazione`} element={<Registrazione />} />
-          <Route path={`${HOME}/login`} element={<Login />} />
-          <Route path={`${HOME}/medico`} element={<HomeMedico />} />
-          <Route path={`${HOME}/medico/lista`} element={<ListaPazienti />} />
-          <Route path={`${HOME}/caregiver`} element={<HomeCaregiver />} />
+          <Route path="/" element={<App />} />
+          <Route path="/registrazione" element={<Registrazione />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/medico" element={<HomeMedico />} />
+          <Route path="/medico/lista" element={<ListaPazienti />} />
+          <Route path="/caregiver" element={<HomeCaregiver />} />
+          <Route path="/caregiver/crea_storia" element={<CreaStoria />} />
           <Route
-            path={`${HOME}/caregiver/crea_storia`}
-            element={<CreaStoria />}
-          />
-          <Route
-            path={`${HOME}/caregiver/crea_quiz_allenamento`}
+            path="/caregiver/crea_quiz_allenamento"
             element={<CreaQuizAllenamento />}
           />
           <Route
-            path={`${HOME}/caregiver/crea_filastrocca`}
+            path="/caregiver/crea_filastrocca"
             element={<CreaFilastrocca />}
           />
-          <Route
-            path={`${HOME}/caregiver/crea_todolist`}
-            element={<CreaToDoList />}
-          />
+          <Route path="/caregiver/crea_todo_list" element={<CreaToDoList />} />
         </Routes>
-      </Router>
+      </HashRouter>
     </UserProvider>
   </React.StrictMode>
 );

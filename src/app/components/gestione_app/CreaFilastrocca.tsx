@@ -3,7 +3,7 @@ import 'app/css/gestione_app/FormElements.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-function Filastrocca(): JSX.Element {
+function CreaFilastrocca(): JSX.Element {
   return (
     <>
       <form className="formflex">
@@ -53,4 +53,4 @@ function Filastrocca(): JSX.Element {
   );
 }
 
-export default Filastrocca;
+export default CreaFilastrocca;

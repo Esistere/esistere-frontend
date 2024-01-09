@@ -44,7 +44,7 @@ function Pulsante({
     <Button
       style={{
         color: isHover ? testoH : testoNonH,
-        borderColor: borderColor,
+        border: `1px solid ${borderColor}`,
         backgroundColor: isHover ? sfondoH : sfondoNonH,
         margin: '1em',
         boxSizing: 'border-box',

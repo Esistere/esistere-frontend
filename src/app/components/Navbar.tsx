@@ -168,7 +168,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to={`/${HOME}/lista`}
+                to={`/${HOME}/medico/lista`}
                 style={{
                   textDecoration: 'none',
                 }}
@@ -270,7 +270,7 @@ function Navbar(): JSX.Element {
               )}
             </Link>
             <Link
-              to={`/${HOME}/lista`}
+              to={`/${HOME}/medico/lista`}
               style={{
                 textDecoration: 'none',
               }}

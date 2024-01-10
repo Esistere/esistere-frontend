@@ -183,6 +183,7 @@ function Navbar(): JSX.Element {
                   </Button>
                 )}
               </Link>
+              {/*TOOD : inserire pulsanti caregiver*/}
               <Link
                 to="/"
                 style={{
@@ -285,6 +286,7 @@ function Navbar(): JSX.Element {
                 </Button>
               )}
             </Link>
+            {/*TOOD : inserire pulsanti caregiver*/}
             <Link
               to="/"
               style={{

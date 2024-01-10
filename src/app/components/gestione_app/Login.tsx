@@ -10,6 +10,7 @@ import { TextField, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Pulsante from './Pulsante';
+import Button from '@mui/material/Button';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -38,7 +39,6 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
-  // const [testol] = useState<string>('accedi');
   const [testo1] = useState<string>('registrati');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -71,6 +71,12 @@ const Login: React.FC = () => {
         }
       })
       .catch((e) => console.log(e));
+  };
+
+  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
   };
 
   return (
@@ -121,8 +127,20 @@ const Login: React.FC = () => {
           onChange={(event) => handleChange(event)}
         />
         <br />
-
-        <input type="submit" value="Accedi"></input>
+        <Button
+          style={{
+            color: '#ffffff',
+            backgroundColor: coloreBottone,
+            margin: '1em',
+            boxSizing: 'border-box',
+          }}
+          variant="outlined"
+          onMouseEnter={() => gestisciHover(true)}
+          onMouseLeave={() => gestisciHover(false)}
+          type="submit"
+        >
+          Accedi
+        </Button>
       </form>
       <label
         htmlFor="registrazione"

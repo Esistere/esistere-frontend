@@ -56,10 +56,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     med: '',
     cg_fam: '',
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   let mediciData: Medico[];
   const caricaMedici = (): caricaMediciResult => {
     const fetchMediciData = async (): Promise<void> => {
+      setIsLoading(true);
       const medicoControl = new MedicoControl();
       mediciData = await medicoControl.fetchMedici();
       if (mediciData.length > 0) {

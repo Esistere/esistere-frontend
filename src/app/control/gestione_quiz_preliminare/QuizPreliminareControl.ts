@@ -25,7 +25,7 @@ class QuizPreliminareControl {
     }
   }
   async inviaDatiQuizPreliminare(
-    datiQuizPreliminare: QuizPreliminare
+    datiQuizPreliminare: QuizPreliminare[]
   ): Promise<void> {
     const url = `${this.baseUrl}/salva_quiz`;
     try {
@@ -33,6 +33,7 @@ class QuizPreliminareControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiQuizPreliminare),
       });
@@ -56,6 +57,7 @@ class QuizPreliminareControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiDomandaQuizPreliminare),
       });
@@ -79,6 +81,7 @@ class QuizPreliminareControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiRispostaPreliminare),
       });

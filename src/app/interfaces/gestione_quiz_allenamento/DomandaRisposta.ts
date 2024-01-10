@@ -1,11 +1,11 @@
 export interface DomandaRisposta {
-  quiz_ag: number;
+  quiz_ag: number | undefined;
   domanda: string;
-  corretta: boolean;
+  corretta: boolean | undefined;
   risposte: {
-    domanda_ag: number;
+    domanda_ag: number | undefined;
     risposta: string;
-    corretta: boolean;
-    selezionata: boolean;
+    corretta: boolean | undefined;
+    selezionata: boolean | undefined;
   }[];
 }

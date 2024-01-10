@@ -36,6 +36,7 @@ class FilastroccaControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify({ id }),
       });
@@ -55,6 +56,7 @@ class FilastroccaControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiFilastrocca),
       });
@@ -74,6 +76,7 @@ class FilastroccaControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiFilastrocca),
       });

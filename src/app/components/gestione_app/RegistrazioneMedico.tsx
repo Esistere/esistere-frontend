@@ -1,7 +1,7 @@
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import React, { useState } from 'react';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Alert, Snackbar } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
@@ -28,6 +28,7 @@ const RegistrazioneMedico: React.FC = () => {
       [name]: value,
     });
   };
+
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const handleMail = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -38,6 +39,7 @@ const RegistrazioneMedico: React.FC = () => {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
     setIsEmailValid(emailRegex.test(value));
   };
+
   const [isPassValid, setIsPassValid] = useState<boolean>(true);
   const handlePass = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
@@ -67,11 +69,28 @@ const RegistrazioneMedico: React.FC = () => {
     medicoControl
       .inviaDatiMedico(medico)
       .then(() => {
-        console.log('Dati inviati correttamente' + medico);
+        setSuccess(true);
+        setOpen(true);
       })
-      .catch((e) => {
-        console.error(e);
+      .catch(() => {
+        setSuccess(false);
+        setOpen(true);
       });
+  };
+
+  const [success, setSuccess] = useState<boolean | null>(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -270,6 +289,17 @@ const RegistrazioneMedico: React.FC = () => {
           </Button>
         </div>
       </form>
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={success ? 'success' : 'error'}
+          sx={{ width: '100%' }}
+        >
+          {success
+            ? 'Registrazione effettuata con successo!'
+            : 'Registrazione fallita'}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

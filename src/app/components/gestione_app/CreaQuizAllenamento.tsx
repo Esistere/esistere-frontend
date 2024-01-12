@@ -10,47 +10,80 @@ import {
   Radio,
   FormControlLabel,
 } from '@mui/material';
-
-interface QuizQuestion {
-  question: string;
-  options: string[];
-  correctAnswer: string;
-}
+import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
+import { DomandaRisposta } from 'app/interfaces/gestione_quiz_allenamento/DomandaRisposta';
+import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
+import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
 
 function CreaQuizAllenamento(): JSX.Element {
-  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
-  const [questionData, setQuestionData] = useState<QuizQuestion[]>([]);
+  const [quizAllenamento, setQuizAllenamento] =
+    useState<QuizAllenamentoGiornaliero>({
+      cg_fam: Number(localStorage.getItem('id')),
+      numero_domande: 0,
+    });
+  const [domandeRisposte, setDomandeRisposte] = useState<DomandaRisposta[]>([]);
 
   const handleNumberOfQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newNumberOfQuestions = Number(event.target.value);
 
-    setNumberOfQuestions(newNumberOfQuestions);
+    setQuizAllenamento({
+      ...quizAllenamento,
+      ['numero_domande']: newNumberOfQuestions,
+    });
 
-    if (newNumberOfQuestions > questionData.length) {
+    if (newNumberOfQuestions > domandeRisposte.length) {
       // Aggiungi nuove domande se il nuovo numero è maggiore
-      const additionalQuestions = newNumberOfQuestions - questionData.length;
-      const newQuestions = Array.from({ length: additionalQuestions }, () => ({
-        question: '',
-        options: ['', '', '', ''],
-        correctAnswer: '',
-      }));
-      setQuestionData([...questionData, ...newQuestions]);
-    } else if (newNumberOfQuestions < questionData.length) {
+      const additionalQuestions = newNumberOfQuestions - domandeRisposte.length;
+      const newQuestions = Array.from(
+        { length: additionalQuestions },
+        (): DomandaRisposta => ({
+          quiz_ag: undefined,
+          corretta: undefined,
+          domanda: '',
+          risposte: [
+            {
+              domanda_ag: undefined,
+              risposta: '',
+              corretta: undefined,
+              selezionata: undefined,
+            },
+            {
+              domanda_ag: undefined,
+              risposta: '',
+              corretta: undefined,
+              selezionata: undefined,
+            },
+            {
+              domanda_ag: undefined,
+              risposta: '',
+              corretta: undefined,
+              selezionata: undefined,
+            },
+            {
+              domanda_ag: undefined,
+              risposta: '',
+              corretta: undefined,
+              selezionata: undefined,
+            },
+          ],
+        })
+      );
+      setDomandeRisposte([...domandeRisposte, ...newQuestions]);
+    } else if (newNumberOfQuestions < domandeRisposte.length) {
       // Rimuovi domande se il nuovo numero è minore
-      const remainingQuestions = questionData.slice(0, newNumberOfQuestions);
-      setQuestionData(remainingQuestions);
+      const remainingQuestions = domandeRisposte.slice(0, newNumberOfQuestions);
+      setDomandeRisposte(remainingQuestions);
     }
   };
-
   const handleQuestionChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const newQuestionData = [...questionData];
-    newQuestionData[questionIndex].question = event.target.value;
-    setQuestionData(newQuestionData);
+    const newQuestionData = [...domandeRisposte];
+    newQuestionData[questionIndex].domanda = event.target.value;
+    setDomandeRisposte(newQuestionData);
   };
 
   const handleOptionChange = (
@@ -58,33 +91,74 @@ function CreaQuizAllenamento(): JSX.Element {
     optionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const newQuestionData = [...questionData];
-    newQuestionData[questionIndex].options[optionIndex] = event.target.value;
-    setQuestionData(newQuestionData);
+    const newQuestionData = [...domandeRisposte];
+    newQuestionData[questionIndex].risposte[optionIndex].risposta =
+      event.target.value;
+    setDomandeRisposte(newQuestionData);
   };
 
   const handleCorrectAnswerChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const newQuestionData = [...questionData];
-    newQuestionData[questionIndex].correctAnswer = event.target.value;
-    setQuestionData(newQuestionData);
+    const newQuestionData = [...domandeRisposte];
+    newQuestionData[questionIndex].risposte.map((option, optionIndex) => {
+      if (event.target.value === option.risposta) {
+        newQuestionData[questionIndex].risposte[optionIndex].corretta = true;
+      } else {
+        newQuestionData[questionIndex].risposte[optionIndex].corretta = false;
+      }
+    });
+    setDomandeRisposte(newQuestionData);
+  };
+
+  const newQuestion: DomandaRisposta = {
+    quiz_ag: undefined,
+    corretta: undefined,
+    domanda: '',
+    risposte: [
+      {
+        domanda_ag: undefined,
+        risposta: '',
+        corretta: undefined,
+        selezionata: undefined,
+      },
+      {
+        domanda_ag: undefined,
+        risposta: '',
+        corretta: undefined,
+        selezionata: undefined,
+      },
+      {
+        domanda_ag: undefined,
+        risposta: '',
+        corretta: undefined,
+        selezionata: undefined,
+      },
+      {
+        domanda_ag: undefined,
+        risposta: '',
+        corretta: undefined,
+        selezionata: undefined,
+      },
+    ],
   };
 
   const handleAddQuestion = (): void => {
-    const newQuestion: QuizQuestion = {
-      question: '',
-      options: ['', '', '', ''],
-      correctAnswer: '',
-    };
-
-    setQuestionData([...questionData, newQuestion]);
+    setDomandeRisposte([...domandeRisposte, newQuestion]);
   };
 
   const handleQuizCreation = (): void => {
-    // Implement logic for handling the quiz creation
-    console.log(questionData);
+    const domaRisp = domandeRisposte.map((domanda, index) => ({
+      [`domanda ${index}`]: domanda,
+    }));
+    const domRes: ResponseObject = {
+      domandeRisposte: Object.assign({}, ...domaRisp),
+      quizAllenamento: quizAllenamento,
+    };
+    const quizAllenamentoContol: QuizAllenamentoControl =
+      new QuizAllenamentoControl();
+    quizAllenamentoContol.inviaQuizAllenamento(domRes);
   };
 
   return (
@@ -93,19 +167,19 @@ function CreaQuizAllenamento(): JSX.Element {
       <TextField
         label="Number of Questions"
         type="number"
-        value={numberOfQuestions}
+        value={quizAllenamento.numero_domande}
         onChange={handleNumberOfQuestionsChange}
       />
 
       <Grid container spacing={2}>
-        {questionData.map((question, questionIndex) => (
+        {domandeRisposte.map((question, questionIndex) => (
           <Grid item xs={12} key={questionIndex}>
             <Paper elevation={3} style={{ padding: '16px' }}>
               <Typography variant="h6">Question {questionIndex + 1}</Typography>
               <TextField
                 label="Question"
                 fullWidth
-                value={question.question}
+                value={question.domanda}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   handleQuestionChange(questionIndex, event)
                 }
@@ -113,12 +187,14 @@ function CreaQuizAllenamento(): JSX.Element {
 
               <FormControl component="fieldset">
                 <RadioGroup
-                  value={question.correctAnswer}
+                  value={question.risposte.findIndex(
+                    (option) => option.corretta === true
+                  )}
                   onChange={(event) =>
                     handleCorrectAnswerChange(questionIndex, event)
                   }
                 >
-                  {question.options.map((option, optionIndex) => (
+                  {question.risposte.map((option, optionIndex) => (
                     <FormControlLabel
                       key={optionIndex}
                       value={option}
@@ -127,7 +203,7 @@ function CreaQuizAllenamento(): JSX.Element {
                         <TextField
                           label={`Option ${optionIndex + 1}`}
                           fullWidth
-                          value={option}
+                          value={option.risposta}
                           onChange={(
                             event: React.ChangeEvent<HTMLInputElement>
                           ) =>

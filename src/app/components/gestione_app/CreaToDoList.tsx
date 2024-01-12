@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 //eslint-disable-next-line
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import 'app/css/gestione_app/FormElements.css';
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
+import Pulsante from './Pulsante';
 
 function CreaToDoList(): JSX.Element {
   const [NumAttivita, setNumAttivita] = useState<number | null>(null);
@@ -30,7 +31,7 @@ function CreaToDoList(): JSX.Element {
       setAttivitaConfermate(nuovaListaAttivita);
     }
   };
-
+  const [testo1] = useState<string>('conferma');
   return (
     <>
       <form style={{ display: 'flex', flexWrap: 'wrap', width: '50%' }}>
@@ -50,13 +51,15 @@ function CreaToDoList(): JSX.Element {
           />
         </div>
         <div>
-          <Button
-            type="button"
-            variant="contained"
-            onClick={handleConfermaClick}
-          >
-            Conferma
-          </Button>
+          {Pulsante({
+            tipologia: 'scuro',
+            testo: testo1,
+            nome: 'conferma',
+            inizio: null,
+            fine: null,
+            borderColor: '#000000',
+            onClick: handleConfermaClick,
+          })}
         </div>
         <br />
       </form>

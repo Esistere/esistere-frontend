@@ -69,7 +69,6 @@ function ListaPazienti(props: Props): JSX.Element {
     setMobileOpen(!mobileOpen);
   };
 
-  // const [isHovered, setIsHovered] = React.useState(false);
   const [isHoveredAndamento, setIsHoveredAndamento] = useState(false);
   const [isHoveredQuizPreliminare, setIsHoveredQuizPreliminare] =
     useState(false);
@@ -79,9 +78,6 @@ function ListaPazienti(props: Props): JSX.Element {
   const [isHoveredCg, setIsHoveredCg] = useState(false);
   const [isHoveredTac, setIsHoveredTac] = useState(false);
 
-  // const gestisciHover = (hovered: boolean): void => {
-  //   setIsHovered(hovered);
-  // };
   const gestisciHoverAndamento = (hovered: boolean): void => {
     setIsHoveredAndamento(hovered);
   };

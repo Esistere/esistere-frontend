@@ -62,6 +62,7 @@ function CreaStoria(): JSX.Element {
               style={{
                 backgroundColor: isHovered ? '#8036a1' : '#9149f3',
                 color: '#ffffff',
+                margin: '1em',
               }}
             >
               Carica file

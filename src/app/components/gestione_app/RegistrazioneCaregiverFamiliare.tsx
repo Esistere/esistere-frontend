@@ -41,6 +41,7 @@ let selectedMedico: {
 } | null;
 let deveCaricare = true;
 let success: boolean | null = null;
+let status: string | null = null;
 let open = false;
 function RegistrazioneCaregiverFamiliare(): JSX.Element {
   const [visibilityCG, setVisibilityCG] = useState<string>('block');
@@ -212,9 +213,10 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         success = true;
         open = true;
       })
-      .catch(() => {
+      .catch((value) => {
         success = false;
         open = true;
+        status = value;
       });
   };
 
@@ -510,7 +512,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         >
           {success
             ? 'Registrazione effettuata con successo!'
-            : 'Registrazione fallita'}
+            : `Registrazione fallita. Errore : ${status}`}
         </Alert>
       </Snackbar>
     </>

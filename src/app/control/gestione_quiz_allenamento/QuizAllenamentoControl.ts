@@ -1,6 +1,7 @@
 import { WEBSERVER } from 'app/config';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
 import { DomandaRisposta } from 'app/interfaces/gestione_quiz_allenamento/DomandaRisposta';
+import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
 
 class QuizAllenamentoControl {
   private baseUrl: string;
@@ -129,6 +130,7 @@ class QuizAllenamentoControl {
       throw new Error('Error');
     }
   }
+
   async fetchRispostaQuizAllenamento(id: number): Promise<DomandaRisposta[]> {
     const url = `${this.baseUrl}/risposta_allenamento_giornaliero_domanda_ag`;
     try {
@@ -156,6 +158,7 @@ class QuizAllenamentoControl {
         );
     }
   }
+
   async inviaDatiRispostaQuizAllenamento(
     datiRispostaQuizAllenamento: DomandaRisposta
   ): Promise<void> {
@@ -168,6 +171,25 @@ class QuizAllenamentoControl {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
         body: JSON.stringify(datiRispostaQuizAllenamento),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async inviaQuizAllenamento(quizAllenamento: ResponseObject): Promise<void> {
+    const url = `${this.baseUrl}/salva_quiz_allenamento`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(quizAllenamento),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

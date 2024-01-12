@@ -6,10 +6,12 @@ import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/Careg
 import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import {
+  Alert,
   Autocomplete,
   Button,
   IconButton,
   InputAdornment,
+  Snackbar,
   TextField,
 } from '@mui/material';
 import {
@@ -26,7 +28,13 @@ interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
 }
 
-let opzioni: MedicoPerAutocomplete[];
+let opzioni: MedicoPerAutocomplete[] = [
+  {
+    name: 'MedicoEsempio',
+    value: '0',
+  },
+];
+
 let selectedMedico: {
   name: string;
   value: string;
@@ -196,11 +204,31 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     };
 
     const pazienteControl: PazienteControl = new PazienteControl();
-    try {
-      await pazienteControl.inviaDatiPaziente(paziente);
-    } catch (e) {
-      console.error(e);
+    pazienteControl
+      .inviaDatiPaziente(paziente)
+      .then(() => {
+        setSuccess(true);
+        setOpen(true);
+      })
+      .catch(() => {
+        setSuccess(false);
+        setOpen(true);
+      });
+  };
+
+  const [success, setSuccess] = useState<boolean | null>(null);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
     }
+
+    setOpen(false);
   };
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -452,7 +480,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
             <Autocomplete
               loading
               options={opzioni}
-              value={selectedMedico}
               getOptionLabel={(op) => op.name}
               onChange={handleChangeMedico}
               renderInput={(params) => (
@@ -477,6 +504,17 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
           </div>
         </form>
       )}
+      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={success ? 'success' : 'error'}
+          sx={{ width: '100%' }}
+        >
+          {success
+            ? 'Registrazione effettuata con successo!'
+            : 'Registrazione fallita'}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

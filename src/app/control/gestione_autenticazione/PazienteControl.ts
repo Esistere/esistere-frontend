@@ -27,9 +27,10 @@ class PazienteControl {
     }
   }
 
-  async inviaDatiPaziente(datiPaziente: Paziente): Promise<void> {
+  async inviaDatiPaziente(datiPaziente: Paziente): Promise<number> {
     const url = `${this.baseUrl}/salva_paziente`;
 
+    let risp = 200;
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -40,10 +41,12 @@ class PazienteControl {
       });
 
       if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
+        throw new Error(`${response.status}`);
       }
+      risp = response.status;
+      return risp;
     } catch (error) {
-      throw new Error('Error');
+      throw new Error(JSON.stringify(error));
     }
   }
 }

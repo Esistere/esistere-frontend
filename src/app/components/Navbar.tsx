@@ -183,6 +183,66 @@ function Navbar(): JSX.Element {
                   </Button>
                 )}
               </Link>
+              <Link
+                to="/caregiver/crea_storia"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Crea Storia
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to="/caregiver/crea_quiz_allenamento"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    crea quiz allenamento
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to="/caregiver/crea_filastrocca"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Crea filastrocca
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to="/caregiver/crea_todo_list"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Crea ToDoList
+                  </Button>
+                )}
+              </Link>
               {/*TOOD : inserire pulsanti caregiver*/}
               <Link
                 to="/"
@@ -286,6 +346,67 @@ function Navbar(): JSX.Element {
                 </Button>
               )}
             </Link>
+            <Link
+              to="/caregiver/crea_storia"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {userType === UserType.medico && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Crea Storia
+                </Button>
+              )}
+            </Link>
+            <Link
+              to="/caregiver/crea_quiz_allenamento"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {userType === UserType.medico && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  crea quiz allenamento
+                </Button>
+              )}
+            </Link>
+            <Link
+              to="/caregiver/crea_filastrocca"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {userType === UserType.medico && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Crea filastrocca
+                </Button>
+              )}
+            </Link>
+            <Link
+              to="/caregiver/crea_todo_list"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {userType === UserType.medico && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Crea ToDoList
+                </Button>
+              )}
+            </Link>
+
             {/*TOOD : inserire pulsanti caregiver*/}
             <Link
               to="/"

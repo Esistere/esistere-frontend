@@ -29,7 +29,6 @@ class MedicoControl {
 
   async inviaDatiMedico(datiMedico: Medico): Promise<void> {
     const url = `${this.baseUrl}/salva_medico`;
-    console.log(datiMedico);
 
     try {
       const response = await fetch(url, {

@@ -11,7 +11,13 @@ class QuizPreliminareControl {
   async fetchQuizPreliminari(): Promise<QuizPreliminare[]> {
     const url = `${this.baseUrl}/quiz_preliminari`;
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
@@ -91,6 +97,27 @@ class QuizPreliminareControl {
       }
       const codice_identificativoJSON = await response.json();
       return codice_identificativoJSON.id.codice_identificativo;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+  async fetchDomandeQuizPreliminare(
+    id_quiz: number
+  ): Promise<DomandaQuizPreliminare[]> {
+    const url = `${this.baseUrl}/domande_quiz` + `id_quiz= ${id_quiz}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: DomandaQuizPreliminare[] = await response.json();
+      return data;
     } catch (error) {
       throw new Error('Error');
     }

@@ -40,6 +40,8 @@ let selectedMedico: {
   value: string;
 } | null;
 let deveCaricare = true;
+let success: boolean | null = null;
+let open = false;
 function RegistrazioneCaregiverFamiliare(): JSX.Element {
   const [visibilityCG, setVisibilityCG] = useState<string>('block');
   const [visibilityPAZ, setVisibilityPAZ] = useState<string>('none');
@@ -207,18 +209,14 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     pazienteControl
       .inviaDatiPaziente(paziente)
       .then(() => {
-        setSuccess(true);
-        setOpen(true);
+        success = true;
+        open = true;
       })
       .catch(() => {
-        setSuccess(false);
-        setOpen(true);
+        success = false;
+        open = true;
       });
   };
-
-  const [success, setSuccess] = useState<boolean | null>(null);
-
-  const [open, setOpen] = React.useState(false);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -228,7 +226,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       return;
     }
 
-    setOpen(false);
+    open = false;
   };
 
   const [showPassword, setShowPassword] = React.useState(false);

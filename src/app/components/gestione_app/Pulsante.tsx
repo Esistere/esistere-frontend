@@ -35,7 +35,6 @@ function Pulsante({
     setIsHover(false);
   };
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
-    console.log('Button clicked');
     if (onClick) {
       onClick(event);
     }

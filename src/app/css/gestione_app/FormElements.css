@@ -12,6 +12,7 @@
   flex-direction: row;
   margin-top: 2em;
   margin-bottom: 2em;
+  flex-wrap: wrap;
 }
 
 .option {
@@ -55,4 +56,5 @@
   justify-content: center;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }

@@ -2,14 +2,16 @@ import { WEBSERVER } from 'app/config';
 import { QuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/QuizPreliminare';
 import { DomandaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/DomandaQuizPreliminare';
 import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
+import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObject';
 class QuizPreliminareControl {
   private baseUrl: string;
 
   constructor() {
     this.baseUrl = WEBSERVER;
   }
-  async fetchQuizPreliminari(): Promise<QuizPreliminare[]> {
-    const url = `${this.baseUrl}/quiz_preliminari`;
+
+  async fetchQuizPreliminari(med: number): Promise<QuizPreliminare[]> {
+    const url = `${this.baseUrl}/quiz_preliminari` + `id=${med}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -30,6 +32,7 @@ class QuizPreliminareControl {
       else throw new Error('Unknown error occured while fetching quiz');
     }
   }
+
   async inviaDatiQuizPreliminare(
     datiQuizPreliminare: QuizPreliminare[]
   ): Promise<void> {
@@ -77,6 +80,7 @@ class QuizPreliminareControl {
       throw new Error('Error');
     }
   }
+
   async inviaDatiRispostaPreliminare(
     datiRispostaPreliminare: RispostaQuizPreliminare
   ): Promise<number> {
@@ -101,6 +105,7 @@ class QuizPreliminareControl {
       throw new Error('Error');
     }
   }
+
   async fetchDomandeQuizPreliminare(
     id_quiz: number
   ): Promise<DomandaQuizPreliminare[]> {
@@ -118,6 +123,46 @@ class QuizPreliminareControl {
       }
       const data: DomandaQuizPreliminare[] = await response.json();
       return data;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async inviaQuizPreliminare(quizPreliminare: QuizPreliminare): Promise<void> {
+    const url = `${this.baseUrl}/salva_quiz_preliminare`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(quizPreliminare),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async visualizzaQuizPreliminare(idQuiz: number): Promise<ResponseObjectQP> {
+    const url = `${this.baseUrl}/visualizza_quiz_preliminare` + `id=${idQuiz}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const ResponseObject = await response.json();
+      return ResponseObject;
     } catch (error) {
       throw new Error('Error');
     }

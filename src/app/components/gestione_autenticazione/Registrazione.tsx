@@ -49,7 +49,8 @@ const Registrazione: React.FC = () => {
             <div className="optionIcon">
               <LocalHospitalIcon style={{ fontSize: '5rem' }} />
             </div>
-            <h4 className="testo">Sei un medico?</h4>
+            <h3 className="testo">Sei un medico?</h3>
+            <br />
             <Pulsante
               tipologia="scuro"
               testo="Registrati qui"
@@ -65,7 +66,7 @@ const Registrazione: React.FC = () => {
             <div className="optionIcon">
               <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
             </div>
-            <h4 className="testo">Ti occupi di uno dei nostri pazienti?</h4>
+            <h3 className="testo">Ti occupi di uno dei nostri pazienti?</h3>
             <Pulsante
               tipologia="scuro"
               testo="Registrati qui"

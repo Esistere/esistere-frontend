@@ -1,8 +1,4 @@
-import {
-  ArrowForwardIos,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   Alert,
@@ -28,7 +24,7 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { useEffect, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
-import Caricamento from './Caricamento';
+import Caricamento from 'app/components/gestione_app/Caricamento';
 
 const theme = createTheme({
   palette: {
@@ -283,7 +279,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     impostaColoreBottone(nuovoColore);
   };
 
-
   return (
     <>
       {/* caregiver */}
@@ -515,7 +510,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                           : 'block',
                       width: '30%',
                       height: '100%',
-                      marginTop: '1.5em'
+                      marginTop: '1.5em',
                     }}
                     variant="contained"
                     onMouseEnter={() => gestisciHover(true)}

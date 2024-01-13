@@ -26,9 +26,7 @@ const ElementoListaFilastrocca: React.FC<ElementoListaFilastroccaProps> = ({
       onClick={handleClick}
     >
       <p style={{ fontWeight: 'bold' }}>{filastrocca.titolo}</p>
-      {/* Aggiungi altri dettagli della filastrocca se necessario */}
     </div>
   );
 };
-
 export default ElementoListaFilastrocca;

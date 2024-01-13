@@ -35,6 +35,4 @@ Per iniziare ad usare Esistere, segui queste istruzioni:
 
 Per maggiori informazioni su come configurare e utilizzare Esistere, consulta la [documentazione ufficiale](#) presente nella repository.
 
-## 📃 Licenza
-
-Esistere è rilasciato sotto la licenza [MIT](LICENSE).
+<3

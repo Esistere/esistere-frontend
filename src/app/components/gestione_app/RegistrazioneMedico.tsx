@@ -113,6 +113,9 @@ const RegistrazioneMedico: React.FC = () => {
     <>
       <form method="post" className="formflex" onSubmit={handleSubmit}>
         <div className="riga">
+          <h2 className="testo">Diventa uno dei nostri medici!</h2>
+        </div>
+        <div className="riga">
           <TextField
             type="text"
             name="nome"

@@ -58,64 +58,248 @@ function Navbar(): JSX.Element {
     };
   }, []);
 
-  useEffect(() => {
-    const appBarElement = document.getElementById('appBar');
-
-    const appBarHeight = appBarElement ? appBarElement.clientHeight : 0;
-
-    document.body.style.paddingTop = `${appBarHeight}px`;
-
-    return () => {
-      document.body.style.paddingTop = '0';
-    };
-  }, []);
-
   return (
-    <AppBar
-      position="fixed"
-      id="appBar"
-      sx={{ top: 0, zIndex: 1201, backgroundColor: 'blueviolet' }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <a href="#">
-              <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
-            </a>
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={isDrawerOpen ? handleCloseDrawer : handleOpenDrawer}
-              color="inherit"
-            >
-              {isDrawerOpen ? <CloseIcon /> : <MenuIcon />}
-            </IconButton>
-            <Drawer
-              anchor="left"
-              open={isDrawerOpen}
-              onClose={handleCloseDrawer}
-              variant="temporary"
+    <div style={{ paddingTop: '64px' }}>
+      <AppBar
+        position="fixed"
+        id="appBar"
+        sx={{ top: 0, zIndex: 1201, backgroundColor: 'blueviolet' }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#"
               sx={{
-                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
               }}
             >
+              <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={isDrawerOpen ? handleCloseDrawer : handleOpenDrawer}
+                color="inherit"
+              >
+                {isDrawerOpen ? <CloseIcon /> : <MenuIcon />}
+              </IconButton>
+              <Drawer
+                anchor="left"
+                open={isDrawerOpen}
+                onClose={handleCloseDrawer}
+                variant="temporary"
+                sx={{
+                  '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+                }}
+              >
+                <Link
+                  to="/"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {!loading && userType === null && (
+                    <Button
+                      disabled
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Home
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {!loading && userType === null && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Home
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/login"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {!loading && userType === null && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Login
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/registrazione"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {!loading && userType === null && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{
+                        my: 2,
+                        color: 'black',
+                        display: 'block',
+                      }}
+                    >
+                      Registrazione
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/medico/lista"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.medico && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Lista Pazienti
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/crea_storia"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Crea Storia
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/crea_quiz_allenamento"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      crea quiz allenamento
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/crea_filastrocca"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Crea filastrocca
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/visualizza_filastrocche"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Visualizza filastrocche
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/crea_todo_list"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.medico && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Crea ToDoList
+                    </Button>
+                  )}
+                </Link>
+
+                <Link
+                  to="/"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType != null && (
+                    <Button
+                      onClick={() => {
+                        handleCloseDrawer;
+                        localStorage.removeItem('jwt');
+                        navigate('/');
+                        window.location.reload();
+                        <Link to="/"></Link>;
+                      }}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Logout
+                    </Button>
+                  )}
+                </Link>
+              </Drawer>
+            </Box>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Link
                 to="/"
                 style={{
@@ -124,24 +308,8 @@ function Navbar(): JSX.Element {
               >
                 {!loading && userType === null && (
                   <Button
-                    disabled
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
-                  >
-                    Home
-                  </Button>
-                )}
-              </Link>
-              <Link
-                to="/"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                {!loading && userType === null && (
-                  <Button
-                    onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Home
                   </Button>
@@ -156,7 +324,7 @@ function Navbar(): JSX.Element {
                 {!loading && userType === null && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Login
                   </Button>
@@ -171,11 +339,7 @@ function Navbar(): JSX.Element {
                 {!loading && userType === null && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{
-                      my: 2,
-                      color: 'black',
-                      display: 'block',
-                    }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Registrazione
                   </Button>
@@ -190,7 +354,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.medico && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Lista Pazienti
                   </Button>
@@ -205,7 +369,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Crea Storia
                   </Button>
@@ -220,7 +384,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     crea quiz allenamento
                   </Button>
@@ -235,7 +399,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Crea filastrocca
                   </Button>
@@ -250,7 +414,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Visualizza filastrocche
                   </Button>
@@ -265,7 +429,7 @@ function Navbar(): JSX.Element {
                 {userType === UserType.medico && (
                   <Button
                     onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Crea ToDoList
                   </Button>
@@ -287,225 +451,48 @@ function Navbar(): JSX.Element {
                       window.location.reload();
                       <Link to="/"></Link>;
                     }}
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Logout
                   </Button>
                 )}
               </Link>
-            </Drawer>
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <img src={logonavbar} style={{ height: '2em' }} alt="Esistere" />
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link
-              to="/"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {!loading && userType === null && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Home
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/login"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {!loading && userType === null && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Login
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/registrazione"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {!loading && userType === null && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Registrazione
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/medico/lista"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.medico && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Lista Pazienti
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/caregiver/crea_storia"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.caregiver && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Crea Storia
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/caregiver/crea_quiz_allenamento"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.caregiver && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  crea quiz allenamento
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/caregiver/crea_filastrocca"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.caregiver && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Crea filastrocca
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/caregiver/visualizza_filastrocche"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.caregiver && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Visualizza filastrocche
-                </Button>
-              )}
-            </Link>
-            <Link
-              to="/caregiver/crea_todo_list"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType === UserType.medico && (
-                <Button
-                  onClick={handleCloseDrawer}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Crea ToDoList
-                </Button>
-              )}
-            </Link>
-
-            <Link
-              to="/"
-              style={{
-                textDecoration: 'none',
-              }}
-            >
-              {userType != null && (
-                <Button
-                  onClick={() => {
-                    handleCloseDrawer;
-                    localStorage.removeItem('jwt');
-                    navigate('/');
-                    window.location.reload();
-                    <Link to="/"></Link>;
-                  }}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Logout
-                </Button>
-              )}
-            </Link>
-          </Box>
-          {userType != null && (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+            {userType != null && (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="" />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </div>
   );
 }
 export default Navbar;

@@ -15,6 +15,7 @@ import HomeMedico from './app/components/gestione_app/HomeMedico';
 import HomeCaregiver from './app/components/gestione_app/HomeCaregiver';
 import { UserProvider } from './app/components/gestione_app/UserProvider';
 import ListaFilastrocche from './app/components/gestione_app/ListaFilastrocche';
+import AreaPersonaleMedico from './app/components/gestione_app/AreaPersonaleMedico';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,6 +30,10 @@ root.render(
           <Route path="/registrazione" element={<Registrazione />} />
           <Route path="/login" element={<Login />} />
           <Route path="/medico" element={<HomeMedico />} />
+          <Route
+            path="/medico/area_personale"
+            element={<AreaPersonaleMedico />}
+          />
           <Route path="/medico/lista" element={<ListaPazienti />} />
           <Route path="/caregiver" element={<HomeCaregiver />} />
           <Route path="/caregiver/crea_storia" element={<CreaStoria />} />

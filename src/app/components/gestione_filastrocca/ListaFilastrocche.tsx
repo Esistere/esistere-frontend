@@ -10,11 +10,11 @@ import Typography from '@mui/material/Typography';
 import { Filastrocca } from 'app/interfaces/gestione_filastrocche/Filastrocca'; //
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar';
-import Caricamento from './Caricamento';
+import Caricamento from '../gestione_app/Caricamento';
 //import Creafilastrocca from './CreaFilastrocca';
 //import { Divider } from '@mui/material';
-import { useUser } from './UserProvider';
-import AccessoNegato from './AccessoNegato';
+import { useUser } from '../gestione_autenticazione/UserProvider';
+import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import FilastroccaControl from 'app/control/gestione_filastrocca/FilastroccaControl';
 import 'app/css/gestione_app/FormElements.css';
 import ElementoListaFilastrocca from './ElementoListaFilastrocca';

@@ -1,8 +1,8 @@
 import React from 'react';
 import Navbar from './Navbar';
-import { useUser, UserType } from './gestione_app/UserProvider';
-import HomeMedico from './gestione_app/HomeMedico';
-import HomeCaregiver from './gestione_app/HomeCaregiver';
+import { useUser, UserType } from './gestione_autenticazione/UserProvider';
+import HomeMedico from './gestione_autenticazione/medico/HomeMedico';
+import HomeCaregiver from './gestione_autenticazione/caregiver/HomeCaregiver';
 
 function App(): JSX.Element {
   const { userType } = useUser();

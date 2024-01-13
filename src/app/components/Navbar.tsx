@@ -14,7 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import CloseIcon from '@mui/icons-material/Close';
-import { UserType, useUser } from './gestione_app/UserProvider';
+import { UserType, useUser } from './gestione_autenticazione/UserProvider';
 import logonavbar from 'app/assets/logonavbar.png';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];

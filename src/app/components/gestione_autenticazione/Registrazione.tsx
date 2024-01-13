@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RegistrazioneCaregiverFamiliare from './RegistrazioneCaregiverFamiliare';
-import RegistrazioneMedico from './RegistrazioneMedico';
+import RegistrazioneCaregiverFamiliare from './caregiver/RegistrazioneCaregiverFamiliare';
+import RegistrazioneMedico from './medico/RegistrazioneMedico';
 import Pulsante from 'app/components/gestione_app/Pulsante';
 import 'app/css/gestione_app/FormElements.css';
 

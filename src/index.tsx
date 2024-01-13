@@ -1,22 +1,22 @@
+import 'app/css/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import 'app/css/index.css';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import App from './app/components/App';
+import Login from './app/components/gestione_autenticazione/Login';
+import Registrazione from './app/components/gestione_autenticazione/Registrazione';
+import { UserProvider } from './app/components/gestione_autenticazione/UserProvider';
+import AreaPersonaleCaregiver from './app/components/gestione_autenticazione/caregiver/AreaPersonaleCaregiver';
+import HomeCaregiver from './app/components/gestione_autenticazione/caregiver/HomeCaregiver';
+import AreaPersonaleMedico from './app/components/gestione_autenticazione/medico/AreaPersonaleMedico';
+import HomeMedico from './app/components/gestione_autenticazione/medico/HomeMedico';
+import ListaPazienti from './app/components/gestione_autenticazione/medico/ListaPazienti';
+import CreaFilastrocca from './app/components/gestione_filastrocca/CreaFilastrocca';
+import ListaFilastrocche from './app/components/gestione_filastrocca/ListaFilastrocche';
+import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/CreaQuizAllenamento';
+import CreaStoria from './app/components/gestione_storia/CreaStoria';
+import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
 import reportWebVitals from './app/reportWebVitals';
-import Login from './app/components/gestione_app/Login';
-import Registrazione from './app/components/gestione_app/Registrazione';
-import ListaPazienti from './app/components/gestione_app/ListaPazienti';
-import CreaQuizAllenamento from './app/components/gestione_app/CreaQuizAllenamento';
-import CreaStoria from './app/components/gestione_app/CreaStoria';
-import CreaFilastrocca from './app/components/gestione_app/CreaFilastrocca';
-import CreaToDoList from './app/components/gestione_app/CreaToDoList';
-import HomeMedico from './app/components/gestione_app/HomeMedico';
-import HomeCaregiver from './app/components/gestione_app/HomeCaregiver';
-import { UserProvider } from './app/components/gestione_app/UserProvider';
-import ListaFilastrocche from './app/components/gestione_app/ListaFilastrocche';
-import AreaPersonaleMedico from './app/components/gestione_app/AreaPersonaleMedico';
-import AreaPersonaleCaregiver from './app/components/gestione_app/AreaPersonaleCaregiver';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

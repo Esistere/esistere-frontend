@@ -21,7 +21,7 @@ import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { useEffect, useState } from 'react';
-import Caricamento from './Caricamento';
+import Caricamento from '../../gestione_app/Caricamento';
 
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;

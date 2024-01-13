@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import 'app/css/gestione_app/FormElements.css';
 import { TextField } from '@mui/material';
-import Pulsante from './Pulsante';
+import Pulsante from '../gestione_app/Pulsante';
 
 function CreaToDoList(): JSX.Element {
   const [NumAttivita, setNumAttivita] = useState<number | null>(null);

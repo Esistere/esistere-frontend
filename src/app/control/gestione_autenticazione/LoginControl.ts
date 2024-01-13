@@ -1,4 +1,4 @@
-import { UserType } from 'app/components/gestione_app/UserProvider';
+import { UserType } from 'app/components/gestione_autenticazione/UserProvider';
 import { WEBSERVER } from 'app/config';
 
 class LoginControl {

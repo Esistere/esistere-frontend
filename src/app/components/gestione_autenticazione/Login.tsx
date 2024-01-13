@@ -17,7 +17,7 @@ import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserType } from './UserProvider';
-import Pulsante from './Pulsante';
+import Pulsante from '../gestione_app/Pulsante';
 
 const theme = createTheme({
   palette: {

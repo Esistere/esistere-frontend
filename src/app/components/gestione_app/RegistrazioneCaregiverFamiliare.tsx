@@ -273,7 +273,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     <>
       <form className="formflex" style={{ display: visibility.visibilityCG }}>
         <div className="riga">
-          <h2 className="testo">Diventa uno dei nostri Caregiver!</h2>
+          <h3 className="testo">Diventa uno dei nostri Caregiver!</h3>
         </div>
         <div className="riga">
           <TextField
@@ -449,7 +449,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         onSubmit={handleSubmit}
       >
         <div className="riga">
-          <h2 className="testo">Inserisci i dati del tuo paziente!</h2>
+          <h3 className="testo">Inserisci i dati del tuo paziente!</h3>
         </div>
         <div className="riga">
           <TextField

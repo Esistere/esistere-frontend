@@ -1,31 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navbar from './Navbar';
-import { useNavigate } from 'react-router-dom';
-import { UserType } from './gestione_app/UserProvider';
+import { useUser, UserType } from './gestione_app/UserProvider';
+import HomeMedico from './gestione_app/HomeMedico';
+import HomeCaregiver from './gestione_app/HomeCaregiver';
 
 function App(): JSX.Element {
-  const navigate = useNavigate();
-  const userType: string | null = localStorage.getItem('id');
+  const { userType } = useUser();
 
-  useEffect(() => {
-    if (userType !== null) {
-      const userTypeNumber = Number(userType);
-      if (userTypeNumber === UserType.caregiver) {
-        navigate('/caregiver');
-        window.location.reload();
-      } else if (userTypeNumber === UserType.medico) {
-        navigate('/medico');
-        window.location.reload();
-      }
-    }
-  }, [navigate, userType]);
-
-  return (
-    <>
-      <Navbar />
-      <h2>Home</h2>
-    </>
-  );
+  if (userType === UserType.medico) {
+    return <HomeMedico />;
+  } else if (userType === UserType.caregiver) {
+    return <HomeCaregiver />;
+  } else {
+    return (
+      <>
+        <Navbar />
+        <h2>Home</h2>
+      </>
+    );
+  }
 }
 
 export default App;

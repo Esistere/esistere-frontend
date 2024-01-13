@@ -9,6 +9,28 @@ class MedicoControl {
     this.baseUrl = WEBSERVER;
   }
 
+  async fetchDatiMedico(idMedico: number): Promise<Medico> {
+    const url = `${this.baseUrl}/visualizza_medico` + `?id=${idMedico}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned error: ${response.status}`);
+      }
+      const data: Medico = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(`Error fetching data from server: ${error.message}`);
+      else
+        throw new Error('Unknown error occurred while fetching  dati medico.');
+    }
+  }
   async fetchMedici(): Promise<Medico[]> {
     const url = `${this.baseUrl}/visualizza_medici`;
     try {
@@ -73,7 +95,7 @@ class MedicoControl {
   }
 
   async fetchPaziente(cf: string): Promise<Paziente> {
-    const url = `${WEBSERVER}/visualizza_paziente_med`;
+    const url = `${WEBSERVER}/visualizza_paziente_med` + `cf=${cf}`;
 
     try {
       const response = await fetch(url, {

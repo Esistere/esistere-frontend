@@ -22,9 +22,10 @@ import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/Careg
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import Caricamento from 'app/components/gestione_app/Caricamento';
+import { emailRegex, passwordRegex } from '../Regex';
 
 const theme = createTheme({
   palette: {
@@ -78,32 +79,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     cg_fam: '',
   });
   let isLoading = false;
-
-  const handleChangeCaregiverFamiliare = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { name, value } = event.target;
-    setFormDataCaregiverFamiliare({
-      ...formDataCaregiverFamiliare,
-      [name]: value,
-    });
-  };
-
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
-  const [isPassValid, setIsPassValid] = useState<boolean>(true);
-
-  useEffect(() => {
-    // Effetto per controllare l'email
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,50}$/;
-    setIsEmailValid(emailRegex.test(formDataCaregiverFamiliare.email));
-  }, [formDataCaregiverFamiliare.email]);
-
-  useEffect(() => {
-    // Effetto per controllare la password
-    const passRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/;
-    setIsPassValid(passRegex.test(formDataCaregiverFamiliare.passwd));
-  }, [formDataCaregiverFamiliare.passwd]);
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -181,6 +156,30 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newEmail = event.target.value;
+
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      email: newEmail,
+    }));
+
+    setIsEmailValid(emailRegex.test(newEmail) || newEmail === '');
+  };
+
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newPass = event.target.value;
+
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      passwd: newPass,
+    }));
+
+    setIsPassValid(passwordRegex.test(newPass) || newPass === '');
+  };
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
@@ -217,6 +216,16 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         open = true;
         status = value;
       });
+  };
+
+  const handleChangeCaregiverFamiliare = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, value } = event.target;
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
   };
 
   const handleChangePaziente = (
@@ -297,15 +306,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
               color: '#5E35B1',
             }}
           >
-            <Typography
-              component="h1"
-              variant="h5"
-              id="titolo"
-              color="primary"
-              sx={{ mt: 2, fontWeight: 'bold' }}
-            >
-              Diventa uno dei nostri Caregiver!
-            </Typography>
             <CardContent
               sx={{
                 width: '100%',
@@ -314,6 +314,15 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 alignItems: 'center',
               }}
             >
+              <Typography
+                component="h1"
+                variant="h5"
+                color="primary"
+                id="cg-title"
+                sx={{ mt: 2, fontWeight: 'bold' }}
+              >
+                Diventa uno dei nostri Caregiver!
+              </Typography>
               <form
                 className="formflex"
                 style={{ display: visibility.visibilityCG }}
@@ -441,14 +450,19 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     type="email"
                     name="email"
                     id="outlined-email-input"
+                    value={formDataCaregiverFamiliare.email}
                     label="Email"
+                    error={
+                      !isEmailValid &&
+                      formDataCaregiverFamiliare.email.length > 0
+                    }
                     style={{
                       flexBasis: 'calc(26 em)',
                       margin: '1em',
                       boxSizing: 'border-box',
                       marginLeft: '20%',
                       marginRight: '20%',
-                      backgroundColor: isEmailValid ? 'white' : 'lightcoral',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     InputProps={{
                       endAdornment: (
@@ -460,7 +474,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       ),
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleEmailChange}
                   />
                 </div>
                 <div
@@ -475,12 +489,17 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     type={showPassword ? 'text' : 'password'}
                     name="passwd"
                     id="outlined-password-input"
+                    value={formDataCaregiverFamiliare.passwd}
                     label="Password"
+                    error={
+                      !isPassValid &&
+                      formDataCaregiverFamiliare.passwd.length > 0
+                    }
                     style={{
                       flexBasis: '26em',
                       margin: '1em',
                       boxSizing: 'border-box',
-                      backgroundColor: isPassValid ? 'white' : 'lightcoral',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     InputProps={{
                       endAdornment: (
@@ -497,7 +516,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       ),
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handlePasswordChange}
                   />
                 </div>
                 <div className="riga">
@@ -509,7 +528,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                         visibility.visibilityPAZ === 'block'
                           ? 'none'
                           : 'block',
-                      width: '30%',
                       height: '100%',
                       marginTop: '1.5em',
                     }}
@@ -522,111 +540,122 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                   </Button>
                 </div>
               </form>
+
+              {isLoading ? <Caricamento /> : <></>}
+              <form
+                method="post"
+                className="formflex"
+                style={{ display: visibility.visibilityPAZ }}
+                onSubmit={handleSubmit}
+              >
+                {/* paziente */}
+                <Typography
+                  className="testo"
+                  component="h1"
+                  variant="h5"
+                  color="primary"
+                  id="cg-title"
+                  sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
+                >
+                  Inserisci i dati del tuo paziente!
+                </Typography>
+                <div className="riga">
+                  <TextField
+                    required
+                    type="text"
+                    label="Codice Fiscale"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    name="codice_fiscale"
+                    onChange={handleChangePaziente}
+                  />
+                  <TextField
+                    required
+                    type="text"
+                    label="Nome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    name="nome"
+                    onChange={handleChangePaziente}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    required
+                    type="text"
+                    label="Cognome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    name="cognome"
+                    onChange={handleChangePaziente}
+                  />
+                  <TextField
+                    required
+                    type="date"
+                    name="data_di_nascita"
+                    id="outlined-birthdate-input"
+                    placeholder=""
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleChangePaziente}
+                  />
+                </div>
+                <div className="riga">
+                  <Autocomplete
+                    loading
+                    options={opzioni}
+                    getOptionLabel={(op) => op.name}
+                    onChange={handleChangeMedico}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Scegli un medico"
+                        style={{
+                          width: '16.15em',
+                          margin: '1em',
+                          boxSizing: 'border-box',
+                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+                <div className="riga">
+                  <Button
+                    style={{
+                      background: coloreBottone,
+                    }}
+                    type="submit"
+                    variant="contained"
+                    onMouseEnter={() => gestisciHover(true)}
+                    onMouseLeave={() => gestisciHover(false)}
+                    onClick={() => handleInserisciPaziente}
+                    endIcon={<CheckIcon />}
+                  >
+                    Registrati
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
         </Container>
       </ThemeProvider>
-
-      {isLoading ? <Caricamento /> : <></>}
-      <form
-        method="post"
-        className="formflex"
-        style={{ display: visibility.visibilityPAZ }}
-        onSubmit={handleSubmit}
-      >
-        {/* paziente */}
-        <div className="riga">
-          <h3 className="testo">Inserisci i dati del tuo paziente!</h3>
-        </div>
-        <div className="riga">
-          <TextField
-            required
-            type="text"
-            label="Codice Fiscale"
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="codice_fiscale"
-            onChange={handleChangePaziente}
-          />
-          <TextField
-            required
-            type="text"
-            label="Nome"
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="nome"
-            onChange={handleChangePaziente}
-          />
-        </div>
-        <div className="riga">
-          <TextField
-            required
-            type="text"
-            label="Cognome"
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            name="cognome"
-            onChange={handleChangePaziente}
-          />
-          <TextField
-            required
-            type="date"
-            name="data_di_nascita"
-            id="outlined-birthdate-input"
-            label="Data di Nascita"
-            placeholder=""
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            onChange={handleChangePaziente}
-          />
-        </div>
-        <div className="riga">
-          <Autocomplete
-            loading
-            options={opzioni}
-            getOptionLabel={(op) => op.name}
-            onChange={handleChangeMedico}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Scegli un medico"
-                style={{
-                  width: '16.15em',
-                  margin: '1em',
-                  boxSizing: 'border-box',
-                }}
-              />
-            )}
-          />
-        </div>
-        <div className="riga">
-          <Button
-            style={{
-              background: coloreBottone,
-            }}
-            type="submit"
-            variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
-            onClick={() => handleInserisciPaziente}
-            endIcon={<CheckIcon />}
-          >
-            Registrati
-          </Button>
-        </div>
-      </form>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
         <Alert
           onClose={handleClose}

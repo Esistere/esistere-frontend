@@ -30,59 +30,77 @@ const Registrazione: React.FC = () => {
   }, []);
 
   return (
-    <div className="allContainer">
-      <img
-        src={logo}
-        alt="Logo"
-        style={{ height: '100px', marginTop: '20px' }}
-      />
-      <div className="introduction">
-        <h2>Benvenuti nella Pagina di Registrazione</h2>
-        <div
-          className="optionContainer"
-          style={{ display: 'flex', justifyContent: 'center' }}
-        >
+    <>
+      <div className="allContainer">
+        <img
+          src={logo}
+          alt="Logo"
+          style={{ height: '100px', marginTop: '20px' }}
+        />
+        <div className="introduction">
+          <h2 className="testo">Benvenuti nella Pagina di Registrazione</h2>
           <div
-            className="option"
-            style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
+            className="optionContainer"
+            style={{ display: 'flex', justifyContent: 'center' }}
           >
-            <div className="optionIcon">
-              <LocalHospitalIcon style={{ fontSize: '5rem' }} />
+            <div
+              className="option"
+              style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
+            >
+              <div className="optionIcon">
+                <LocalHospitalIcon style={{ fontSize: '5rem' }} />
+              </div>
+              <h3 className="testo">Sei un medico?</h3>
+              <br />
+              <Pulsante
+                tipologia="scuro"
+                testo="Registrati qui"
+                nome="registrazione-medico"
+                onClick={() => {
+                  setTipo('medico');
+                  setTimeout(() => {
+                    const element = document.getElementById('med-title');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 0);
+                }}
+              />
             </div>
-            <h3 className="testo">Sei un medico?</h3>
-            <br />
-            <Pulsante
-              tipologia="scuro"
-              testo="Registrati qui"
-              nome="registrazione-medico"
-              onClick={() => setTipo('medico')}
-            />
-          </div>
-          <div className="verticalDivider"></div>
-          <div
-            className="option"
-            style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
-          >
-            <div className="optionIcon">
-              <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
+            <div className="verticalDivider"></div>
+            <div
+              className="option"
+              style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
+            >
+              <div className="optionIcon">
+                <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
+              </div>
+              <h3 className="testo">Ti occupi di uno dei nostri pazienti?</h3>
+              <Pulsante
+                tipologia="scuro"
+                testo="Registrati qui"
+                nome="registrazione-caregiver-familiare"
+                onClick={() => {
+                  setTipo('caregiver-familiare');
+                  setTimeout(() => {
+                    const element = document.getElementById('cg-title');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 0);
+                }}
+              />
             </div>
-            <h3 className="testo">Ti occupi di uno dei nostri pazienti?</h3>
-            <Pulsante
-              tipologia="scuro"
-              testo="Registrati qui"
-              nome="registrazione-caregiver-familiare"
-              onClick={() => setTipo('caregiver-familiare')}
-            />
           </div>
-        </div>
-        <div className="regicontainer">
-          {tipo === 'medico' && <RegistrazioneMedico />}
-          {tipo === 'caregiver-familiare' && (
-            <RegistrazioneCaregiverFamiliare />
-          )}
+          <div className="regicontainer">
+            {tipo === 'medico' && <RegistrazioneMedico />}
+            {tipo === 'caregiver-familiare' && (
+              <RegistrazioneCaregiverFamiliare />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -16,6 +16,7 @@ import ListaFilastrocche from './app/components/gestione_filastrocca/ListaFilast
 import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/CreaQuizAllenamento';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
+import Navbar from './app/components/Navbar';
 import reportWebVitals from './app/reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -26,6 +27,7 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <HashRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/registrazione" element={<Registrazione />} />

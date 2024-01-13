@@ -1,6 +1,6 @@
 .allContainer {
   flex-direction: column;
-  margin-top: 4em;
+  margin-top: 2em;
   align-items: center;
   padding-bottom: 2em;
   display: flex;
@@ -9,7 +9,7 @@
 .optionContainer {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 0.5rem;
   margin-bottom: 2rem;
 }
 
@@ -75,7 +75,6 @@
 .introduction h2 {
   font-size: 2em;
   margin-bottom: 0.5em;
-  color: #5e35b1;
 }
 
 @media screen and (max-width: 600px) {

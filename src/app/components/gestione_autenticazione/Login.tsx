@@ -96,7 +96,6 @@ function Login(): JSX.Element {
             <CssBaseline />
             <Card
               sx={{
-                marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -127,7 +126,7 @@ function Login(): JSX.Element {
                     required
                     fullWidth
                     id="email"
-                    label="Indirizzo Email"
+                    label="Email"
                     name="email"
                     autoComplete="email"
                     autoFocus

@@ -11,6 +11,7 @@ import {
   Snackbar,
   TextField,
   ThemeProvider,
+  Typography,
   createTheme,
 } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
@@ -154,6 +155,16 @@ const RegistrazioneMedico: React.FC = () => {
                 alignItems: 'center',
               }}
             >
+              <Typography
+                component="h1"
+                variant="h5"
+                color="primary"
+                id="med-title"
+                sx={{ mt: 2, fontWeight: 'bold' }}
+              >
+                Diventa uno dei nostri Medici!
+              </Typography>
+
               <form method="post" className="formflex" onSubmit={handleSubmit}>
                 <div className="riga">
                   <TextField

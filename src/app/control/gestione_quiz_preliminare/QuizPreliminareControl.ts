@@ -2,7 +2,7 @@ import { WEBSERVER } from 'app/config';
 import { QuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/QuizPreliminare';
 import { DomandaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/DomandaQuizPreliminare';
 import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
-import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObject';
+import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObjectQP';
 class QuizPreliminareControl {
   private baseUrl: string;
 

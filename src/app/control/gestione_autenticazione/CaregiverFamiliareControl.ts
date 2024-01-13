@@ -7,7 +7,35 @@ class CaregiverFamiliareControl {
   constructor() {
     this.baseUrl = WEBSERVER;
   }
+  async fetchDatiCaregiverFamiliare(
+    idCaregiverFamiliare: number
+  ): Promise<CaregiverFamiliare> {
+    const url =
+      `${this.baseUrl}/visualizza_caregiver_familiare` +
+      `?id : ${idCaregiverFamiliare}`;
 
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: CaregiverFamiliare = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(`Error fetching data from server: ${error.message}`);
+      else
+        throw new Error(
+          'Unknown error occurred while fetching  dati caregiverFamiliare.'
+        );
+    }
+  }
   async fetchCaregiversFamiliari(): Promise<CaregiverFamiliare[]> {
     const url = `${this.baseUrl}/visualizza_caregiver_familiari`;
     try {

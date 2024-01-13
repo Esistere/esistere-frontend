@@ -76,9 +76,3 @@
   font-size: 2em;
   margin-bottom: 0.5em;
 }
-
-@media screen and (max-width: 600px) {
-  .verticalDivider {
-    display: none;
-  }
-}

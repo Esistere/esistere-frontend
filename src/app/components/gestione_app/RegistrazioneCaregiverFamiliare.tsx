@@ -44,10 +44,10 @@ let success: boolean | null = null;
 let status: string | null = null;
 let open = false;
 function RegistrazioneCaregiverFamiliare(): JSX.Element {
-  const [visibilityCG, setVisibilityCG] = useState<string>('block');
-  const [visibilityPAZ, setVisibilityPAZ] = useState<string>('none');
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
-  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const [visibility, setVisibility] = useState({
+    visibilityCG: 'block',
+    visibilityPAZ: 'none',
+  });
   const [formDataCaregiverFamiliare, setFormDataCaregiverFamiliare] = useState({
     nome: '',
     cognome: '',
@@ -67,27 +67,20 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     med: '',
     cg_fam: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
-  let mediciData: Medico[];
-  const caricaMedici = (): caricaMediciResult => {
-    const fetchMediciData = async (): Promise<void> => {
-      setIsLoading(true);
-      const medicoControl = new MedicoControl();
-      mediciData = await medicoControl.fetchMedici();
-      if (mediciData.length > 0) {
-        setIsLoading(false);
-        console.log(mediciData);
-        opzioni = mediciData.map((medico) => ({
-          name: `${medico.nome} ${medico.cognome}`,
-          value: medico.codice_identificativo?.toString() || '',
-        }));
-      }
-    };
-    return { fetchMediciData };
+  let isLoading = false;
+
+  const handleChangeCaregiverFamiliare = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { name, value } = event.target;
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
   };
 
-  const [avvia, setAvvia] = useState(false);
-  const { fetchMediciData } = caricaMedici();
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
 
   useEffect(() => {
     // Effetto per controllare l'email
@@ -102,24 +95,118 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     setIsPassValid(passRegex.test(formDataCaregiverFamiliare.passwd));
   }, [formDataCaregiverFamiliare.passwd]);
 
-  useEffect(() => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = (): void => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+  };
+
+  let mediciData: Medico[];
+  const caricaMedici = (): caricaMediciResult => {
+    const fetchMediciData = async (): Promise<void> => {
+      isLoading = true;
+      const medicoControl = new MedicoControl();
+      mediciData = await medicoControl.fetchMedici();
+      if (mediciData.length > 0) {
+        isLoading = false;
+        setVisibility({
+          visibilityCG: 'block',
+          visibilityPAZ: 'block',
+        });
+        console.log(mediciData);
+        opzioni = mediciData.map((medico) => ({
+          name: `${medico.nome} ${medico.cognome}`,
+          value: medico.codice_identificativo?.toString() || '',
+        }));
+      }
+    };
+    return { fetchMediciData };
+  };
+
+  const [avvia, setAvvia] = useState(false);
+
+  useEffect((): void => {
     if (avvia) {
-      const fetchOpzioni = async (): Promise<void> => {
-        await fetchMediciData();
-      };
-      fetchOpzioni();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      isLoading = true;
     }
-    setAvvia(false);
+  }, [avvia]);
+
+  const { fetchMediciData } = caricaMedici();
+
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      if (avvia) {
+        try {
+          await fetchMediciData();
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          isLoading = false;
+        }
+      }
+    };
+
+    fetchData();
   }, [avvia, fetchMediciData]);
 
-  const handleChangeCaregiverFamiliare = (
-    event: React.ChangeEvent<HTMLInputElement>
+  const handleInserisciPaziente = (
+    event: React.MouseEvent<HTMLButtonElement>
   ): void => {
-    const { name, value } = event.target;
-    setFormDataCaregiverFamiliare({
+    event.preventDefault();
+
+    const requiredFieldsFilled = Object.values(
+      formDataCaregiverFamiliare
+    ).every((value) => value !== '');
+
+    if (requiredFieldsFilled && isEmailValid && isPassValid) {
+      setAvvia(true);
+    } else {
+      console.log('Please fill in all required fields.');
+    }
+  };
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    event.preventDefault();
+    const caregiverFamiliare: CaregiverFamiliare = {
       ...formDataCaregiverFamiliare,
-      [name]: value,
-    });
+      data_di_nascita: new Date(formDataCaregiverFamiliare.data_di_nascita),
+    };
+
+    const caregiverFamiliareControl: CaregiverFamiliareControl =
+      new CaregiverFamiliareControl();
+
+    const codice_identificativo =
+      await caregiverFamiliareControl.inviaDatiCaregiverFamiliare(
+        caregiverFamiliare
+      );
+
+    const paziente: Paziente = {
+      ...formDataPaziente,
+      data_di_nascita: new Date(formDataPaziente.data_di_nascita),
+      med: Number(formDataPaziente.med),
+      cg_fam: codice_identificativo,
+    };
+
+    const pazienteControl: PazienteControl = new PazienteControl();
+    pazienteControl
+      .inviaDatiPaziente(paziente)
+      .then(() => {
+        success = true;
+        open = true;
+      })
+      .catch((value) => {
+        success = false;
+        open = true;
+        status = value;
+      });
   };
 
   const handleChangePaziente = (
@@ -164,62 +251,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   }, [formDataPaziente]);
 
-  const handleInserisciPaziente = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
-
-    const requiredFieldsFilled = Object.values(
-      formDataCaregiverFamiliare
-    ).every((value) => value !== '');
-
-    if (requiredFieldsFilled && isEmailValid && isPassValid) {
-      setAvvia(true);
-      setVisibilityCG('none');
-      setVisibilityPAZ('block');
-    } else {
-      console.log('Please fill in all required fields.');
-    }
-  };
-
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event.preventDefault();
-    const caregiverFamiliare: CaregiverFamiliare = {
-      ...formDataCaregiverFamiliare,
-      data_di_nascita: new Date(formDataCaregiverFamiliare.data_di_nascita),
-    };
-
-    const caregiverFamiliareControl: CaregiverFamiliareControl =
-      new CaregiverFamiliareControl();
-
-    const codice_identificativo =
-      await caregiverFamiliareControl.inviaDatiCaregiverFamiliare(
-        caregiverFamiliare
-      );
-
-    const paziente: Paziente = {
-      ...formDataPaziente,
-      data_di_nascita: new Date(formDataPaziente.data_di_nascita),
-      med: Number(formDataPaziente.med),
-      cg_fam: codice_identificativo,
-    };
-
-    const pazienteControl: PazienteControl = new PazienteControl();
-    pazienteControl
-      .inviaDatiPaziente(paziente)
-      .then(() => {
-        success = true;
-        open = true;
-      })
-      .catch((value) => {
-        success = false;
-        open = true;
-        status = value;
-      });
-  };
-
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -231,16 +262,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     open = false;
   };
 
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const handleClickShowPassword = (): void => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
-  };
-
   const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
 
   const gestisciHover = (isHovered: boolean): void => {
@@ -250,7 +271,10 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
 
   return (
     <>
-      <form className="formflex" style={{ display: visibilityCG }}>
+      <form className="formflex" style={{ display: visibility.visibilityCG }}>
+        <div className="riga">
+          <h2 className="testo">Diventa uno dei nostri Caregiver!</h2>
+        </div>
         <div className="riga">
           <TextField
             type="text"
@@ -401,6 +425,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
           <Button
             style={{
               background: coloreBottone,
+              display:
+                visibility.visibilityCG === 'block' &&
+                visibility.visibilityPAZ === 'block'
+                  ? 'none'
+                  : 'block',
             }}
             variant="contained"
             onMouseEnter={() => gestisciHover(true)}
@@ -412,98 +441,105 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
           </Button>
         </div>
       </form>
-      {isLoading ? (
-        <Caricamento />
-      ) : (
-        <form
-          method="post"
-          className="formflex"
-          style={{ display: visibilityPAZ }}
-          onSubmit={handleSubmit}
-        >
-          <h2>Paziente</h2>
-          <div className="riga">
-            <TextField
-              required
-              type="text"
-              label="Codice Fiscale"
-              style={{
-                width: '16.15em',
-                margin: '1em',
-                boxSizing: 'border-box',
-              }}
-              name="codice_fiscale"
-              onChange={handleChangePaziente}
-            />
-            <TextField
-              required
-              type="text"
-              label="Nome"
-              style={{
-                width: '16.15em',
-                margin: '1em',
-                boxSizing: 'border-box',
-              }}
-              name="nome"
-              onChange={handleChangePaziente}
-            />
-          </div>
-          <div className="riga">
-            <TextField
-              required
-              type="text"
-              label="Cognome"
-              style={{
-                width: '16.15em',
-                margin: '1em',
-                boxSizing: 'border-box',
-              }}
-              name="cognome"
-              onChange={handleChangePaziente}
-            />
-            <TextField
-              required
-              type="date"
-              name="data_di_nascita"
-              id="outlined-birthdate-input"
-              label="Data di Nascita"
-              placeholder=""
-              style={{
-                width: '16.15em',
-                margin: '1em',
-                boxSizing: 'border-box',
-              }}
-              onChange={handleChangePaziente}
-            />
-          </div>
-          <div className="riga">
-            <Autocomplete
-              loading
-              options={opzioni}
-              getOptionLabel={(op) => op.name}
-              onChange={handleChangeMedico}
-              renderInput={(params) => (
-                <TextField {...params} label="Scegli un medico" />
-              )}
-            />
-          </div>
-          <div className="riga">
-            <Button
-              style={{
-                background: coloreBottone,
-              }}
-              type="submit"
-              variant="contained"
-              onMouseEnter={() => gestisciHover(true)}
-              onMouseLeave={() => gestisciHover(false)}
-              onClick={() => handleInserisciPaziente}
-              endIcon={<CheckIcon />}
-            >
-              Registrati
-            </Button>
-          </div>
-        </form>
-      )}
+      {isLoading ? <Caricamento /> : <></>}
+      <form
+        method="post"
+        className="formflex"
+        style={{ display: visibility.visibilityPAZ }}
+        onSubmit={handleSubmit}
+      >
+        <div className="riga">
+          <h2 className="testo">Inserisci i dati del tuo paziente!</h2>
+        </div>
+        <div className="riga">
+          <TextField
+            required
+            type="text"
+            label="Codice Fiscale"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            name="codice_fiscale"
+            onChange={handleChangePaziente}
+          />
+          <TextField
+            required
+            type="text"
+            label="Nome"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            name="nome"
+            onChange={handleChangePaziente}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            required
+            type="text"
+            label="Cognome"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            name="cognome"
+            onChange={handleChangePaziente}
+          />
+          <TextField
+            required
+            type="date"
+            name="data_di_nascita"
+            id="outlined-birthdate-input"
+            label="Data di Nascita"
+            placeholder=""
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChangePaziente}
+          />
+        </div>
+        <div className="riga">
+          <Autocomplete
+            loading
+            options={opzioni}
+            getOptionLabel={(op) => op.name}
+            onChange={handleChangeMedico}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Scegli un medico"
+                style={{
+                  width: '16.15em',
+                  margin: '1em',
+                  boxSizing: 'border-box',
+                }}
+              />
+            )}
+          />
+        </div>
+        <div className="riga">
+          <Button
+            style={{
+              background: coloreBottone,
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={() => handleInserisciPaziente}
+            endIcon={<CheckIcon />}
+          >
+            Registrati
+          </Button>
+        </div>
+      </form>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
         <Alert
           onClose={handleClose}

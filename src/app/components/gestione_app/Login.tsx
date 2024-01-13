@@ -39,8 +39,6 @@ const Login: React.FC = () => {
     event.preventDefault();
   };
 
-  const [testo1] = useState<string>('registrati');
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -82,85 +80,85 @@ const Login: React.FC = () => {
   return (
     <>
       <Navbar />
-      <form method="post" onSubmit={handleSubmit}>
-        <TextField
-          required
-          type="email"
-          id="current-email"
-          name="email"
-          label="Email"
-          placeholder="Email"
-          style={{
-            width: '16.15em',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          required
-          type={showPassword ? 'text' : 'password'}
-          id="current-password"
-          name="passwd"
-          label="Password"
-          style={{
-            width: '16.15em',
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          placeholder="Password"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          onChange={(event) => handleChange(event)}
-        />
-        <br />
-
-        <Button
-          style={{
-            color: '#ffffff',
-            backgroundColor: coloreBottone,
-            margin: '1em',
-            boxSizing: 'border-box',
-          }}
-          variant="outlined"
-          onMouseEnter={() => gestisciHover(true)}
-          onMouseLeave={() => gestisciHover(false)}
-          type="submit"
-        >
-          Accedi
-        </Button>
+      <form method="post" className="formflex" onSubmit={handleSubmit}>
+        <div className="riga">
+          <h3 className="testo">
+            Effettua l&apos;accesso, oppure{' '}
+            <Link to="/registrazione">
+              {Pulsante({
+                tipologia: 'scuro',
+                testo: 'Registrati ora!',
+                nome: 'registrazione',
+                inizio: null,
+                fine: null,
+                borderColor: '#ffffff',
+              })}
+            </Link>
+          </h3>
+        </div>
+        <div className="riga">
+          <TextField
+            required
+            type="email"
+            id="current-email"
+            name="email"
+            label="Email"
+            placeholder="Email"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="riga">
+          <TextField
+            required
+            type={showPassword ? 'text' : 'password'}
+            id="current-password"
+            name="passwd"
+            label="Password"
+            style={{
+              width: '16.15em',
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            placeholder="Password"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onChange={(event) => handleChange(event)}
+          />
+        </div>
+        <div className="riga">
+          <Button
+            style={{
+              color: '#ffffff',
+              backgroundColor: coloreBottone,
+              margin: '1em',
+              boxSizing: 'border-box',
+            }}
+            variant="outlined"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            type="submit"
+          >
+            Accedi
+          </Button>
+        </div>
       </form>
-      <label
-        htmlFor="registrazione"
-        style={{
-          margin: '1em',
-        }}
-      >
-        Non hai un account?{' '}
-      </label>
-      <Link to="/registrazione">
-        {Pulsante({
-          tipologia: 'chiaro',
-          testo: testo1,
-          nome: 'registrazione',
-          inizio: null,
-          fine: null,
-          borderColor: '#000000',
-        })}
-      </Link>
     </>
   );
 };

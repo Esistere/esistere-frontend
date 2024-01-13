@@ -29,10 +29,11 @@ class QuizAllenamentoControl {
     }
   }
 
-  async fetchQuizAllenamento(
-    id: number
+  async fetchQuizAllenamentoByCgFam(
+    cg_fam: number
   ): Promise<QuizAllenamentoGiornaliero[]> {
-    const url = `${this.baseUrl}/quiz_allenamento_cgfam` + `id = ${id}`;
+    const url =
+      `${this.baseUrl}/quiz_allenamento_cgfam` + `?idCgFam = ${cg_fam}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -80,8 +81,11 @@ class QuizAllenamentoControl {
     }
   }
 
-  async fetchDomandaQuizAllenamento(id: number): Promise<DomandaRisposta[]> {
-    const url = `${this.baseUrl}/domanda_allenamento_quiz_ag` + `id = ${id}`;
+  async fetchDomandaQuizAllenamento(
+    quiz_ag: number
+  ): Promise<DomandaRisposta[]> {
+    const url =
+      `${this.baseUrl}/domanda_allenamento_quiz_ag` + `idQuizAg = ${quiz_ag}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -131,8 +135,12 @@ class QuizAllenamentoControl {
     }
   }
 
-  async fetchRispostaQuizAllenamento(id: number): Promise<DomandaRisposta[]> {
-    const url = `${this.baseUrl}/risposta_allenamento_giornaliero_domanda_ag`;
+  async fetchDatiRispostaQuizAllenamento(
+    idRisposta: number
+  ): Promise<DomandaRisposta> {
+    const url =
+      `${this.baseUrl}/risposta_allenamento_giornaliero` +
+      `idRisposta = ${idRisposta}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -140,7 +148,37 @@ class QuizAllenamentoControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify({ id }),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: DomandaRisposta = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(
+          `Error fetching risposte quiz allenamento: ${error.message}`
+        );
+      else
+        throw new Error(
+          'Unknown error occurred while fetching risposte quiz allenamento.'
+        );
+    }
+  }
+
+  async fetchRispostaByDomandaQuizAllenamento(
+    domanda_ag: number
+  ): Promise<DomandaRisposta[]> {
+    const url =
+      `${this.baseUrl}/risposta_allenamento_domanda_ag` +
+      `idDomanda = ${domanda_ag}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
@@ -196,6 +234,35 @@ class QuizAllenamentoControl {
       }
     } catch (error) {
       throw new Error('Error');
+    }
+  }
+
+  async visualizzaQuizAllenamento(idQuizAg: number): Promise<ResponseObject> {
+    const url =
+      `${this.baseUrl}/visualizza_quiz_allenamento` + `?id: ${idQuizAg}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify({ idQuizAg }),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: ResponseObject = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(
+          `Error fetching risposte quiz allenamento: ${error.message}`
+        );
+      else
+        throw new Error(
+          'Unknown error occurred while fetching risposte quiz allenamento.'
+        );
     }
   }
 }

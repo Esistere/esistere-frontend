@@ -8,8 +8,8 @@ class ToDoListControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchToDoList(): Promise<ToDoList[]> {
-    const url = `${this.baseUrl}}/to-do-list`;
+  async fetchToDoList(id: number): Promise<ToDoList[]> {
+    const url = `${this.baseUrl}}/to_do_list` + `id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -29,8 +29,9 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async fetchToDoListByMed(id: number): Promise<ToDoList[]> {
-    const url = `${this.baseUrl}/to_do_list_medico` + `id= ${id}`;
+    const url = `${this.baseUrl}/to_do_list_medico` + `idMedico= ${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -50,6 +51,7 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async fetchToDoListByPaziente(codice_fiscale: number): Promise<ToDoList[]> {
     const url =
       `${this.baseUrl}/to_do_list_paziente` +
@@ -73,6 +75,7 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async fetchToDoListByMedPaziente(
     id: number,
     codice_fiscale: number
@@ -99,6 +102,7 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async inviaDatiToDoList(dataToDoList: ToDoList): Promise<void> {
     const url = `${this.baseUrl}/save_to_do_list`;
     try {
@@ -117,6 +121,7 @@ class ToDoListControl {
       throw new Error('Error');
     }
   }
+
   async modificaDatiToDoList(dataToDoList: ToDoList): Promise<void> {
     const url = `${this.baseUrl}/update_to_do_list`;
     try {
@@ -135,6 +140,7 @@ class ToDoListControl {
       throw new Error('Error');
     }
   }
+
   async fetchAttivita(id: number): Promise<Attivita[]> {
     const url = `${this.baseUrl}/attivita` + `id= ${id}`;
     try {
@@ -156,6 +162,7 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async fetchAttivitaByToDoList(id: number): Promise<Attivita[]> {
     const url = `${this.baseUrl}/attivita_to_do_list` + `id= ${id}`;
     try {
@@ -177,6 +184,7 @@ class ToDoListControl {
       else throw new Error('Unknown error occurred while fetching ToDoList.');
     }
   }
+
   async inviaDatiAttivita(dataAttivita: Attivita): Promise<void> {
     const url = `${this.baseUrl}/save_attivita`;
     try {
@@ -195,6 +203,7 @@ class ToDoListControl {
       throw new Error('Error');
     }
   }
+
   async modificaDatiAttivita(dataAttivita: Attivita): Promise<void> {
     const url = `${this.baseUrl}/update_attivita`;
     try {

@@ -14,6 +14,7 @@ import CreaToDoList from './app/components/gestione_app/CreaToDoList';
 import HomeMedico from './app/components/gestione_app/HomeMedico';
 import HomeCaregiver from './app/components/gestione_app/HomeCaregiver';
 import { UserProvider } from './app/components/gestione_app/UserProvider';
+import ListaFilastrocche from './app/components/gestione_app/ListaFilastrocche';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -39,6 +40,11 @@ root.render(
             path="/caregiver/crea_filastrocca"
             element={<CreaFilastrocca />}
           />
+          <Route
+            path="/caregiver/visualizza_filastrocche"
+            element={<ListaFilastrocche />}
+          />
+
           <Route path="/caregiver/crea_todo_list" element={<CreaToDoList />} />
         </Routes>
       </HashRouter>

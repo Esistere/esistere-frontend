@@ -189,7 +189,7 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                {userType === UserType.medico && (
+                {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'black', display: 'block' }}
@@ -204,7 +204,7 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                {userType === UserType.medico && (
+                {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'black', display: 'block' }}
@@ -219,12 +219,27 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                {userType === UserType.medico && (
+                {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'black', display: 'block' }}
                   >
                     Crea filastrocca
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to="/caregiver/visualizza_filastrocche"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.caregiver && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'black', display: 'block' }}
+                  >
+                    Visualizza filastrocche
                   </Button>
                 )}
               </Link>
@@ -243,7 +258,7 @@ function Navbar(): JSX.Element {
                   </Button>
                 )}
               </Link>
-              {/*TOOD : inserire pulsanti caregiver*/}
+
               <Link
                 to="/"
                 style={{
@@ -352,7 +367,7 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              {userType === UserType.medico && (
+              {userType === UserType.caregiver && (
                 <Button
                   onClick={handleCloseDrawer}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -367,7 +382,7 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              {userType === UserType.medico && (
+              {userType === UserType.caregiver && (
                 <Button
                   onClick={handleCloseDrawer}
                   sx={{ my: 2, color: 'white', display: 'block' }}
@@ -382,12 +397,27 @@ function Navbar(): JSX.Element {
                 textDecoration: 'none',
               }}
             >
-              {userType === UserType.medico && (
+              {userType === UserType.caregiver && (
                 <Button
                   onClick={handleCloseDrawer}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                   Crea filastrocca
+                </Button>
+              )}
+            </Link>
+            <Link
+              to="/caregiver/visualizza_filastrocche"
+              style={{
+                textDecoration: 'none',
+              }}
+            >
+              {userType === UserType.caregiver && (
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  Visualizza filastrocche
                 </Button>
               )}
             </Link>
@@ -407,7 +437,6 @@ function Navbar(): JSX.Element {
               )}
             </Link>
 
-            {/*TOOD : inserire pulsanti caregiver*/}
             <Link
               to="/"
               style={{

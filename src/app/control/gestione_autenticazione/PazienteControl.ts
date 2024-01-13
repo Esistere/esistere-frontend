@@ -1,11 +1,34 @@
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { WEBSERVER } from 'app/config';
+import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 
 class PazienteControl {
   private baseUrl: string;
 
   constructor() {
     this.baseUrl = WEBSERVER;
+  }
+
+  async fetchPazienti(): Promise<Paziente[]> {
+    const url = `${this.baseUrl}/visualizza_pazienti`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: Paziente[] = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(`Error fetching pazienti: ${error.message}`);
+      else throw new Error('Unknown error occurred while fetching pazienti.');
+    }
   }
 
   async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
@@ -45,6 +68,26 @@ class PazienteControl {
       }
       risp = response.status;
       return risp;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }
+
+  async visualizzaCgFamByPaziente(id: number): Promise<CaregiverFamiliare> {
+    const url = `${this.baseUrl}/visualizza_caregiver` + `?id=${id}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: CaregiverFamiliare = await response.json();
+      return data;
     } catch (error) {
       throw new Error(JSON.stringify(error));
     }

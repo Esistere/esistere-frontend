@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'app/css/gestione_app/FormElements.css';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { TextField, Button } from '@mui/material';
 
 function CreaFilastrocca(): JSX.Element {
+  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
+
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
+  };
+
   return (
     <>
       <form className="formflex">
@@ -47,6 +54,18 @@ function CreaFilastrocca(): JSX.Element {
               maxRows={1}
             />
           </div>
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+          >
+            Crea Filastrocca
+          </Button>
         </Box>
       </form>
     </>

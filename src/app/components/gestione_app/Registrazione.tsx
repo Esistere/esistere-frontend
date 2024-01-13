@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import RegistrazioneCaregiverFamiliare from './RegistrazioneCaregiverFamiliare';
 import RegistrazioneMedico from './RegistrazioneMedico';
-import Navbar from '../Navbar';
 import Pulsante from 'app/components/gestione_app/Pulsante';
 import 'app/css/gestione_app/FormElements.css';
 
@@ -36,21 +35,21 @@ const Registrazione: React.FC = () => {
             style={isWideScreen ? { borderRight: '1px solid gray' } : {}}
           >
             <h4 className="testo">Sei un medico?</h4>
-            {Pulsante({
-              tipologia: 'scuro',
-              testo: 'Registrati qui!',
-              nome: 'registrazione-medico',
-              onClick: (): void => setTipo('medico'),
-            })}
+            <Pulsante
+              tipologia="scuro"
+              testo="Registrati qui!"
+              nome="registrazione-medico"
+              onClick={(): void => setTipo('medico')}
+            />
           </div>
           <div className="option">
             <h4 className="testo">Ti occupi di uno dei nostri pazienti?</h4>
-            {Pulsante({
-              tipologia: 'scuro',
-              testo: 'Registrati qui!',
-              nome: 'registrazione-caregiver-familiare',
-              onClick: (): void => setTipo('caregiver-familiare'),
-            })}
+            <Pulsante
+              tipologia="scuro"
+              testo="Registrati qui!"
+              nome="registrazione-caregiver-familiare"
+              onClick={(): void => setTipo('caregiver-familiare')}
+            />
           </div>
         </div>
         <div className="regicontainer">

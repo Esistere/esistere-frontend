@@ -1,7 +1,7 @@
-import Button from '@mui/material/Button';
 import React, { useState, MouseEvent } from 'react';
+import Button, { ButtonProps } from '@mui/material/Button';
 
-interface PulsanteProps {
+interface PulsanteProps extends ButtonProps {
   tipologia: 'chiaro' | 'scuro';
   testo: string;
   nome: string;
@@ -10,14 +10,15 @@ interface PulsanteProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-function Pulsante({
+const Pulsante: React.FC<PulsanteProps> = ({
   tipologia,
   testo,
   nome,
   inizio,
   fine,
   onClick,
-}: PulsanteProps): JSX.Element {
+  ...otherProps
+}) => {
   const testoH = '#ffffff';
   const testoNonH = tipologia === 'chiaro' ? '#601E9E' : '#ffffff';
   const sfondoH = tipologia === 'chiaro' ? '#b2a1c7' : '#601E9E';
@@ -32,20 +33,20 @@ function Pulsante({
   const handleMouseLeave = (): void => {
     setIsHover(false);
   };
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>): void => {
     if (onClick) {
       onClick(event);
     }
   };
+
   return (
     <Button
+      {...otherProps}
       variant="contained"
       style={{
         color: isHover ? testoH : testoNonH,
         backgroundColor: isHover ? sfondoH : sfondoNonH,
-        marginTop: '1.5em',
-        marginBottom: '1em',
-        boxSizing: 'border-box',
       }}
       sx={{ mt: 3, mb: 2 }}
       id={nome}
@@ -58,6 +59,6 @@ function Pulsante({
       {testo}
     </Button>
   );
-}
+};
 
 export default Pulsante;

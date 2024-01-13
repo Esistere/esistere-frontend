@@ -1,23 +1,23 @@
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {
   Box,
-  Button,
-  Container,
-  CssBaseline,
-  TextField,
-  Typography,
-  IconButton,
-  InputAdornment,
   Card,
   CardContent,
+  Container,
+  CssBaseline,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import logo from 'app/assets/logo512.png';
 import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserType } from './UserProvider';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Visibility from '@mui/icons-material/Visibility';
-import logo from 'app/assets/logo512.png';
+import Pulsante from './Pulsante';
 
 const theme = createTheme({
   palette: {
@@ -159,15 +159,17 @@ function Login(): JSX.Element {
                     ),
                   }}
                 />
-                <Button
+                <Pulsante
+                  tipologia="scuro"
+                  testo="Accedi"
+                  nome="login"
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   color="primary"
-                >
-                  Accedi
-                </Button>
+                />
+
                 <Typography variant="body2" sx={{ mb: 2 }}>
                   Non hai un account?{' '}
                   <Link

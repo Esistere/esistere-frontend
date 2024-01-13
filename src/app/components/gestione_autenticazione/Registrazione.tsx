@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import RegistrazioneCaregiverFamiliare from './caregiver/RegistrazioneCaregiverFamiliare';
 import RegistrazioneMedico from './medico/RegistrazioneMedico';
 import Pulsante from 'app/components/gestione_app/Pulsante';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import logo from 'app/assets/logo512.png';
 import 'app/css/gestione_app/FormElements.css';
 
 const Registrazione: React.FC = () => {
@@ -27,40 +30,58 @@ const Registrazione: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <div className="allContainer">
-        <div className="optionContainer">
+    <div className="allContainer">
+      <img
+        src={logo}
+        alt="Logo"
+        style={{ height: '100px', marginTop: '20px' }}
+      />
+      <div className="introduction">
+        <h2>Benvenuti nella Pagina di Registrazione</h2>
+        <div
+          className="optionContainer"
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
           <div
             className="option"
-            style={isWideScreen ? { borderRight: '1px solid gray' } : {}}
+            style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
           >
+            <div className="optionIcon">
+              <LocalHospitalIcon style={{ fontSize: '5rem' }} />
+            </div>
             <h4 className="testo">Sei un medico?</h4>
             <Pulsante
               tipologia="scuro"
-              testo="Registrati qui!"
+              testo="Registrati qui"
               nome="registrazione-medico"
-              onClick={(): void => setTipo('medico')}
+              onClick={() => setTipo('medico')}
             />
           </div>
-          <div className="option">
+          <div className="verticalDivider"></div>
+          <div
+            className="option"
+            style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
+          >
+            <div className="optionIcon">
+              <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
+            </div>
             <h4 className="testo">Ti occupi di uno dei nostri pazienti?</h4>
             <Pulsante
               tipologia="scuro"
-              testo="Registrati qui!"
+              testo="Registrati qui"
               nome="registrazione-caregiver-familiare"
-              onClick={(): void => setTipo('caregiver-familiare')}
+              onClick={() => setTipo('caregiver-familiare')}
             />
           </div>
         </div>
         <div className="regicontainer">
-          {tipo === 'medico' ? (
-            <RegistrazioneMedico />
-          ) : tipo === 'caregiver-familiare' ? (
+          {tipo === 'medico' && <RegistrazioneMedico />}
+          {tipo === 'caregiver-familiare' && (
             <RegistrazioneCaregiverFamiliare />
-          ) : null}
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

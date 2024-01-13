@@ -13,7 +13,7 @@ import Navbar from '../../Navbar';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import ElementoLista from '../../gestione_app/ElementoLista';
 import { Divider } from '@mui/material';
-import { useUser } from '../UserProvider';
+import { UserType, useUser } from '../UserProvider';
 import AccessoNegato from '../AccessoNegato';
 
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
@@ -38,7 +38,7 @@ function ListaPazienti(props: Props): JSX.Element {
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
     null
   );
-  const { userType, loading } = useUser();
+  const { userType } = useUser();
 
   const fetchData = async (): Promise<void> => {
     const medicoControl = new MedicoControl();
@@ -123,7 +123,7 @@ function ListaPazienti(props: Props): JSX.Element {
   );
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  if (userType === 0 || loading) {
+  if (userType === UserType.medico) {
     return (
       <div>
         <Navbar />

@@ -58,9 +58,22 @@ function Navbar(): JSX.Element {
     };
   }, []);
 
+  useEffect(() => {
+    const appBarElement = document.getElementById('appBar');
+
+    const appBarHeight = appBarElement ? appBarElement.clientHeight : 0;
+
+    document.body.style.paddingTop = `${appBarHeight}px`;
+
+    return () => {
+      document.body.style.paddingTop = '0';
+    };
+  }, []);
+
   return (
     <AppBar
-      position="sticky"
+      position="fixed"
+      id="appBar"
       sx={{ top: 0, zIndex: 1201, backgroundColor: 'blueviolet' }}
     >
       <Container maxWidth="xl">

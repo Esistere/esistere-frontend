@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
-import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
-import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
-import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
+import {
+  ArrowForwardIos,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 import {
   Alert,
   Autocomplete,
@@ -14,14 +13,14 @@ import {
   Snackbar,
   TextField,
 } from '@mui/material';
-import {
-  ArrowForwardIos,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
-import CheckIcon from '@mui/icons-material/Check';
-import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
+import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
+import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
+import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
+import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
+import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
+import React, { useEffect, useState } from 'react';
 import Caricamento from './Caricamento';
 
 interface caricaMediciResult {

@@ -29,7 +29,6 @@ const Registrazione: React.FC = () => {
 
   return (
     <>
-      <Navbar />
       <div className="allContainer">
         <div className="optionContainer">
           <div
@@ -41,7 +40,6 @@ const Registrazione: React.FC = () => {
               tipologia: 'scuro',
               testo: 'Registrati qui!',
               nome: 'registrazione-medico',
-              borderColor: '#000000',
               onClick: (): void => setTipo('medico'),
             })}
           </div>
@@ -51,7 +49,6 @@ const Registrazione: React.FC = () => {
               tipologia: 'scuro',
               testo: 'Registrati qui!',
               nome: 'registrazione-caregiver-familiare',
-              borderColor: '#000000',
               onClick: (): void => setTipo('caregiver-familiare'),
             })}
           </div>

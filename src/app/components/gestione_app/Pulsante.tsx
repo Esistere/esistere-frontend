@@ -8,21 +8,19 @@ interface PulsanteProps {
   inizio?: React.ReactNode;
   fine?: React.ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  borderColor: '#000000' | '#ffffff';
 }
 
 function Pulsante({
   tipologia,
   testo,
   nome,
-  borderColor,
   inizio,
   fine,
   onClick,
 }: PulsanteProps): JSX.Element {
   const testoH = '#ffffff';
-  const testoNonH = tipologia === 'chiaro' ? '#8036a1' : '#ffffff';
-  const sfondoH = tipologia === 'chiaro' ? '#b2a1c7' : '#8036a1';
+  const testoNonH = tipologia === 'chiaro' ? '#601E9E' : '#ffffff';
+  const sfondoH = tipologia === 'chiaro' ? '#b2a1c7' : '#601E9E';
   const sfondoNonH = tipologia === 'chiaro' ? '#ffffff' : '#9149f3';
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -41,13 +39,15 @@ function Pulsante({
   };
   return (
     <Button
+      variant="contained"
       style={{
         color: isHover ? testoH : testoNonH,
-        border: `1px solid ${borderColor}`,
         backgroundColor: isHover ? sfondoH : sfondoNonH,
-        margin: '1em',
+        marginTop: '1.5em',
+        marginBottom: '1em',
         boxSizing: 'border-box',
       }}
+      sx={{ mt: 3, mb: 2 }}
       id={nome}
       startIcon={inizio}
       endIcon={fine}

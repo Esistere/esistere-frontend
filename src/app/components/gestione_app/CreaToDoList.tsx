@@ -57,7 +57,6 @@ function CreaToDoList(): JSX.Element {
             nome: 'conferma',
             inizio: null,
             fine: null,
-            borderColor: '#000000',
             onClick: handleConfermaClick,
           })}
         </div>

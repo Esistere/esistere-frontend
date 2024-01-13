@@ -8,10 +8,16 @@ import {
   Alert,
   Autocomplete,
   Button,
+  Card,
+  CardContent,
+  Container,
+  CssBaseline,
   IconButton,
   InputAdornment,
   Snackbar,
   TextField,
+  ThemeProvider,
+  Typography,
 } from '@mui/material';
 import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
@@ -21,7 +27,16 @@ import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { useEffect, useState } from 'react';
-import Caricamento from '../../gestione_app/Caricamento';
+import { createTheme } from '@mui/material/styles';
+import Caricamento from './Caricamento';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#5E35B1',
+    },
+  },
+});
 
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
@@ -268,178 +283,254 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     impostaColoreBottone(nuovoColore);
   };
 
+
   return (
     <>
-      <form className="formflex" style={{ display: visibility.visibilityCG }}>
-        <div className="riga">
-          <h3 className="testo">Diventa uno dei nostri Caregiver!</h3>
-        </div>
-        <div className="riga">
-          <TextField
-            type="text"
-            name="nome"
-            id="outlined-nome-input"
-            required
-            label="Nome"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            onChange={handleChangeCaregiverFamiliare}
-          />
-          <TextField
-            type="text"
-            name="cognome"
-            id="outlined-cognome-input"
-            label="Cognome"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div className="riga">
-          <TextField
-            type="text"
-            name="indirizzo"
-            id="outlined-indirizzo-input"
-            label="Indirizzo"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-          <TextField
-            type="text"
-            name="numero_civico"
-            id="outlined-num-civico-input"
-            label="Numero Civico"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div className="riga">
-          <TextField
-            type="text"
-            name="citta"
-            id="outlined-citta-input"
-            label="Città"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-          <TextField
-            type="date"
-            name="data_di_nascita"
-            id="outlined-birthdate-input"
-            label="Data di Nascita"
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
+      {/* caregiver */}
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="lg">
+          <CssBaseline />
+          <Card
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              alignItems: 'center',
+              padding: (theme) => theme.spacing(3),
+              backgroundColor: '#EDE7F6',
+              borderRadius: '10px',
+              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+              color: '#5E35B1',
             }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div className="riga">
-          <TextField
-            type="text"
-            name="numero_telefono"
-            id="outlined-num-telefono-input"
-            label="Numero Telefono"
-            style={{ width: '16.15em', margin: '1em', boxSizing: 'border-box' }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <TextField
-            type="email"
-            name="email"
-            id="outlined-email-input"
-            label="Email"
-            style={{
-              flexBasis: 'calc(26 em)',
-              margin: '1em',
-              boxSizing: 'border-box',
-              marginLeft: '20%',
-              marginRight: '20%',
-              backgroundColor: isEmailValid ? 'white' : 'lightcoral',
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" disabled>
-                    <Visibility style={{ opacity: '0' }} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <TextField
-            type={showPassword ? 'text' : 'password'}
-            name="passwd"
-            id="outlined-password-input"
-            label="Password"
-            style={{
-              flexBasis: '26em',
-              margin: '1em',
-              boxSizing: 'border-box',
-              backgroundColor: isPassValid ? 'white' : 'lightcoral',
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            required
-            onChange={handleChangeCaregiverFamiliare}
-          />
-        </div>
-        <div className="riga">
-          <Button
-            style={{
-              background: coloreBottone,
-              display:
-                visibility.visibilityCG === 'block' &&
-                visibility.visibilityPAZ === 'block'
-                  ? 'none'
-                  : 'block',
-            }}
-            variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
-            endIcon={<ArrowForwardIos />}
-            onClick={handleInserisciPaziente}
           >
-            Inserisci Paziente
-          </Button>
-        </div>
-      </form>
+            <CardContent
+              sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                component="h1"
+                variant="h5"
+                color="primary"
+                sx={{ mt: 2, fontWeight: 'bold' }}
+              >
+                Diventa uno dei nostri Caregiver!
+              </Typography>
+              <form
+                className="formflex"
+                style={{ display: visibility.visibilityCG }}
+              >
+                <div className="riga">
+                  <TextField
+                    type="text"
+                    name="nome"
+                    id="outlined-nome-input"
+                    label="Nome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleChangeCaregiverFamiliare}
+                    required
+                  />
+                  <TextField
+                    type="text"
+                    name="cognome"
+                    id="outlined-cognome-input"
+                    label="Cognome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    type="text"
+                    name="indirizzo"
+                    id="outlined-indirizzo-input"
+                    label="Indirizzo"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                  <TextField
+                    type="text"
+                    name="numero_civico"
+                    id="outlined-num-civico-input"
+                    label="Numero Civico"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    type="text"
+                    name="citta"
+                    id="outlined-citta-input"
+                    label="Città"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                  <TextField
+                    type="date"
+                    name="data_di_nascita"
+                    id="outlined-birthdate-input"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    type="text"
+                    name="numero_telefono"
+                    id="outlined-num-telefono-input"
+                    label="Numero Telefono"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  <TextField
+                    type="email"
+                    name="email"
+                    id="outlined-email-input"
+                    label="Email"
+                    style={{
+                      flexBasis: 'calc(26 em)',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      marginLeft: '20%',
+                      marginRight: '20%',
+                      backgroundColor: isEmailValid ? 'white' : 'lightcoral',
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton edge="end" disabled>
+                            <Visibility style={{ opacity: '0' }} />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  <TextField
+                    type={showPassword ? 'text' : 'password'}
+                    name="passwd"
+                    id="outlined-password-input"
+                    label="Password"
+                    style={{
+                      flexBasis: '26em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: isPassValid ? 'white' : 'lightcoral',
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    required
+                    onChange={handleChangeCaregiverFamiliare}
+                  />
+                </div>
+                <div className="riga">
+                  <Button
+                    style={{
+                      background: coloreBottone,
+                      display:
+                        visibility.visibilityCG === 'block' &&
+                        visibility.visibilityPAZ === 'block'
+                          ? 'none'
+                          : 'block',
+                      width: '30%',
+                      height: '100%',
+                      marginTop: '1.5em'
+                    }}
+                    variant="contained"
+                    onMouseEnter={() => gestisciHover(true)}
+                    onMouseLeave={() => gestisciHover(false)}
+                    onClick={handleInserisciPaziente}
+                  >
+                    Inserisci Paziente
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </Container>
+      </ThemeProvider>
+
       {isLoading ? <Caricamento /> : <></>}
       <form
         method="post"
@@ -447,6 +538,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         style={{ display: visibility.visibilityPAZ }}
         onSubmit={handleSubmit}
       >
+        {/* paziente */}
         <div className="riga">
           <h3 className="testo">Inserisci i dati del tuo paziente!</h3>
         </div>

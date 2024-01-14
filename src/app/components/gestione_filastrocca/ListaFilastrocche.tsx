@@ -42,7 +42,7 @@ function ListaFilastrocche(props: Props): JSX.Element {
       setFilastrocche(data);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching pazienti:', error);
+      console.error('Error fetching filastrocche:', error);
     }
   };
 

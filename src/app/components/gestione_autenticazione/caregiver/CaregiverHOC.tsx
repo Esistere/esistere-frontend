@@ -6,8 +6,8 @@ const withCaregiver = <P extends object>(
   Component: ComponentType<P>
 ): React.FC<P> => {
   const WithCaregiver: React.FC<P> = (props: P): ReactElement | null => {
-    const { userType } = useUser();
-    if (userType !== UserType.caregiver) {
+    const { userType, loading } = useUser();
+    if (!loading && userType !== UserType.caregiver) {
       return <AccessoNegato />;
     }
 

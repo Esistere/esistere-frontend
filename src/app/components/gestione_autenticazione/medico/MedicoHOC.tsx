@@ -6,8 +6,8 @@ const withMedico = <P extends object>(
   Component: ComponentType<P>
 ): React.FC<P> => {
   const WithMedico: React.FC<P> = (props: P): ReactElement | null => {
-    const { userType } = useUser();
-    if (userType !== UserType.medico) {
+    const { userType, loading } = useUser();
+    if (!loading && userType !== UserType.medico) {
       return <AccessoNegato />;
     }
 

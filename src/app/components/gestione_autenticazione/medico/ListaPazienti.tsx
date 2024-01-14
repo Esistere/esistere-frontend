@@ -9,12 +9,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../Navbar';
+import Navbar from 'app/components/Navbar';
 import Caricamento from 'app/components/gestione_app/Caricamento';
-import ElementoLista from '../../gestione_app/ElementoLista';
+import ElementoLista from './ElementoLista';
 import { Divider } from '@mui/material';
-import { UserType, useUser } from '../UserProvider';
-import AccessoNegato from '../AccessoNegato';
+import {
+  UserType,
+  useUser,
+} from 'app/components/gestione_autenticazione/UserProvider';
+import AccessoNegato from 'app/components/gestione_autenticazione/AccessoNegato';
 
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import Button from '@mui/material/Button';

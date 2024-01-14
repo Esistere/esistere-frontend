@@ -59,7 +59,7 @@ const Registrazione: React.FC = () => {
                 onClick={() => {
                   setTipo('medico');
                   setTimeout(() => {
-                    const element = document.getElementById('med-title');
+                    const element = document.getElementById('med-sect');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });
                     }
@@ -67,7 +67,6 @@ const Registrazione: React.FC = () => {
                 }}
               />
             </div>
-            <div className="verticalDivider"></div>
             <div
               className="option"
               style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
@@ -83,7 +82,7 @@ const Registrazione: React.FC = () => {
                 onClick={() => {
                   setTipo('caregiver-familiare');
                   setTimeout(() => {
-                    const element = document.getElementById('cg-title');
+                    const element = document.getElementById('cg-sect');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });
                     }
@@ -93,9 +92,17 @@ const Registrazione: React.FC = () => {
             </div>
           </div>
           <div className="regicontainer">
-            {tipo === 'medico' && <RegistrazioneMedico />}
+            {tipo === 'medico' && (
+              <>
+                <div id="med-sect" style={{ display: 'hidden' }}></div>
+                <RegistrazioneMedico />
+              </>
+            )}
             {tipo === 'caregiver-familiare' && (
-              <RegistrazioneCaregiverFamiliare />
+              <>
+                <div id="cg-sect" style={{ display: 'hidden' }}></div>
+                <RegistrazioneCaregiverFamiliare />
+              </>
             )}
           </div>
         </div>

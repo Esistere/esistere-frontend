@@ -20,7 +20,7 @@ function App(): JSX.Element {
   }, [userType, loading, navigate]);
 
   if (loading) {
-    return <Caricamento/>;
+    return <Caricamento />;
   }
 
   if (userType === UserType.medico) {
@@ -31,7 +31,6 @@ function App(): JSX.Element {
     return (
       <>
         <h2>Home</h2>
-        <h1>Kitemuort</h1>
       </>
     );
   }

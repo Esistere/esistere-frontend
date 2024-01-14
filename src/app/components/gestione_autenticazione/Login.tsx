@@ -69,11 +69,11 @@ function Login(): JSX.Element {
       .then((value) => {
         switch (value) {
           case UserType.medico:
-            navigate('/');
+            navigate('/medico');
             window.location.reload();
             break;
           case UserType.caregiver:
-            navigate('/');
+            navigate('/caregiver');
             window.location.reload();
             break;
           default:

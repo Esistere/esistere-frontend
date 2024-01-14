@@ -18,7 +18,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserType } from './UserProvider';
 import Pulsante from '../gestione_app/Pulsante';
-import Navbar from '../Navbar';
 
 const theme = createTheme({
   palette: {
@@ -85,7 +84,6 @@ function Login(): JSX.Element {
 
   return (
     <>
-      <Navbar />
       <form method="post" onSubmit={handleSubmit}>
         <ThemeProvider theme={theme}>
           <Container

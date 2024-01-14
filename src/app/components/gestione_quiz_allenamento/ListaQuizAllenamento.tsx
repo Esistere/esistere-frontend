@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ElementoListaQuizAllenamentoGiornaliero from './ElementoListaQA';
 import Navbar from '../Navbar';
 import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
-import { useUser } from '../gestione_autenticazione/UserProvider';
+import { UserType, useUser } from '../gestione_autenticazione/UserProvider';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
 import Caricamento from '../gestione_app/Caricamento';
 import 'app/css/gestione_app/FormElements.css';
@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const drawerWidth = 338;
 interface Props {
@@ -36,10 +37,12 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
 
   const quizAllenamentoControl = new QuizAllenamentoControl();
 
+  const { id } = useParams();
+
   const fetchData = async (): Promise<void> => {
     try {
-      const data = await quizAllenamentoControl.fetchQuizAllenamentoGiornaliero(
-        Number(localStorage.getItem('id'))
+      const data = await quizAllenamentoControl.fetchQuizAllenamentoByCgFam(
+        Number(id)
       );
       setQuizAllenamento(data);
       setIsLoading(false);
@@ -47,7 +50,6 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
       console.error('Error fetching quiz', error);
     }
   };
-
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,7 +106,25 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
   IconButton;
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  if (userType === 1 || loading) {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  if (window !== undefined) {
+    if (
+      location.pathname === '/medico/visualizza_quiz_allenamento' &&
+      userType === UserType.caregiver
+    ) {
+      navigate('/caregiver/visualizza_quiz_allenamento');
+      window().location.reload();
+    } else if (
+      location.pathname === '/caregiver/visualizza_quiz_allenamento' &&
+      userType === UserType.medico
+    ) {
+      navigate('/medico/visualizza_quiz_allenamento');
+      window().location.reload();
+    }
+  }
+  if (userType !== null || loading) {
     return (
       <div>
         <Navbar />

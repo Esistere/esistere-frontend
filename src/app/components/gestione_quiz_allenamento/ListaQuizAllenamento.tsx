@@ -1,57 +1,65 @@
-import MenuIcon from '@mui/icons-material/Menu';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Filastrocca } from 'app/interfaces/gestione_filastrocche/Filastrocca'; //
 import React, { useEffect, useState } from 'react';
+import ElementoListaQuizAllenamentoGiornaliero from './ElementoListaQA';
 import Navbar from '../Navbar';
-import Caricamento from '../gestione_app/Caricamento';
-//import Creafilastrocca from './CreaFilastrocca';
-//import { Divider } from '@mui/material';
+import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
 import { useUser } from '../gestione_autenticazione/UserProvider';
-import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
-import FilastroccaControl from 'app/control/gestione_filastrocca/FilastroccaControl';
+import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
+import Caricamento from '../gestione_app/Caricamento';
 import 'app/css/gestione_app/FormElements.css';
-import ElementoListaFilastrocca from './ElementoListaFilastrocca';
+import MenuIcon from '@mui/icons-material/Menu';
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Drawer,
+  IconButton,
+  List,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
+import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
 
-const drawerWidth = 338; //240 provare
-
+const drawerWidth = 338;
 interface Props {
   window?: () => Window;
 }
 
-function ListaFilastrocche(props: Props): JSX.Element {
-  const [filastrocche, setFilastrocche] = useState<Filastrocca[]>([]);
+function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
+  const [quizAllenamento, setQuizAllenamento] = useState<
+    QuizAllenamentoGiornaliero[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedFilastrocca, setSelecteFilastrocca] =
-    useState<Filastrocca | null>(null);
+  const [selectedQuizAllenamento, setSelectedQuizAllenamento] =
+    useState<ResponseObject | null>(null);
   const { userType, loading } = useUser();
 
-  const fetchData = async (): Promise<void> => {
-    const filastroccaControl = new FilastroccaControl();
+  const quizAllenamentoControl = new QuizAllenamentoControl();
 
+  const fetchData = async (): Promise<void> => {
     try {
-      const data = await filastroccaControl.fetchFilastrocche(
+      const data = await quizAllenamentoControl.fetchQuizAllenamentoGiornaliero(
         Number(localStorage.getItem('id'))
       );
-      setFilastrocche(data);
+      setQuizAllenamento(data);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching filastrocche:', error);
+      console.error('Error fetching quiz', error);
     }
   };
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFilastroccaClick = (filastrocca: Filastrocca): void => {
-    setSelecteFilastrocca(filastrocca);
+  const handleQuizAllenamentoClick = async (
+    quizAllenamento: QuizAllenamentoGiornaliero
+  ): Promise<void> => {
+    const quiz = await quizAllenamentoControl.visualizzaQuizAllenamento(
+      Number(quizAllenamento.id)
+    );
+    setSelectedQuizAllenamento(quiz);
   };
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -65,20 +73,21 @@ function ListaFilastrocche(props: Props): JSX.Element {
       <List>
         {isLoading ? (
           <Caricamento />
-        ) : filastrocche.length === 0 ? (
-          <p>Non ci sono filastrocche.</p>
+        ) : quizAllenamento.length === 0 ? (
+          <p>Non ci sono quiz.</p>
         ) : (
-          filastrocche.map((filastrocca, index) => (
-            <ElementoListaFilastrocca
+          quizAllenamento.map((quizAllenamento, index) => (
+            <ElementoListaQuizAllenamentoGiornaliero
               key={index}
-              filastrocca={filastrocca}
-              onFilastroccaClick={handleFilastroccaClick}
+              quizAllenamentoGiornaliero={quizAllenamento}
+              onQuizAllenamentoGiornalieroClick={handleQuizAllenamentoClick}
             />
           ))
         )}
       </List>
     </div>
   );
+  IconButton;
   const container =
     window !== undefined ? () => window().document.body : undefined;
   if (userType === 1 || loading) {
@@ -107,14 +116,14 @@ function ListaFilastrocche(props: Props): JSX.Element {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap component="div">
-                Filastrocche
+                Quiz Allenamento Giornaliero
               </Typography>
             </Toolbar>
           </AppBar>
           <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="filastrocche"
+            aria-label="quizAllenamento"
           >
             <Drawer
               container={container}
@@ -126,7 +135,7 @@ function ListaFilastrocche(props: Props): JSX.Element {
               }}
               sx={{
                 display: { xs: 'block', sm: 'none' },
-                '& .MuiDrawer-paper': {
+                '&.MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
                 },
@@ -138,7 +147,7 @@ function ListaFilastrocche(props: Props): JSX.Element {
               variant="permanent"
               sx={{
                 display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': {
+                '&.MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
                 },
@@ -149,7 +158,7 @@ function ListaFilastrocche(props: Props): JSX.Element {
             </Drawer>
           </Box>
           <Box
-            id="filastrocche"
+            id="quizAllenamento"
             component="main"
             sx={{
               flexGrow: 1,
@@ -158,20 +167,23 @@ function ListaFilastrocche(props: Props): JSX.Element {
             }}
           >
             <Toolbar />
-            {selectedFilastrocca ? (
+            {selectedQuizAllenamento ? (
               <>
                 <Typography variant="h4">
-                  {selectedFilastrocca.titolo}
+                  {'Punteggio totale: ' +
+                    // eslint-disable-next-line max-len
+                    `${selectedQuizAllenamento.quizAllenamento.punteggio_totale}`}
                 </Typography>
                 <Typography variant="h6">
-                  {selectedFilastrocca.testo}
+                  {'Numero domande: ' +
+                    `${selectedQuizAllenamento.quizAllenamento.numero_domande}`}
                 </Typography>
-                <Typography variant="h6">
-                  {selectedFilastrocca.autore}
-                </Typography>
+                {
+                  //TO DO: mettere domande e risposte
+                }
               </>
             ) : (
-              <Typography paragraph>Seleziona una filastrocca.</Typography>
+              <Typography paragraph>Seleziona un quiz allenamento.</Typography>
             )}
           </Box>
         </Box>
@@ -182,4 +194,4 @@ function ListaFilastrocche(props: Props): JSX.Element {
   }
 }
 
-export default ListaFilastrocche;
+export default ListaQuizAllenamentoGiornaliero;

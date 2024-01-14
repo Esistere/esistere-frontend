@@ -53,6 +53,19 @@ function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const colore = (
+    corretta: boolean | undefined,
+    selezionata: boolean | undefined
+  ): string => {
+    if (corretta && selezionata) {
+      return 'forestgreen';
+    } else if (selezionata && !corretta) {
+      return 'crimson';
+    } else {
+      return 'black';
+    }
+  };
+
   const handleQuizAllenamentoClick = async (
     quizAllenamento: QuizAllenamentoGiornaliero
   ): Promise<void> => {
@@ -79,6 +92,7 @@ function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
           quizAllenamento.map((quizAllenamento, index) => (
             <ElementoListaQuizAllenamentoGiornaliero
               key={index}
+              index={index + 1}
               quizAllenamentoGiornaliero={quizAllenamento}
               onQuizAllenamentoGiornalieroClick={handleQuizAllenamentoClick}
             />
@@ -178,9 +192,39 @@ function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
                   {'Numero domande: ' +
                     `${selectedQuizAllenamento.quizAllenamento.numero_domande}`}
                 </Typography>
-                {
-                  //TO DO: mettere domande e risposte
-                }
+                {Object.values(selectedQuizAllenamento.domandeRisposte).map(
+                  (domandaRisposta, index) => (
+                    <div key={index}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          color: domandaRisposta.corretta
+                            ? 'forestgreen'
+                            : 'crimson',
+                        }}
+                      >
+                        Domanda: {domandaRisposta.domanda}
+                      </Typography>
+                      <Typography variant="h6">Risposte:</Typography>
+                      <br />
+                      {domandaRisposta.risposte.map((risposta, index) => (
+                        <div key={index}>
+                          <Typography
+                            variant="h6"
+                            style={{
+                              color: colore(
+                                risposta.corretta,
+                                risposta.selezionata
+                              ),
+                            }}
+                          >
+                            {risposta.risposta}
+                          </Typography>
+                        </div>
+                      ))}
+                    </div>
+                  )
+                )}
               </>
             ) : (
               <Typography paragraph>Seleziona un quiz allenamento.</Typography>

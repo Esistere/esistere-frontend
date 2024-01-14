@@ -25,7 +25,7 @@ interface Props {
   window?: () => Window;
 }
 
-function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
+function ListaQuizAllenamento(props: Props): JSX.Element {
   const [quizAllenamento, setQuizAllenamento] = useState<
     QuizAllenamentoGiornaliero[]
   >([]);
@@ -238,4 +238,4 @@ function ListaQuizAllenamentoGiornaliero(props: Props): JSX.Element {
   }
 }
 
-export default ListaQuizAllenamentoGiornaliero;
+export default ListaQuizAllenamento;

@@ -88,7 +88,13 @@ function Login(): JSX.Element {
       <Navbar />
       <form method="post" onSubmit={handleSubmit}>
         <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
+          <Container
+            component="main"
+            maxWidth="xs"
+            style={{
+              marginBottom: '4em',
+            }}
+          >
             <CssBaseline />
             <Card
               sx={{

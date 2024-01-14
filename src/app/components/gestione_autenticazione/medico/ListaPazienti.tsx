@@ -1,4 +1,5 @@
 import MenuIcon from '@mui/icons-material/Menu';
+import { Divider } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,27 +8,21 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
-import React, { useEffect, useState } from 'react';
 import Navbar from 'app/components/Navbar';
 import Caricamento from 'app/components/gestione_app/Caricamento';
+import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
+import React, { useEffect, useState } from 'react';
 import ElementoLista from './ElementoLista';
-import { Divider } from '@mui/material';
-import {
-  UserType,
-  useUser,
-} from 'app/components/gestione_autenticazione/UserProvider';
-import AccessoNegato from 'app/components/gestione_autenticazione/AccessoNegato';
 
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import Button from '@mui/material/Button';
-import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
 import ChecklistIcon from '@mui/icons-material/Checklist'; //todo
-import QuizIcon from '@mui/icons-material/Quiz'; //quiz giornaliero
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
+import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; //tac
-import 'app/css/gestione_app/FormElements.css';
+import QuizIcon from '@mui/icons-material/Quiz'; //quiz giornaliero
+import Button from '@mui/material/Button';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
+import 'app/css/gestione_app/FormElements.css';
 
 const drawerWidth = 338;
 
@@ -41,7 +36,6 @@ function ListaPazienti(props: Props): JSX.Element {
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
     null
   );
-  const { userType } = useUser();
 
   const fetchData = async (): Promise<void> => {
     const medicoControl = new MedicoControl();
@@ -126,218 +120,214 @@ function ListaPazienti(props: Props): JSX.Element {
   );
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  if (userType === UserType.medico) {
-    return (
-      <div>
-        <Navbar />
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
+  return (
+    <div>
+      <Navbar />
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { sm: `calc(100% - ${drawerWidth}em)` },
+            background: 'blueviolet',
+            height: '3.5em',
+            marginTop: { xs: '3.5em' },
+          }}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Pazienti
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="pazienti"
+        >
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
             sx={{
-              width: { sm: `calc(100% - ${drawerWidth}em)` },
-              background: 'blueviolet',
-              height: '3.5em',
-              marginTop: { xs: '3.5em' },
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+              },
             }}
           >
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" noWrap component="div">
-                Pazienti
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Box
-            component="nav"
-            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="pazienti"
-          >
-            <Drawer
-              container={container}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              ModalProps={{
-                keepMounted: true,
-              }}
-              sx={{
-                display: { xs: 'block', sm: 'none' },
-                '& .MuiDrawer-paper': {
-                  boxSizing: 'border-box',
-                  width: drawerWidth,
-                },
-              }}
-            >
-              {drawer}
-            </Drawer>
-            <Drawer
-              variant="permanent"
-              sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': {
-                  boxSizing: 'border-box',
-                  width: drawerWidth,
-                },
-              }}
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Box>
-          <Box
-            id="datiPaziente"
-            component="main"
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
             sx={{
-              flexGrow: 1,
-              p: 3,
-              width: { sm: '100% ', md: `calc(100%- ${drawerWidth}em)` },
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+              },
             }}
+            open
           >
-            <Toolbar />
-            {selectedPaziente ? (
-              <div>
-                <Typography variant="h4">
-                  {selectedPaziente.codice_fiscale}
-                </Typography>
-                <Typography variant="h6">{selectedPaziente.nome}</Typography>
-
-                <form className="formflex">
-                  <div className="riga">
-                    <Button
-                      style={{
-                        color: isHoveredAndamento ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredAndamento
-                          ? '#b2a1c7'
-                          : '#ffffff',
-
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverAndamento(true)}
-                      onMouseLeave={() => gestisciHoverAndamento(false)}
-                      startIcon={<AutoGraphIcon />}
-                    >
-                      Andamento
-                    </Button>
-
-                    <Button
-                      style={{
-                        color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredQuizPreliminare
-                          ? '#b2a1c7'
-                          : '#ffffff',
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
-                      onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
-                      startIcon={<PsychologyIcon />}
-                    >
-                      quiz preliminare
-                    </Button>
-
-                    <Button
-                      style={{
-                        color: isHoveredTodoList ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredTodoList
-                          ? '#b2a1c7'
-                          : '#ffffff',
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverTodoList(true)}
-                      onMouseLeave={() => gestisciHoverTodoList(false)}
-                      startIcon={<ChecklistIcon />}
-                    >
-                      todo list
-                    </Button>
-                  </div>
-                  <div className="riga">
-                    <Button
-                      style={{
-                        color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredQuizGiornaliero
-                          ? '#b2a1c7'
-                          : '#ffffff',
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
-                      onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
-                      startIcon={<QuizIcon />}
-                    >
-                      quiz giornaliero
-                    </Button>
-
-                    <Button
-                      style={{
-                        color: isHoveredCg ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredCg ? '#b2a1c7' : '#ffffff',
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverCg(true)}
-                      onMouseLeave={() => gestisciHoverCg(false)}
-                      startIcon={<PersonRoundedIcon />}
-                    >
-                      profilo caregiver
-                    </Button>
-
-                    <Button
-                      style={{
-                        color: isHoveredTac ? '#ffffff' : '#8036a1',
-                        borderColor: '#000000',
-                        backgroundColor: isHoveredTac ? '#b2a1c7' : '#ffffff',
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                      }}
-                      variant="outlined"
-                      onMouseEnter={() => gestisciHoverTac(true)}
-                      onMouseLeave={() => gestisciHoverTac(false)}
-                      startIcon={<QuestionMarkIcon />}
-                    >
-                      tac
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            ) : (
-              <Typography paragraph>
-                Seleziona un paziente per visualizzare i dati.
-              </Typography>
-            )}
-          </Box>
+            {drawer}
+          </Drawer>
         </Box>
-      </div>
-    );
-  } else {
-    return <AccessoNegato />;
-  }
+        <Box
+          id="datiPaziente"
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            width: { sm: '100% ', md: `calc(100%- ${drawerWidth}em)` },
+          }}
+        >
+          <Toolbar />
+          {selectedPaziente ? (
+            <div>
+              <Typography variant="h4">
+                {selectedPaziente.codice_fiscale}
+              </Typography>
+              <Typography variant="h6">{selectedPaziente.nome}</Typography>
+
+              <form className="formflex">
+                <div className="riga">
+                  <Button
+                    style={{
+                      color: isHoveredAndamento ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredAndamento
+                        ? '#b2a1c7'
+                        : '#ffffff',
+
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverAndamento(true)}
+                    onMouseLeave={() => gestisciHoverAndamento(false)}
+                    startIcon={<AutoGraphIcon />}
+                  >
+                    Andamento
+                  </Button>
+
+                  <Button
+                    style={{
+                      color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredQuizPreliminare
+                        ? '#b2a1c7'
+                        : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
+                    onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
+                    startIcon={<PsychologyIcon />}
+                  >
+                    quiz preliminare
+                  </Button>
+
+                  <Button
+                    style={{
+                      color: isHoveredTodoList ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredTodoList
+                        ? '#b2a1c7'
+                        : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverTodoList(true)}
+                    onMouseLeave={() => gestisciHoverTodoList(false)}
+                    startIcon={<ChecklistIcon />}
+                  >
+                    todo list
+                  </Button>
+                </div>
+                <div className="riga">
+                  <Button
+                    style={{
+                      color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredQuizGiornaliero
+                        ? '#b2a1c7'
+                        : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
+                    onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
+                    startIcon={<QuizIcon />}
+                  >
+                    quiz giornaliero
+                  </Button>
+
+                  <Button
+                    style={{
+                      color: isHoveredCg ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredCg ? '#b2a1c7' : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverCg(true)}
+                    onMouseLeave={() => gestisciHoverCg(false)}
+                    startIcon={<PersonRoundedIcon />}
+                  >
+                    profilo caregiver
+                  </Button>
+
+                  <Button
+                    style={{
+                      color: isHoveredTac ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredTac ? '#b2a1c7' : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverTac(true)}
+                    onMouseLeave={() => gestisciHoverTac(false)}
+                    startIcon={<QuestionMarkIcon />}
+                  >
+                    tac
+                  </Button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <Typography paragraph>
+              Seleziona un paziente per visualizzare i dati.
+            </Typography>
+          )}
+        </Box>
+      </Box>
+    </div>
+  );
 }
 
 export default ListaPazienti;

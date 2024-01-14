@@ -1,8 +1,4 @@
-import {
-  ArrowForwardIos,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   Alert,
@@ -28,7 +24,7 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { useEffect, useState } from 'react';
 import { createTheme } from '@mui/material/styles';
-import Caricamento from './Caricamento';
+import Caricamento from 'app/components/gestione_app/Caricamento';
 
 const theme = createTheme({
   palette: {
@@ -283,7 +279,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     impostaColoreBottone(nuovoColore);
   };
 
-
   return (
     <>
       {/* caregiver */}
@@ -302,6 +297,15 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
               color: '#5E35B1',
             }}
           >
+            <Typography
+              component="h1"
+              variant="h5"
+              id="titolo"
+              color="primary"
+              sx={{ mt: 2, fontWeight: 'bold' }}
+            >
+              Diventa uno dei nostri Caregiver!
+            </Typography>
             <CardContent
               sx={{
                 width: '100%',
@@ -310,14 +314,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 alignItems: 'center',
               }}
             >
-              <Typography
-                component="h1"
-                variant="h5"
-                color="primary"
-                sx={{ mt: 2, fontWeight: 'bold' }}
-              >
-                Diventa uno dei nostri Caregiver!
-              </Typography>
               <form
                 className="formflex"
                 style={{ display: visibility.visibilityCG }}
@@ -515,7 +511,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                           : 'block',
                       width: '30%',
                       height: '100%',
-                      marginTop: '1.5em'
+                      marginTop: '1.5em',
                     }}
                     variant="contained"
                     onMouseEnter={() => gestisciHover(true)}

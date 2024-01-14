@@ -3,6 +3,7 @@ import 'app/css/gestione_app/ElementoLista.css';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
 
 interface ElementoListaQuizAllenamentoGiornalieroProps {
+  index: number;
   quizAllenamentoGiornaliero: QuizAllenamentoGiornaliero;
   onQuizAllenamentoGiornalieroClick: (
     quizAllenamentoGiornaliero: QuizAllenamentoGiornaliero
@@ -11,7 +12,11 @@ interface ElementoListaQuizAllenamentoGiornalieroProps {
 
 const ElementoListaQuizAllenamentoGiornaliero: React.FC<
   ElementoListaQuizAllenamentoGiornalieroProps
-> = ({ quizAllenamentoGiornaliero, onQuizAllenamentoGiornalieroClick }) => {
+> = ({
+  index,
+  quizAllenamentoGiornaliero,
+  onQuizAllenamentoGiornalieroClick,
+}) => {
   const handleClick = (): void => {
     onQuizAllenamentoGiornalieroClick(quizAllenamentoGiornaliero);
   };
@@ -25,7 +30,7 @@ const ElementoListaQuizAllenamentoGiornaliero: React.FC<
       }}
       onClick={handleClick}
     >
-      <p style={{ fontWeight: 'bold' }}>{quizAllenamentoGiornaliero.id}</p>
+      <p style={{ fontWeight: 'bold' }}>Quiz {index}</p>
     </div>
   );
 };

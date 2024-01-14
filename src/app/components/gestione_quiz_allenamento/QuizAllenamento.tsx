@@ -72,9 +72,6 @@ function QuizAllenamento(): JSX.Element {
       </>
     );
   }
-  if (userType === UserType.medico) {
-    navigate('/medico/visualizza_quiz_allenamento');
-  }
 
   return (
     <div>

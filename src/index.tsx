@@ -13,7 +13,9 @@ import HomeMedico from './app/components/gestione_autenticazione/medico/HomeMedi
 import ListaPazienti from './app/components/gestione_autenticazione/medico/ListaPazienti';
 import CreaFilastrocca from './app/components/gestione_filastrocca/CreaFilastrocca';
 import ListaFilastrocche from './app/components/gestione_filastrocca/ListaFilastrocche';
+import QuizAllenamento from './app/components/gestione_quiz_allenamento/QuizAllenamento';
 import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/CreaQuizAllenamento';
+import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/ListaQuizAllenamento';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
 import Navbar from './app/components/Navbar';
@@ -38,6 +40,10 @@ root.render(
             element={<AreaPersonaleMedico />}
           />
           <Route path="/medico/lista" element={<ListaPazienti />} />
+          <Route
+            path="/medico/visualizza_quiz_allenamento:id"
+            element={<ListaQuizAllenamento />}
+          />
           <Route path="/caregiver" element={<HomeCaregiver />} />
           <Route
             path="/caregiver/area_personale"
@@ -45,8 +51,16 @@ root.render(
           />
           <Route path="/caregiver/crea_storia" element={<CreaStoria />} />
           <Route
+            path="/caregiver/quiz_allenamento"
+            element={<QuizAllenamento />}
+          />
+          <Route
             path="/caregiver/crea_quiz_allenamento"
             element={<CreaQuizAllenamento />}
+          />
+          <Route
+            path="/caregiver/visualizza_quiz_allenamento"
+            element={<ListaQuizAllenamento />}
           />
           <Route
             path="/caregiver/crea_filastrocca"

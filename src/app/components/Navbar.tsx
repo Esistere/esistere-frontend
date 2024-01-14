@@ -17,8 +17,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { UserType, useUser } from './gestione_autenticazione/UserProvider';
 import logonavbar from 'app/assets/logonavbar.png';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function Navbar(): JSX.Element {
   const navigate = useNavigate();
   const { userType, loading } = useUser();
@@ -481,11 +479,34 @@ function Navbar(): JSX.Element {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem key="Area personale" onClick={handleCloseUserMenu}>
+                    {userType === UserType.caregiver ? (
+                      <Link
+                        to="/caregiver/area_personale"
+                        style={{
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <Typography
+                          textAlign="center"
+                          style={{ color: 'black' }}
+                        >
+                          Area Personale
+                        </Typography>
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/medico/area_personale"
+                        style={{
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <Typography textAlign="center">
+                          Area Personale
+                        </Typography>
+                      </Link>
+                    )}
+                  </MenuItem>
                 </Menu>
               </Box>
             )}

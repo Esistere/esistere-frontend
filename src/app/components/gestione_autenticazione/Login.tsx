@@ -69,14 +69,10 @@ function Login(): JSX.Element {
       .then((value) => {
         switch (value) {
           case UserType.medico:
-            // TODO Routing dedicato al medico
-            console.log('medico');
             navigate('/');
             window.location.reload();
             break;
           case UserType.caregiver:
-            // TODO Routing dedico al caregiver
-            console.log('caregiver');
             navigate('/');
             window.location.reload();
             break;

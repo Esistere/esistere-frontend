@@ -197,17 +197,17 @@ function Navbar(): JSX.Element {
                   )}
                 </Link>
                 <Link
-                  to="/caregiver/crea_quiz_allenamento"
+                  to="/caregiver/quiz_allenamento"
                   style={{
                     textDecoration: 'none',
                   }}
                 >
-                  {userType === UserType.caregiver && (
+                  {userType !== null && (
                     <Button
                       onClick={handleCloseDrawer}
                       sx={{ my: 2, color: 'black', display: 'block' }}
                     >
-                      crea quiz allenamento
+                      Quiz Allenamento
                     </Button>
                   )}
                 </Link>
@@ -253,28 +253,6 @@ function Navbar(): JSX.Element {
                       sx={{ my: 2, color: 'black', display: 'block' }}
                     >
                       Crea ToDoList
-                    </Button>
-                  )}
-                </Link>
-
-                <Link
-                  to="/"
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userType != null && (
-                    <Button
-                      onClick={() => {
-                        handleCloseDrawer;
-                        localStorage.removeItem('jwt');
-                        navigate('/');
-                        window.location.reload();
-                        <Link to="/"></Link>;
-                      }}
-                      sx={{ my: 2, color: 'black', display: 'block' }}
-                    >
-                      Logout
                     </Button>
                   )}
                 </Link>
@@ -374,17 +352,17 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to="/caregiver/crea_quiz_allenamento"
+                to="/caregiver/quiz_allenamento"
                 style={{
                   textDecoration: 'none',
                 }}
               >
-                {userType === UserType.caregiver && (
+                {userType !== null && (
                   <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    crea quiz allenamento
+                    Quiz Allenamento
                   </Button>
                 )}
               </Link>
@@ -430,28 +408,6 @@ function Navbar(): JSX.Element {
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Crea ToDoList
-                  </Button>
-                )}
-              </Link>
-
-              <Link
-                to="/"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                {userType != null && (
-                  <Button
-                    onClick={() => {
-                      handleCloseDrawer;
-                      localStorage.removeItem('jwt');
-                      navigate('/');
-                      window.location.reload();
-                      <Link to="/"></Link>;
-                    }}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    Logout
                   </Button>
                 )}
               </Link>
@@ -501,11 +457,35 @@ function Navbar(): JSX.Element {
                           textDecoration: 'none',
                         }}
                       >
-                        <Typography textAlign="center">
+                        <Typography
+                          textAlign="center"
+                          style={{ color: 'black' }}
+                        >
                           Area Personale
                         </Typography>
                       </Link>
                     )}
+                  </MenuItem>
+                  <MenuItem
+                    key="Logout"
+                    onClick={() => {
+                      handleCloseUserMenu;
+                      localStorage.removeItem('jwt');
+                      navigate('/');
+                      window.location.reload();
+                      <Link to="/"></Link>;
+                    }}
+                  >
+                    <Link
+                      to="/"
+                      style={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Typography textAlign="center" style={{ color: 'black' }}>
+                        Logout
+                      </Typography>
+                    </Link>
                   </MenuItem>
                 </Menu>
               </Box>

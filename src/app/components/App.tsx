@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useUser, UserType } from './gestione_autenticazione/UserProvider';
-import HomeMedico from './gestione_autenticazione/medico/HomeMedico';
-import HomeCaregiver from './gestione_autenticazione/caregiver/HomeCaregiver';
+import { useNavigate } from 'react-router-dom';
 
 function App(): JSX.Element {
   const { userType } = useUser();
+  const navigate = useNavigate();
 
-  if (userType === UserType.medico) {
-    return <HomeMedico />;
-  } else if (userType === UserType.caregiver) {
-    return <HomeCaregiver />;
-  } else {
-    return (
-      <>
-        <h2>Home</h2>
-      </>
-    );
-  }
+  useEffect((): void => {
+    if (userType === UserType.medico) {
+      navigate('/medico');
+    } else if (userType === UserType.caregiver) {
+      navigate('/caregiver');
+    }
+  }, [userType, navigate]);
+
+  return (
+    <>
+      <h2>Home</h2>
+    </>
+  );
 }
 
 export default App;

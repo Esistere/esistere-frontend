@@ -56,6 +56,16 @@ function Navbar(): JSX.Element {
     };
   }, []);
 
+  /* eslint-disable */
+  const homeValue =
+    '#/' +
+    (userType === UserType.medico
+      ? 'medico'
+      : userType === UserType.caregiver
+      ? 'caregiver'
+      : '');
+  /* eslint-enable */
+
   return (
     <div style={{ paddingTop: '64px' }}>
       <AppBar
@@ -69,7 +79,7 @@ function Navbar(): JSX.Element {
               variant="h6"
               noWrap
               component="a"
-              href="#"
+              href={homeValue}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },

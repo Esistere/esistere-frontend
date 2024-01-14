@@ -90,7 +90,8 @@ function Login(): JSX.Element {
             component="main"
             maxWidth="xs"
             style={{
-              marginBottom: '4em',
+              marginTop: '3em',
+              marginBottom: '3em',
             }}
           >
             <CssBaseline />

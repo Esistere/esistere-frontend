@@ -157,6 +157,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   };
 
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [emailError, setEmailError] = useState('');
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newEmail = event.target.value;
 
@@ -165,10 +166,18 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       email: newEmail,
     }));
 
-    setIsEmailValid(emailRegex.test(newEmail) || newEmail === '');
+    const isValid = emailRegex.test(newEmail) || newEmail === '';
+    setIsEmailValid(isValid);
+
+    if (!isValid) {
+      setEmailError('Inserisci un indirizzo email valido.');
+    } else {
+      setEmailError('');
+    }
   };
 
   const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const [passwordError, setPasswordError] = useState('');
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPass = event.target.value;
 
@@ -177,7 +186,14 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       passwd: newPass,
     }));
 
-    setIsPassValid(passwordRegex.test(newPass) || newPass === '');
+    const isValid = passwordRegex.test(newPass) || newPass === '';
+    setIsPassValid(isValid);
+
+    if (!isValid) {
+      setPasswordError('Inserisci una password valida.');
+    } else {
+      setPasswordError('');
+    }
   };
 
   const handleSubmit = async (
@@ -476,6 +492,16 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     required
                     onChange={handleEmailChange}
                   />
+                  {emailError && (
+                    <div
+                      style={{
+                        color: 'red',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
                 </div>
                 <div
                   style={{
@@ -518,6 +544,16 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     required
                     onChange={handlePasswordChange}
                   />
+                  {passwordError && (
+                    <div
+                      style={{
+                        color: 'red',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
                 </div>
                 <div className="riga">
                   <Button

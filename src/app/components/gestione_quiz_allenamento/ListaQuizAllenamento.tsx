@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const drawerWidth = 338;
 interface Props {
@@ -37,12 +37,10 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
 
   const quizAllenamentoControl = new QuizAllenamentoControl();
 
-  const { id } = useParams();
-
   const fetchData = async (): Promise<void> => {
     try {
       const data = await quizAllenamentoControl.fetchQuizAllenamentoByCgFam(
-        Number(id)
+        Number(localStorage.getItem('id'))
       );
       setQuizAllenamento(data);
       setIsLoading(false);

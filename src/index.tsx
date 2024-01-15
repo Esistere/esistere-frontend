@@ -52,7 +52,7 @@ root.render(
             element={React.createElement(withMedico(ListaPazienti))}
           />
           <Route
-            path="/medico/visualizza_quiz_allenamento:id"
+            path="/medico/visualizza_quiz_allenamento"
             element={React.createElement(withMedico(ListaQuizAllenamento))}
           />
 

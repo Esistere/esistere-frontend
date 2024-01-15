@@ -60,10 +60,7 @@ function QuizAllenamento(): JSX.Element {
               testo="Visualizza i quiz"
               nome="registrazione-caregiver-familiare"
               onClick={() => {
-                navigate(
-                  '/caregiver/visualizza_quiz_allenamento/' +
-                    `${localStorage.getItem('id')}`
-                );
+                navigate('/caregiver/visualizza_quiz_allenamento');
                 window.location.reload();
               }}
             />

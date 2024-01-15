@@ -33,7 +33,7 @@ class QuizAllenamentoControl {
     cg_fam: number
   ): Promise<QuizAllenamentoGiornaliero[]> {
     const url =
-      `${this.baseUrl}/quiz_allenamento_cgfam` + `?idCgFam = ${cg_fam}`;
+      `${this.baseUrl}/quiz_allenamento_cgfam?` + `idCgFam=${cg_fam}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -239,7 +239,7 @@ class QuizAllenamentoControl {
 
   async visualizzaQuizAllenamento(idQuizAg: number): Promise<ResponseObject> {
     const url =
-      `${this.baseUrl}/visualizza_quiz_allenamento` + `?id: ${idQuizAg}`;
+      `${this.baseUrl}/visualizza_quiz_allenamento` + `?id=${idQuizAg}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -247,7 +247,6 @@ class QuizAllenamentoControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify({ idQuizAg }),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

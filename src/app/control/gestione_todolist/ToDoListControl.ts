@@ -82,7 +82,7 @@ class ToDoListControl {
   ): Promise<ToDoList[]> {
     const url =
       `${this.baseUrl}/to_do_list_medico_paziente` +
-      `id= ${id}&codice_fiscale= ${codice_fiscale}`;
+      `?idMed=${id}&cfPaziente= ${codice_fiscale}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -142,7 +142,7 @@ class ToDoListControl {
   }
 
   async fetchAttivita(id: number): Promise<Attivita[]> {
-    const url = `${this.baseUrl}/attivita` + `id= ${id}`;
+    const url = `${this.baseUrl}/attivita` + `id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -164,7 +164,7 @@ class ToDoListControl {
   }
 
   async fetchAttivitaByToDoList(id: number): Promise<Attivita[]> {
-    const url = `${this.baseUrl}/attivita_to_do_list` + `id= ${id}`;
+    const url = `${this.baseUrl}/attivita_to_do_list` + `id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',

@@ -12,7 +12,7 @@ class CaregiverFamiliareControl {
   ): Promise<CaregiverFamiliare> {
     const url =
       `${this.baseUrl}/visualizza_caregiver_familiare` +
-      `?id : ${idCaregiverFamiliare}`;
+      `?id=${idCaregiverFamiliare}`;
 
     try {
       const response = await fetch(url, {

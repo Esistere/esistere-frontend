@@ -19,6 +19,7 @@ import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/Lis
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
 import Navbar from './app/components/Navbar';
+import Footer from './app/components/Footer';
 import reportWebVitals from './app/reportWebVitals';
 import withCaregiver from './app/components/gestione_autenticazione/caregiver/CaregiverHOC';
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
@@ -94,6 +95,7 @@ root.render(
             element={React.createElement(withCaregiver(CreaToDoList))}
           />
         </Routes>
+        <Footer />
       </HashRouter>
     </UserProvider>
   </React.StrictMode>

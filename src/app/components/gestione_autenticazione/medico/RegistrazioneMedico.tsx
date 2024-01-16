@@ -134,10 +134,9 @@ const RegistrazioneMedico: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               padding: (theme) => theme.spacing(3),
-              backgroundColor: '#EDE7F6',
-              borderRadius: '10px',
+              backgroundColor: 'white',
               boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-              color: '#5E35B1',
+              color: '#5E35#1',
             }}
           >
             <CardContent

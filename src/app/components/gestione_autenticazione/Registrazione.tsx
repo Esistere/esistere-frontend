@@ -72,7 +72,7 @@ const Registrazione: React.FC = () => {
               style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
             >
               <div className="optionIcon">
-                <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
+                <SupervisorAccountIcon style={{ fontSize: '5rem'}} />
               </div>
               <h3 className="testo">Ti occupi di uno dei nostri pazienti?</h3>
               <Pulsante

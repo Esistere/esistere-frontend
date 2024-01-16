@@ -226,7 +226,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   };
 
   const handleChangeCaregiverFamiliare = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     const { name, value } = event.target;
     setFormDataCaregiverFamiliare({
@@ -295,6 +295,12 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     impostaColoreBottone(nuovoColore);
   };
 
+  // Handling date focus
+  const [focus, setFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
+  const onFocus = (): void => setFocused(true);
+  const onBlur = (): void => setFocused(false);
+
   return (
     <>
       {/* caregiver */}
@@ -307,8 +313,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
               display: 'flex',
               alignItems: 'center',
               padding: (theme) => theme.spacing(3),
-              backgroundColor: '#EDE7F6',
-              borderRadius: '10px',
+              bgcolor: '#fefefe',
               boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
               color: '#5E35B1',
             }}
@@ -414,9 +419,9 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={handleChangeCaregiverFamiliare}
                   />
                   <TextField
-                    type="date"
                     name="data_di_nascita"
                     id="outlined-birthdate-input"
+                    label="Data di nascita"
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -425,7 +430,14 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    type={hasValue || focus ? 'date' : 'text'}
+                    onChange={(e) => {
+                      if (e.target.value) setHasValue(true);
+                      else setHasValue(false);
+                      handleChangeCaregiverFamiliare(e);
+                    }}
                   />
                 </div>
                 <div className="riga">
@@ -580,7 +592,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                   className="testo"
                   component="h1"
                   variant="h5"
-                  color="primary"
+                  color="#8A2BE2"
                   id="cg-title"
                   sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
                 >

@@ -102,8 +102,8 @@ function Login(): JSX.Element {
                 alignItems: 'center',
                 padding: (theme) => theme.spacing(3),
                 backgroundColor: '#EDE7F6',
-                borderRadius: '10px',
                 boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+                bgcolor: 'white',
                 color: '#5E35B1',
               }}
             >

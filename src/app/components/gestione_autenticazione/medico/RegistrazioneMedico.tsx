@@ -12,7 +12,6 @@ import {
   TextField,
   ThemeProvider,
   Typography,
-  createTheme,
 } from '@mui/material';
 import React, { ChangeEvent, useState } from 'react';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
@@ -21,13 +20,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import 'app/css/gestione_app/FormElements.css';
 import { emailRegex, passwordRegex } from '../Regex';
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#5E35B1',
-    },
-  },
-});
+import { theme } from 'app/components/gestione_app/FormTheme';
 
 const RegistrazioneMedico: React.FC = () => {
   const [formData, setFormData] = useState({

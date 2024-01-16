@@ -23,18 +23,9 @@ import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { createTheme } from '@mui/material/styles';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import { emailRegex, passwordRegex } from '../Regex';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#5E35B1',
-    },
-  },
-});
-
+import { theme } from 'app/components/gestione_app/FormTheme';
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
 }

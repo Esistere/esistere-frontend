@@ -6,8 +6,13 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import logo from 'app/assets/logo512.png';
 import 'app/css/gestione_app/FormElements.css';
+import Caricamento from '../gestione_app/Caricamento';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from './UserProvider';
 
 const Registrazione: React.FC = () => {
+  const navigate = useNavigate();
+  const { userType, loading } = useUser();
   const [tipo, setTipo] = useState<string>('');
 
   const [isWideScreen, setIsWideScreen] = useState(
@@ -28,6 +33,19 @@ const Registrazione: React.FC = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  // If the user is already logged in, redirect to the home page
+  useEffect(() => {
+    if (!loading) {
+      if (userType !== null) {
+        navigate('/');
+      }
+    }
+  }, [userType, loading, navigate]);
+
+  if (loading) {
+    return <Caricamento />;
+  }
 
   return (
     <>

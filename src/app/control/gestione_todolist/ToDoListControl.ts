@@ -52,10 +52,10 @@ class ToDoListControl {
     }
   }
 
-  async fetchToDoListByPaziente(codice_fiscale: number): Promise<ToDoList[]> {
+  async fetchToDoListByPaziente(codice_fiscale: string): Promise<ToDoList[]> {
     const url =
       `${this.baseUrl}/to_do_list_paziente` +
-      `codice_fiscale= ${codice_fiscale}`;
+      `codice_fiscale=${codice_fiscale}`;
     try {
       const response = await fetch(url, {
         method: 'POST',

@@ -236,7 +236,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   };
 
   const handleChangePaziente = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     const { name, value } = event.target;
     setFormDataPaziente({
@@ -296,10 +296,15 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   };
 
   // Handling date focus
-  const [focus, setFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  const onFocus = (): void => setFocused(true);
-  const onBlur = (): void => setFocused(false);
+  const [focusCgFam, setFocusedCgFam] = useState(false);
+  const [hasValueCgFam, setHasValueCgFam] = useState(false);
+  const onFocusCgFam = (): void => setFocusedCgFam(true);
+  const onBlurCgFam = (): void => setFocusedCgFam(false);
+
+  const [focusPaziente, setFocusedPaziente] = useState(false);
+  const [hasValuePaziente, setHasValuePaziente] = useState(false);
+  const onFocusPaziente = (): void => setFocusedPaziente(true);
+  const onBlurPaziente = (): void => setFocusedPaziente(false);
 
   return (
     <>
@@ -430,12 +435,12 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    type={hasValue || focus ? 'date' : 'text'}
+                    onFocus={onFocusCgFam}
+                    onBlur={onBlurCgFam}
+                    type={hasValueCgFam || focusCgFam ? 'date' : 'text'}
                     onChange={(e) => {
-                      if (e.target.value) setHasValue(true);
-                      else setHasValue(false);
+                      if (e.target.value) setHasValueCgFam(true);
+                      else setHasValueCgFam(false);
                       handleChangeCaregiverFamiliare(e);
                     }}
                   />
@@ -610,6 +615,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     name="codice_fiscale"
+                    inputProps={{style: {textTransform: 'uppercase'}}}
                     onChange={handleChangePaziente}
                   />
                   <TextField
@@ -641,11 +647,31 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={handleChangePaziente}
                   />
                   <TextField
+                    name="data_di_nascita"
+                    id="outlined-birthdate-input"
+                    label="Data di nascita"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onFocus={onFocusPaziente}
+                    onBlur={onBlurPaziente}
+                    type={hasValuePaziente || focusPaziente ? 'date' : 'text'}
+                    onChange={(e) => {
+                      if (e.target.value) setHasValuePaziente(true);
+                      else setHasValuePaziente(false);
+                      handleChangePaziente(e);
+                    }}
+                  />
+                  {/* <TextField
                     required
                     type="date"
                     name="data_di_nascita"
                     id="outlined-birthdate-input"
-                    placeholder=""
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -653,7 +679,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     onChange={handleChangePaziente}
-                  />
+                  /> */}
                 </div>
                 <div className="riga">
                   <Autocomplete

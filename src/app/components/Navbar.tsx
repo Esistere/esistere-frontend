@@ -287,21 +287,6 @@ function Navbar(): JSX.Element {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Link
-                to="/"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                {!loading && userType === null && (
-                  <Button
-                    onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    Home
-                  </Button>
-                )}
-              </Link>
-              <Link
                 to="/login"
                 style={{
                   textDecoration: 'none',

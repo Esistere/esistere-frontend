@@ -14,10 +14,11 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import logo from 'app/assets/logo512.png';
 import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserType } from './UserProvider';
+import { UserType, useUser } from './UserProvider';
 import Pulsante from '../gestione_app/Pulsante';
+import Caricamento from '../gestione_app/Caricamento';
 
 const theme = createTheme({
   palette: {
@@ -29,6 +30,8 @@ const theme = createTheme({
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
+  const { userType, loading } = useUser();
+
   const [formData, setFormData] = useState({
     email: '',
     passwd: '',
@@ -81,6 +84,19 @@ function Login(): JSX.Element {
       })
       .catch((e) => console.log(e));
   };
+
+  // If the user is already logged in, redirect to the home page
+  useEffect(() => {
+    if (!loading) {
+      if (userType !== null) {
+        navigate('/');
+      }
+    }
+  }, [userType, loading, navigate]);
+
+  if (loading) {
+    return <Caricamento />;
+  }
 
   return (
     <>

@@ -14,6 +14,7 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useEffect, useState } from 'react';
 import ElementoLista from './ElementoLista';
 
+import { useNavigate } from 'react-router-dom';
 import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import ChecklistIcon from '@mui/icons-material/Checklist'; //todo
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
@@ -31,6 +32,7 @@ interface Props {
 }
 
 function ListaPazienti(props: Props): JSX.Element {
+  const navigate = useNavigate();
   const [pazienti, setPazienti] = useState<Paziente[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
@@ -243,7 +245,6 @@ function ListaPazienti(props: Props): JSX.Element {
                   >
                     quiz preliminare
                   </Button>
-
                   <Button
                     style={{
                       color: isHoveredTodoList ? '#ffffff' : '#8036a1',
@@ -254,6 +255,11 @@ function ListaPazienti(props: Props): JSX.Element {
                       width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
+                    }}
+                    onClick={() => {
+                      navigate('/medico/visualizza_todolist', {
+                        state: selectedPaziente.codice_fiscale,
+                      });
                     }}
                     variant="outlined"
                     onMouseEnter={() => gestisciHoverTodoList(true)}

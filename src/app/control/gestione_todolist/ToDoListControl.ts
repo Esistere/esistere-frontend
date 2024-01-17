@@ -1,6 +1,7 @@
 import { WEBSERVER } from 'app/config';
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import { Attivita } from 'app/interfaces/gestione_todolist/Attivita';
+import { ResponseObjectToDoList } from 'app/interfaces/gestione_todolist/ResponseObjectToDoList';
 
 class ToDoListControl {
   private baseUrl: string;
@@ -53,9 +54,7 @@ class ToDoListControl {
   }
 
   async fetchToDoListByPaziente(codice_fiscale: string): Promise<ToDoList[]> {
-    const url =
-      `${this.baseUrl}/to_do_list_paziente` +
-      `codice_fiscale=${codice_fiscale}`;
+    const url = `${this.baseUrl}/to_do_list_paziente`;
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -63,6 +62,7 @@ class ToDoListControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
+        body: JSON.stringify({ codice_fiscale }),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
@@ -164,7 +164,7 @@ class ToDoListControl {
   }
 
   async fetchAttivitaByToDoList(id: number): Promise<Attivita[]> {
-    const url = `${this.baseUrl}/attivita_to_do_list` + `id=${id}`;
+    const url = `${this.baseUrl}/attivita_to_do_list` + `?id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -177,6 +177,28 @@ class ToDoListControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const data: Attivita[] = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(`Error fetching ToDoList: ${error.message}`);
+      else throw new Error('Unknown error occurred while fetching ToDoList.');
+    }
+  }
+
+  async fetchToDoListCompleta(id: number): Promise<ResponseObjectToDoList> {
+    const url = `${this.baseUrl}/visualizza_to_do_list` + `?id=${id}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: ResponseObjectToDoList = await response.json();
       return data;
     } catch (error) {
       if (error instanceof Error)

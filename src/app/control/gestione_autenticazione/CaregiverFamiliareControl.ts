@@ -26,6 +26,8 @@ class CaregiverFamiliareControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const data: CaregiverFamiliare = await response.json();
+      const dataa = new Date(data.data_di_nascita);
+      console.log(data, data.data_di_nascita, dataa.toISOString());
       return data;
     } catch (error) {
       if (error instanceof Error)
@@ -54,6 +56,29 @@ class CaregiverFamiliareControl {
     }
   }
 
+  async modificaCaregiverFamiliare(
+    datiCaregiverFamiliare: CaregiverFamiliare
+  ): Promise<boolean> {
+    const url = `${this.baseUrl}/modifica_caregiver_camiliare`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(datiCaregiverFamiliare),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return true;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
   async inviaDatiCaregiverFamiliare(
     datiCaregiverFamiliare: CaregiverFamiliare
   ): Promise<number> {

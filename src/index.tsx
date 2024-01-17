@@ -18,6 +18,7 @@ import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/Crea
 import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/ListaQuizAllenamento';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
+import ListaToDoList from './app/components/gestione_todolist/ListaToDoList';
 import reportWebVitals from './app/reportWebVitals';
 import withCaregiver from './app/components/gestione_autenticazione/caregiver/CaregiverHOC';
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
@@ -49,6 +50,15 @@ root.render(
             path="/medico/lista"
             element={React.createElement(withMedico(ListaPazienti))}
           />
+          <Route
+            path="/medico/visualizza_quiz_allenamento"
+            element={React.createElement(withMedico(ListaQuizAllenamento))}
+          />
+          <Route
+            path="/medico/visualizza_todolist"
+            element={React.createElement(withMedico(ListaToDoList))}
+          />
+
           <Route
             path="/medico/visualizza_quiz_allenamento"
             element={React.createElement(withMedico(ListaQuizAllenamento))}

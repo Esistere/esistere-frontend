@@ -43,19 +43,11 @@ function AreaPersonaleCaregiver(): JSX.Element {
           if (caregiver.data_di_nascita) {
             const parsedDate = new Date(caregiver.data_di_nascita);
 
-            // Format the date as DD-MM-YYYY
-            // const formattedDate = parsedDate.toLocaleDateString('it-IT');
-            // Create a new Date object from the formatted string
-            // setCaregiverData({
-            //   ...caregiverData,
-
-            // });
-            caregiver.data_di_nascita = new Date(parsedDate);
+            setCaregiverData({
+              ...caregiver,
+              data_di_nascita: parsedDate,
+            });
           }
-          setCaregiverData({
-            ...caregiver,
-            data_di_nascita: caregiver.data_di_nascita,
-          });
           setIsLoading(false);
         } catch (error) {
           console.error('Errore nel recupero dei dati del caregiver', error);
@@ -76,10 +68,18 @@ function AreaPersonaleCaregiver(): JSX.Element {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
-    setCaregiverData({
-      ...caregiverData,
-      [name]: value,
-    });
+    if (name === 'data_di_nascita') {
+      const newValue = new Date(value);
+      setCaregiverData((prevState) => ({
+        ...prevState,
+        [name]: newValue,
+      }));
+    } else {
+      setCaregiverData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
@@ -150,6 +150,8 @@ function AreaPersonaleCaregiver(): JSX.Element {
             <form className="formflex2" method="post" onSubmit={handleSubmit}>
               <div className="riga">
                 <TextField
+                  name="nome"
+                  disabled={disa}
                   required
                   type="text"
                   id="outline-nome"
@@ -164,6 +166,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
                 />
 
                 <TextField
+                  name="cognome"
                   disabled={disa}
                   required
                   type="text"
@@ -180,6 +183,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
               </div>
               <div className="riga">
                 <TextField
+                  name="indirizzo"
                   disabled={disa}
                   required
                   type="text"
@@ -194,6 +198,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
                   onChange={handleChange}
                 />
                 <TextField
+                  name="numero_civico"
                   disabled={disa}
                   required
                   type="text"
@@ -210,6 +215,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
               </div>
               <div className="riga">
                 <TextField
+                  name="citta"
                   disabled={disa}
                   required
                   type="text"
@@ -224,6 +230,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
                   onChange={handleChange}
                 />
                 <TextField
+                  name="data_di_nascita"
                   disabled={disa}
                   required
                   type="date"
@@ -235,13 +242,14 @@ function AreaPersonaleCaregiver(): JSX.Element {
                     boxSizing: 'border-box',
                   }}
                   value={
-                    caregiverData.data_di_nascita.toISOString().split('T')[+1]
+                    caregiverData.data_di_nascita.toISOString().split('T')[0]
                   }
                   onChange={handleChange}
                 />
               </div>
               <div className="riga">
                 <TextField
+                  name="numero_di_telefono"
                   disabled={disa}
                   required
                   type="text"
@@ -256,6 +264,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
                   onChange={handleChange}
                 />
                 <TextField
+                  name="email"
                   disabled={disa}
                   required
                   type="email"
@@ -272,6 +281,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
               </div>
               <div className="riga">
                 <TextField
+                  name="passwd"
                   disabled={disa}
                   required
                   type="password"

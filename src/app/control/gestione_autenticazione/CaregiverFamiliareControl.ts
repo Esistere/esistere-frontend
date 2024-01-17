@@ -26,8 +26,6 @@ class CaregiverFamiliareControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const data: CaregiverFamiliare = await response.json();
-      const dataa = new Date(data.data_di_nascita);
-      console.log(data, data.data_di_nascita, dataa.toISOString());
       return data;
     } catch (error) {
       if (error instanceof Error)

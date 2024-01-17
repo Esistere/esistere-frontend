@@ -113,6 +113,28 @@ class MedicoControl {
       throw new Error('Error fetching paziente');
     }
   }
+
+  async modificaMedico(datiMedico: Medico): Promise<boolean> {
+    const url = `${this.baseUrl}/modifica_medico`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(datiMedico),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return true;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
 }
 
 export default MedicoControl;

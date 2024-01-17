@@ -57,7 +57,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     citta: '',
     numero_civico: '',
     data_di_nascita: '',
-    numero_telefono: '',
+    numero_di_telefono: '',
     email: '',
     passwd: '',
   });
@@ -615,7 +615,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     name="codice_fiscale"
-                    inputProps={{style: {textTransform: 'uppercase'}}}
+                    inputProps={{ style: { textTransform: 'uppercase' } }}
                     onChange={handleChangePaziente}
                   />
                   <TextField

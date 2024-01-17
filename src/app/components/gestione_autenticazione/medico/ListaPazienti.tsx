@@ -121,7 +121,7 @@ function ListaPazienti(props: Props): JSX.Element {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   return (
-    <div>
+    <>
       <Navbar />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -326,7 +326,7 @@ function ListaPazienti(props: Props): JSX.Element {
           )}
         </Box>
       </Box>
-    </div>
+    </>
   );
 }
 

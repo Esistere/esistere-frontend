@@ -14,11 +14,12 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import logo from 'app/assets/logo512.png';
 import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserType, useUser } from './UserProvider';
 import Pulsante from '../gestione_app/Pulsante';
 import Caricamento from '../gestione_app/Caricamento';
+import { emailRegex, passwordRegex } from 'app/regex';
 import Navbar from '../Navbar';
 
 const theme = createTheme({
@@ -39,14 +40,44 @@ function Login(): JSX.Element {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [emailError, setEmailError] = useState('');
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newEmail = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      email: newEmail,
+    }));
+
+    const isValid = emailRegex.test(newEmail) || newEmail === '';
+    setIsEmailValid(isValid);
+
+    if (!isValid) {
+      setEmailError('Inserisci un indirizzo email valido.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const [passwordError, setPasswordError] = useState('');
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newPass = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      passwd: newPass,
+    }));
+
+    const isValid = passwordRegex.test(newPass) || newPass === '';
+    setIsPassValid(isValid);
+
+    if (!isValid) {
+      setPasswordError('Inserisci una password valida.');
+    } else {
+      setPasswordError('');
+    }
   };
 
   const handleClickShowPassword = (): void =>
@@ -102,68 +133,79 @@ function Login(): JSX.Element {
   return (
     <>
       <Navbar />
-      <form method="post" onSubmit={handleSubmit}>
-        <ThemeProvider theme={theme}>
-          <Container
-            component="main"
-            maxWidth="xs"
-            style={{
-              marginTop: '3em',
-              marginBottom: '3em',
+      <ThemeProvider theme={theme}>
+        <Container
+          component="main"
+          maxWidth="xs"
+          style={{
+            marginTop: '3em',
+            marginBottom: '3em',
+          }}
+        >
+          <CssBaseline />
+          <Card
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: (theme) => theme.spacing(3),
+              backgroundColor: '#EDE7F6',
+              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+              bgcolor: 'white',
+              color: '#5E35B1',
             }}
           >
-            <CssBaseline />
-            <Card
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: (theme) => theme.spacing(3),
-                backgroundColor: '#EDE7F6',
-                boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-                bgcolor: 'white',
-                color: '#5E35B1',
-              }}
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ height: '100px', marginTop: '20px' }}
+            />
+            <Typography
+              component="h1"
+              variant="h5"
+              color="primary"
+              sx={{ mt: 2, fontWeight: 'bold' }}
             >
-              <img
-                src={logo}
-                alt="Logo"
-                style={{ height: '100px', marginTop: '20px' }}
-              />
-              <Typography
-                component="h1"
-                variant="h5"
-                color="primary"
-                sx={{ mt: 2, fontWeight: 'bold' }}
-              >
-                Accedi
-              </Typography>
-              <CardContent>
+              Accedi
+            </Typography>
+            <CardContent>
+              <form method="post" onSubmit={handleSubmit}>
                 <Box sx={{ mt: 1 }}>
                   <TextField
                     margin="normal"
                     required
-                    fullWidth
+                    sx={{ width: '20em' }}
                     id="email"
                     label="Email"
                     name="email"
+                    error={!isEmailValid && formData.email.length > 0}
                     autoComplete="email"
                     autoFocus
                     variant="outlined"
                     color="primary"
-                    onChange={handleChange}
+                    onChange={handleEmailChange}
                   />
+                  {emailError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                      }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
                   <TextField
                     margin="normal"
                     required
-                    fullWidth
+                    sx={{ width: '20em' }}
                     name="passwd"
                     label="Password"
+                    error={!isPassValid && formData.passwd.length > 0}
                     id="password"
                     autoComplete="current-password"
                     variant="outlined"
                     color="primary"
-                    onChange={(event) => handleChange(event)}
+                    onChange={handlePasswordChange}
                     type={showPassword ? 'text' : 'password'}
                     InputProps={{
                       endAdornment: (
@@ -180,6 +222,15 @@ function Login(): JSX.Element {
                       ),
                     }}
                   />
+                  {passwordError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
                   <Pulsante
                     tipologia="scuro"
                     testo="Accedi"
@@ -190,7 +241,6 @@ function Login(): JSX.Element {
                     sx={{ mt: 3, mb: 2 }}
                     color="primary"
                   />
-
                   <Typography variant="body2" sx={{ mb: 2 }}>
                     Non hai un account?{' '}
                     <Link
@@ -205,11 +255,11 @@ function Login(): JSX.Element {
                     </Link>
                   </Typography>
                 </Box>
-              </CardContent>
-            </Card>
-          </Container>
-        </ThemeProvider>
-      </form>
+              </form>
+            </CardContent>
+          </Card>
+        </Container>
+      </ThemeProvider>
     </>
   );
 }

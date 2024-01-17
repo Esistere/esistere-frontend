@@ -19,7 +19,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import 'app/css/gestione_app/FormElements.css';
-import { emailRegex, passwordRegex } from '../Regex';
+import { emailRegex, passwordRegex } from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 
 const RegistrazioneMedico: React.FC = () => {
@@ -43,6 +43,7 @@ const RegistrazioneMedico: React.FC = () => {
   };
 
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [emailError, setEmailError] = useState('');
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newEmail = event.target.value;
 
@@ -51,10 +52,18 @@ const RegistrazioneMedico: React.FC = () => {
       email: newEmail,
     }));
 
-    setIsEmailValid(emailRegex.test(newEmail) || newEmail === '');
+    const isValid = emailRegex.test(newEmail) || newEmail === '';
+    setIsEmailValid(isValid);
+
+    if (!isValid) {
+      setEmailError('Inserisci un indirizzo email valido.');
+    } else {
+      setEmailError('');
+    }
   };
 
   const [isPassValid, setIsPassValid] = useState<boolean>(true);
+  const [passwordError, setPasswordError] = useState('');
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPass = event.target.value;
 
@@ -63,7 +72,14 @@ const RegistrazioneMedico: React.FC = () => {
       passwd: newPass,
     }));
 
-    setIsPassValid(passwordRegex.test(newPass) || newPass === '');
+    const isValid = passwordRegex.test(newPass) || newPass === '';
+    setIsPassValid(isValid);
+
+    if (!isValid) {
+      setPasswordError('Inserisci una password valida.');
+    } else {
+      setPasswordError('');
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -271,6 +287,7 @@ const RegistrazioneMedico: React.FC = () => {
                       boxSizing: 'border-box',
                       marginLeft: '20%',
                       marginRight: '20%',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     InputProps={{
                       endAdornment: (
@@ -282,6 +299,16 @@ const RegistrazioneMedico: React.FC = () => {
                       ),
                     }}
                   />
+                  {emailError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
                 </div>
                 <div
                   style={{
@@ -303,6 +330,7 @@ const RegistrazioneMedico: React.FC = () => {
                       flexBasis: '26em',
                       margin: '1em',
                       boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     InputProps={{
                       endAdornment: (
@@ -320,6 +348,16 @@ const RegistrazioneMedico: React.FC = () => {
                     }}
                     onChange={handlePasswordChange}
                   />
+                  {passwordError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {passwordError}
+                    </div>
+                  )}
                 </div>
                 <div
                   style={{

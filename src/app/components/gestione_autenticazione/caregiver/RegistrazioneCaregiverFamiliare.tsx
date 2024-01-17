@@ -24,7 +24,7 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Caricamento from 'app/components/gestione_app/Caricamento';
-import { emailRegex, passwordRegex } from '../Regex';
+import { emailRegex, passwordRegex } from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
@@ -503,7 +503,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                   {emailError && (
                     <div
                       style={{
-                        color: 'red',
+                        color: '#D32F2F',
                         whiteSpace: 'pre-wrap',
                       }}
                     >
@@ -555,7 +555,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                   {passwordError && (
                     <div
                       style={{
-                        color: 'red',
+                        color: '#D32F2F',
                         whiteSpace: 'pre-wrap',
                       }}
                     >

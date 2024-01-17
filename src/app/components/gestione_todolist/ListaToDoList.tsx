@@ -18,6 +18,7 @@ import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import ToDoListControl from 'app/control/gestione_todolist/ToDoListControl';
 import ElementoDatiToDoList from './ElementoDatiToDoList';
 import ElementoToDoList from './ElementoToDoList';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 338;
 
@@ -25,28 +26,32 @@ interface Props {
   window?: () => Window;
 }
 
-function ListaToDoList(props: Props, cf: string): JSX.Element {
+function ListaToDoList(props: Props): JSX.Element {
   const [toDoList, setToDoList] = useState<ToDoList[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedToDoList, setSelectedToDoList] = useState<ToDoList | null>(
     null
   );
-
-  const fetchData = async (): Promise<void> => {
-    const toDoListControl = new ToDoListControl();
-
-    try {
-      const data = await toDoListControl.fetchToDoListByPaziente(cf);
-      setToDoList(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching pazienti:', error);
-    }
-  };
+  const location = useLocation();
+  const cf = location.state;
 
   useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      const toDoListControl = new ToDoListControl();
+
+      try {
+        if (cf) {
+          const data = await toDoListControl.fetchToDoListByPaziente(cf);
+          setToDoList(data);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching pazienti:', error);
+      }
+    };
+
     fetchData();
-  }, []);
+  }, [cf]);
 
   const handleToDoListClick = (toDoList: ToDoList): void => {
     setSelectedToDoList(toDoList);
@@ -114,7 +119,7 @@ function ListaToDoList(props: Props, cf: string): JSX.Element {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Pazienti
+              ToDoList
             </Typography>
           </Toolbar>
         </AppBar>
@@ -166,9 +171,7 @@ function ListaToDoList(props: Props, cf: string): JSX.Element {
         >
           <Toolbar />
           {selectedToDoList ? (
-            <div>
-              <Typography variant="h4">{selectedToDoList.id}</Typography>
-            </div>
+            <ElementoDatiToDoList {...selectedToDoList} />
           ) : (
             <Typography paragraph>Seleziona una ToDoList.</Typography>
           )}

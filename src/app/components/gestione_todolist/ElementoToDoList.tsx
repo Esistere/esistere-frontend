@@ -1,5 +1,4 @@
 import React from 'react';
-import ElementoDatiToDoList from './ElementoDatiToDoList';
 
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 
@@ -30,8 +29,7 @@ const ElementoToDoList: React.FC<ElementoToDoListProps> = ({
       }}
       onClick={handleClick}
     >
-      <h2>Attività della ToDoList</h2>
-      <p style={{ fontWeight: 'bold' }}>{`ToDoList ${index}`}</p>
+      <h2>{`ToDoList ${index + 1}`}</h2>
     </div>
   );
 };

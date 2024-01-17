@@ -67,13 +67,13 @@ function Navbar(): JSX.Element {
   /* eslint-enable */
 
   return (
-    <div style={{ paddingTop: '64px' }}>
+    <div>
       <AppBar
-        position="fixed"
+        position="sticky"
         id="appBar"
         sx={{ top: 0, zIndex: 1201, backgroundColor: 'blueviolet' }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth={false}>
           <Toolbar disableGutters>
             <Typography
               variant="h6"

@@ -14,6 +14,7 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import Pulsante from 'app/components/gestione_app/Pulsante';
 import avataricon from 'app/assets/avatar-icon.png';
+import Navbar from 'app/components/Navbar';
 
 function AreaPersonaleCaregiver(): JSX.Element {
   const [caregiverData, setCaregiverData] = useState<CaregiverFamiliare>({
@@ -105,6 +106,7 @@ function AreaPersonaleCaregiver(): JSX.Element {
 
   return (
     <>
+      <Navbar />
       <Container component="main" maxWidth="lg">
         <CssBaseline />
         <Card

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useUser, UserType } from './gestione_autenticazione/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import Caricamento from './gestione_app/Caricamento';
+import Navbar from './Navbar';
 import Footer from './Footer';
 
 function App(): JSX.Element {
@@ -24,6 +25,7 @@ function App(): JSX.Element {
 
   return (
     <>
+      <Navbar />
       <h2>Home</h2>
       <Footer />
     </>

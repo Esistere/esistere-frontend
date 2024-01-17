@@ -9,6 +9,7 @@ import 'app/css/gestione_app/FormElements.css';
 import Caricamento from '../gestione_app/Caricamento';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserProvider';
+import Navbar from '../Navbar';
 
 const Registrazione: React.FC = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const Registrazione: React.FC = () => {
 
   return (
     <>
+      <Navbar />
       <div className="allContainer">
         <img
           src={logo}
@@ -90,7 +92,7 @@ const Registrazione: React.FC = () => {
               style={isWideScreen ? { borderRight: '1px #ede7f6' } : {}}
             >
               <div className="optionIcon">
-                <SupervisorAccountIcon style={{ fontSize: '5rem'}} />
+                <SupervisorAccountIcon style={{ fontSize: '5rem' }} />
               </div>
               <h3 className="testo">Ti occupi di uno dei nostri pazienti?</h3>
               <Pulsante

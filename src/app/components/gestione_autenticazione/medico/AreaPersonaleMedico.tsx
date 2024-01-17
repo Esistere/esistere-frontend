@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import 'app/css/gestione_app/FormElements.css';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import { Medico } from 'app/interfaces/gestione_autenticazione/Medico';
+import Navbar from 'app/components/Navbar';
 function AreaPersonaleMedico(): JSX.Element {
   const [medicoData, setMedicoData] = useState<Medico | null>(null);
 
@@ -24,6 +25,7 @@ function AreaPersonaleMedico(): JSX.Element {
 
   return (
     <>
+      <Navbar />
       <form style={{ display: 'flex', flexWrap: 'wrap', width: '50%' }}>
         <div className="riga">
           <TextField

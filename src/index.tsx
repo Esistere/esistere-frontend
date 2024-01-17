@@ -18,7 +18,6 @@ import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/Crea
 import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/ListaQuizAllenamento';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
-import Navbar from './app/components/Navbar';
 import reportWebVitals from './app/reportWebVitals';
 import withCaregiver from './app/components/gestione_autenticazione/caregiver/CaregiverHOC';
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
@@ -31,7 +30,6 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <HashRouter>
-        <Navbar />
         <Routes>
           {/* Global paths */}
           <Route path="/" element={<App />} />

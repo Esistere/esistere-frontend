@@ -13,7 +13,7 @@ import Slider from 'app/components/gestione_app/Slider';
 
 const images = [cgpaziente, filastrocca, lineaguida, lineaguida];
 const HomeMedico: React.FC = () => {
-  const [pazienti, setPazienti] = useState<Paziente[]>([]);
+  const [, setPazienti] = useState<Paziente[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (): Promise<void> => {

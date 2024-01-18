@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import Footer from 'app/components/Footer';
-import {
-  Box,
-  Button,
-  ButtonBase,
-  Card,
-  CardMedia,
-  Grid,
-  Link,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, Button, CardMedia, Grid, Typography } from '@mui/material';
 import Navbar from 'app/components/Navbar';
-import { Container, ThemeProvider } from '@mui/system';
-import { theme } from 'app/components/gestione_app/FormTheme';
 
 const HomeCaregiver: React.FC = () => {
-  const [caregiver, setCaregiver] = useState<CaregiverFamiliare[]>([]);
+  // const [caregiver, setCaregiver] = useState<CaregiverFamiliare[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const aspectRatio = 16 / 9;
+  // const aspectRatio = 16 / 9;
 
   const fetchData = async (): Promise<void> => {
     const caregiverFamiliareControl = new CaregiverFamiliareControl();
@@ -31,6 +18,7 @@ const HomeCaregiver: React.FC = () => {
         Number(localStorage.getItem('id'))
       );
       //setCaregiver(data);
+      console.log(data);
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching dati caregiver familiare:', error);

@@ -10,11 +10,21 @@ import {
   Radio,
   FormControlLabel,
 } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
 import { DomandaRisposta } from 'app/interfaces/gestione_quiz_allenamento/DomandaRisposta';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
 import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
+import 'app/css/gestione_app/FormElements.css';
+import Navbar from '../Navbar';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#8A2BE2',
+    },
+  },
+});
 function CreaQuizAllenamento(): JSX.Element {
   const [quizAllenamento, setQuizAllenamento] =
     useState<QuizAllenamentoGiornaliero>({
@@ -27,55 +37,72 @@ function CreaQuizAllenamento(): JSX.Element {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newNumberOfQuestions = Number(event.target.value);
+    if (newNumberOfQuestions >= 0) {
+      setQuizAllenamento({
+        ...quizAllenamento,
+        ['numero_domande']: newNumberOfQuestions,
+      });
 
-    setQuizAllenamento({
-      ...quizAllenamento,
-      ['numero_domande']: newNumberOfQuestions,
-    });
-
-    if (newNumberOfQuestions > domandeRisposte.length) {
-      // Aggiungi nuove domande se il nuovo numero è maggiore
-      const additionalQuestions = newNumberOfQuestions - domandeRisposte.length;
-      const newQuestions = Array.from(
-        { length: additionalQuestions },
-        (): DomandaRisposta => ({
-          quiz_ag: undefined,
-          corretta: undefined,
-          domanda: '',
-          risposte: [
-            {
-              domanda_ag: undefined,
-              risposta: '',
-              corretta: undefined,
-              selezionata: undefined,
-            },
-            {
-              domanda_ag: undefined,
-              risposta: '',
-              corretta: undefined,
-              selezionata: undefined,
-            },
-            {
-              domanda_ag: undefined,
-              risposta: '',
-              corretta: undefined,
-              selezionata: undefined,
-            },
-            {
-              domanda_ag: undefined,
-              risposta: '',
-              corretta: undefined,
-              selezionata: undefined,
-            },
-          ],
-        })
-      );
-      setDomandeRisposte([...domandeRisposte, ...newQuestions]);
-    } else if (newNumberOfQuestions < domandeRisposte.length) {
-      // Rimuovi domande se il nuovo numero è minore
-      const remainingQuestions = domandeRisposte.slice(0, newNumberOfQuestions);
-      setDomandeRisposte(remainingQuestions);
+      if (newNumberOfQuestions > domandeRisposte.length) {
+        // Aggiungi nuove domande se il nuovo numero è maggiore
+        const additionalQuestions =
+          newNumberOfQuestions - domandeRisposte.length;
+        const newQuestions = Array.from(
+          { length: additionalQuestions },
+          (): DomandaRisposta => ({
+            quiz_ag: undefined,
+            corretta: undefined,
+            domanda: '',
+            risposte: [
+              {
+                domanda_ag: undefined,
+                risposta: '',
+                corretta: undefined,
+                selezionata: undefined,
+              },
+              {
+                domanda_ag: undefined,
+                risposta: '',
+                corretta: undefined,
+                selezionata: undefined,
+              },
+              {
+                domanda_ag: undefined,
+                risposta: '',
+                corretta: undefined,
+                selezionata: undefined,
+              },
+              {
+                domanda_ag: undefined,
+                risposta: '',
+                corretta: undefined,
+                selezionata: undefined,
+              },
+            ],
+          })
+        );
+        setDomandeRisposte([...domandeRisposte, ...newQuestions]);
+      } else if (newNumberOfQuestions < domandeRisposte.length) {
+        // Rimuovi domande se il nuovo numero è minore
+        const remainingQuestions = domandeRisposte.slice(
+          0,
+          newNumberOfQuestions
+        );
+        setDomandeRisposte(remainingQuestions);
+      }
+    } else {
+      // Se il nuovo numero è negativo, imposta il numero di domande a 0
+      setQuizAllenamento({
+        ...quizAllenamento,
+        numero_domande: 0,
+      });
     }
+  };
+  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
+
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
   };
   const handleQuestionChange = (
     questionIndex: number,
@@ -146,6 +173,10 @@ function CreaQuizAllenamento(): JSX.Element {
 
   const handleAddQuestion = (): void => {
     setDomandeRisposte([...domandeRisposte, newQuestion]);
+    setQuizAllenamento((prevQuiz) => ({
+      ...prevQuiz,
+      numero_domande: prevQuiz.numero_domande + 1,
+    }));
   };
 
   const handleQuizCreation = (): void => {
@@ -162,77 +193,127 @@ function CreaQuizAllenamento(): JSX.Element {
   };
 
   return (
-    <div>
-      <Typography variant="h4">Quiz Creation Page</Typography>
-      <TextField
-        label="Number of Questions"
-        type="number"
-        value={quizAllenamento.numero_domande}
-        onChange={handleNumberOfQuestionsChange}
-      />
-
-      <Grid container spacing={2}>
-        {domandeRisposte.map((question, questionIndex) => (
-          <Grid item xs={12} key={questionIndex}>
-            <Paper elevation={3} style={{ padding: '16px' }}>
-              <Typography variant="h6">Question {questionIndex + 1}</Typography>
-              <TextField
-                label="Question"
-                fullWidth
-                value={question.domanda}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  handleQuestionChange(questionIndex, event)
-                }
-              />
-
-              <FormControl component="fieldset">
-                <RadioGroup
-                  value={question.risposte.findIndex(
-                    (option) => option.corretta === true
-                  )}
-                  onChange={(event) =>
-                    handleCorrectAnswerChange(questionIndex, event)
-                  }
+    <ThemeProvider theme={theme}>
+      <div>
+        <Navbar />
+        <form className="formflex">
+          <Typography variant="h4" style={{ color: 'blueviolet' }}>
+            Creazione Quiz Allenamento Giornaliero
+          </Typography>
+          <TextField
+            label="Number of Questions"
+            type="number"
+            value={quizAllenamento.numero_domande}
+            onChange={handleNumberOfQuestionsChange}
+          />
+          <Grid container spacing={2} style={{ marginTop: '2em' }}>
+            {domandeRisposte.map((question, questionIndex) => (
+              <Grid item xs={12} key={questionIndex}>
+                <Paper
+                  elevation={3}
+                  style={{ padding: '16px', width: '25em', margin: 'auto' }}
                 >
-                  {question.risposte.map((option, optionIndex) => (
-                    <FormControlLabel
-                      key={optionIndex}
-                      value={option}
-                      control={<Radio />}
-                      label={
-                        <TextField
-                          label={`Option ${optionIndex + 1}`}
-                          fullWidth
-                          value={option.risposta}
-                          onChange={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                          ) =>
-                            handleOptionChange(
-                              questionIndex,
-                              optionIndex,
-                              event
-                            )
+                  <Typography variant="h6">
+                    Domanda {questionIndex + 1}
+                  </Typography>
+                  <TextField
+                    label="Question"
+                    fullWidth
+                    value={question.domanda}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(questionIndex, event)
+                    }
+                    style={{ width: '20em', margin: 'auto' }}
+                  />
+                  <div className="riga">
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        value={
+                          question.risposte.find(
+                            (option) => option.corretta === true
+                          )?.risposta
+                        }
+                        onChange={(event) => {
+                          const selectedValue = event.target.value.trim();
+                          const isLabelEmpty = question.risposte.every(
+                            (option) => option.risposta.trim() === ''
+                          );
+
+                          if (
+                            !isLabelEmpty &&
+                            selectedValue !== '' &&
+                            selectedValue !==
+                              question.risposte.find(
+                                (option) => option.corretta === true
+                              )?.risposta
+                          ) {
+                            handleCorrectAnswerChange(questionIndex, event);
                           }
-                        />
-                      }
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </Paper>
+                        }}
+                      >
+                        {question.risposte.map((option, optionIndex) => (
+                          <FormControlLabel
+                            key={optionIndex}
+                            value={option.risposta}
+                            control={<Radio />}
+                            label={
+                              <TextField
+                                label={`Option ${optionIndex + 1}`}
+                                fullWidth
+                                value={option.risposta}
+                                onChange={(
+                                  event: React.ChangeEvent<HTMLInputElement>
+                                ) =>
+                                  handleOptionChange(
+                                    questionIndex,
+                                    optionIndex,
+                                    event
+                                  )
+                                }
+                                style={{ marginTop: '8px' }}
+                              />
+                            }
+                          />
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
+                  </div>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </form>
 
-      <Button variant="contained" color="primary" onClick={handleAddQuestion}>
-        Add Question
-      </Button>
-
-      <Button variant="contained" color="primary" onClick={handleQuizCreation}>
-        Create Quiz
-      </Button>
-    </div>
+        <div className="riga">
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={handleAddQuestion}
+          >
+            Aggingi Domanda
+          </Button>
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={handleQuizCreation}
+          >
+            Crea Quiz
+          </Button>
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
-
 export default CreaQuizAllenamento;

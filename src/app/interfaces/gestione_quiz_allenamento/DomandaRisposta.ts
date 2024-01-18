@@ -7,5 +7,6 @@ export interface DomandaRisposta {
     risposta: string;
     corretta: boolean | undefined;
     selezionata: boolean | undefined;
+    id: number | undefined;
   }[];
 }

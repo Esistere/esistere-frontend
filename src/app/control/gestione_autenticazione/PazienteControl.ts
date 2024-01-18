@@ -31,6 +31,25 @@ class PazienteControl {
     }
   }
 
+  async fetchCodicePaziente(id: number): Promise<string> {
+    const url = `${this.baseUrl}/visualizza_codice_fiscale` + `?id=${id}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+
+      const codice = await response.json();
+      return codice;
+    } catch (error) {
+      throw new Error('Error fetching paziente');
+    }
+  }
+
   async fetchDatiPaziente(codice_fiscale: string): Promise<Paziente> {
     const url = `${this.baseUrl}/visualizza_paziente`;
 

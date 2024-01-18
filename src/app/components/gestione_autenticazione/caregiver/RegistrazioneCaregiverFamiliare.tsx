@@ -26,6 +26,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import { emailRegex, passwordRegex } from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
+import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
 }
@@ -81,6 +82,8 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     event.preventDefault();
   };
 
+  const [show, setShow] = React.useState(false);
+
   let mediciData: Medico[];
   const caricaMedici = (): caricaMediciResult => {
     const fetchMediciData = async (): Promise<void> => {
@@ -122,6 +125,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
+          setAvvia(false);
           // eslint-disable-next-line react-hooks/exhaustive-deps
           isLoading = false;
         }
@@ -143,7 +147,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     if (requiredFieldsFilled && isEmailValid && isPassValid) {
       setAvvia(true);
     } else {
-      console.log('Please fill in all required fields.');
+      setShow(true);
     }
   };
 
@@ -311,6 +315,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       {/* caregiver */}
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="lg">
+          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
           <CssBaseline />
           <Card
             sx={{
@@ -448,7 +453,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 <div className="riga">
                   <TextField
                     type="text"
-                    name="numero_telefono"
+                    name="numero_di_telefono"
                     id="outlined-num-telefono-input"
                     label="Numero Telefono"
                     style={{

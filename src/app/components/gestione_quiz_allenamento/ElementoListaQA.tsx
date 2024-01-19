@@ -27,10 +27,11 @@ const ElementoListaQuizAllenamentoGiornaliero: React.FC<
         padding: '10px',
         marginBottom: '10px',
         cursor: 'pointer',
+        width: '20em',
       }}
       onClick={handleClick}
     >
-      <p style={{ fontWeight: 'bold' }}>Quiz {index}</p>
+      <h2>Quiz {index}</h2>
     </div>
   );
 };

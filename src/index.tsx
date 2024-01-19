@@ -24,6 +24,7 @@ import withCaregiver from './app/components/gestione_autenticazione/caregiver/Ca
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
 import LineeGuidaForm from './app/components/gestione_linee_guida/LineeGuidaForm';
 import ListaQuiPreliminare from './app/components/gestione_quiz_preliminare/ListaQuizPreliminare';
+import CompilazioneQuizPreliminare from './app/components/gestione_quiz_preliminare/CompilazioneQuizPreliminare';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -114,6 +115,12 @@ root.render(
           <Route
             path="/caregiver/crea_todo_list"
             element={React.createElement(withCaregiver(CreaToDoList))}
+          />
+          <Route
+            path="/caregiver/compila_quiz_preliminare"
+            element={React.createElement(
+              withCaregiver(CompilazioneQuizPreliminare)
+            )}
           />
         </Routes>
       </HashRouter>

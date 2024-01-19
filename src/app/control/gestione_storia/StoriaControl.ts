@@ -1,4 +1,5 @@
 import { WEBSERVER } from 'app/config';
+import { Storia } from 'app/interfaces/gestione_storia/Storia';
 import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
 
 class StoriaControl {
@@ -22,6 +23,27 @@ class StoriaControl {
     }
     const storiaMedia = await response.json();
     return storiaMedia;
+  }
+
+  async inviaStoria(datiStoria: Storia): Promise<boolean> {
+    const url = `${this.baseUrl}/save_storia`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(datiStoria),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return response.ok ? true : false;
+    } catch (error) {
+      throw new Error('Error');
+    }
   }
 
   async getMediaUrl(allegato: string): Promise<string> {

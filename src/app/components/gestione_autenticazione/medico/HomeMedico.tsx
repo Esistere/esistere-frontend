@@ -5,14 +5,8 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { Box, Button, CardMedia, Grid, Typography } from '@mui/material';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import Navbar from 'app/components/Navbar';
-import cgpaziente from 'app/assets/images/cgpaziente.png';
-import filastrocca from 'app/assets/images/filastrocca.png';
-import lineaguida from 'app/assets/images/lineaguida.jpg';
 import { Link } from 'react-router-dom';
-import Slider from 'app/components/gestione_app/Slider';
 
-
-const images = [cgpaziente, filastrocca, lineaguida, lineaguida];
 const HomeMedico: React.FC = () => {
   const [, setPazienti] = useState<Paziente[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,27 +36,16 @@ const HomeMedico: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div
-        style={{
-          maxWidth: '1200px',
-          width: '100%',
-          height: '500px',
-          margin: '0 auto',
-        }}
-      >
-        Grafico
-        <Slider images={images} />
-      </div>
-      <br />
-      <Box margin="2 em">
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Box margin="0 2em">
-              <Typography variant="h4">
+      <div>
+        <br />
+        <Box margin="2 em">
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" style={{ textAlign: 'right' }}>
                 Visualizza la lista dei tuoi pazienti
               </Typography>
               <br />
-              <Typography variant="h6">
+              <Typography variant="h6" style={{ textAlign: 'right' }}>
                 Per visualizzare la lista dei tuoi pazienti, clicca sul pulsante
                 sottostante.
               </Typography>
@@ -72,35 +55,38 @@ const HomeMedico: React.FC = () => {
                   textDecoration: 'none',
                 }}
               >
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: 'blueviolet',
+                    float: 'right',
+                    marginTop: '0.5em',
+                  }}
+                >
                   Visualizza Pazienti
                 </Button>
               </Link>
-            </Box>
-          </Grid>
-          <Grid item xs={6} md={5}>
-            <Box margin="2em">
+            </Grid>
+            <Grid item xs={6} md={5}>
               <CardMedia
                 component="img"
-                style={{ width: '25em', height: '18em', marginBottom: '1em' }}
+                style={{ width: '25em', height: '18em', margin: 'auto' }}
                 image={require('app/assets/images/paziente.png')}
               />
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </div>
       <br />
 
       <div>
         <Grid container spacing={2}>
           <Grid item xs={6} md={5}>
-            <Box margin=" 2em">
-              <CardMedia
-                component="img"
-                style={{ width: '30em', height: '20em', marginBottom: '1em' }}
-                image={require('app/assets/images/quizPreliminareMed.jpg')}
-              />
-            </Box>
+            <CardMedia
+              component="img"
+              style={{ width: '30em', height: '20em', margin: 'auto' }}
+              image={require('app/assets/images/quizPreliminareMed.jpg')}
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <Box margin="0 2em">
@@ -120,7 +106,14 @@ const HomeMedico: React.FC = () => {
                   textDecoration: 'none',
                 }}
               >
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: 'blueviolet',
+                    float: 'left',
+                    marginTop: '0.5em',
+                  }}
+                >
                   Quiz Preliminare
                 </Button>
               </Link>
@@ -130,39 +123,49 @@ const HomeMedico: React.FC = () => {
       </div>
       <br />
 
-      <Box margin="2 em">
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Box margin="0 2em">
-              <Typography variant="h4">Crea una nuova linea guida</Typography>
-              <br />
-              <Typography variant="h6">
-                Aiuta i tuoi pazienti e i caregiver alla creazione delle
-                attività da svolgere tramite le tue linee guida
-              </Typography>
-              <Link
-                to="/medico/LineaGuida"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                <Button variant="contained" color="primary">
-                  Linea Guida
-                </Button>
-              </Link>
-            </Box>
-          </Grid>
-          <Grid item xs={6} md={5}>
-            <Box margin="2em">
+      <div>
+        <Box margin="2 em">
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Box margin="0 2em">
+                <Typography variant="h4" style={{ textAlign: 'right' }}>
+                  Crea una nuova linea guida
+                </Typography>
+                <br />
+                <Typography variant="h6" style={{ textAlign: 'right' }}>
+                  Aiuta i tuoi pazienti e i caregiver alla creazione delle
+                  attività da svolgere insieme ai pazienti tramite le tue linee
+                  guida
+                </Typography>
+                <Link
+                  to="/medico/LineaGuida"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: 'blueviolet',
+                      float: 'right',
+                      marginTop: '0.5em',
+                    }}
+                  >
+                    Linea Guida
+                  </Button>
+                </Link>
+              </Box>
+            </Grid>
+            <Grid item xs={6} md={5}>
               <CardMedia
                 component="img"
-                style={{ width: '25em', height: '18em', marginBottom: '1em' }}
+                style={{ width: '25em', height: '18em', margin: 'auto' }}
                 image={require('app/assets/images/LineeGuidaMed.jpg')}
               />
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </div>
       <br />
       <Footer />
     </>

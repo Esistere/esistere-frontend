@@ -2,7 +2,11 @@ import { WEBSERVER } from 'app/config';
 import { Tac } from 'app/interfaces/gestione_tac/Tac';
 
 class TacControl {
-  baseUrl = WEBSERVER;
+  private baseUrl: string;
+
+  constructor() {
+    this.baseUrl = WEBSERVER;
+  }
 
   async fetchTac(idTac: number): Promise<Tac> {
     const url = `${this.baseUrl}/tac?id=${idTac}`;
@@ -18,6 +22,23 @@ class TacControl {
     }
     const tac = await response.json();
     return tac;
+  }
+
+  async getTacUrl(allegato: string): Promise<string> {
+    const url = `${this.baseUrl}/${allegato}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const tacUrl = URL.createObjectURL(blob);
+    return tacUrl;
   }
 
   async getTacByPaziente(codice_fiscale: string): Promise<Tac[]> {

@@ -24,6 +24,32 @@ class LineaGuidaControl {
       else throw new Error('Unknown error occurred while fetching medici.');
     }
   }
+
+  async fetchLineaGuidaByMed(id: number): Promise<LineaGuida> {
+    const url = `${this.baseUrl}/visualizza_linea_guida_medico` + `id= ${id}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+
+      const data: LineaGuida = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(`Error fetching linea guida: ${error.message}`);
+      else
+        throw new Error('Unknown error occurred while fetching linea guida.');
+    }
+  }
+
   async inviaDatiQuiz(datiLineeGUida: LineaGuida): Promise<void> {
     // TODO fix url
     const url = `${this.baseUrl}/salva_linee_guida`;

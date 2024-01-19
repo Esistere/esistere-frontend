@@ -57,10 +57,35 @@ function QuizAllenamento(): JSX.Element {
             <Pulsante
               tipologia="scuro"
               testo="Visualizza i quiz"
-              nome="registrazione-caregiver-familiare"
+              nome="visualizza-quiz"
               className="optionText"
               onClick={() => {
                 navigate('/caregiver/visualizza_quiz_allenamento');
+                window.location.reload();
+              }}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (userType === UserType.medico) {
+    return (
+      <>
+        <Navbar />
+        <div className="optionContainer">
+          <div className="option ">
+            <div className="optionIcon">
+              <PreviewIcon style={{ fontSize: '5rem' }} />
+            </div>
+            <Pulsante
+              tipologia="scuro"
+              testo="Visualizza i quiz"
+              nome="visualizza-quiz"
+              className="optionText"
+              onClick={() => {
+                navigate('/medico/visualizza_quiz_allenamento');
                 window.location.reload();
               }}
             />

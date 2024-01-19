@@ -23,6 +23,7 @@ import reportWebVitals from './app/reportWebVitals';
 import withCaregiver from './app/components/gestione_autenticazione/caregiver/CaregiverHOC';
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
 import LineeGuidaForm from './app/components/gestione_linee_guida/LineeGuidaForm';
+import ListaQuiPreliminare from './app/components/gestione_quiz_preliminare/ListaQuizPreliminare';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -60,6 +61,10 @@ root.render(
             element={React.createElement(withMedico(ListaToDoList))}
           />
 
+          <Route
+            path="/medico/quiz_preliminare"
+            element={React.createElement(withMedico(ListaQuiPreliminare))}
+          />
           <Route
             path="/medico/visualizza_quiz_allenamento"
             element={React.createElement(withMedico(ListaQuizAllenamento))}

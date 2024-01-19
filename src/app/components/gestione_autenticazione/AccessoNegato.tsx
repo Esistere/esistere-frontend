@@ -34,16 +34,6 @@ const AccessoNegato: React.FC = (): JSX.Element => {
         style={{ width: '10em' }}
       />
     </div>
-    /*<div className="Back">
-      <div className="text">
-        <h1 style={{ textAlign: 'center', marginTop: '9em' }}>
-          Attenzione non sei autorizzato ad accedere a questo servizio
-        </h1>
-      </div>
-      <button onClick={handleGoBack} style={{ backgroundColor: 'blueviolet' }}>
-        Torna Indietro
-      </button>
-    </div> */
   );
 };
 export default AccessoNegato;

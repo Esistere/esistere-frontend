@@ -48,7 +48,7 @@ function CreaStoria(): JSX.Element {
           <Box
             component="form"
             sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' },
+              '& .MuiTextField-root': { m: 1, width: '35ch' },
             }}
             noValidate
             autoComplete="off"

@@ -22,7 +22,6 @@ class QuizAllenamentoControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify({ id }),
       });
       const quiz_allenamento_giornaliero = await response.json();
       return quiz_allenamento_giornaliero;
@@ -70,7 +69,6 @@ class QuizAllenamentoControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify({ id }),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

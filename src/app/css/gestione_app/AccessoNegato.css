@@ -1,0 +1,17 @@
+.Back {
+  position: absolute;
+  background-image: url('app/assets/images/accessoNegato.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  filter: brightness(70%) opacity(85%);
+}
+
+.text {
+  filter: brightness(100%);
+  background-color: rgb(216, 216, 207);
+}

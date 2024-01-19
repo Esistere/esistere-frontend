@@ -2,6 +2,8 @@ import { WEBSERVER } from 'app/config';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
 import { DomandaRisposta } from 'app/interfaces/gestione_quiz_allenamento/DomandaRisposta';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
+import { RispostaQuizAllenamento } from 'app/interfaces/gestione_quiz_allenamento/RispostaQuizAllenamento';
+import { DomandaQuizAllenamento } from 'app/interfaces/gestione_quiz_allenamento/DomandaQuizAllenamento';
 
 class QuizAllenamentoControl {
   private baseUrl: string;
@@ -32,8 +34,7 @@ class QuizAllenamentoControl {
   async fetchQuizAllenamentoByCgFam(
     cg_fam: number
   ): Promise<QuizAllenamentoGiornaliero[]> {
-    const url =
-      `${this.baseUrl}/quiz_allenamento_cgfam?` + `idCgFam=${cg_fam}`;
+    const url = `${this.baseUrl}/quiz_allenamento_cgfam?` + `idCgFam=${cg_fam}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -218,7 +219,9 @@ class QuizAllenamentoControl {
     }
   }
 
-  async inviaQuizAllenamento(quizAllenamento: ResponseObject): Promise<void> {
+  async inviaQuizAllenamento(
+    quizAllenamento: ResponseObject
+  ): Promise<boolean> {
     const url = `${this.baseUrl}/salva_quiz_allenamento`;
     try {
       const response = await fetch(url, {
@@ -232,6 +235,7 @@ class QuizAllenamentoControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }
@@ -262,6 +266,45 @@ class QuizAllenamentoControl {
         throw new Error(
           'Unknown error occurred while fetching risposte quiz allenamento.'
         );
+    }
+  }
+
+  async aggiungiRisposte(risposte: RispostaQuizAllenamento[]): Promise<void> {
+    const url = `${this.baseUrl}/aggiungi_risposte`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(risposte),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async aggiornaDomanda(domanda: DomandaQuizAllenamento): Promise<void> {
+    const url = `${this.baseUrl}/aggiorna_domanda`;
+    console.log(domanda);
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(domanda),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+    } catch (error) {
+      throw new Error('Error');
     }
   }
 }

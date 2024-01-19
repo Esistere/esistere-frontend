@@ -7,6 +7,7 @@ class CaregiverFamiliareControl {
   constructor() {
     this.baseUrl = WEBSERVER;
   }
+
   async fetchDatiCaregiverFamiliare(
     idCaregiverFamiliare: number
   ): Promise<CaregiverFamiliare> {

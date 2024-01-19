@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 const HomeCaregiver: React.FC = () => {
   // const [caregiver, setCaregiver] = useState<CaregiverFamiliare[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const aspectRatio = 16 / 9;
 
   const fetchData = async (): Promise<void> => {
     const caregiverFamiliareControl = new CaregiverFamiliareControl();
@@ -48,16 +47,21 @@ const HomeCaregiver: React.FC = () => {
                 I risultati ti guideranno nella creazione di attività e storie
                 mirate, rendendo ogni momento più significativo.
               </Typography>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: 'blueviolet',
-                  float: 'right',
-                  marginTop: '0.5em',
-                }}
+              <Link
+                to="/caregiver/compila_quiz_preliminare"
+                style={{ textDecoration: 'none' }}
               >
-                Fai il Sage Test
-              </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: 'blueviolet',
+                    float: 'right',
+                    marginTop: '0.5em',
+                  }}
+                >
+                  Fai il Sage Test
+                </Button>
+              </Link>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -94,16 +98,18 @@ const HomeCaregiver: React.FC = () => {
                 progresso e per aiutare il medico ad adattarsi alle tue
                 esigenze.
               </Typography>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: 'blueviolet',
-                  float: 'left',
-                  marginTop: '0.5em',
-                }}
-              >
-                Visualizza ToDo List
-              </Button>
+              <Link to="/caregiver/visualizza_todolist">
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: 'blueviolet',
+                    float: 'left',
+                    marginTop: '0.5em',
+                  }}
+                >
+                  Visualizza ToDo List
+                </Button>
+              </Link>
             </Box>
           </Grid>
         </Grid>
@@ -174,7 +180,7 @@ const HomeCaregiver: React.FC = () => {
                 Lascia che le parole fluiscono nel modulo che uscirà dopo aver
                 cliccato il pulsante qui sotto.
               </Typography>
-              <Link to=" /caregiver/crea_storia">
+              <Link to="/caregiver/crea_storia">
                 <Button
                   variant="contained"
                   style={{ backgroundColor: 'blueviolet', marginTop: '0.5em' }}

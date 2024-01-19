@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.intro {
+  background-image: url('app/assets/images/intro.png');
+  background-size: auto 100%;
+  background-position: right;
+  background-repeat: no-repeat;
+  justify-content: center;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  color: white;
+  margin-bottom: 3 em;
+  position: relative;
+}
+
+.intro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: inherit;
+  filter: inherit;
+  z-index: -1;
+}

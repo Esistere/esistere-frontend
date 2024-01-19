@@ -61,7 +61,10 @@ root.render(
             path="/medico/visualizza_todolist"
             element={React.createElement(withMedico(ListaToDoList))}
           />
-
+          <Route
+            path="/medico/crea_todo_list"
+            element={React.createElement(withMedico(CreaToDoList))}
+          />
           <Route
             path="/medico/quiz_preliminare"
             element={React.createElement(withMedico(ListaQuiPreliminare))}
@@ -112,9 +115,14 @@ root.render(
             path="/caregiver/visualizza_filastrocche"
             element={React.createElement(withCaregiver(ListaFilastrocche))}
           />
+          {/*
           <Route
             path="/caregiver/crea_todo_list"
             element={React.createElement(withCaregiver(CreaToDoList))}
+        />*/}
+          <Route
+            path="/caregiver/visualizza_todolist"
+            element={React.createElement(withCaregiver(ListaToDoList))}
           />
           <Route
             path="/caregiver/compila_quiz_preliminare"

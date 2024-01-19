@@ -11,6 +11,7 @@ import lineaguida from 'app/assets/images/lineaguida.jpg';
 import { Link } from 'react-router-dom';
 import Slider from 'app/components/gestione_app/Slider';
 
+
 const images = [cgpaziente, filastrocca, lineaguida, lineaguida];
 const HomeMedico: React.FC = () => {
   const [, setPazienti] = useState<Paziente[]>([]);

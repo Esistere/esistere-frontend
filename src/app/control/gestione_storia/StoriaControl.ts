@@ -8,8 +8,8 @@ class StoriaControl {
     this.baseUrl = WEBSERVER;
   }
 
-  async fetchStoria(idTac: number): Promise<StoriaMedia> {
-    const url = `${this.baseUrl}/tac?id=${idTac}`;
+  async fetchStoria(idStoria: number): Promise<StoriaMedia> {
+    const url = `${this.baseUrl}/storia?id=${idStoria}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: {

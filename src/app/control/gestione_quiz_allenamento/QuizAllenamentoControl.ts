@@ -14,7 +14,7 @@ class QuizAllenamentoControl {
   async fetchQuizAllenamentoGiornaliero(
     id: number
   ): Promise<QuizAllenamentoGiornaliero[]> {
-    const url = `${this.baseUrl}/quiz_allenamento_giornaliero`;
+    const url = `${this.baseUrl}/quiz_allenamento_giornaliero` + `?id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -60,7 +60,7 @@ class QuizAllenamentoControl {
   async fetchDatiDomandaQuizAllenamento(
     id: number
   ): Promise<DomandaRisposta[]> {
-    const url = `${this.baseUrl}/domanda_allenamento_giornaliero`;
+    const url = `${this.baseUrl}/domanda_allenamento_giornaliero` + `?id=${id}`;
 
     try {
       const response = await fetch(url, {

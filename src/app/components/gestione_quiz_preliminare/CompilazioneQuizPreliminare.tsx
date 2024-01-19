@@ -5,17 +5,6 @@ import { QuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/QuizPr
 import { DomandaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/DomandaQuizPreliminare';
 import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
 import { useLocation } from 'react-router-dom';
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Drawer,
-  IconButton,
-  List,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import Navbar from '../Navbar';
 
 function CompilaQuiz(): JSX.Element {
   const [quizPreliminare, setQuizPreliminare] =
@@ -46,7 +35,7 @@ function CompilaQuiz(): JSX.Element {
         setCodiceFiscale(data);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching quiz preliminari', error);
+        console.error('Error fetching codice_fiscale', error);
       }
     };
 
@@ -59,12 +48,9 @@ function CompilaQuiz(): JSX.Element {
 
   return (
     <div>
-      {/* Qui inserisci la tua logica per visualizzare e compilare il quiz */}
-      {/* Ad esempio, puoi mappare le domande e le risposte */}
       {quizPreliminare.map((domanda: DomandaQuizPreliminare) => (
         <div key={domanda.id}>
           <p>{domanda.domanda}</p>
-          {/* Aggiungi la logica per gestire le risposte */}
           <input type="textfield" name={`domanda_${domanda.id}`} />
         </div>
       ))}

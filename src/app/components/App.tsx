@@ -34,22 +34,22 @@ function App(): JSX.Element {
         </div>
         <div>
           <Box margin="5 em">
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={2} style={{ marginTop: '4em' }}>
+              <Grid item xs={6} md={5}>
                 <CardMedia
                   component="img"
                   style={{ width: '25em', height: '25em', margin: 'auto' }}
                   image={require('app/assets/images/Alzheimer.jpg')}
                 />
               </Grid>
-              <Grid item xs={6} md={5}>
+              <Grid item xs={12} md={6}>
                 <Typography
                   variant="h5"
                   style={{ textAlign: 'left', marginTop: '4em' }}
                 >
-                  L &apos;Alzheimer è una malattia neurodegenerativa che
-                  colpisce il cervello, causando perdita progressiva di memoria
-                  e funzioni cognitive, influenzando la vita quotidiana delle
+                  L&apos;Alzheimer è una malattia neurodegenerativa che colpisce
+                  il cervello, causando perdita progressiva di memoria e
+                  funzioni cognitive, influenzando la vita quotidiana delle
                   persone.
                 </Typography>
               </Grid>
@@ -96,7 +96,7 @@ function App(): JSX.Element {
                   image={require('app/assets/images/sagetest.jpg')}
                 />
               </Grid>
-              <Grid item xs={6} md={5}>
+              <Grid item xs={12} md={6}>
                 <Typography
                   variant="h5"
                   style={{ textAlign: 'left', marginTop: '4em' }}

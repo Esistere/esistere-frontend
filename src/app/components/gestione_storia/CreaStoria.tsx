@@ -5,7 +5,16 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Navbar from '../Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#8A2BE2',
+    },
+  },
+});
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -32,56 +41,59 @@ function CreaStoria(): JSX.Element {
   };
 
   return (
-    <>
-      <form className="formflex">
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div className="riga">
-            <TextField
-              required
-              fullWidth
-              id="outlined-multiline-storia"
-              label="Testo Storia"
-              multiline
-              rows={10}
-            />
-          </div>
-          <div className="riga">
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-              onMouseEnter={() => gestisciHover(true)}
-              onMouseLeave={() => gestisciHover(false)}
-              style={{
-                backgroundColor: isHovered ? '#8036a1' : '#9149f3',
-                color: '#ffffff',
-                margin: '1em',
-              }}
-            >
-              Carica file
-              <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-            </Button>
-          </div>
-          <div className="riga">
-            <TextField
-              required
-              fullWidth
-              id="outlined-multiline-descrizione"
-              label="Descrizione File"
-              multiline
-              rows={10}
-            />
-          </div>
-        </Box>
-      </form>
-    </>
+    <ThemeProvider theme={theme}>
+      <>
+        <Navbar />
+        <form className="formflex">
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div className="riga">
+              <TextField
+                required
+                fullWidth
+                id="outlined-multiline-storia"
+                label="Testo Storia"
+                multiline
+                rows={10}
+              />
+            </div>
+            <div className="riga">
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+                onMouseEnter={() => gestisciHover(true)}
+                onMouseLeave={() => gestisciHover(false)}
+                style={{
+                  backgroundColor: isHovered ? '#8036a1' : '#9149f3',
+                  color: '#ffffff',
+                  margin: '1em',
+                }}
+              >
+                Carica file
+                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+              </Button>
+            </div>
+            <div className="riga">
+              <TextField
+                required
+                fullWidth
+                id="outlined-multiline-descrizione"
+                label="Descrizione File"
+                multiline
+                rows={10}
+              />
+            </div>
+          </Box>
+        </form>
+      </>
+    </ThemeProvider>
   );
 }
 

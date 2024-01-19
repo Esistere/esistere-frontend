@@ -32,26 +32,25 @@ function QuizAllenamento(): JSX.Element {
     return (
       <>
         <Navbar />
-        <div
-          className="optionContainer"
-          style={{ display: 'flex', justifyContent: 'center' }}
-        >
+        <div className="optionContainer">
           <div className="option">
             <div className="optionIcon">
               <AddIcon style={{ fontSize: '5rem' }} />
             </div>
-            <br />
+
             <Pulsante
               tipologia="scuro"
               testo="Crea un nuovo Quiz"
               nome="crea-quiz"
+              className="optionText"
               onClick={() => {
                 navigate('/caregiver/crea_quiz_allenamento');
                 window.location.reload();
               }}
             />
           </div>
-          <div className="option">
+
+          <div className="option ">
             <div className="optionIcon">
               <PreviewIcon style={{ fontSize: '5rem' }} />
             </div>
@@ -59,6 +58,7 @@ function QuizAllenamento(): JSX.Element {
               tipologia="scuro"
               testo="Visualizza i quiz"
               nome="registrazione-caregiver-familiare"
+              className="optionText"
               onClick={() => {
                 navigate('/caregiver/visualizza_quiz_allenamento');
                 window.location.reload();

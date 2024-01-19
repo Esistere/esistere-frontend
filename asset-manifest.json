@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/esistere-frontend/static/css/main.a722c476.css",
-    "main.js": "/esistere-frontend/static/js/main.d24850bd.js",
+    "main.js": "/esistere-frontend/static/js/main.67586f86.js",
     "static/js/787.d0deff6c.chunk.js": "/esistere-frontend/static/js/787.d0deff6c.chunk.js",
     "static/media/storia.png": "/esistere-frontend/static/media/storia.facf558f9fe23e88d6bc.png",
     "static/media/logonavbar.png": "/esistere-frontend/static/media/logonavbar.7fabad46dcb5af59dac1.png",
@@ -21,11 +21,11 @@
     "static/media/logo.svg": "/esistere-frontend/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/esistere-frontend/index.html",
     "main.a722c476.css.map": "/esistere-frontend/static/css/main.a722c476.css.map",
-    "main.d24850bd.js.map": "/esistere-frontend/static/js/main.d24850bd.js.map",
+    "main.67586f86.js.map": "/esistere-frontend/static/js/main.67586f86.js.map",
     "787.d0deff6c.chunk.js.map": "/esistere-frontend/static/js/787.d0deff6c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a722c476.css",
-    "static/js/main.d24850bd.js"
+    "static/js/main.67586f86.js"
   ]
 }

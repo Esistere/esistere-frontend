@@ -17,6 +17,7 @@ import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/Res
 import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ const theme = createTheme({
   },
 });
 function CreaQuizAllenamento(): JSX.Element {
+  const navigate = useNavigate();
   const [quizAllenamento, setQuizAllenamento] =
     useState<QuizAllenamentoGiornaliero>({
       cg_fam: Number(localStorage.getItem('id')),
@@ -187,7 +189,7 @@ function CreaQuizAllenamento(): JSX.Element {
     }));
   };
 
-  const handleQuizCreation = (): void => {
+  const handleQuizCreation = async (): Promise<void> => {
     const domaRisp = domandeRisposte.map((domanda, index) => ({
       [`domanda ${index}`]: domanda,
     }));
@@ -197,7 +199,10 @@ function CreaQuizAllenamento(): JSX.Element {
     };
     const quizAllenamentoContol: QuizAllenamentoControl =
       new QuizAllenamentoControl();
-    quizAllenamentoContol.inviaQuizAllenamento(domRes);
+    const risultato = await quizAllenamentoContol.inviaQuizAllenamento(domRes);
+    if (risultato) {
+      navigate('/');
+    }
   };
 
   return (

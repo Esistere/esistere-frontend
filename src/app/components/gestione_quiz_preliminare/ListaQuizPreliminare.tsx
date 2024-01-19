@@ -87,7 +87,7 @@ function ListaQuizPreliminare(props: Props): JSX.Element {
   IconButton;
   const container =
     window !== undefined ? () => window().document.body : undefined;
-  if (userType === UserType.caregiver || loading) {
+  if (userType === UserType.medico || loading) {
     return (
       <div>
         <Navbar />

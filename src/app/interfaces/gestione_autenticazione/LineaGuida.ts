@@ -1,5 +1,5 @@
 export interface LineaGuida {
-  id: number;
+  id: number | undefined;
   linea_guida: string;
   med: number;
 }

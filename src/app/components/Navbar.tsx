@@ -191,6 +191,7 @@ function Navbar(): JSX.Element {
                     </Button>
                   )}
                 </Link>
+
                 <Link
                   to="/caregiver/crea_storia"
                   style={{
@@ -373,6 +374,21 @@ function Navbar(): JSX.Element {
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     Crea filastrocca
+                  </Button>
+                )}
+              </Link>
+              <Link
+                to="/medico/lineeguidaform"
+                style={{
+                  textDecoration: 'none',
+                }}
+              >
+                {userType === UserType.medico && (
+                  <Button
+                    onClick={handleCloseDrawer}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    linee guida
                   </Button>
                 )}
               </Link>

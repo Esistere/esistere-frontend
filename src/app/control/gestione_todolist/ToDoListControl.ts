@@ -103,7 +103,9 @@ class ToDoListControl {
     }
   }
 
-  async inviaDatiToDoList(dataToDoList: ToDoList): Promise<void> {
+  async inviaDatiToDoList(
+    dataToDoList: ResponseObjectToDoList
+  ): Promise<boolean> {
     const url = `${this.baseUrl}/save_to_do_list`;
     try {
       const response = await fetch(url, {
@@ -117,6 +119,7 @@ class ToDoListControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }

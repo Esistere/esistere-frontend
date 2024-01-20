@@ -16,6 +16,7 @@ import ListaFilastrocche from './app/components/gestione_filastrocca/ListaFilast
 import QuizAllenamento from './app/components/gestione_quiz_allenamento/QuizAllenamento';
 import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/CreaQuizAllenamento';
 import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/ListaQuizAllenamento';
+import CompilaQuizAllenamento from './app/components/gestione_quiz_allenamento/CompilaQuizAllenamento';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
 import ListaToDoList from './app/components/gestione_todolist/ListaToDoList';
@@ -103,10 +104,10 @@ root.render(
             path="/caregiver/visualizza_quiz_allenamento"
             element={React.createElement(withCaregiver(ListaQuizAllenamento))}
           />
-          {/* <Route
+          <Route
             path="/caregiver/compila_quiz_allenamento"
             element={React.createElement(withCaregiver(CompilaQuizAllenamento))}
-          /> */}
+          />
           <Route
             path="/caregiver/crea_filastrocca"
             element={React.createElement(withCaregiver(CreaFilastrocca))}

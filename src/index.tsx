@@ -64,7 +64,7 @@ root.render(
             element={React.createElement(withMedico(ListaToDoList))}
           />
           <Route
-            path="/medico/crea_todo_list"
+            path="/medico/crea_todolist"
             element={React.createElement(withMedico(CreaToDoList))}
           />
           <Route

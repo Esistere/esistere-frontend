@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import QuizPreliminareControl from 'app/control/gestione_quiz_preliminare/QuizPreliminareControl';
 import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
-import { QuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/QuizPreliminare';
 import { DomandaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/DomandaQuizPreliminare';
-import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
 import { useLocation } from 'react-router-dom';
 
 function CompilaQuiz(): JSX.Element {
   const [quizPreliminare, setQuizPreliminare] =
     useState<DomandaQuizPreliminare[]>();
+  // TODO remove
+  /* eslint-disable */
   const [codiceFiscale, setCodiceFiscale] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
@@ -26,6 +26,8 @@ function CompilaQuiz(): JSX.Element {
       console.error('Error fetching quiz preliminari', error);
     }
   };
+  // TODO remove
+  /* eslint-enable */
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -40,7 +42,7 @@ function CompilaQuiz(): JSX.Element {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   if (!quizPreliminare) {
     return <div>Errore nel caricamento del quiz preliminare</div>;

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-//eslint-disable-next-line
-import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
-import 'app/css/gestione_app/FormElements.css';
-import { TextField, Typography, Grid, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, TextField, Typography, Grid, Paper } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Pulsante from '../gestione_app/Pulsante';
-import Navbar from '../Navbar';
+import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
+import { Attivita } from 'app/interfaces/gestione_todolist/Attivita';
+import { ResponseObjectToDoList } from 'app/interfaces/gestione_todolist/ResponseObjectToDoList';
 import ToDoListControl from 'app/control/gestione_todolist/ToDoListControl';
+import 'app/css/gestione_app/FormElements.css';
+import Navbar from '../Navbar';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -14,152 +16,172 @@ const theme = createTheme({
     },
   },
 });
+
 function CreaToDoList(): JSX.Element {
-  const [NumAttivita, setNumAttivita] = useState<number | null>(null);
-  const [attivitaConfermate, setAttivitaConfermate] = useState<number[]>([]);
-  const [testoSalva] = useState<string>('Salva ToDoList');
-  const handleChangeNum = (
+  const navigate = useNavigate();
+  const location = useLocation();
+  const cf = location.state;
+  const [toDoList, setToDoList] = useState<ToDoList>({
+    med: Number(localStorage.getItem('id')),
+    id: undefined,
+    num_attivita: 0,
+    completata: false,
+    paziente: cf,
+  });
+  const [attivita, setAttivita] = useState<Attivita[]>([]);
+
+  const handleNumberOfQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const { value } = event.target;
-    console.log(value);
-    let newNumAttivita = parseInt(value);
+    const newNumberOfQuestions = Number(event.target.value);
+    if (newNumberOfQuestions >= 0) {
+      setToDoList({
+        ...toDoList,
+        ['num_attivita']: newNumberOfQuestions,
+      });
 
-    if (isNaN(newNumAttivita) || newNumAttivita < 0) {
-      newNumAttivita = 0;
-    }
-
-    setNumAttivita(newNumAttivita);
-  };
-
-  useEffect(() => {
-    if (NumAttivita !== null) {
-      console.log(JSON.stringify(NumAttivita));
-    }
-  }, [NumAttivita]);
-
-  const handleConfermaClick = (): void => {
-    if (NumAttivita !== null && NumAttivita >= 0) {
-      const nuovaListaAttivita = Array.from(
-        { length: NumAttivita },
-        (_, index) => index + 1
-      );
-      setAttivitaConfermate(nuovaListaAttivita);
+      if (newNumberOfQuestions > attivita.length) {
+        // Aggiungi nuove domande se il nuovo numero è maggiore
+        const additionalQuestions = newNumberOfQuestions - attivita.length;
+        const newQuestions = Array.from(
+          { length: additionalQuestions },
+          (): Attivita => ({
+            id: undefined,
+            testo: '',
+            completata: false,
+            commento: '',
+            valutazione: 0,
+            to_do_list: undefined,
+          })
+        );
+        setAttivita([...attivita, ...newQuestions]);
+      } else if (newNumberOfQuestions < attivita.length) {
+        // Rimuovi domande se il nuovo numero è minore
+        const remainingQuestions = attivita.slice(0, newNumberOfQuestions);
+        setAttivita(remainingQuestions);
+      }
     } else {
-      setAttivitaConfermate([]);
+      // Se il nuovo numero è negativo, imposta il numero di domande a 0
+      setToDoList({
+        ...toDoList,
+        num_attivita: 0,
+      });
     }
   };
-  const handleSalvaToDoListClick = async (): Promise<void> => {
-    try {
-      // Costruisci l'oggetto ToDoList da inviare al backend
-      const toDoListData = {
-        id: undefined,
-        num_attivita: NumAttivita !== null ? NumAttivita : 0,
-        completata: false,
-        med: 1, // Sostituisci con il valore appropriato
-        paziente: 'codice_fiscale', // Sostituisci con il valore appropriato
-      };
+  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
 
-      // Creare un'istanza del control
-      const toDoListControl = new ToDoListControl();
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
+  };
+  const handleQuestionChange = (
+    questionIndex: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newQuestionData = [...attivita];
+    newQuestionData[questionIndex].testo = event.target.value;
+    setAttivita(newQuestionData);
+  };
 
-      // Chiamare la funzione del control per inviare la ToDoList al backend
-      await toDoListControl.inviaDatiToDoList(toDoListData);
-      // Puoi anche  dopo il salvataggio, come navigare a un'altra pagina
-      // In questo esempio, si ricarica la pagina
-      window.location.reload();
-    } catch (error) {
-      console.error('Errore durante il salvataggio della ToDoList:', error);
-      // Puoi gestire gli errori , ad esempio mostrando un messaggio all'utente
+  const newQuestion: Attivita = {
+    id: undefined,
+    testo: '',
+    completata: false,
+    commento: '',
+    valutazione: 0,
+    to_do_list: undefined,
+  };
+
+  const handleAddQuestion = (): void => {
+    setAttivita([...attivita, newQuestion]);
+    setToDoList((prevQuiz) => ({
+      ...prevQuiz,
+      numero_domande: prevQuiz.num_attivita + 1,
+    }));
+  };
+
+  const handleQuizCreation = async (): Promise<void> => {
+    const domRes: ResponseObjectToDoList = {
+      attivita: attivita,
+      toDoList: toDoList,
+    };
+
+    console.log(domRes);
+    const quizAllenamentoContol: ToDoListControl = new ToDoListControl();
+    const risultato = await quizAllenamentoContol.inviaDatiToDoList(domRes);
+    console.log(risultato);
+    if (risultato) {
+      navigate('/');
     }
   };
 
-  const [testo1] = useState<string>('conferma');
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
-      <form className="formflex">
-        <Typography variant="h4" style={{ color: 'blueviolet' }}>
-          Quante attività vuoi inserire in questa ToDoList?
-        </Typography>
-
-        <div className="riga">
+      <div>
+        <Navbar />
+        <form className="formflex">
+          <Typography variant="h4" style={{ color: 'blueviolet' }}>
+            Creazione ToDoList
+          </Typography>
           <TextField
-            required
+            label="Numero di Attività"
             type="number"
-            id="outline-num_attivita"
-            label="Numero attività"
-            style={{
-              width: '16.15em',
-              margin: '1em',
-              boxSizing: 'border-box',
-            }}
-            inputProps={{
-              min: 0,
-            }}
-            onChange={handleChangeNum}
+            value={toDoList.num_attivita}
+            onChange={handleNumberOfQuestionsChange}
           />
-        </div>
-        <div className="riga">
-          {Pulsante({
-            tipologia: 'scuro',
-            testo: testo1,
-            nome: 'conferma',
-            inizio: null,
-            fine: null,
-            onClick: handleConfermaClick,
-          })}
-        </div>
-
-        {attivitaConfermate.length > 0 && (
-          <div>
-            <Grid container spacing={3} style={{ marginTop: '2em' }}>
-              <Grid item xs={12}>
+          <Grid container spacing={2} style={{ marginTop: '2em' }}>
+            {attivita.map((question, questionIndex) => (
+              <Grid item xs={12} key={questionIndex}>
                 <Paper
                   elevation={3}
-                  style={{
-                    padding: '16px',
-                    width: '100%',
-                    margin: 'auto',
-                    textAlign: 'center',
-                  }}
+                  style={{ padding: '16px', width: '25em', margin: 'auto' }}
                 >
-                  <form className="formflex">
-                    <Typography variant="h6" style={{ color: 'blueviolet' }}>
-                      Descrivi le attività:
-                    </Typography>
-                    {attivitaConfermate.map((attivita, index) => (
-                      <div key={index} className="riga">
-                        <TextField
-                          key={index}
-                          name={`attivita_${attivita}`}
-                          label={`Attività ${attivita}`}
-                          id="outlined-basic"
-                          style={{
-                            width: '30.5em',
-                            margin: '1em',
-                            boxSizing: 'border-box',
-                          }}
-                        />
-                        <br />
-                      </div>
-                    ))}
-                  </form>
+                  <Typography variant="h6">
+                    Attivit&agrave; {questionIndex + 1}
+                  </Typography>
+                  <TextField
+                    label="Attività"
+                    fullWidth
+                    value={question.testo}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      handleQuestionChange(questionIndex, event)
+                    }
+                    style={{ width: '20em', margin: 'auto' }}
+                  />
                 </Paper>
               </Grid>
-            </Grid>
-          </div>
-        )}
-      </form>
-      <div className="riga">
-        {Pulsante({
-          tipologia: 'scuro',
-          testo: testoSalva,
-          nome: 'salva-todolist',
-          inizio: null,
-          fine: null,
-          onClick: handleSalvaToDoListClick,
-        })}
+            ))}
+          </Grid>
+        </form>
+
+        <div className="riga">
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={handleAddQuestion}
+          >
+            Aggingi Attivit&agrave;
+          </Button>
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={handleQuizCreation}
+          >
+            Crea ToDoList
+          </Button>
+        </div>
       </div>
     </ThemeProvider>
   );

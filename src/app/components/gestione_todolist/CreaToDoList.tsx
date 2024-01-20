@@ -6,7 +6,7 @@ import { TextField, Typography, Grid, Paper } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Pulsante from '../gestione_app/Pulsante';
 import Navbar from '../Navbar';
-
+import ToDoListControl from 'app/control/gestione_todolist/ToDoListControl';
 const theme = createTheme({
   palette: {
     primary: {
@@ -17,7 +17,7 @@ const theme = createTheme({
 function CreaToDoList(): JSX.Element {
   const [NumAttivita, setNumAttivita] = useState<number | null>(null);
   const [attivitaConfermate, setAttivitaConfermate] = useState<number[]>([]);
-
+  const [testoSalva] = useState<string>('Salva ToDoList');
   const handleChangeNum = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -49,6 +49,31 @@ function CreaToDoList(): JSX.Element {
       setAttivitaConfermate([]);
     }
   };
+  const handleSalvaToDoListClick = async (): Promise<void> => {
+    try {
+      // Costruisci l'oggetto ToDoList da inviare al backend
+      const toDoListData = {
+        id: undefined,
+        num_attivita: NumAttivita !== null ? NumAttivita : 0,
+        completata: false,
+        med: 1, // Sostituisci con il valore appropriato
+        paziente: 'codice_fiscale', // Sostituisci con il valore appropriato
+      };
+
+      // Creare un'istanza del control
+      const toDoListControl = new ToDoListControl();
+
+      // Chiamare la funzione del control per inviare la ToDoList al backend
+      await toDoListControl.inviaDatiToDoList(toDoListData);
+      // Puoi anche  dopo il salvataggio, come navigare a un'altra pagina
+      // In questo esempio, si ricarica la pagina
+      window.location.reload();
+    } catch (error) {
+      console.error('Errore durante il salvataggio della ToDoList:', error);
+      // Puoi gestire gli errori , ad esempio mostrando un messaggio all'utente
+    }
+  };
+
   const [testo1] = useState<string>('conferma');
   return (
     <ThemeProvider theme={theme}>
@@ -126,6 +151,16 @@ function CreaToDoList(): JSX.Element {
           </div>
         )}
       </form>
+      <div className="riga">
+        {Pulsante({
+          tipologia: 'scuro',
+          testo: testoSalva,
+          nome: 'salva-todolist',
+          inizio: null,
+          fine: null,
+          onClick: handleSalvaToDoListClick,
+        })}
+      </div>
     </ThemeProvider>
   );
 }

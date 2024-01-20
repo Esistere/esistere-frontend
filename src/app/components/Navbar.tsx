@@ -213,7 +213,7 @@ function Navbar(): JSX.Element {
                     textDecoration: 'none',
                   }}
                 >
-                  {userType !== null && (
+                  {userType === UserType.caregiver && (
                     <Button
                       onClick={handleCloseDrawer}
                       sx={{ my: 2, color: 'black', display: 'block' }}
@@ -353,7 +353,7 @@ function Navbar(): JSX.Element {
                   textDecoration: 'none',
                 }}
               >
-                {userType !== null && (
+                {userType === UserType.caregiver && (
                   <Button
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'white', display: 'block' }}

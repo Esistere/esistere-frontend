@@ -17,6 +17,7 @@ import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/Res
 import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -26,7 +27,7 @@ const theme = createTheme({
   },
 });
 function CreaQuizAllenamento(): JSX.Element {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [quizAllenamento, setQuizAllenamento] =
     useState<QuizAllenamentoGiornaliero>({
       cg_fam: Number(localStorage.getItem('id')),
@@ -51,6 +52,7 @@ function CreaQuizAllenamento(): JSX.Element {
         const newQuestions = Array.from(
           { length: additionalQuestions },
           (): DomandaRisposta => ({
+            idDomanda: undefined,
             quiz_ag: undefined,
             corretta: undefined,
             domanda: '',
@@ -60,28 +62,28 @@ function CreaQuizAllenamento(): JSX.Element {
                 risposta: '',
                 corretta: undefined,
                 selezionata: undefined,
-                id: undefined,
+                idRisposta: undefined,
               },
               {
                 domanda_ag: undefined,
                 risposta: '',
                 corretta: undefined,
                 selezionata: undefined,
-                id: undefined,
+                idRisposta: undefined,
               },
               {
                 domanda_ag: undefined,
                 risposta: '',
                 corretta: undefined,
                 selezionata: undefined,
-                id: undefined,
+                idRisposta: undefined,
               },
               {
                 domanda_ag: undefined,
                 risposta: '',
                 corretta: undefined,
                 selezionata: undefined,
-                id: undefined,
+                idRisposta: undefined,
               },
             ],
           })
@@ -134,17 +136,19 @@ function CreaQuizAllenamento(): JSX.Element {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newQuestionData = [...domandeRisposte];
-    newQuestionData[questionIndex].risposte.map((option, optionIndex) => {
-      if (event.target.value === option.risposta) {
-        newQuestionData[questionIndex].risposte[optionIndex].corretta = true;
-      } else {
-        newQuestionData[questionIndex].risposte[optionIndex].corretta = false;
-      }
-    });
+    newQuestionData[questionIndex].risposte = newQuestionData[
+      questionIndex
+    ].risposte.map((option) => ({
+      ...option,
+      corretta: event.target.value === option.risposta,
+    }));
+    console.log(newQuestionData);
     setDomandeRisposte(newQuestionData);
+    console.log(newQuestionData);
   };
 
   const newQuestion: DomandaRisposta = {
+    idDomanda: undefined,
     quiz_ag: undefined,
     corretta: undefined,
     domanda: '',
@@ -154,28 +158,28 @@ function CreaQuizAllenamento(): JSX.Element {
         risposta: '',
         corretta: undefined,
         selezionata: undefined,
-        id: undefined,
+        idRisposta: undefined,
       },
       {
         domanda_ag: undefined,
         risposta: '',
         corretta: undefined,
         selezionata: undefined,
-        id: undefined,
+        idRisposta: undefined,
       },
       {
         domanda_ag: undefined,
         risposta: '',
         corretta: undefined,
         selezionata: undefined,
-        id: undefined,
+        idRisposta: undefined,
       },
       {
         domanda_ag: undefined,
         risposta: '',
         corretta: undefined,
         selezionata: undefined,
-        id: undefined,
+        idRisposta: undefined,
       },
     ],
   };
@@ -200,9 +204,9 @@ function CreaQuizAllenamento(): JSX.Element {
       new QuizAllenamentoControl();
     const risultato = await quizAllenamentoContol.inviaQuizAllenamento(domRes);
     console.log(risultato);
-    // if (risultato) {
-    //   navigate('/');
-    // }
+    if (risultato) {
+      navigate('/');
+    }
   };
 
   return (
@@ -214,7 +218,7 @@ function CreaQuizAllenamento(): JSX.Element {
             Creazione Quiz Allenamento Giornaliero
           </Typography>
           <TextField
-            label="Number of Questions"
+            label="Numero di domande"
             type="number"
             value={quizAllenamento.numero_domande}
             onChange={handleNumberOfQuestionsChange}
@@ -230,7 +234,7 @@ function CreaQuizAllenamento(): JSX.Element {
                     Domanda {questionIndex + 1}
                   </Typography>
                   <TextField
-                    label="Question"
+                    label="Domanda"
                     fullWidth
                     value={question.domanda}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -271,7 +275,7 @@ function CreaQuizAllenamento(): JSX.Element {
                             control={<Radio />}
                             label={
                               <TextField
-                                label={`Option ${optionIndex + 1}`}
+                                label={`Risposta ${optionIndex + 1}`}
                                 fullWidth
                                 value={option.risposta}
                                 onChange={(

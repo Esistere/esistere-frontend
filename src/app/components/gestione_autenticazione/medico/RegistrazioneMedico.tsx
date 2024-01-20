@@ -19,7 +19,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import 'app/css/gestione_app/FormElements.css';
-import { emailRegex, passwordRegex } from 'app/regex';
+import {
+  emailRegex,
+  numeroTelefonoStudioRegex,
+  passwordRegex,
+} from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 
 const RegistrazioneMedico: React.FC = () => {
@@ -79,6 +83,47 @@ const RegistrazioneMedico: React.FC = () => {
       setPasswordError('Inserisci una password valida.');
     } else {
       setPasswordError('');
+    }
+  };
+
+  const [isStudioValid, setIsStudioValid] = useState<boolean>(true);
+  const [studioError, setStudioError] = useState('');
+  const handleStudioChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newStudio = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      indirizzo_studio: newStudio,
+    }));
+
+    const isValid = newStudio !== '';
+    setIsStudioValid(isValid);
+
+    if (!isValid) {
+      setStudioError('Inserisci un indirizzo studio.');
+    } else {
+      setStudioError('');
+    }
+  };
+
+  const [isNumStudioValid, setIsNumStudioValid] = useState<boolean>(true);
+  const [numStudioError, setNumStudioError] = useState('');
+  const handleNumStudioChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newNumStudio = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      numero_telefono_studio: newNumStudio,
+    }));
+    const isValid =
+      numeroTelefonoStudioRegex.test(newNumStudio) || newNumStudio === '';
+    setIsNumStudioValid(isValid);
+    if (!isValid) {
+      setNumStudioError('Inserisci un numero telefono studio valido.');
+    } else {
+      setNumStudioError('');
     }
   };
 
@@ -211,14 +256,18 @@ const RegistrazioneMedico: React.FC = () => {
                     id="outlined-indirizzo-input"
                     required
                     label="Indirizzo Studio"
+                    error={!isStudioValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    onChange={handleChange}
+                    onChange={handleStudioChange}
                   />
+                  {studioError && (
+                    <div style={{ color: '#D32F2F' }}>{studioError}</div>
+                  )}
                   <TextField
                     type="text"
                     name="numero_civico"
@@ -255,14 +304,18 @@ const RegistrazioneMedico: React.FC = () => {
                     id="outlined-num-telefono-input"
                     required
                     label="Telefono Studio"
+                    error={!isNumStudioValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    onChange={handleChange}
+                    onChange={handleNumStudioChange}
                   />
+                  {numStudioError && (
+                    <div style={{ color: '#D32F2F' }}>{numStudioError}</div>
+                  )}
                 </div>
                 <div
                   style={{

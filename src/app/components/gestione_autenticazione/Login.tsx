@@ -1,6 +1,7 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -8,6 +9,8 @@ import {
   CssBaseline,
   IconButton,
   InputAdornment,
+  Snackbar,
+  SnackbarOrigin,
   TextField,
   Typography,
 } from '@mui/material';
@@ -89,6 +92,20 @@ function Login(): JSX.Element {
     event.preventDefault();
   };
 
+  // Snackbar
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -96,6 +113,10 @@ function Login(): JSX.Element {
       email: formData.email,
       passwd: formData.passwd,
     };
+
+    if (!isEmailValid || !isPassValid) {
+      return;
+    }
 
     const loginControl = new LoginControl();
     loginControl
@@ -114,9 +135,16 @@ function Login(): JSX.Element {
             console.error('Tipo di utente non gestito');
         }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setOpen(true);
+        console.log(e);
+      });
   };
 
+  //    'UPDATE medico SET (codice_identificativo, nome, ' +
+  // 'cognome, indirizzo_studio, citta, numero_civico, ' +
+  // 'numero_telefono_studio, email, passwd) = ($1, $2, $3, $4, $5, $6, ' +
+  // '$7, $8, $9) WHERE codice_identificativo = $10';
   // If the user is already logged in, redirect to the home page
   useEffect(() => {
     if (!loading) {
@@ -172,6 +200,7 @@ function Login(): JSX.Element {
               <form method="post" onSubmit={handleSubmit}>
                 <Box sx={{ mt: 1 }}>
                   <TextField
+                    type="email"
                     margin="normal"
                     required
                     sx={{ width: '20em' }}
@@ -232,6 +261,7 @@ function Login(): JSX.Element {
                     </div>
                   )}
                   <Pulsante
+                    name="login"
                     tipologia="scuro"
                     testo="Accedi"
                     nome="login"
@@ -241,6 +271,22 @@ function Login(): JSX.Element {
                     sx={{ mt: 3, mb: 2 }}
                     color="primary"
                   />
+
+                  <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: '100%' }}
+                    >
+                      Login Fallito!
+                    </Alert>
+                  </Snackbar>
+
                   <Typography variant="body2" sx={{ mb: 2 }}>
                     Non hai un account?{' '}
                     <Link

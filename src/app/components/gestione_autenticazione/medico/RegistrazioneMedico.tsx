@@ -110,7 +110,7 @@ const RegistrazioneMedico: React.FC = () => {
 
   const [success, setSuccess] = useState<boolean | null>(null);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -385,7 +385,12 @@ const RegistrazioneMedico: React.FC = () => {
           </Card>
         </Container>
       </ThemeProvider>
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
         <Alert
           onClose={handleClose}
           severity={success ? 'success' : 'error'}

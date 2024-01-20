@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="4"
+            failures="1"
+            tests="3">
+
+  <testsuite name="nightwatch.github"
+    errors="4" failures="1" hostname="" id="" package="github" skipped="0"
+    tests="3" time="117.5" timestamp="">
+  
+    <testcase name="Github Title test" classname="nightwatch.github" time="18.97" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Github search for nightwatch repository" classname="nightwatch.github" time="13.74" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Github login with fake credentials" classname="nightwatch.github" time="25.77" assertions="1">  <failure message="Timed out while waiting for element &lt;[value=&#39;Sign in&#39;]&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5108ms)">    at Object.Github login with fake credentials (D:\Github\esistere-frontend\nightwatch\github.ts:36:8)</failure>
+
+    
+    <error message="Timed out while waiting for element &lt;[value=&#39;Sign in&#39;]&gt; to be present for 5000 milliseconds. - expected [32m&#34;visible&#34;[39m but got: [31m&#34;not found&#34;[39m [90m(5108ms)[39m" type="error"><![CDATA[
+    Error
+    at Object.Github login with fake credentials (D:\Github\esistere-frontend\nightwatch\github.ts:36:8)
+    at Context.call (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\context.js:509:35)
+    at TestCase.run (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\testcase.js:58:31)
+    at Runnable.__runFn (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\index.js:839:80)
+    at Runnable.run (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\runnable.js:126:21)
+    at TestSuite.executeRunnable (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\index.js:1000:49)
+    at TestSuite.handleRunnable (D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\index.js:1015:33)
+    at D:\Github\esistere-frontend\node_modules\nightwatch\lib\testsuite\index.js:839:21
+    at async DefaultRunner.runTestSuite (D:\Github\esistere-frontend\node_modules\nightwatch\lib\runner\test-runners\default.js:83:7)
+    at async DefaultRunner.promiseFn (D:\Github\esistere-frontend\node_modules\nightwatch\lib\runner\test-runners\default.js:101:7)
+    ]]></error>
+    
+    </testcase>
+  
+
+  
+    <system-err>
+       NoSuchElementError
+   An element could not be located on the page using the given search parameters.
+
+    Try fixing by :
+    1. Please inspect the html before the step
+    2. Verify if an element with the mentioned selector is present in the DOM tree
+
+    Error location:
+    D:\Github\esistere-frontend\src\test\App.test.tsx:8
+    –––––––––––––––––––––––––––––––––––––––––––––––––––
+     6 |       .url(&#39;http://www.google.com&#39;)
+     7 |       .waitForElementVisible(&#39;body&#39;, 1000)
+     8 |       .setValue(&#39;input[type=text]&#39;, &#39;Hello World&#39;) 
+     9 |       .waitForElementVisible(&#39;input[name=btnK]&#39;, 1000)
+     10 |       .click(&#39;input[name=btnK]&#39;)
+    –––––––––––––––––––––––––––––––––––––––––––––––––––
+
+ NoSuchElementError
+   An element could not be located on the page using the given search parameters.
+    {&#34;value&#34;:null,&#34;status&#34;:0}
+
+    Try fixing by :
+    1. Please inspect the html before the step
+    2. Verify if an element with the mentioned selector is present in the DOM tree
+
+    Error location:
+    D:\Github\esistere-frontend\nightwatch\github.ts:32
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+     30 |     browser
+     31 |       .url(&#39;https://github.com/login&#39;)
+     32 |       .clearValue(&#39;#login_field&#39;) 
+     33 |       .setValue(&#39;#login_field&#39;, &#39;nightwatch&#39;)
+     34 |       .clearValue(&#39;#password&#39;)
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+ NoSuchElementError
+   An element could not be located on the page using the given search parameters.
+    {&#34;value&#34;:null,&#34;status&#34;:0}
+
+    Try fixing by :
+    1. Please inspect the html before the step
+    2. Verify if an element with the mentioned selector is present in the DOM tree
+
+    Error location:
+    D:\Github\esistere-frontend\nightwatch\github.ts:33
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+     31 |       .url(&#39;https://github.com/login&#39;)
+     32 |       .clearValue(&#39;#login_field&#39;)
+     33 |       .setValue(&#39;#login_field&#39;, &#39;nightwatch&#39;) 
+     34 |       .clearValue(&#39;#password&#39;)
+     35 |       .setValue(&#39;#password&#39;, &#39;testpassword&#39;)
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+ NoSuchElementError
+   An element could not be located on the page using the given search parameters.
+    {&#34;value&#34;:null,&#34;status&#34;:0}
+
+    Try fixing by :
+    1. Please inspect the html before the step
+    2. Verify if an element with the mentioned selector is present in the DOM tree
+
+    Error location:
+    D:\Github\esistere-frontend\nightwatch\github.ts:34
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+     32 |       .clearValue(&#39;#login_field&#39;)
+     33 |       .setValue(&#39;#login_field&#39;, &#39;nightwatch&#39;)
+     34 |       .clearValue(&#39;#password&#39;) 
+     35 |       .setValue(&#39;#password&#39;, &#39;testpassword&#39;)
+     36 |       .waitForElementVisible(&#39;[value=\&#39;Sign in\&#39;]&#39;)
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+ NoSuchElementError
+   An element could not be located on the page using the given search parameters.
+    {&#34;value&#34;:null,&#34;status&#34;:0}
+
+    Try fixing by :
+    1. Please inspect the html before the step
+    2. Verify if an element with the mentioned selector is present in the DOM tree
+
+    Error location:
+    D:\Github\esistere-frontend\nightwatch\github.ts:35
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+     33 |       .setValue(&#39;#login_field&#39;, &#39;nightwatch&#39;)
+     34 |       .clearValue(&#39;#password&#39;)
+     35 |       .setValue(&#39;#password&#39;, &#39;testpassword&#39;) 
+     36 |       .waitForElementVisible(&#39;[value=\&#39;Sign in\&#39;]&#39;)
+     37 |       .click(&#39;[value=\&#39;Sign in\&#39;]&#39;)
+    ––––––––––––––––––––––––––––––––––––––––––––––––––
+
+    </system-err>
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

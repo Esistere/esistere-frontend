@@ -18,5 +18,5 @@
     "baseUrl": "src"
   },
   "typeAcquisition": { "include": ["jest"] },
-  "include": ["src/app", "src/test"]
+  "include": ["src/app"]
 }

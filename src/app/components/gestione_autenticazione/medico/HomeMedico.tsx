@@ -36,7 +36,7 @@ const HomeMedico: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div>
+      <div id="div-medico">
         <br />
         <Box margin="2 em">
           <Grid container spacing={2}>
@@ -50,7 +50,7 @@ const HomeMedico: React.FC = () => {
                 sottostante.
               </Typography>
               <Link
-                to="/medico/lista"
+                to="/medico/visualizza_pazienti"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -138,7 +138,7 @@ const HomeMedico: React.FC = () => {
                   guida
                 </Typography>
                 <Link
-                  to="/medico/lineeguidaform"
+                  to="/medico/LineaGuida"
                   style={{
                     textDecoration: 'none',
                   }}

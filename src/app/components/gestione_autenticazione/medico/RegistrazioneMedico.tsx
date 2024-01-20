@@ -385,22 +385,24 @@ const RegistrazioneMedico: React.FC = () => {
           </Card>
         </Container>
       </ThemeProvider>
-      <Snackbar
-        open={open}
-        autoHideDuration={5000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
+      <div id="test">
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
           onClose={handleClose}
-          severity={success ? 'success' : 'error'}
-          sx={{ width: '100%' }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         >
-          {success
-            ? 'Registrazione effettuata con successo!'
-            : 'Registrazione fallita'}
-        </Alert>
-      </Snackbar>
+          <Alert
+            onClose={handleClose}
+            severity={success ? 'success' : 'error'}
+            sx={{ width: '100%' }}
+          >
+            {success
+              ? 'Registrazione effettuata con successo!'
+              : 'Registrazione fallita'}
+          </Alert>
+        </Snackbar>
+      </div>
     </>
   );
 };

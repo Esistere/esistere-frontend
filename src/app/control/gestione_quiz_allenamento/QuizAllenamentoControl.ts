@@ -222,6 +222,7 @@ class QuizAllenamentoControl {
   ): Promise<boolean> {
     const url = `${this.baseUrl}/salva_quiz_allenamento`;
     try {
+      console.log(quizAllenamento);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -301,6 +302,28 @@ class QuizAllenamentoControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async aggiornaQuizAllenamento(
+    quiz: QuizAllenamentoGiornaliero
+  ): Promise<boolean> {
+    const url = `${this.baseUrl}/aggiorna_quiz`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(quiz),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return true;
     } catch (error) {
       throw new Error('Error');
     }

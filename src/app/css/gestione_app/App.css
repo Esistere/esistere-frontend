@@ -70,6 +70,6 @@
 
 @media screen and (min-width: 601px) {
   .intro {
-    height: 80vh;
+    height: 25em;
   }
 }

@@ -8,6 +8,14 @@ import Navbar from '../Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Storia } from 'app/interfaces/gestione_storia/Storia';
 import StoriaControl from 'app/control/gestione_storia/StoriaControl';
+import {
+  Card,
+  CardMedia,
+  Container,
+  CssBaseline,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -50,13 +58,11 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
   const gestisciHoverCaricaFile = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottoneCaricaFile(nuovoColore);
-    setIsHoveredCaricaFile(isHovered);
   };
 
   const gestisciHoverSalva = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottoneSalva(nuovoColore);
-    setIsHoveredSalva(isHovered);
   };
 
   const handleFileChange = (
@@ -86,66 +92,112 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     <ThemeProvider theme={theme}>
       <>
         <Navbar />
-        <form className="formflex">
-          <div className="riga">
-            <TextField
-              required
-              fullWidth
-              id="testo"
-              label="Testo Storia"
-              multiline
-              rows={15}
-              value={datiStoria.testo}
-              onChange={handleChange}
-              style={{ margin: '1.5em ', width: '40%' }}
-            />
-          </div>
-          <div className="riga">
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-              onMouseEnter={() => gestisciHoverCaricaFile(true)}
-              onMouseLeave={() => gestisciHoverCaricaFile(false)}
-              style={{
-                backgroundColor: coloreBottoneCaricaFile,
-                color: '#ffffff',
-                margin: '1em',
-                width: '10%',
-              }}
+        <Typography variant="h3" color="blueviolet" textAlign="center">
+          Scrivi una nuova storia
+        </Typography>
+        <Container component="main" maxWidth="lg">
+          <CssBaseline />
+          <Card
+            sx={{
+              marginTop: 4,
+              display: 'flex',
+              alignItems: 'column',
+              padding: (theme) => theme.spacing(3),
+              backgroundColor: 'white',
+              borderRadius: '10px',
+              boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
+              color: '#5E35B1',
+            }}
+          >
+            <Stack
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
+              alignItems="center"
+              justifyContent="center"
+              sx={{ width: '100%' }}
             >
-              Carica file
-              <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-            </Button>
-          </div>
-          <div className="riga">
-            <TextField
-              required
-              fullWidth
-              id="descrizione"
-              label="Descrizione File"
-              multiline
-              rows={8}
-              onChange={handleChange}
-              style={{ margin: '5em ', width: '40%' }}
-            />
-          </div>
-          <div className="riga">
-            <Button
-              style={{
-                backgroundColor: coloreBottoneSalva,
-                color: '#ffffff',
-                margin: '1em',
-                width: '10%',
-              }}
-              onClick={handleSave}
-              onMouseEnter={() => gestisciHoverSalva(true)}
-              onMouseLeave={() => gestisciHoverSalva(false)}
-            >
-              Salva storia
-            </Button>
-          </div>
-        </form>
+              <div className="formflex2">
+                <div className="riga">
+                  <CardMedia
+                    component="img"
+                    style={{ width: '110%', height: 'auto', marginLeft: '2em' }}
+                    image={require('app/assets/images/scriviStoria.png')}
+                  />
+                </div>
+              </div>
+              <form className="formflex">
+                <div className="riga">
+                  <TextField
+                    required
+                    id="testo"
+                    label="Testo Storia"
+                    multiline
+                    rows={15}
+                    value={datiStoria.testo}
+                    onChange={handleChange}
+                    style={{
+                      margin: '1em ',
+                      width: '60%',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+                <div className="riga">
+                  <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                    onMouseEnter={() => gestisciHoverCaricaFile(true)}
+                    onMouseLeave={() => gestisciHoverCaricaFile(false)}
+                    style={{
+                      backgroundColor: coloreBottoneCaricaFile,
+                      color: '#ffffff',
+                      margin: '1em',
+                      width: '25%',
+                    }}
+                  >
+                    Carica file
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                  </Button>
+                </div>
+                <div className="riga">
+                  <TextField
+                    required
+                    fullWidth
+                    id="descrizione"
+                    label="Descrizione File"
+                    multiline
+                    rows={8}
+                    onChange={handleChange}
+                    style={{
+                      margin: '1.5em ',
+                      width: '60%',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+                <div className="riga">
+                  <Button
+                    style={{
+                      backgroundColor: coloreBottoneSalva,
+                      color: '#ffffff',
+                      margin: '1em',
+                      width: '25%',
+                    }}
+                    onClick={handleSave}
+                    onMouseEnter={() => gestisciHoverSalva(true)}
+                    onMouseLeave={() => gestisciHoverSalva(false)}
+                  >
+                    Salva storia
+                  </Button>
+                </div>
+              </form>
+            </Stack>
+          </Card>
+        </Container>
       </>
     </ThemeProvider>
   );

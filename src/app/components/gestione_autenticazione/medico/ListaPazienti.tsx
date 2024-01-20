@@ -15,7 +15,6 @@ import React, { useEffect, useState } from 'react';
 import ElementoLista from './ElementoLista';
 
 import { useNavigate } from 'react-router-dom';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 import ChecklistIcon from '@mui/icons-material/Checklist'; //todo
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
 import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
@@ -68,7 +67,6 @@ function ListaPazienti(props: Props): JSX.Element {
     setMobileOpen(!mobileOpen);
   };
 
-  const [isHoveredAndamento, setIsHoveredAndamento] = useState(false);
   const [isHoveredQuizPreliminare, setIsHoveredQuizPreliminare] =
     useState(false);
   const [isHoveredTodoList, setIsHoveredTodoList] = useState(false);
@@ -76,10 +74,6 @@ function ListaPazienti(props: Props): JSX.Element {
     useState(false);
   const [isHoveredCg, setIsHoveredCg] = useState(false);
   const [isHoveredTac, setIsHoveredTac] = useState(false);
-
-  const gestisciHoverAndamento = (hovered: boolean): void => {
-    setIsHoveredAndamento(hovered);
-  };
 
   const gestisciHoverQuizPreliminare = (hovered: boolean): void => {
     setIsHoveredQuizPreliminare(hovered);
@@ -207,26 +201,6 @@ function ListaPazienti(props: Props): JSX.Element {
 
               <form className="formflex">
                 <div className="riga">
-                  <Button
-                    style={{
-                      color: isHoveredAndamento ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredAndamento
-                        ? '#b2a1c7'
-                        : '#ffffff',
-
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverAndamento(true)}
-                    onMouseLeave={() => gestisciHoverAndamento(false)}
-                    startIcon={<AutoGraphIcon />}
-                  >
-                    Andamento
-                  </Button>
-
                   <Button
                     style={{
                       color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',

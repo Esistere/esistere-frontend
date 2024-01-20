@@ -20,6 +20,7 @@ import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
 import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; //tac
 import QuizIcon from '@mui/icons-material/Quiz'; //quiz giornaliero
+import AddIcon from '@mui/icons-material/Add'; //aggiungi todo
 import Button from '@mui/material/Button';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import 'app/css/gestione_app/FormElements.css';
@@ -240,7 +241,30 @@ function ListaPazienti(props: Props): JSX.Element {
                     onMouseLeave={() => gestisciHoverTodoList(false)}
                     startIcon={<ChecklistIcon />}
                   >
-                    todo list
+                    lista todo list
+                  </Button>
+                  <Button
+                    style={{
+                      color: isHoveredTodoList ? '#ffffff' : '#8036a1',
+                      borderColor: '#000000',
+                      backgroundColor: isHoveredTodoList
+                        ? '#b2a1c7'
+                        : '#ffffff',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    onClick={() => {
+                      navigate('/medico/crea_todolist', {
+                        state: selectedPaziente.codice_fiscale,
+                      });
+                    }}
+                    variant="outlined"
+                    onMouseEnter={() => gestisciHoverTodoList(true)}
+                    onMouseLeave={() => gestisciHoverTodoList(false)}
+                    startIcon={<AddIcon />}
+                  >
+                    Crea todo list
                   </Button>
                 </div>
                 <div className="riga">
@@ -281,6 +305,11 @@ function ListaPazienti(props: Props): JSX.Element {
                     onMouseEnter={() => gestisciHoverCg(true)}
                     onMouseLeave={() => gestisciHoverCg(false)}
                     startIcon={<PersonRoundedIcon />}
+                    // onClick={() => {
+                    //   navigate('/medico/visualizza_caregiver', {
+                    //     state: selectedPaziente.cg_fam,
+                    //   });
+                    // }}
                   >
                     profilo caregiver
                   </Button>

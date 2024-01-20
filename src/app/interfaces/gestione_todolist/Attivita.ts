@@ -4,5 +4,5 @@ export interface Attivita {
   completata: boolean | undefined;
   commento: string;
   valutazione: number;
-  to_do_list: number;
+  to_do_list: number | undefined;
 }

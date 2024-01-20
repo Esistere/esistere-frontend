@@ -17,6 +17,7 @@ import QuizAllenamento from './app/components/gestione_quiz_allenamento/QuizAlle
 import CreaQuizAllenamento from './app/components/gestione_quiz_allenamento/CreaQuizAllenamento';
 import ListaQuizAllenamento from './app/components/gestione_quiz_allenamento/ListaQuizAllenamento';
 import CompilaQuizAllenamento from './app/components/gestione_quiz_allenamento/CompilaQuizAllenamento';
+import ListaQuizAllenamentoMedico from './app/components/gestione_quiz_allenamento/ListaQuizAllenamentoMedico';
 import CreaStoria from './app/components/gestione_storia/CreaStoria';
 import CreaToDoList from './app/components/gestione_todolist/CreaToDoList';
 import ListaToDoList from './app/components/gestione_todolist/ListaToDoList';
@@ -72,7 +73,9 @@ root.render(
           />
           <Route
             path="/medico/visualizza_quiz_allenamento"
-            element={React.createElement(withMedico(ListaQuizAllenamento))}
+            element={React.createElement(
+              withMedico(ListaQuizAllenamentoMedico)
+            )}
           />
           <Route
             path="/medico/lineeguidaform"

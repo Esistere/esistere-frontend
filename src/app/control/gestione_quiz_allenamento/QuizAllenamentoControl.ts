@@ -322,9 +322,8 @@ class QuizAllenamentoControl {
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
-      } else {
-        return true;
       }
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }

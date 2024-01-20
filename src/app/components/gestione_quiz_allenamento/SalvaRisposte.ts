@@ -68,10 +68,8 @@ class SalvaRisposte {
   }
 
   async finishQuiz(quiz: QuizAllenamentoGiornaliero): Promise<boolean> {
-    const result = await this.quizAllenamentoControl.aggiornaQuizAllenamento(
-      quiz
-    );
-    return result ? true : false;
+    const result = this.quizAllenamentoControl.aggiornaQuizAllenamento(quiz);
+    return (await result) ? true : false;
   }
 }
 

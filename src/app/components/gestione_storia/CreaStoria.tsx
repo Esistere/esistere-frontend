@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'app/css/gestione_app/FormElements.css';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -28,8 +28,13 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
+  const [isHoveredCaricaFile, setIsHoveredCaricaFile] = React.useState(false);
+  const [isHoveredSalva, setIsHoveredSalva] = React.useState(false);
+
+  const [coloreBottoneCaricaFile, impostaColoreBottoneCaricaFile] =
+    useState<string>('#9149f3');
+  const [coloreBottoneSalva, impostaColoreBottoneSalva] =
+    useState<string>('#9149f3');
   const [datiStoria, setDatiStoria] = useState<Storia>({
     id: 0,
     cg_fam: 0,
@@ -38,10 +43,16 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
   });
   const storiaControl = new StoriaControl();
 
-  const gestisciHover = (isHovered: boolean): void => {
+  const gestisciHoverCaricaFile = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
-    impostaColoreBottone(nuovoColore);
-    setIsHovered(isHovered);
+    impostaColoreBottoneCaricaFile(nuovoColore);
+    setIsHoveredCaricaFile(isHovered);
+  };
+
+  const gestisciHoverSalva = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreBottoneSalva(nuovoColore);
+    setIsHoveredSalva(isHovered);
   };
 
   const handleFileChange = (
@@ -79,10 +90,10 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
               id="testo"
               label="Testo Storia"
               multiline
-              rows={10}
+              rows={15}
               value={datiStoria.testo}
               onChange={handleChange}
-              style={{ margin: '1.5em ' }}
+              style={{ margin: '1.5em ', width: '40%' }}
             />
           </div>
           <div className="riga">
@@ -90,12 +101,13 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
               component="label"
               variant="contained"
               startIcon={<CloudUploadIcon />}
-              onMouseEnter={() => gestisciHover(true)}
-              onMouseLeave={() => gestisciHover(false)}
+              onMouseEnter={() => gestisciHoverCaricaFile(true)}
+              onMouseLeave={() => gestisciHoverCaricaFile(false)}
               style={{
-                backgroundColor: isHovered ? '#8036a1' : '#9149f3',
+                backgroundColor: coloreBottoneCaricaFile,
                 color: '#ffffff',
                 margin: '1em',
+                width: '10%',
               }}
             >
               Carica file
@@ -109,25 +121,24 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
               id="descrizione"
               label="Descrizione File"
               multiline
-              rows={10}
+              rows={8}
               onChange={handleChange}
-              style={{ margin: '1.5em ' }}
+              style={{ margin: '5em ', width: '40%' }}
             />
           </div>
           <div className="riga">
             <Button
               style={{
-                background: coloreBottone,
-                color: 'white',
-                width: '16.15em',
+                backgroundColor: coloreBottoneSalva,
+                color: '#ffffff',
                 margin: '1em',
-                boxSizing: 'border-box',
+                width: '10%',
               }}
               onClick={handleSave}
-              onMouseEnter={() => gestisciHover(true)}
-              onMouseLeave={() => gestisciHover(false)}
+              onMouseEnter={() => gestisciHoverSalva(true)}
+              onMouseLeave={() => gestisciHoverSalva(false)}
             >
-              Salva
+              Salva storia
             </Button>
           </div>
         </form>

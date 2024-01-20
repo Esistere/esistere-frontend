@@ -5,6 +5,7 @@ import LineaGuidaControl from 'app/control/gestione_autenticazione/LineaGuidaCon
 import { LineaGuida } from 'app/interfaces/gestione_autenticazione/LineaGuida';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Navbar from '../Navbar';
 
 const theme = createTheme({
   palette: {
@@ -56,6 +57,7 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Navbar />
       <h2
         style={{ textAlign: 'center', color: coloreBottone, marginTop: '20px' }}
       >

@@ -1,4 +1,5 @@
 export interface DomandaRisposta {
+  idDomanda: number | undefined;
   quiz_ag: number | undefined;
   domanda: string;
   corretta: boolean | undefined;
@@ -7,6 +8,6 @@ export interface DomandaRisposta {
     risposta: string;
     corretta: boolean | undefined;
     selezionata: boolean | undefined;
-    id: number | undefined;
+    idRisposta: number | undefined;
   }[];
 }

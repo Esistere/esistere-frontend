@@ -1,17 +1,19 @@
 {
   "files": {
     "main.css": "/esistere-frontend/static/css/main.985655d4.css",
-    "main.js": "/esistere-frontend/static/js/main.00bc7430.js",
+    "main.js": "/esistere-frontend/static/js/main.7a30260b.js",
     "static/js/787.d0deff6c.chunk.js": "/esistere-frontend/static/js/787.d0deff6c.chunk.js",
     "static/media/storia.png": "/esistere-frontend/static/media/storia.facf558f9fe23e88d6bc.png",
     "static/media/logonavbar.png": "/esistere-frontend/static/media/logonavbar.7fabad46dcb5af59dac1.png",
     "static/media/cgpaziente.png": "/esistere-frontend/static/media/cgpaziente.550446d7a360136bb218.png",
     "static/media/supporto.png": "/esistere-frontend/static/media/supporto.a204fb22b7b06a117c4d.png",
+    "static/media/scriviStoria.png": "/esistere-frontend/static/media/scriviStoria.cfbc9b7e11daca778968.png",
     "static/media/filastrocca.png": "/esistere-frontend/static/media/filastrocca.acac9374010170a2f318.png",
     "static/media/intro.png": "/esistere-frontend/static/media/intro.72f1ebdc196fb6c07e38.png",
     "static/media/QuizAllenamento.png": "/esistere-frontend/static/media/QuizAllenamento.fda4acbda24fb5b8e99d.png",
     "static/media/paziente.png": "/esistere-frontend/static/media/paziente.22b66ef364e2b760f986.png",
     "static/media/logo512.png": "/esistere-frontend/static/media/logo512.e4d63d87f2e4a3b8bd6b.png",
+    "static/media/scriviFilastrocca.jpg": "/esistere-frontend/static/media/scriviFilastrocca.c1428d57f03a15e07e75.jpg",
     "static/media/ToDoList1.jpg": "/esistere-frontend/static/media/ToDoList1.037a02155da1b720e4ce.jpg",
     "static/media/accessoNegato.jpg": "/esistere-frontend/static/media/accessoNegato.66cb8da1663d552d2f66.jpg",
     "static/media/Alzheimer.jpg": "/esistere-frontend/static/media/Alzheimer.ec97e53f213e8dd6adbc.jpg",
@@ -22,11 +24,11 @@
     "static/media/logo.svg": "/esistere-frontend/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/esistere-frontend/index.html",
     "main.985655d4.css.map": "/esistere-frontend/static/css/main.985655d4.css.map",
-    "main.00bc7430.js.map": "/esistere-frontend/static/js/main.00bc7430.js.map",
+    "main.7a30260b.js.map": "/esistere-frontend/static/js/main.7a30260b.js.map",
     "787.d0deff6c.chunk.js.map": "/esistere-frontend/static/js/787.d0deff6c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.985655d4.css",
-    "static/js/main.00bc7430.js"
+    "static/js/main.7a30260b.js"
   ]
 }

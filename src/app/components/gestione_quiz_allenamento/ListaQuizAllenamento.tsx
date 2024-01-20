@@ -10,6 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Box,
+  Card,
+  CardContent,
   CssBaseline,
   Drawer,
   IconButton,
@@ -20,6 +22,7 @@ import {
 import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Pulsante from '../gestione_app/Pulsante';
 
 const drawerWidth = 338;
 interface Props {
@@ -58,6 +61,7 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
     selezionata: boolean | undefined
   ): string => {
     if (corretta && selezionata) {
+      setPunteggio_totale(punteggio_totale + 1);
       return 'forestgreen';
     } else if (selezionata && !corretta) {
       return 'crimson';
@@ -102,6 +106,9 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
     </div>
   );
   IconButton;
+
+  const [punteggio_totale, setPunteggio_totale] = useState(0);
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -202,45 +209,60 @@ function ListaQuizAllenamento(props: Props): JSX.Element {
             {selectedQuizAllenamento ? (
               <>
                 <Typography variant="h4">
-                  {'Punteggio totale: ' +
-                    // eslint-disable-next-line max-len
-                    `${selectedQuizAllenamento.quizAllenamento.punteggio_totale}`}
+                  Punteggio totale:&nbsp;{' '}
+                  {selectedQuizAllenamento.quizAllenamento.punteggio_totale}
+                  {userType === UserType.caregiver && (
+                    <Pulsante
+                      onClick={() => {
+                        navigate('/caregiver/compila_quiz_allenamento', {
+                          state: selectedQuizAllenamento.quizAllenamento.id,
+                        });
+                      }}
+                      tipologia={'scuro'}
+                      testo={'Esegui'}
+                      nome={'esegui'}
+                      style={{ margin: '3em' }}
+                    />
+                  )}
                 </Typography>
+
                 <Typography variant="h6">
                   {'Numero domande: ' +
                     `${selectedQuizAllenamento.quizAllenamento.numero_domande}`}
                 </Typography>
                 {Object.values(selectedQuizAllenamento.domandeRisposte).map(
                   (domandaRisposta, index) => (
-                    <div key={index}>
-                      <Typography
-                        variant="h6"
-                        style={{
-                          color: domandaRisposta.corretta
-                            ? 'forestgreen'
-                            : 'crimson',
-                        }}
-                      >
-                        Domanda: {domandaRisposta.domanda}
-                      </Typography>
-                      <Typography variant="h6">Risposte:</Typography>
-                      <br />
-                      {domandaRisposta.risposte.map((risposta, index) => (
-                        <div key={index}>
-                          <Typography
-                            variant="h6"
-                            style={{
-                              color: colore(
-                                risposta.corretta,
-                                risposta.selezionata
-                              ),
-                            }}
-                          >
-                            {risposta.risposta}
-                          </Typography>
-                        </div>
-                      ))}
-                    </div>
+                    <Card key={index} sx={{ margin: '2em' }}>
+                      <CardContent>
+                        <Typography
+                          variant="h6"
+                          style={{
+                            color: domandaRisposta.corretta
+                              ? 'forestgreen'
+                              : 'crimson',
+                          }}
+                        >
+                          Domanda: {domandaRisposta.domanda}
+                        </Typography>
+                        <Typography variant="h6">Risposte:</Typography>
+                        <br />
+                        {domandaRisposta.risposte.map((risposta, ind) => (
+                          <div key={ind}>
+                            <Typography
+                              variant="h6"
+                              style={{
+                                color: colore(
+                                  risposta.corretta,
+                                  risposta.selezionata
+                                ),
+                              }}
+                            >
+                              {risposta.risposta}
+                            </Typography>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
                   )
                 )}
               </>

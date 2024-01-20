@@ -260,7 +260,7 @@ function ListaPazienti(props: Props): JSX.Element {
                     onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
                     startIcon={<QuizIcon />}
                     onClick={() => {
-                      navigate('/medico/visualizza_quiz_giornaliero', {
+                      navigate('/medico/visualizza_quiz_allenamento', {
                         state: selectedPaziente.cg_fam,
                       });
                     }}

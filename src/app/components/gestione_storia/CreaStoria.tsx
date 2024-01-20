@@ -28,8 +28,12 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
+  // TODO remove
+  /* eslint-disable */
   const [isHoveredCaricaFile, setIsHoveredCaricaFile] = React.useState(false);
   const [isHoveredSalva, setIsHoveredSalva] = React.useState(false);
+  // TODO remove
+  /* eslint-enable */
 
   const [coloreBottoneCaricaFile, impostaColoreBottoneCaricaFile] =
     useState<string>('#9149f3');

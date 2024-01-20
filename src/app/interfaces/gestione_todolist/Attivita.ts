@@ -1,7 +1,7 @@
 export interface Attivita {
   id: number | undefined;
   testo: string;
-  completata: boolean | undefined;
+  completata: boolean;
   commento: string;
   valutazione: number;
   to_do_list: number | undefined;

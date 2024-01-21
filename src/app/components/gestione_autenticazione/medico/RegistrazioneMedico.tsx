@@ -21,6 +21,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import 'app/css/gestione_app/FormElements.css';
 import {
   emailRegex,
+  indirizzoStudioRegex,
+  numCivicoRegex,
   numeroTelefonoStudioRegex,
   passwordRegex,
 } from 'app/regex';
@@ -96,13 +98,38 @@ const RegistrazioneMedico: React.FC = () => {
       indirizzo_studio: newStudio,
     }));
 
-    const isValid = newStudio !== '';
+    const isValid = indirizzoStudioRegex.test(newStudio) || newStudio !== '';
     setIsStudioValid(isValid);
 
     if (!isValid) {
       setStudioError('Inserisci un indirizzo studio.');
     } else {
       setStudioError('');
+    }
+  };
+
+  const [isNumCivStudioValid, setIsNumCivStudioValid] = useState<boolean>(true);
+  const [numCivStudioError, setNumCivStudioError] = useState('');
+  const handleNumCivStudioChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newNumStudio = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      numero_civico: newNumStudio,
+    }));
+    const isValid =
+      newNumStudio.length < 6
+        ? numCivicoRegex.test(newNumStudio) || newNumStudio === ''
+        : false;
+    setIsNumCivStudioValid(isValid);
+    if (!isValid) {
+      setNumCivStudioError(
+        'Inserisci un numero civico valido. Es. 34523 o 123/A'
+      );
+    } else {
+      setNumCivStudioError('');
     }
   };
 
@@ -139,18 +166,44 @@ const RegistrazioneMedico: React.FC = () => {
       email: formData.email,
       passwd: formData.passwd,
     };
-
-    const medicoControl: MedicoControl = new MedicoControl();
-    medicoControl
-      .inviaDatiMedico(medico)
-      .then(() => {
-        setSuccess(true);
-        setOpen(true);
-      })
-      .catch(() => {
-        setSuccess(false);
-        setOpen(true);
-      });
+    const requiredFieldsFilled = Object.values(formData).every(
+      (value) => value !== ''
+    );
+    if (
+      requiredFieldsFilled &&
+      isEmailValid &&
+      isPassValid &&
+      isStudioValid &&
+      isNumCivStudioValid &&
+      isNumStudioValid
+    ) {
+      const medicoControl: MedicoControl = new MedicoControl();
+      medicoControl
+        .inviaDatiMedico(medico)
+        .then(() => {
+          setSuccess(true);
+          setOpen(true);
+        })
+        .catch(() => {
+          setSuccess(false);
+          setOpen(true);
+        });
+    } else {
+      console.log(
+        'req',
+        requiredFieldsFilled,
+        'email',
+        isEmailValid,
+        'pwd',
+        isPassValid,
+        'via studio',
+        isStudioValid,
+        'numcivico',
+        isNumCivStudioValid,
+        'numstudio',
+        isNumStudioValid
+      );
+    }
   };
 
   const [success, setSuccess] = useState<boolean | null>(null);
@@ -274,15 +327,21 @@ const RegistrazioneMedico: React.FC = () => {
                     id="outlined-num-civico-input"
                     required
                     label="Numero Civico"
+                    error={
+                      !isNumCivStudioValid && formData.numero_civico.length > 0
+                    }
                     style={{
                       width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    onChange={handleChange}
+                    onChange={handleNumCivStudioChange}
                   />
                 </div>
+                {numCivStudioError && (
+                  <div style={{ color: '#D32F2F' }}>{numCivStudioError}</div>
+                )}
                 <div className="riga">
                   <TextField
                     type="text"

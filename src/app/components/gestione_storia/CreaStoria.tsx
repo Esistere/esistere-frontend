@@ -6,16 +6,17 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
 import Navbar from '../Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Storia } from 'app/interfaces/gestione_storia/Storia';
 import StoriaControl from 'app/control/gestione_storia/StoriaControl';
 import {
   Card,
+  CardContent,
   CardMedia,
   Container,
   CssBaseline,
   Stack,
   Typography,
 } from '@mui/material';
+import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
 
 const theme = createTheme({
   palette: {
@@ -47,11 +48,17 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     useState<string>('#9149f3');
   const [coloreBottoneSalva, impostaColoreBottoneSalva] =
     useState<string>('#9149f3');
-  const [datiStoria, setDatiStoria] = useState<Storia>({
-    id: 0,
-    cg_fam: 0,
+  const [datiStoria, setDatiStoria] = useState<StoriaMedia>({
+    id: undefined,
+    cg_fam: Number(localStorage.getItem('id')),
     testo: '',
-    descrizione: '',
+    media: {
+      id: undefined,
+      storia: undefined,
+      allegato: '',
+      descrizione: '',
+      tipo: -1,
+    },
   });
   const storiaControl = new StoriaControl();
 
@@ -71,15 +78,57 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     if (event.target.files) {
       const nomeFile = event.target.files[0].name;
       console.log('Nome del file:', nomeFile);
+
+      const file = event.target.files[0];
+      const tipo = event.target.files[0].type;
+      const numTipo = tipo.startsWith('image/') ? 0 : 1;
+      if (tipo.startsWith('image/')) {
+        if (file) {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            if (e && e.target !== null) {
+              const alle =
+                e.target.result !== null ? (e.target.result as string) : '';
+              setDatiStoria((prev) => ({
+                ...prev,
+                media: {
+                  ...prev.media,
+                  allegato: alle,
+                  tipo: numTipo,
+                },
+              }));
+            } else {
+              console.error('Errore durante la lettura del file.');
+            }
+          };
+        }
+      }
     }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = event.target;
-    setDatiStoria((prevDatiStoria) => ({
-      ...prevDatiStoria,
-      [id]: value,
-    }));
+    if (value.length <= 300) {
+      setDatiStoria((prevDatiStoria) => ({
+        ...prevDatiStoria,
+        [id]: value,
+      }));
+    }
+  };
+  const handleDescrChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const { value } = event.target;
+    if (value.length <= 300) {
+      setDatiStoria((prevDatiStoria) => ({
+        ...prevDatiStoria,
+        media: {
+          ...prevDatiStoria.media,
+          descrizione: value,
+        },
+      }));
+    }
   };
 
   const handleSave = async (): Promise<void> => {
@@ -92,9 +141,6 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     <ThemeProvider theme={theme}>
       <>
         <Navbar />
-        <Typography variant="h3" color="blueviolet" textAlign="center">
-          Scrivi una nuova storia
-        </Typography>
         <Container component="main" maxWidth="lg">
           <CssBaseline />
           <Card
@@ -116,23 +162,44 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
               justifyContent="center"
               sx={{ width: '100%' }}
             >
-              <div className="formflex2">
+              <div className="formflex2" style={{ alignItems: 'top' }}>
                 <div className="riga">
+                  <CardContent>
+                    <Typography
+                      variant="h4"
+                      color="blueviolet"
+                      textAlign="center"
+                      style={{
+                        marginBottom: '2em',
+                      }}
+                    >
+                      Scrivi una nuova storia
+                    </Typography>
+                    <Typography variant="h5" color="black" textAlign="left">
+                      Caricare un&apos;immagine o un file vocale potrebbe
+                      aiutare a la persona che segui a continuare a ricordare
+                      parti importanti della sua vita!
+                    </Typography>
+                  </CardContent>
                   <CardMedia
                     component="img"
-                    style={{ width: '110%', height: 'auto', marginLeft: '2em' }}
+                    style={{ width: '24em', height: 'auto', marginLeft: '2em' }}
                     image={require('app/assets/images/scriviStoria.png')}
                   />
                 </div>
               </div>
-              <form className="formflex">
+              <form
+                className="formflex"
+                method="post"
+                encType="multipart/form-data"
+              >
                 <div className="riga">
                   <TextField
                     required
                     id="testo"
                     label="Testo Storia"
                     multiline
-                    rows={15}
+                    rows={8}
                     value={datiStoria.testo}
                     onChange={handleChange}
                     style={{
@@ -158,7 +225,9 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
                   >
                     Carica file
                     <VisuallyHiddenInput
+                      name="image"
                       type="file"
+                      accept="image/* "
                       onChange={handleFileChange}
                     />
                   </Button>
@@ -170,8 +239,9 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
                     id="descrizione"
                     label="Descrizione File"
                     multiline
-                    rows={8}
-                    onChange={handleChange}
+                    rows={4}
+                    value={datiStoria.media.descrizione}
+                    onChange={handleDescrChange}
                     style={{
                       margin: '1.5em ',
                       width: '60%',

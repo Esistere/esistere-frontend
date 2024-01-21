@@ -16,7 +16,8 @@ import {
   Typography,
 } from '@mui/material';
 import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
-
+import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
+import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
   palette: {
     primary: {
@@ -52,7 +53,7 @@ function CreaStoria(): JSX.Element {
     },
   });
   const storiaControl = new StoriaControl();
-
+  const [show, setShow] = React.useState(false);
   const gestisciHoverCaricaFile = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottoneCaricaFile(nuovoColore);
@@ -74,7 +75,6 @@ function CreaStoria(): JSX.Element {
       setFile(selectedFile);
       console.log('Nome del file:', nomeFile);
 
-      const file = event.target.files[0];
       const tipo = event.target.files[0].type;
       const numTipo = tipo.startsWith('image/') ? 0 : 1;
       if (tipo.startsWith('image/')) {
@@ -123,9 +123,22 @@ function CreaStoria(): JSX.Element {
     }
   };
 
+  const areFieldsFilled = (): boolean => {
+    return (
+      datiStoria.testo.trim() !== '' &&
+      datiStoria.media.descrizione.trim() !== '' &&
+      file !== null
+    );
+  };
+  const navigate = useNavigate();
   const handleSave = async (): Promise<void> => {
-    await storiaControl.inviaStoria(datiStoria, file);
-    console.log('Storia salvata con successo!');
+    if (areFieldsFilled()) {
+      await storiaControl.inviaStoria(datiStoria, file);
+      navigate('/');
+    } else {
+      setShow(true);
+      console.log('Errore: Tutti i campi devono essere compilati.');
+    }
   };
 
   return (
@@ -133,6 +146,7 @@ function CreaStoria(): JSX.Element {
       <>
         <Navbar />
         <Container component="main" maxWidth="lg">
+          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
           <CssBaseline />
           <Card
             sx={{

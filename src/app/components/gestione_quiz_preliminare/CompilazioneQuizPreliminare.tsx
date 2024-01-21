@@ -1,10 +1,22 @@
-import { Box, Card, CardContent, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObjectQP';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import 'app/css/gestione_app/FormElements.css';
+import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
+import QuizPreliminareControl from 'app/control/gestione_quiz_preliminare/QuizPreliminareControl';
 
 function CompilaQuiz(): JSX.Element {
   const [data, setData] = useState<ResponseObjectQP>();
+
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -13,6 +25,8 @@ function CompilaQuiz(): JSX.Element {
   useEffect(() => {
     setData(quiz);
   }, [quiz]);
+
+  const [risposte, setRisposte] = useState<RispostaQuizPreliminare[]>([]);
 
   const handleUpdateAnswer = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -47,6 +61,31 @@ function CompilaQuiz(): JSX.Element {
     console.log(data);
   };
 
+  const handleSubmitAnswers = async (): Promise<void> => {
+    if (data !== undefined) {
+      const updatedRisposte: RispostaQuizPreliminare[] = Object.keys(
+        data.domandeRisposte
+      ).map((dom) => ({
+        id: data.domandeRisposte[dom].risposta.id,
+        domanda: data.domandeRisposte[dom].risposta.domanda,
+        risposta: data.domandeRisposte[dom].risposta.risposta,
+        paziente: data.domandeRisposte[dom].risposta.paziente,
+      }));
+
+      setRisposte(updatedRisposte);
+
+      const quizPreliminareControl: QuizPreliminareControl =
+        new QuizPreliminareControl();
+
+      const risultato =
+        quizPreliminareControl.aggiungiRispostePreliminare(risposte);
+
+      if (await risultato) {
+        navigate('/');
+      }
+    }
+  };
+
   return (
     <>
       <Box sx={{ width: '100%', height: '100%' }}>
@@ -74,6 +113,17 @@ function CompilaQuiz(): JSX.Element {
               </CardContent>
             </Card>
           ))}
+        <div className="riga">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              handleSubmitAnswers();
+            }}
+          >
+            Conferma
+          </Button>
+        </div>
       </Box>
     </>
   );

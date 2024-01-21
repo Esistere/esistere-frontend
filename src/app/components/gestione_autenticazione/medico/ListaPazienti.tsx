@@ -208,6 +208,7 @@ function ListaPazienti(props: Props): JSX.Element {
                   marginRight: '3em',
                   width: '14em',
                 }}
+                alt={`${selectedPaziente.nome} ${selectedPaziente.cognome}`}
               />
               <div style={{ marginTop: '4em' }}>
                 <Typography variant="h4">

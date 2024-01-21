@@ -106,7 +106,6 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
       </List>
     </div>
   );
-  IconButton;
 
   const [punteggio_totale, setPunteggio_totale] = useState(0);
 

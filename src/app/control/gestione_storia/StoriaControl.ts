@@ -25,17 +25,23 @@ class StoriaControl {
     return storiaMedia;
   }
 
-  async inviaStoria(datiStoria: StoriaMedia): Promise<boolean> {
+  async inviaStoria(
+    datiStoria: StoriaMedia,
+    file: File | null
+  ): Promise<boolean> {
     const url = `${this.baseUrl}/save_storia`;
+    const formData = new FormData();
+    console.log('asd', JSON.stringify(datiStoria));
+    if (file) formData.append('file', file);
+    formData.append('data', JSON.stringify(datiStoria));
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify(datiStoria),
+        body: formData,
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

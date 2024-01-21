@@ -5,7 +5,6 @@ export interface StoriaMedia {
   media: {
     id: number | undefined;
     storia: number | undefined,
-    allegato: string;
     descrizione: string;
     tipo: number;
   };

@@ -28,6 +28,7 @@ import withMedico from './app/components/gestione_autenticazione/medico/MedicoHO
 import LineeGuidaForm from './app/components/gestione_linee_guida/LineeGuidaForm';
 import ListaQuiPreliminare from './app/components/gestione_quiz_preliminare/ListaQuizPreliminare';
 import CompilazioneQuizPreliminare from './app/components/gestione_quiz_preliminare/CompilazioneQuizPreliminare';
+import CreaQuizPreliminare from './app/components/gestione_quiz_preliminare/CreaQuizPreliminare';
 import DatiCaregiver from './app/components/gestione_autenticazione/medico/DatiCaregiver';
 
 const root = ReactDOM.createRoot(
@@ -91,6 +92,10 @@ root.render(
             path="/medico/crea_tac"
             element={React.createElement(withMedico(CreaTac))}
           />
+          <Route
+            path="/medico/crea_quiz_preliminare"
+            element={React.createElement(withMedico(CreaQuizPreliminare))}
+          />
           {/* Caregiver paths */}
           <Route
             path="/caregiver"
@@ -128,11 +133,6 @@ root.render(
             path="/caregiver/visualizza_filastrocche"
             element={React.createElement(withCaregiver(ListaFilastrocche))}
           />
-          {/*
-          <Route
-            path="/caregiver/crea_todo_list"
-            element={React.createElement(withCaregiver(CreaToDoList))}
-        />*/}
           <Route
             path="/caregiver/visualizza_todolist"
             element={React.createElement(withCaregiver(ListaToDoList))}

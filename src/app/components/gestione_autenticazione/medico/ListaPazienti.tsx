@@ -206,7 +206,7 @@ function ListaPazienti(props: Props): JSX.Element {
                 style={{
                   float: 'left',
                   marginRight: '3em',
-                  width: '8em',
+                  width: '14em',
                 }}
               />
               <div style={{ marginTop: '4em' }}>
@@ -216,6 +216,10 @@ function ListaPazienti(props: Props): JSX.Element {
 
                 <Typography variant="h6">
                   {selectedPaziente.codice_fiscale}
+                </Typography>
+
+                <Typography variant="h6">
+                  {selectedPaziente.data_di_nascita.toString().split('T')[0]}
                 </Typography>
 
                 <form className="formflex">

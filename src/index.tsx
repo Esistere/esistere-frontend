@@ -27,6 +27,7 @@ import withMedico from './app/components/gestione_autenticazione/medico/MedicoHO
 import LineeGuidaForm from './app/components/gestione_linee_guida/LineeGuidaForm';
 import ListaQuiPreliminare from './app/components/gestione_quiz_preliminare/ListaQuizPreliminare';
 import CompilazioneQuizPreliminare from './app/components/gestione_quiz_preliminare/CompilazioneQuizPreliminare';
+import DatiCaregiver from './app/components/gestione_autenticazione/medico/DatiCaregiver';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -81,7 +82,10 @@ root.render(
             path="/medico/lineeguidaform"
             element={React.createElement(withMedico(LineeGuidaForm))}
           />
-
+          <Route
+            path="/medico/visualizza_caregiver"
+            element={React.createElement(withMedico(DatiCaregiver))}
+          />
           {/* Caregiver paths */}
           <Route
             path="/caregiver"

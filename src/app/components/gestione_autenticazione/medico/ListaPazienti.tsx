@@ -305,11 +305,11 @@ function ListaPazienti(props: Props): JSX.Element {
                     onMouseEnter={() => gestisciHoverCg(true)}
                     onMouseLeave={() => gestisciHoverCg(false)}
                     startIcon={<PersonRoundedIcon />}
-                    // onClick={() => {
-                    //   navigate('/medico/visualizza_caregiver', {
-                    //     state: selectedPaziente.cg_fam,
-                    //   });
-                    // }}
+                    onClick={() => {
+                      navigate('/medico/visualizza_caregiver', {
+                        state: selectedPaziente.cg_fam,
+                      });
+                    }}
                   >
                     profilo caregiver
                   </Button>

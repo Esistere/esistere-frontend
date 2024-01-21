@@ -1,5 +1,5 @@
 import { WEBSERVER } from 'app/config';
-import { Storia } from 'app/interfaces/gestione_storia/Storia';
+
 import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
 
 class StoriaControl {
@@ -25,7 +25,7 @@ class StoriaControl {
     return storiaMedia;
   }
 
-  async inviaStoria(datiStoria: Storia): Promise<boolean> {
+  async inviaStoria(datiStoria: StoriaMedia): Promise<boolean> {
     const url = `${this.baseUrl}/save_storia`;
 
     try {

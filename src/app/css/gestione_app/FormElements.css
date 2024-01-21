@@ -16,9 +16,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3em;
+  align-content: center;
+  margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
+  max-width: 20em;
+  height: 20em;
 }
 .optionContainer {
   display: flex;
@@ -44,22 +47,12 @@
 }
 
 @media screen and (min-width: 601px) {
-  .option {
-    width: 10vh;
-    height: 25vh;
-  }
-
   .formflex2 {
     width: 50%;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .option {
-    width: 20vh;
-    height: 30vh;
-  }
-
   .formflex2 {
     width: 100%;
   }
@@ -67,11 +60,9 @@
 
 .optionIcon {
   margin-bottom: 1rem;
+  margin-top: 4em;
 }
 
-.optionText {
-  font-size: flex-end; /* togliere*/
-}
 .regicontainer {
   width: 100%;
   padding: 1rem;

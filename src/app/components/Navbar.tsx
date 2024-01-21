@@ -69,12 +69,17 @@ function Navbar(): JSX.Element {
   return (
     <div>
       <AppBar
-        position="sticky"
+        position="fixed"
         id="appBar"
         sx={{ top: 0, zIndex: 1201, backgroundColor: 'blueviolet' }}
       >
         <Container maxWidth={false}>
-          <Toolbar disableGutters>
+          <Toolbar
+            disableGutters
+            sx={{
+              height: '3.5em',
+            }}
+          >
             <Typography
               variant="h6"
               noWrap

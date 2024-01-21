@@ -1,5 +1,5 @@
 export interface DomandaQuizPreliminare {
   id?: number | undefined;
   domanda: string;
-  quiz_preliminare: number;
+  quiz_preliminare: number | undefined;
 }

@@ -1,6 +1,6 @@
 export interface RispostaQuizPreliminare {
   id?: number | undefined;
-  domanda: number;
+  domanda: number | undefined;
   paziente: string;
   risposta: string;
 }

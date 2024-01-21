@@ -15,7 +15,15 @@ import CheckIcon from '@mui/icons-material/Check';
 import Pulsante from 'app/components/gestione_app/Pulsante';
 import avataricon from 'app/assets/avatar-icon.png';
 import Navbar from 'app/components/Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#8A2BE2',
+    },
+  },
+});
 function AreaPersonaleCaregiver(): JSX.Element {
   const [caregiverData, setCaregiverData] = useState<CaregiverFamiliare>({
     codice_identificativo: undefined,
@@ -105,216 +113,218 @@ function AreaPersonaleCaregiver(): JSX.Element {
   };
 
   return (
-    <>
-      <Navbar />
-      <Container component="main" maxWidth="lg">
-        <CssBaseline />
-        <Card
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            alignItems: 'center',
-            padding: (theme) => theme.spacing(3),
-            backgroundColor: 'white',
-            borderRadius: '10px',
-            boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-            color: '#5E35B1',
-          }}
-        >
-          <CardContent
+    <ThemeProvider theme={theme}>
+      <>
+        <Navbar />
+        <Container component="main" maxWidth="lg">
+          <CssBaseline />
+          <Card
             sx={{
-              width: '100%',
+              marginTop: 8,
               display: 'flex',
-              flexDirection: 'rows',
-              alignItems: 'top',
-              flexWrap: 'wrap',
+              alignItems: 'center',
+              padding: (theme) => theme.spacing(3),
+              backgroundColor: 'white',
+              borderRadius: '10px',
+              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+              color: '#5E35B1',
             }}
           >
-            <div className="formflex2">
-              <div className="riga">
-                <Avatar
-                  alt={`${caregiverData?.nome} ${caregiverData?.cognome}`}
-                  src={avataricon}
-                  sx={{ width: '30%', height: 'auto', aspectRatio: 1 / 1 }}
-                />
+            <CardContent
+              sx={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'rows',
+                alignItems: 'top',
+                flexWrap: 'wrap',
+              }}
+            >
+              <div className="formflex2">
+                <div className="riga">
+                  <Avatar
+                    alt={`${caregiverData?.nome} ${caregiverData?.cognome}`}
+                    src={avataricon}
+                    sx={{ width: '30%', height: 'auto', aspectRatio: 1 / 1 }}
+                  />
+                </div>
+                <div className="riga">
+                  <Pulsante
+                    tipologia="scuro"
+                    nome="modifica"
+                    testo="Modifica Dati Personali"
+                    onClick={() => setDisa(false)}
+                  />
+                </div>
               </div>
-              <div className="riga">
-                <Pulsante
-                  tipologia="scuro"
-                  nome="modifica"
-                  testo="Modifica Dati Personali"
-                  onClick={() => setDisa(false)}
-                />
-              </div>
-            </div>
-            <form className="formflex2" method="post" onSubmit={handleSubmit}>
-              <div className="riga">
-                <TextField
-                  name="nome"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outline-nome"
-                  label="Nome"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.nome}
-                  onChange={handleChange}
-                />
+              <form className="formflex2" method="post" onSubmit={handleSubmit}>
+                <div className="riga">
+                  <TextField
+                    name="nome"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outline-nome"
+                    label="Nome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.nome}
+                    onChange={handleChange}
+                  />
 
-                <TextField
-                  name="cognome"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outline-cognome"
-                  label="Cognome"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.cognome}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="riga">
-                <TextField
-                  name="indirizzo"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outlined-indirizzo"
-                  label="Indirizzo"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.indirizzo}
-                  onChange={handleChange}
-                />
-                <TextField
-                  name="numero_civico"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outlined-numero_civivo"
-                  label="Numero Civico"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.numero_civico}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="riga">
-                <TextField
-                  name="citta"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outline-citta"
-                  label="Città"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.citta}
-                  onChange={handleChange}
-                />
-                <TextField
-                  name="data_di_nascita"
-                  disabled={disa}
-                  required
-                  type="date"
-                  id="outlined-data"
-                  label="Data di Nascita"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={
-                    caregiverData.data_di_nascita.toISOString().split('T')[0]
-                  }
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="riga">
-                <TextField
-                  name="numero_di_telefono"
-                  disabled={disa}
-                  required
-                  type="text"
-                  id="outlined-telefono"
-                  label="Telefono"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.numero_di_telefono}
-                  onChange={handleChange}
-                />
-                <TextField
-                  name="email"
-                  disabled={disa}
-                  required
-                  type="email"
-                  id="outlined-Email"
-                  label="Email"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="riga">
-                <TextField
-                  name="passwd"
-                  disabled={disa}
-                  required
-                  type="password"
-                  id="outlined-password"
-                  style={{
-                    width: '16.15em',
-                    margin: '1em',
-                    boxSizing: 'border-box',
-                  }}
-                  value={caregiverData.passwd}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="riga">
-                <Button
-                  style={{
-                    background: coloreBottone,
-                    display: disa ? 'none' : 'block',
-                  }}
-                  type="submit"
-                  variant="contained"
-                  onMouseEnter={() => gestisciHover(true)}
-                  onMouseLeave={() => gestisciHover(false)}
-                  endIcon={<CheckIcon />}
-                >
-                  Salva dati
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </Container>
-    </>
+                  <TextField
+                    name="cognome"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outline-cognome"
+                    label="Cognome"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.cognome}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    name="indirizzo"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outlined-indirizzo"
+                    label="Indirizzo"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.indirizzo}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    name="numero_civico"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outlined-numero_civivo"
+                    label="Numero Civico"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.numero_civico}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    name="citta"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outline-citta"
+                    label="Città"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.citta}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    name="data_di_nascita"
+                    disabled={disa}
+                    required
+                    type="date"
+                    id="outlined-data"
+                    label="Data di Nascita"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={
+                      caregiverData.data_di_nascita.toISOString().split('T')[0]
+                    }
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    name="numero_di_telefono"
+                    disabled={disa}
+                    required
+                    type="text"
+                    id="outlined-telefono"
+                    label="Telefono"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.numero_di_telefono}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    name="email"
+                    disabled={disa}
+                    required
+                    type="email"
+                    id="outlined-Email"
+                    label="Email"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="riga">
+                  <TextField
+                    name="passwd"
+                    disabled={disa}
+                    required
+                    type="password"
+                    id="outlined-password"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                    }}
+                    value={caregiverData.passwd}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="riga">
+                  <Button
+                    style={{
+                      background: coloreBottone,
+                      display: disa ? 'none' : 'block',
+                    }}
+                    type="submit"
+                    variant="contained"
+                    onMouseEnter={() => gestisciHover(true)}
+                    onMouseLeave={() => gestisciHover(false)}
+                    endIcon={<CheckIcon />}
+                  >
+                    Salva dati
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </Container>
+      </>
+    </ThemeProvider>
   );
 }
 

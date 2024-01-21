@@ -1,5 +1,4 @@
 import React from 'react';
-//import 'app/css/gestione_app/AccessoNegato.css';
 import accessoNegato from 'app/assets/images/accessoNegato.jpg';
 import { Typography } from '@mui/material';
 import Pulsante from '../gestione_app/Pulsante';

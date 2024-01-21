@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/esistere-frontend/static/css/main.46b2a931.css",
-    "main.js": "/esistere-frontend/static/js/main.877bbbcb.js",
+    "main.js": "/esistere-frontend/static/js/main.ffcb7fb2.js",
     "static/js/787.d0deff6c.chunk.js": "/esistere-frontend/static/js/787.d0deff6c.chunk.js",
     "static/media/storia.png": "/esistere-frontend/static/media/storia.facf558f9fe23e88d6bc.png",
     "static/media/logonavbar.png": "/esistere-frontend/static/media/logonavbar.7fabad46dcb5af59dac1.png",
@@ -14,6 +14,7 @@
     "static/media/paziente.png": "/esistere-frontend/static/media/paziente.22b66ef364e2b760f986.png",
     "static/media/logo512.png": "/esistere-frontend/static/media/logo512.e4d63d87f2e4a3b8bd6b.png",
     "static/media/scriviFilastrocca.jpg": "/esistere-frontend/static/media/scriviFilastrocca.c1428d57f03a15e07e75.jpg",
+    "static/media/tac.jpg": "/esistere-frontend/static/media/tac.57d9cf81c520de45d5da.jpg",
     "static/media/ToDoList1.jpg": "/esistere-frontend/static/media/ToDoList1.037a02155da1b720e4ce.jpg",
     "static/media/accessoNegato.jpg": "/esistere-frontend/static/media/accessoNegato.66cb8da1663d552d2f66.jpg",
     "static/media/Alzheimer.jpg": "/esistere-frontend/static/media/Alzheimer.ec97e53f213e8dd6adbc.jpg",
@@ -23,11 +24,11 @@
     "static/media/famiglia.jpg": "/esistere-frontend/static/media/famiglia.6afa2a4a5a5869e15e0b.jpg",
     "index.html": "/esistere-frontend/index.html",
     "main.46b2a931.css.map": "/esistere-frontend/static/css/main.46b2a931.css.map",
-    "main.877bbbcb.js.map": "/esistere-frontend/static/js/main.877bbbcb.js.map",
+    "main.ffcb7fb2.js.map": "/esistere-frontend/static/js/main.ffcb7fb2.js.map",
     "787.d0deff6c.chunk.js.map": "/esistere-frontend/static/js/787.d0deff6c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46b2a931.css",
-    "static/js/main.877bbbcb.js"
+    "static/js/main.ffcb7fb2.js"
   ]
 }

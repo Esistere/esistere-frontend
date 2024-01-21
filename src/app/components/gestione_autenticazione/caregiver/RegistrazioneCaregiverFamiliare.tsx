@@ -832,7 +832,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={(e) => {
                       if (e.target.value) setHasValuePaziente(true);
                       else setHasValuePaziente(false);
-                      handleBirthDateChange;
+                      handleBirthDateChange(e);
                     }}
                   />
                   {birthDateError && (

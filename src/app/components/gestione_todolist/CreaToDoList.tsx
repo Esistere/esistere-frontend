@@ -70,8 +70,13 @@ function CreaToDoList(): JSX.Element {
   };
   const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
 
-  const gestisciHover = (isHovered: boolean): void => {
-    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+  const gestisciHoverCrea = (isHoveredCrea: boolean): void => {
+    const nuovoColore = isHoveredCrea ? '#8036a1' : '#9149f3';
+    impostaColoreBottone(nuovoColore);
+  };
+
+  const gestisciHoverAgg = (isHoveredAgg: boolean): void => {
+    const nuovoColore = isHoveredAgg ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
   const handleQuestionChange = (
@@ -162,8 +167,8 @@ function CreaToDoList(): JSX.Element {
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
+            onMouseEnter={() => gestisciHoverAgg(true)}
+            onMouseLeave={() => gestisciHoverAgg(false)}
             onClick={handleAddQuestion}
           >
             Aggingi Attivit&agrave;
@@ -175,8 +180,8 @@ function CreaToDoList(): JSX.Element {
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
+            onMouseEnter={() => gestisciHoverCrea(true)}
+            onMouseLeave={() => gestisciHoverCrea(false)}
             onClick={handleQuizCreation}
           >
             Crea ToDoList

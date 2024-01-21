@@ -39,7 +39,7 @@
 
 .intro {
   background-image: url('app/assets/images/intro.png');
-  background-size: auto 100%;
+  background-size: cover;
   background-position: right;
   background-repeat: no-repeat;
   justify-content: center;

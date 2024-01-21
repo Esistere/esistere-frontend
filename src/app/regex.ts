@@ -9,3 +9,4 @@ export const fotoRegex = /\.(png|jpg|jpeg|bmp|tif|tiff)$/i;
 export const indirizzoRegex = /^[A-zÀ-ù '-]{2,30}$/;
 export const indirizzoStudioRegex = /^[A-zÀ-ù '-]{2,30}$/;
 export const numeroTelefonoStudioRegex = /^\d{10}$/;
+export const numCivicoRegex = /^\d{1,5}(\/[A-Z]+)?$/;

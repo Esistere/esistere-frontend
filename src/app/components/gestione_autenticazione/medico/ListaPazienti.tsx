@@ -239,6 +239,11 @@ function ListaPazienti(props: Props): JSX.Element {
                       onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
                       onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
                       startIcon={<PsychologyIcon />}
+                      onClick={() => {
+                        navigate('/medico/crea_quiz_preliminare', {
+                          state: selectedPaziente.codice_fiscale,
+                        });
+                      }}
                     >
                       quiz preliminare
                     </Button>

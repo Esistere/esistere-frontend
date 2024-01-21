@@ -15,12 +15,12 @@ import React, { useEffect, useState } from 'react';
 import ElementoLista from './ElementoLista';
 
 import { useNavigate } from 'react-router-dom';
-import ChecklistIcon from '@mui/icons-material/Checklist'; //todo
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded'; //cg
-import PsychologyIcon from '@mui/icons-material/Psychology'; //preliminare
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'; //tac
-import QuizIcon from '@mui/icons-material/Quiz'; //quiz giornaliero
-import AddIcon from '@mui/icons-material/Add'; //aggiungi todo
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import QuizIcon from '@mui/icons-material/Quiz';
+import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import 'app/css/gestione_app/FormElements.css';

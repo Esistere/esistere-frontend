@@ -87,45 +87,43 @@ function CompilaQuiz(): JSX.Element {
   };
 
   return (
-    <>
-      <Box sx={{ width: '100%', height: '100%' }}>
-        {data &&
-          Object.keys(data.domandeRisposte).map((dom) => (
-            <Card key={dom}>
-              <CardContent>
-                <Typography variant="h4" color="blueviolet" textAlign="center">
-                  {data.domandeRisposte[dom].domanda.domanda}
-                </Typography>
-                <TextField
-                  margin="normal"
-                  required
-                  sx={{ width: '20em' }}
-                  name="Risposta"
-                  label="Risposta"
-                  id="risposta"
-                  variant="outlined"
-                  color="secondary"
-                  onChange={(e) => {
-                    handleUpdateAnswer(e, dom);
-                  }}
-                  value={data.domandeRisposte[dom].risposta.risposta || ''}
-                />
-              </CardContent>
-            </Card>
-          ))}
-        <div className="riga">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              handleSubmitAnswers();
-            }}
-          >
-            Conferma
-          </Button>
-        </div>
-      </Box>
-    </>
+    <Box sx={{ width: '100%', height: '100%' }}>
+      {data &&
+        Object.keys(data.domandeRisposte).map((dom) => (
+          <Card key={dom}>
+            <CardContent>
+              <Typography variant="h4" color="blueviolet" textAlign="center">
+                {data.domandeRisposte[dom].domanda.domanda}
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                sx={{ width: '20em' }}
+                name="Risposta"
+                label="Risposta"
+                id="risposta"
+                variant="outlined"
+                color="secondary"
+                onChange={(e) => {
+                  handleUpdateAnswer(e, dom);
+                }}
+                value={data.domandeRisposte[dom].risposta.risposta || ''}
+              />
+            </CardContent>
+          </Card>
+        ))}
+      <div className="riga">
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            handleSubmitAnswers();
+          }}
+        >
+          Conferma
+        </Button>
+      </div>
+    </Box>
   );
 }
 

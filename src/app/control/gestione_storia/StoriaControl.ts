@@ -31,7 +31,6 @@ class StoriaControl {
   ): Promise<boolean> {
     const url = `${this.baseUrl}/save_storia`;
     const formData = new FormData();
-    console.log('asd', JSON.stringify(datiStoria));
     if (file) formData.append('file', file);
     formData.append('data', JSON.stringify(datiStoria));
 

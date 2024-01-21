@@ -6,7 +6,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
 import Navbar from '../Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import StoriaControl from 'app/control/gestione_storia/StoriaControl';
 import {
   Card,
   CardContent,
@@ -16,7 +15,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
+import { Tac } from 'app/interfaces/gestione_tac/Tac';
+import TacControl from 'app/control/gestione_tac/TACControl';
+import { useLocation } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -36,23 +37,20 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 });
-function CreaStoria(): JSX.Element {
+function CreaTac(): JSX.Element {
+  const location = useLocation();
+  const cf = location.state;
   const [coloreBottoneCaricaFile, impostaColoreBottoneCaricaFile] =
     useState<string>('#9149f3');
   const [coloreBottoneSalva, impostaColoreBottoneSalva] =
     useState<string>('#9149f3');
-  const [datiStoria, setDatiStoria] = useState<StoriaMedia>({
+  const [datiTac, setDatiTac] = useState<Tac>({
     id: undefined,
-    cg_fam: Number(localStorage.getItem('id')),
-    testo: '',
-    media: {
-      id: undefined,
-      storia: undefined,
-      descrizione: '',
-      tipo: -1,
-    },
+    paziente: cf,
+    med: Number(localStorage.getItem('id')),
+    stadio: '',
   });
-  const storiaControl = new StoriaControl();
+  const tacControl = new TacControl();
 
   const gestisciHoverCaricaFile = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
@@ -77,19 +75,14 @@ function CreaStoria(): JSX.Element {
 
       const file = event.target.files[0];
       const tipo = event.target.files[0].type;
-      const numTipo = tipo.startsWith('image/') ? 0 : 1;
       if (tipo.startsWith('image/')) {
         if (file) {
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = (e) => {
             if (e && e.target !== null) {
-              setDatiStoria((prev) => ({
+              setDatiTac((prev) => ({
                 ...prev,
-                media: {
-                  ...prev.media,
-                  tipo: numTipo,
-                },
               }));
             } else {
               console.error('Errore durante la lettura del file.');
@@ -103,29 +96,15 @@ function CreaStoria(): JSX.Element {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = event.target;
     if (value.length <= 300) {
-      setDatiStoria((prevDatiStoria) => ({
-        ...prevDatiStoria,
+      setDatiTac((prevDatiTac) => ({
+        ...prevDatiTac,
         [id]: value,
-      }));
-    }
-  };
-  const handleDescrChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { value } = event.target;
-    if (value.length <= 300) {
-      setDatiStoria((prevDatiStoria) => ({
-        ...prevDatiStoria,
-        media: {
-          ...prevDatiStoria.media,
-          descrizione: value,
-        },
       }));
     }
   };
 
   const handleSave = async (): Promise<void> => {
-    await storiaControl.inviaStoria(datiStoria, file);
+    await tacControl.inviaTac(datiTac, file);
     console.log('Storia salvata con successo!');
   };
 
@@ -165,12 +144,10 @@ function CreaStoria(): JSX.Element {
                         marginBottom: '2em',
                       }}
                     >
-                      Scrivi una nuova storia
+                      Carica la tac di un paziente
                     </Typography>
                     <Typography variant="h5" color="black" textAlign="left">
-                      Caricare un&apos;immagine o un file vocale potrebbe
-                      aiutare a la persona che segui a continuare a ricordare
-                      parti importanti della sua vita!
+                      Caricare la tac del paziente
                     </Typography>
                   </CardContent>
                   <CardMedia
@@ -189,10 +166,8 @@ function CreaStoria(): JSX.Element {
                   <TextField
                     required
                     id="testo"
-                    label="Testo Storia"
-                    multiline
-                    rows={8}
-                    value={datiStoria.testo}
+                    label="Stadio"
+                    value={datiTac.stadio}
                     onChange={handleChange}
                     style={{
                       margin: '1em ',
@@ -225,21 +200,6 @@ function CreaStoria(): JSX.Element {
                   </Button>
                 </div>
                 <div className="riga">
-                  <TextField
-                    required
-                    fullWidth
-                    id="descrizione"
-                    label="Descrizione File"
-                    multiline
-                    rows={4}
-                    value={datiStoria.media.descrizione}
-                    onChange={handleDescrChange}
-                    style={{
-                      margin: '1.5em ',
-                      width: '60%',
-                      boxSizing: 'border-box',
-                    }}
-                  />
                 </div>
                 <div className="riga">
                   <Button
@@ -253,7 +213,7 @@ function CreaStoria(): JSX.Element {
                     onMouseEnter={() => gestisciHoverSalva(true)}
                     onMouseLeave={() => gestisciHoverSalva(false)}
                   >
-                    Salva storia
+                    Salva tac
                   </Button>
                 </div>
               </form>
@@ -265,4 +225,4 @@ function CreaStoria(): JSX.Element {
   );
 }
 
-export default CreaStoria;
+export default CreaTac;

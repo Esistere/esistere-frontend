@@ -328,6 +328,11 @@ function ListaPazienti(props: Props): JSX.Element {
                       margin: '1em',
                       boxSizing: 'border-box',
                     }}
+                    onClick={() => {
+                      navigate('/medico/crea_tac', {
+                        state: selectedPaziente.codice_fiscale,
+                      });
+                    }}
                     variant="outlined"
                     onMouseEnter={() => gestisciHoverTac(true)}
                     onMouseLeave={() => gestisciHoverTac(false)}

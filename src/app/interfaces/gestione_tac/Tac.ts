@@ -1,7 +1,6 @@
 export interface Tac {
-  id: number;
+  id: number | undefined;
   paziente: string;
   med: number;
-  allegato: string;
   stadio: string;
 }

@@ -73,11 +73,12 @@ class TacControl {
     }
   }
 
-  async saveTac(tac: Tac, file: File): Promise<void> {
+  async inviaTac(tac: Tac, file: File | null): Promise<void> {
     const url = `${this.baseUrl}/save_tac`;
     const formData = new FormData();
-    formData.append('image', file);
+    if (file) formData.append('image', file);
     formData.append('data', JSON.stringify(tac));
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {

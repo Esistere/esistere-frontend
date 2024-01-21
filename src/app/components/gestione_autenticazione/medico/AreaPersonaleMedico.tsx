@@ -46,12 +46,15 @@ function AreaPersonaleMedico(): JSX.Element {
           const idMedico = Number(localStorage.getItem('id'));
           const medico = await medicoControl.fetchDatiMedico(idMedico);
           setIsLoading(false);
-          setMedicoData(medico);
+          setMedicoData((prevMedicoData) => {
+            const newMedicoData = { ...prevMedicoData, ...medico };
+            console.log(newMedicoData);
+            return newMedicoData;
+          });
         } catch (error) {
           console.error('Errore nel recupero dei dati del medico', error);
         }
       };
-
       fetchMedicoData();
     }
   }, [medicoData, isLoading]);
@@ -89,6 +92,7 @@ function AreaPersonaleMedico(): JSX.Element {
     };
     updateMedicoData();
   };
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -119,7 +123,7 @@ function AreaPersonaleMedico(): JSX.Element {
               <div className="formflex2">
                 <div className="riga">
                   <Avatar
-                    alt={`${medicoData?.nome} ${medicoData?.cognome}`}
+                    alt={`${medicoData.nome} ${medicoData?.cognome}`}
                     src={avataricon}
                     sx={{ width: '30%', height: 'auto', aspectRatio: 1 / 1 }}
                   />
@@ -133,6 +137,7 @@ function AreaPersonaleMedico(): JSX.Element {
                   />
                 </div>
               </div>
+
               <form className="formflex2" method="post" onSubmit={handleSubmit}>
                 <div>
                   <TextField

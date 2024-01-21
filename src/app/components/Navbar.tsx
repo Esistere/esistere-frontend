@@ -408,7 +408,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to="/medico/crea_todo_list"
+                to="/medico/crea_todolist"
                 style={{
                   textDecoration: 'none',
                 }}

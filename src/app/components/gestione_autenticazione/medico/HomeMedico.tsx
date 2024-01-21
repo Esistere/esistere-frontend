@@ -50,7 +50,7 @@ const HomeMedico: React.FC = () => {
                 sottostante.
               </Typography>
               <Link
-                to="/medico/visualizza_pazienti"
+                to="/medico/lista"
                 style={{
                   textDecoration: 'none',
                 }}

@@ -24,7 +24,13 @@ import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import { MedicoPerAutocomplete } from 'app/interfaces/gestione_autenticazione/utils/MedicoPerAutocomplete';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import Caricamento from 'app/components/gestione_app/Caricamento';
-import { emailRegex, passwordRegex } from 'app/regex';
+import {
+  codiceFiscaleRegex,
+  emailRegex,
+  indirizzoRegex,
+  numeroTelefonoRegex,
+  passwordRegex,
+} from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
 interface caricaMediciResult {
@@ -188,6 +194,81 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       setPasswordError('Inserisci una password valida.');
     } else {
       setPasswordError('');
+    }
+  };
+  const [isAndressValid, setIsAndressValid] = useState<boolean>(true);
+  const [andressError, setAndressError] = useState('');
+  const handleAndressChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newAndress = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      indirizzo: newAndress,
+    }));
+
+    const isValid = indirizzoRegex.test(newAndress) || newAndress === '';
+    setIsAndressValid(isValid);
+    if (!isValid) {
+      setAndressError('Inserisci un indirizzo valido.');
+    } else {
+      setAndressError('');
+    }
+  };
+
+  const [isBirthDateValid, setIsBirthDateValid] = useState<boolean>(true);
+  const [birthDateError, setBirthDateError] = useState('');
+  const handleBirthDateChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newBirthDate = event.target.value;
+
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      data_di_nascita: newBirthDate,
+    }));
+
+    const isValid = newBirthDate !== '';
+    setIsBirthDateValid(isValid);
+
+    if (!isValid) {
+      setBirthDateError('Inserisci una data di nascita valida.');
+    } else {
+      setBirthDateError('');
+    }
+  };
+
+  const [isNumberValid, setIsNumberValid] = useState<boolean>(true);
+  const [numberError, setNumberError] = useState('');
+  const handleNumberChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newNumber = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      numero_di_telefono: newNumber,
+    }));
+
+    const isValid = numeroTelefonoRegex.test(newNumber) || newNumber === '';
+    setIsNumberValid(isValid);
+    if (!isValid) {
+      setNumberError('Inserisci un numero di telefono valido.');
+    } else {
+      setAndressError('');
+    }
+  };
+
+  const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
+  const [codeError, setCodeError] = useState('');
+  const handleCodeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCode = event.target.value;
+    setFormDataPaziente((prevFormData) => ({
+      ...prevFormData,
+      codice_fiscale: newCode,
+    }));
+
+    const isValid = codiceFiscaleRegex.test(newCode) || newCode === '';
+    setIsCodeValid(isValid);
+    if (!isValid) {
+      setCodeError('Inserisci un codice fiscale valido.');
+    } else {
+      setAndressError('');
     }
   };
 
@@ -386,6 +467,10 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="indirizzo"
                     id="outlined-indirizzo-input"
                     label="Indirizzo"
+                    error={
+                      !isAndressValid &&
+                      formDataCaregiverFamiliare.indirizzo.length > 0
+                    }
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -394,8 +479,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleAndressChange}
                   />
+                  {andressError && (
+                    <div style={{ color: '#D32F2F' }}>{andressError}</div>
+                  )}
                   <TextField
                     type="text"
                     name="numero_civico"
@@ -432,6 +520,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="data_di_nascita"
                     id="outlined-birthdate-input"
                     label="Data di nascita"
+                    error={!isBirthDateValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -446,16 +535,27 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={(e) => {
                       if (e.target.value) setHasValueCgFam(true);
                       else setHasValueCgFam(false);
-                      handleChangeCaregiverFamiliare(e);
+                      handleBirthDateChange;
                     }}
                   />
+                  {birthDateError && (
+                    <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
+                  )}
                 </div>
+
                 <div className="riga">
                   <TextField
                     type="text"
                     name="numero_di_telefono"
                     id="outlined-num-telefono-input"
+                    value={formDataCaregiverFamiliare.numero_di_telefono}
                     label="Numero Telefono"
+                    error={
+                      !isNumberValid &&
+                      formDataCaregiverFamiliare.numero_di_telefono.length <
+                        10 &&
+                      formDataCaregiverFamiliare.numero_di_telefono.length > 10
+                    }
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -464,8 +564,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleNumberChange}
                   />
+                  {numberError && (
+                    <div style={{ color: '#D32F2F' }}>{numberError}</div>
+                  )}
                 </div>
                 <div
                   style={{
@@ -613,6 +716,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     required
                     type="text"
                     label="Codice Fiscale"
+                    error={
+                      !isCodeValid &&
+                      formDataPaziente.codice_fiscale.length > 16 &&
+                      formDataPaziente.codice_fiscale.length < 16
+                    }
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -621,8 +729,12 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     }}
                     name="codice_fiscale"
                     inputProps={{ style: { textTransform: 'uppercase' } }}
-                    onChange={handleChangePaziente}
+                    onChange={handleCodeChange}
                   />
+                  {codeError && (
+                    <div style={{ color: '#D32F2F' }}>{codeError}</div>
+                  )}
+
                   <TextField
                     required
                     type="text"
@@ -655,6 +767,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="data_di_nascita"
                     id="outlined-birthdate-input"
                     label="Data di nascita"
+                    error={!isBirthDateValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -669,9 +782,12 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={(e) => {
                       if (e.target.value) setHasValuePaziente(true);
                       else setHasValuePaziente(false);
-                      handleChangePaziente(e);
+                      handleBirthDateChange;
                     }}
                   />
+                  {birthDateError && (
+                    <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
+                  )}
                   {/* <TextField
                     required
                     type="date"

@@ -28,6 +28,7 @@ import {
   codiceFiscaleRegex,
   emailRegex,
   indirizzoRegex,
+  numCivicoRegex,
   numeroTelefonoRegex,
   passwordRegex,
 } from 'app/regex';
@@ -195,6 +196,25 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       setAndressError('Inserisci un indirizzo valido.');
     } else {
       setAndressError('');
+    }
+  };
+
+  const [isNumCivValid, setIsNumCivValid] = useState<boolean>(true);
+  const [numCivError, setNumCivError] = useState('');
+  const handleNumCivChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newNum = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      numero_civico: newNum,
+    }));
+
+    const isValid =
+      newNum.length < 6 ? numCivicoRegex.test(newNum) || newNum === '' : false;
+    setIsNumCivValid(isValid);
+    if (!isValid) {
+      setNumCivError('Inserisci un numero civico valido. Es. 34523 o 123/A');
+    } else {
+      setNumCivError('');
     }
   };
 
@@ -509,6 +529,10 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="numero_civico"
                     id="outlined-num-civico-input"
                     label="Numero Civico"
+                    error={
+                      !isNumCivValid &&
+                      formDataCaregiverFamiliare.numero_civico.length > 0
+                    }
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -517,8 +541,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleNumCivChange}
                   />
+                  {numCivError && (
+                    <div style={{ color: '#D32F2F' }}>{numCivError}</div>
+                  )}
                 </div>
                 <div className="riga">
                   <TextField

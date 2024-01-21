@@ -167,6 +167,28 @@ class QuizPreliminareControl {
       throw new Error('Error');
     }
   }
+
+  async aggiungiRispostePreliminare(
+    risposte: RispostaQuizPreliminare[]
+  ): Promise<boolean> {
+    const url = `${this.baseUrl}/aggiungi_risposte_preliminare`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(risposte),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return response.ok? true : false;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
 }
 
 export default QuizPreliminareControl;

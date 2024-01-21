@@ -39,7 +39,6 @@ class MedicoControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
-
       const data: Medico[] = await response.json();
       return data;
     } catch (error) {

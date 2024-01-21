@@ -37,13 +37,6 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
-  // TODO remove
-  /* eslint-disable */
-  const [isHoveredCaricaFile, setIsHoveredCaricaFile] = React.useState(false);
-  const [isHoveredSalva, setIsHoveredSalva] = React.useState(false);
-  // TODO remove
-  /* eslint-enable */
-
   const [coloreBottoneCaricaFile, impostaColoreBottoneCaricaFile] =
     useState<string>('#9149f3');
   const [coloreBottoneSalva, impostaColoreBottoneSalva] =
@@ -88,13 +81,11 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
           reader.readAsDataURL(file);
           reader.onload = (e) => {
             if (e && e.target !== null) {
-              const alle =
-                e.target.result !== null ? (e.target.result as string) : '';
               setDatiStoria((prev) => ({
                 ...prev,
                 media: {
                   ...prev.media,
-                  allegato: alle,
+                  allegato: '',
                   tipo: numTipo,
                 },
               }));

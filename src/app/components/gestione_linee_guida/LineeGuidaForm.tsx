@@ -33,7 +33,7 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const medicoId = parseInt(localStorage.getItem('medicoId') || '', 10);
+        const medicoId = parseInt(localStorage.getItem('medicoId') ?? '', 10);
         const medicoLineaGuida = await getMedicoLineaGuida(medicoId);
         setLineaGuida({ ...lineaGuida, ...medicoLineaGuida });
       } catch (error) {

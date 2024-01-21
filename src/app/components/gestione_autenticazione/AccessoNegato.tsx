@@ -17,7 +17,11 @@ const AccessoNegato: React.FC = (): JSX.Element => {
         alignItems: 'center',
       }}
     >
-      <img src={accessoNegato} style={{ maxWidth: '30em', height: 'auto' }} />
+      <img
+        src={accessoNegato}
+        alt="accesso negato"
+        style={{ maxWidth: '30em', height: 'auto' }}
+      />
       <br />
       <Typography
         variant="h4"

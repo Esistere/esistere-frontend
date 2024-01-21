@@ -128,7 +128,9 @@ class QuizPreliminareControl {
     }
   }
 
-  async inviaQuizPreliminare(quizPreliminare: QuizPreliminare): Promise<void> {
+  async inviaQuizPreliminare(
+    quizPreliminare: ResponseObjectQP
+  ): Promise<boolean> {
     const url = `${this.baseUrl}/salva_quiz_preliminare`;
     try {
       const response = await fetch(url, {
@@ -142,6 +144,7 @@ class QuizPreliminareControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }
@@ -184,7 +187,7 @@ class QuizPreliminareControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
-      return response.ok? true : false;
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }

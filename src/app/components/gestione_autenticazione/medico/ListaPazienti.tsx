@@ -24,6 +24,7 @@ import AddIcon from '@mui/icons-material/Add'; //aggiungi todo
 import Button from '@mui/material/Button';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import 'app/css/gestione_app/FormElements.css';
+import logo from 'app/assets/avatar-icon.png';
 
 const drawerWidth = 338;
 
@@ -199,149 +200,163 @@ function ListaPazienti(props: Props): JSX.Element {
           <Toolbar />
           {selectedPaziente ? (
             <div>
-              <Typography variant="h4">
-                {selectedPaziente.codice_fiscale}
-              </Typography>
-              <Typography variant="h6">{selectedPaziente.nome}</Typography>
+              <img
+                className="propiclist"
+                src={logo}
+                style={{
+                  float: 'left',
+                  marginRight: '3em',
+                  width: '8em',
+                }}
+              />
+              <div style={{ marginTop: '4em' }}>
+                <Typography variant="h4">
+                  {selectedPaziente.nome} {selectedPaziente.cognome}
+                </Typography>
 
-              <form className="formflex">
-                <div className="riga">
-                  <Button
-                    style={{
-                      color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredQuizPreliminare
-                        ? '#b2a1c7'
-                        : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
-                    onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
-                    startIcon={<PsychologyIcon />}
-                  >
-                    quiz preliminare
-                  </Button>
-                  <Button
-                    style={{
-                      color: isHoveredTodoList ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredTodoList
-                        ? '#b2a1c7'
-                        : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    onClick={() => {
-                      navigate('/medico/visualizza_todolist', {
-                        state: selectedPaziente.codice_fiscale,
-                      });
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverTodoList(true)}
-                    onMouseLeave={() => gestisciHoverTodoList(false)}
-                    startIcon={<ChecklistIcon />}
-                  >
-                    lista todo list
-                  </Button>
+                <Typography variant="h6">
+                  {selectedPaziente.codice_fiscale}
+                </Typography>
 
-                  <Button
-                    style={{
-                      color: isHoveredCreaTodoList ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredCreaTodoList
-                        ? '#b2a1c7'
-                        : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    onClick={() => {
-                      navigate('/medico/crea_todolist', {
-                        state: selectedPaziente.codice_fiscale,
-                      });
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverCreaTodoList(true)}
-                    onMouseLeave={() => gestisciHoverCreaTodoList(false)}
-                    startIcon={<AddIcon />}
-                  >
-                    Crea todo list
-                  </Button>
-                </div>
-                <div className="riga">
-                  <Button
-                    style={{
-                      color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredQuizGiornaliero
-                        ? '#b2a1c7'
-                        : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
-                    onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
-                    startIcon={<QuizIcon />}
-                    onClick={() => {
-                      navigate('/medico/visualizza_quiz_allenamento', {
-                        state: selectedPaziente.cg_fam,
-                      });
-                    }}
-                  >
-                    quiz Allenamento
-                  </Button>
+                <form className="formflex">
+                  <div className="riga">
+                    <Button
+                      style={{
+                        color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredQuizPreliminare
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
+                      onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
+                      startIcon={<PsychologyIcon />}
+                    >
+                      quiz preliminare
+                    </Button>
+                    <Button
+                      style={{
+                        color: isHoveredTodoList ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredTodoList
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      onClick={() => {
+                        navigate('/medico/visualizza_todolist', {
+                          state: selectedPaziente.codice_fiscale,
+                        });
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverTodoList(true)}
+                      onMouseLeave={() => gestisciHoverTodoList(false)}
+                      startIcon={<ChecklistIcon />}
+                    >
+                      lista todo list
+                    </Button>
 
-                  <Button
-                    style={{
-                      color: isHoveredCg ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredCg ? '#b2a1c7' : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverCg(true)}
-                    onMouseLeave={() => gestisciHoverCg(false)}
-                    startIcon={<PersonRoundedIcon />}
-                    onClick={() => {
-                      navigate('/medico/visualizza_caregiver', {
-                        state: selectedPaziente.cg_fam,
-                      });
-                    }}
-                  >
-                    profilo caregiver
-                  </Button>
+                    <Button
+                      style={{
+                        color: isHoveredCreaTodoList ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredCreaTodoList
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      onClick={() => {
+                        navigate('/medico/crea_todolist', {
+                          state: selectedPaziente.codice_fiscale,
+                        });
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverCreaTodoList(true)}
+                      onMouseLeave={() => gestisciHoverCreaTodoList(false)}
+                      startIcon={<AddIcon />}
+                    >
+                      Crea todo list
+                    </Button>
+                  </div>
+                  <div className="riga">
+                    <Button
+                      style={{
+                        color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredQuizGiornaliero
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
+                      onMouseLeave={() => gestisciHoverQuizGiornaliero(false)}
+                      startIcon={<QuizIcon />}
+                      onClick={() => {
+                        navigate('/medico/visualizza_quiz_allenamento', {
+                          state: selectedPaziente.cg_fam,
+                        });
+                      }}
+                    >
+                      quiz Allenamento
+                    </Button>
 
-                  <Button
-                    style={{
-                      color: isHoveredTac ? '#ffffff' : '#8036a1',
-                      borderColor: '#000000',
-                      backgroundColor: isHoveredTac ? '#b2a1c7' : '#ffffff',
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    onClick={() => {
-                      navigate('/medico/crea_tac', {
-                        state: selectedPaziente.codice_fiscale,
-                      });
-                    }}
-                    variant="outlined"
-                    onMouseEnter={() => gestisciHoverTac(true)}
-                    onMouseLeave={() => gestisciHoverTac(false)}
-                    startIcon={<QuestionMarkIcon />}
-                  >
-                    tac
-                  </Button>
-                </div>
-              </form>
+                    <Button
+                      style={{
+                        color: isHoveredCg ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredCg ? '#b2a1c7' : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverCg(true)}
+                      onMouseLeave={() => gestisciHoverCg(false)}
+                      startIcon={<PersonRoundedIcon />}
+                      onClick={() => {
+                        navigate('/medico/visualizza_caregiver', {
+                          state: selectedPaziente.cg_fam,
+                        });
+                      }}
+                    >
+                      profilo caregiver
+                    </Button>
+
+                    <Button
+                      style={{
+                        color: isHoveredTac ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredTac ? '#b2a1c7' : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      onClick={() => {
+                        navigate('/medico/crea_tac', {
+                          state: selectedPaziente.codice_fiscale,
+                        });
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverTac(true)}
+                      onMouseLeave={() => gestisciHoverTac(false)}
+                      startIcon={<QuestionMarkIcon />}
+                    >
+                      tac
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           ) : (
             <Typography paragraph>

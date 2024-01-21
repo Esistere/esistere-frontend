@@ -34,7 +34,7 @@ import {
 } from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
-interface CaricaMediciResult {
+interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
 }
 
@@ -92,7 +92,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   const [show, setShow] = React.useState(false);
 
   let mediciData: Medico[];
-  const caricaMedici = (): CaricaMediciResult => {
+  const caricaMedici = (): caricaMediciResult => {
     const fetchMediciData = async (): Promise<void> => {
       isLoading = true;
       const medicoControl = new MedicoControl();

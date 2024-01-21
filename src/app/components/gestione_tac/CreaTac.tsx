@@ -203,7 +203,7 @@ function CreaTac(): JSX.Element {
                     <VisuallyHiddenInput
                       name="file"
                       type="file"
-                      accept="image/*,audio/*"
+                      accept="image/*"
                       onChange={handleFileChange}
                     />
                   </Button>

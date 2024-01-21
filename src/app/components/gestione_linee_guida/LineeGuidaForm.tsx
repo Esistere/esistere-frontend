@@ -59,7 +59,11 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
     <ThemeProvider theme={theme}>
       <Navbar />
       <h2
-        style={{ textAlign: 'center', color: coloreBottone, marginTop: '20px' }}
+        style={{
+          textAlign: 'center',
+          color: coloreBottone,
+          marginTop: '3.5em',
+        }}
       >
         Creazione Linee Guida
       </h2>
@@ -74,10 +78,10 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
             }
             multiline
             rows={20}
-            style={{ width: '80%', marginRight: '20px' }}
+            style={{ width: '60%', marginRight: '20px', height: '70%' }}
           />
         </div>
-        <div className="riga" style={{ marginTop: '20px' }}>
+        <div className="riga" style={{ marginTop: '0.60em' }}>
           <Button
             style={{
               background: coloreBottone,

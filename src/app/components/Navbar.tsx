@@ -20,7 +20,6 @@ import logonavbar from 'app/assets/logonavbar.png';
 function Navbar(): JSX.Element {
   const navigate = useNavigate();
   const { userType, loading } = useUser();
-  const [, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -40,7 +39,6 @@ function Navbar(): JSX.Element {
 
   const handleCloseDrawer = (): void => {
     setDrawerOpen(false);
-    setAnchorElNav(null);
   };
 
   useEffect(() => {

@@ -148,7 +148,14 @@ function CreaQuizPreliminare(): JSX.Element {
       <div>
         <Navbar />
         <form className="formflex">
-          <Typography variant="h4" style={{ color: 'blueviolet' }}>
+          <Typography
+            variant="h4"
+            style={{
+              color: 'blueviolet',
+              marginTop: '2em',
+              marginBottom: '1.25em',
+            }}
+          >
             Creazione Quiz Preliminare
           </Typography>
           <TextField

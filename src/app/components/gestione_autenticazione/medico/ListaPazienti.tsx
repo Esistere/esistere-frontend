@@ -71,6 +71,7 @@ function ListaPazienti(props: Props): JSX.Element {
   const [isHoveredQuizPreliminare, setIsHoveredQuizPreliminare] =
     useState(false);
   const [isHoveredTodoList, setIsHoveredTodoList] = useState(false);
+  const [isHoveredCreaTodoList, setIsHoveredCreaTodoList] = useState(false);
   const [isHoveredQuizGiornaliero, setIsHoveredQuizGiornaliero] =
     useState(false);
   const [isHoveredCg, setIsHoveredCg] = useState(false);
@@ -82,6 +83,9 @@ function ListaPazienti(props: Props): JSX.Element {
 
   const gestisciHoverTodoList = (hovered: boolean): void => {
     setIsHoveredTodoList(hovered);
+  };
+  const gestisciHoverCreaTodoList = (hovered: boolean): void => {
+    setIsHoveredCreaTodoList(hovered);
   };
   const gestisciHoverQuizGiornaliero = (hovered: boolean): void => {
     setIsHoveredQuizGiornaliero(hovered);
@@ -243,11 +247,12 @@ function ListaPazienti(props: Props): JSX.Element {
                   >
                     lista todo list
                   </Button>
+
                   <Button
                     style={{
-                      color: isHoveredTodoList ? '#ffffff' : '#8036a1',
+                      color: isHoveredCreaTodoList ? '#ffffff' : '#8036a1',
                       borderColor: '#000000',
-                      backgroundColor: isHoveredTodoList
+                      backgroundColor: isHoveredCreaTodoList
                         ? '#b2a1c7'
                         : '#ffffff',
                       width: '16.15em',
@@ -260,8 +265,8 @@ function ListaPazienti(props: Props): JSX.Element {
                       });
                     }}
                     variant="outlined"
-                    onMouseEnter={() => gestisciHoverTodoList(true)}
-                    onMouseLeave={() => gestisciHoverTodoList(false)}
+                    onMouseEnter={() => gestisciHoverCreaTodoList(true)}
+                    onMouseLeave={() => gestisciHoverCreaTodoList(false)}
                     startIcon={<AddIcon />}
                   >
                     Crea todo list

@@ -39,7 +39,7 @@ const HomeMedico: React.FC = () => {
       <div id="div-medico">
         <br />
         <Box margin="2 em">
-          <Grid container spacing={2}>
+          <Grid container spacing={2} marginTop="2em">
             <Grid item xs={12} md={6}>
               <Typography variant="h4" style={{ textAlign: 'right' }}>
                 Visualizza la lista dei tuoi pazienti
@@ -138,7 +138,7 @@ const HomeMedico: React.FC = () => {
                   guida
                 </Typography>
                 <Link
-                  to="/medico/LineaGuida"
+                  to="/medico/lineeguidaform"
                   style={{
                     textDecoration: 'none',
                   }}

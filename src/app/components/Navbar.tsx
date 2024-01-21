@@ -480,11 +480,11 @@ function Navbar(): JSX.Element {
                   <MenuItem
                     key="Logout"
                     onClick={() => {
-                      handleCloseUserMenu;
+                      handleCloseUserMenu();
                       localStorage.removeItem('jwt');
+                      localStorage.removeItem('id');
                       navigate('/');
                       window.location.reload();
-                      <Link to="/"></Link>;
                     }}
                   >
                     <Link

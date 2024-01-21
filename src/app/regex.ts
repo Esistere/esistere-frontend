@@ -6,6 +6,6 @@ export const dataNascitaregex =
   /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
 export const numeroTelefonoRegex = /^[0-9]{10}$/;
 export const fotoRegex = /\.(png|jpg|jpeg|bmp|tif|tiff)$/i;
-export const indirizzoRegex = /^[A-zÀ-ù ‘-]{2,30}$/;
-export const indirizzoStudioRegex = /^[A-zÀ-ù ‘-]{2,30}$/;
+export const indirizzoRegex = /^[A-zÀ-ù '-]{2,30}$/;
+export const indirizzoStudioRegex = /^[A-zÀ-ù '-]{2,30}$/;
 export const numeroTelefonoStudioRegex = /^\d{10}$/;

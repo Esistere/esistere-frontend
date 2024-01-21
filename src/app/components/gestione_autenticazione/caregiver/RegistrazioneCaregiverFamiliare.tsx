@@ -271,6 +271,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       isEmailValid &&
       isPassValid &&
       isAndressValid &&
+      isNumCivValid &&
       isBirthDateValid &&
       isNumberValid
     ) {
@@ -286,6 +287,8 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         isPassValid,
         'address',
         isAndressValid,
+        'numCiv',
+        isNumCivValid,
         'date',
         isBirthDateValid,
         'number',

@@ -17,6 +17,8 @@ import {
 import { Tac } from 'app/interfaces/gestione_tac/Tac';
 import TacControl from 'app/control/gestione_tac/TACControl';
 import { useLocation } from 'react-router-dom';
+import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -50,6 +52,7 @@ function CreaTac(): JSX.Element {
     stadio: '',
   });
   const tacControl = new TacControl();
+  const [show, setShow] = React.useState(false);
 
   const gestisciHoverCaricaFile = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
@@ -102,9 +105,15 @@ function CreaTac(): JSX.Element {
     }
   };
 
+  const navigate = useNavigate();
   const handleSave = async (): Promise<void> => {
-    await tacControl.inviaTac(datiTac, file);
-    console.log('Storia salvata con successo!');
+    if (datiTac.stadio.trim() !== '' && file !== null) {
+      await tacControl.inviaTac(datiTac, file);
+      navigate('/');
+    } else {
+      setShow(true);
+      console.log('Errore: Tutti i campi devono essere compilati.');
+    }
   };
 
   return (
@@ -112,6 +121,7 @@ function CreaTac(): JSX.Element {
       <>
         <Navbar />
         <Container component="main" maxWidth="lg">
+          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
           <CssBaseline />
           <Card
             sx={{
@@ -164,7 +174,7 @@ function CreaTac(): JSX.Element {
                 <div className="riga">
                   <TextField
                     required
-                    id="testo"
+                    id="stadio"
                     label="Stadio"
                     value={datiTac.stadio}
                     onChange={handleChange}

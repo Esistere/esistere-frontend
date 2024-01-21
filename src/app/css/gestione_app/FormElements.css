@@ -92,7 +92,14 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-
+.riga1 {
+  width: 100%;
+  align-items: left;
+  justify-content: left;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 .introduction {
   text-align: center;
   margin-bottom: 2em;

@@ -48,7 +48,6 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     media: {
       id: undefined,
       storia: undefined,
-      allegato: '',
       descrizione: '',
       tipo: -1,
     },
@@ -65,11 +64,15 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
     impostaColoreBottoneSalva(nuovoColore);
   };
 
+  const [file, setFile] = useState<File | null>(null);
+
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    if (event.target.files) {
+    if (event.target.files && event.target.files[0]) {
       const nomeFile = event.target.files[0].name;
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
       console.log('Nome del file:', nomeFile);
 
       const file = event.target.files[0];
@@ -85,7 +88,6 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
                 ...prev,
                 media: {
                   ...prev.media,
-                  allegato: '',
                   tipo: numTipo,
                 },
               }));
@@ -123,7 +125,7 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
   };
 
   const handleSave = async (): Promise<void> => {
-    await storiaControl.inviaStoria(datiStoria);
+    await storiaControl.inviaStoria(datiStoria, file);
     onClose();
     console.log('Storia salvata con successo!');
   };
@@ -216,7 +218,7 @@ function CreaStoria({ onClose }: { onClose: () => void }): JSX.Element {
                   >
                     Carica file
                     <VisuallyHiddenInput
-                      name="image"
+                      name="file"
                       type="file"
                       accept="image/* "
                       onChange={handleFileChange}

@@ -27,7 +27,12 @@ function ElementoLista({
 
   return (
     <div key={index} className="elemento" onClick={handleClick}>
-      <img className="propiclist" src={logo} alt={'paziente ' + { index }} />
+      <img
+        className="propiclist"
+        src={logo}
+        alt={'paziente ' + { index }}
+        style={{ marginRight: '0.75em' }}
+      />
       <div style={{ display: 'block', marginTop: '10px' }}>
         <p className="pp">
           {patient.nome} {patient.cognome}

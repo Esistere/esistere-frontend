@@ -17,7 +17,7 @@ const HomeCaregiver: React.FC = () => {
       const data = await caregiverFamiliareControl.fetchDatiCaregiverFamiliare(
         Number(localStorage.getItem('id'))
       );
-      //setCaregiver(data);
+
       console.log(data);
       setIsLoading(false);
     } catch (error) {

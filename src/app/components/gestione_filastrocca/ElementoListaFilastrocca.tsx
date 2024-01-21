@@ -1,6 +1,5 @@
 import React from 'react';
 import 'app/css/gestione_app/ElementoLista.css';
-//import logo from 'app/assets/logo.svg';
 import { Filastrocca } from 'app/interfaces/gestione_filastrocche/Filastrocca';
 
 interface ElementoListaFilastroccaProps {

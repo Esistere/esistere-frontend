@@ -141,22 +141,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     fetchData();
   }, [avvia, fetchMediciData]);
 
-  const handleInserisciPaziente = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
-
-    const requiredFieldsFilled = Object.values(
-      formDataCaregiverFamiliare
-    ).every((value) => value !== '');
-
-    if (requiredFieldsFilled && isEmailValid && isPassValid) {
-      setAvvia(true);
-    } else {
-      setShow(true);
-    }
-  };
-
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [emailError, setEmailError] = useState('');
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -216,17 +200,17 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
 
   const [isBirthDateValid, setIsBirthDateValid] = useState<boolean>(true);
   const [birthDateError, setBirthDateError] = useState('');
+
   const handleBirthDateChange = (
-    event: ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    const newBirthDate = event.target.value;
+    const { name, value } = event.target;
+    setFormDataCaregiverFamiliare({
+      ...formDataCaregiverFamiliare,
+      [name]: value,
+    });
 
-    setFormDataCaregiverFamiliare((prevFormData) => ({
-      ...prevFormData,
-      data_di_nascita: newBirthDate,
-    }));
-
-    const isValid = newBirthDate !== '';
+    const isValid = value !== '';
     setIsBirthDateValid(isValid);
 
     if (!isValid) {
@@ -250,7 +234,43 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     if (!isValid) {
       setNumberError('Inserisci un numero di telefono valido.');
     } else {
-      setAndressError('');
+      setNumberError('');
+    }
+  };
+
+  const handleInserisciPaziente = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+
+    const requiredFieldsFilled = Object.values(
+      formDataCaregiverFamiliare
+    ).every((value) => value !== '');
+    if (
+      requiredFieldsFilled &&
+      isEmailValid &&
+      isPassValid &&
+      isAndressValid &&
+      isBirthDateValid &&
+      isNumberValid
+    ) {
+      setAvvia(true);
+    } else {
+      setShow(true);
+      console.log(
+        'req',
+        requiredFieldsFilled,
+        'email',
+        isEmailValid,
+        'pass',
+        isPassValid,
+        'address',
+        isAndressValid,
+        'date',
+        isBirthDateValid,
+        'number',
+        isNumberValid
+      );
     }
   };
 
@@ -268,7 +288,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     if (!isValid) {
       setCodeError('Inserisci un codice fiscale valido.');
     } else {
-      setAndressError('');
+      setCodeError('');
     }
   };
 
@@ -535,7 +555,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={(e) => {
                       if (e.target.value) setHasValueCgFam(true);
                       else setHasValueCgFam(false);
-                      handleBirthDateChange;
+                      handleBirthDateChange(e);
                     }}
                   />
                   {birthDateError && (

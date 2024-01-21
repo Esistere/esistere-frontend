@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import 'app/css/gestione_app/FormElements.css';
-import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
 import Navbar from '../Navbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import {
   Card,
   CardContent,
@@ -153,7 +152,7 @@ function CreaTac(): JSX.Element {
                   <CardMedia
                     component="img"
                     style={{ width: '24em', height: 'auto', marginLeft: '2em' }}
-                    image={require('app/assets/images/scriviStoria.png')}
+                    image={require('app/assets/images/tac.jpg')}
                   />
                 </div>
               </div>
@@ -199,8 +198,7 @@ function CreaTac(): JSX.Element {
                     />
                   </Button>
                 </div>
-                <div className="riga">
-                </div>
+                <div className="riga"></div>
                 <div className="riga">
                   <Button
                     style={{

@@ -12,7 +12,6 @@ import {
   CardContent,
   Container,
   CssBaseline,
-  Grid,
 } from '@mui/material';
 import avataricon from 'app/assets/avatar-icon.png';
 
@@ -64,8 +63,10 @@ function DatiCaregiver(): JSX.Element {
       <Navbar />
       <Container component="main" maxWidth="lg">
         <CssBaseline />
+
         <Card
           sx={{
+            margin: 'auto',
             marginTop: 8,
             display: 'flex',
             alignItems: 'center',
@@ -75,77 +76,127 @@ function DatiCaregiver(): JSX.Element {
             borderRadius: '10px',
             boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
             color: '#5E35B1',
+            width: '80%',
           }}
         >
           <CardContent
             sx={{
               width: '100%',
               display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              flexDirection: 'row',
+              alignItems: 'top',
               flexWrap: 'wrap',
-              margin: 'auto',
             }}
           >
-            <div className="formflex2">
+            <form className="formflex2">
               <div className="riga">
                 <Avatar
                   alt={`${caregiverData.nome} ${caregiverData?.cognome}`}
                   src={avataricon}
-                  sx={{ width: '40%', height: 'auto', aspectRatio: 1 / 1 }}
+                  sx={{
+                    width: '30%',
+                    height: 'auto',
+                    aspectRatio: 1 / 1,
+                  }}
                 />
               </div>
-
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Grid item xs={12}>
-                  <Typography variant="h4">Nome:</Typography>
-                  <Typography variant="h5">{caregiverData.nome}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4">Cognome:</Typography>
-                  <Typography variant="h5">{caregiverData.cognome}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4">Indirizzo:</Typography>
-                  <Typography variant="h5">
-                    {caregiverData.indirizzo}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography variant="h4">Numero civico:</Typography>
-                  <Typography variant="h5">
-                    {caregiverData.numero_civico}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography variant="h4">Citta:</Typography>
-                  <Typography variant="h5">{caregiverData.citta}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4">Data di nascita:</Typography>
-                  <Typography variant="h5">
-                    {caregiverData.data_di_nascita?.toISOString().split('T')[0]}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4">Numero di telefono:</Typography>
-                  <Typography variant="h5">
-                    {caregiverData.numero_di_telefono}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h4">email:</Typography>
-                  <Typography variant="h5">{caregiverData.email}</Typography>
-                </Grid>
-              </Grid>
-            </div>
+            </form>
+            <form>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{
+                    color: 'blueviolet',
+                    marginRight: '2px',
+                  }}
+                >
+                  Nome:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.nome}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Cognome:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.cognome}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{
+                    color: 'blueviolet',
+                    marginRight: '2px',
+                  }}
+                >
+                  Indirizzo:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.indirizzo}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Numero civico:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.numero_civico}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Citta:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.citta}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Data di nascita:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.data_di_nascita?.toISOString().split('T')[0]}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Numero di telefono:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.numero_di_telefono}
+                </Typography>
+              </div>
+              <div className="riga1">
+                <Typography
+                  variant="h6"
+                  style={{ color: 'blueviolet', marginRight: '2px' }}
+                >
+                  Email:
+                </Typography>
+                <Typography variant="h6" style={{ color: 'black' }}>
+                  {caregiverData.email}
+                </Typography>
+              </div>
+            </form>
           </CardContent>
         </Card>
       </Container>

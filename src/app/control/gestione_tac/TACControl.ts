@@ -1,11 +1,13 @@
-import { WEBSERVER } from 'app/config';
+import { IASERVER, WEBSERVER } from 'app/config';
 import { Tac } from 'app/interfaces/gestione_tac/Tac';
 
 class TacControl {
   private baseUrl: string;
+  private iaUrl: string;
 
   constructor() {
     this.baseUrl = WEBSERVER;
+    this.iaUrl = IASERVER;
   }
 
   async fetchTac(idTac: number): Promise<Tac> {
@@ -89,6 +91,25 @@ class TacControl {
     if (!response.ok) {
       throw new Error(`Server returned ${response.status}`);
     }
+  }
+
+  async getPredizione(file: File | null): Promise<string> {
+    const url = `${this.iaUrl}/predict`;
+    const formData = new FormData();
+    if (file) formData.append('file', file);
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status}`);
+    }
+    const predizione = await response.json();
+    return predizione.prediction;
   }
 }
 

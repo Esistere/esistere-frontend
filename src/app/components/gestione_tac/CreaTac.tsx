@@ -17,7 +17,7 @@ import {
 import { Tac } from 'app/interfaces/gestione_tac/Tac';
 import TacControl from 'app/control/gestione_tac/TACControl';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -104,11 +104,12 @@ function CreaTac(): JSX.Element {
     }
   };
 
-  const navigate = useNavigate();
+  const [predizione, setPredizione] = useState<string>('');
   const handleSave = async (): Promise<void> => {
     if (datiTac.stadio.trim() !== '' && file !== null) {
       await tacControl.inviaTac(datiTac, file);
-      navigate('/');
+      const pred = await tacControl.getPredizione(file);
+      setPredizione(pred);
     } else {
       setShow(true);
       console.log('Errore: Tutti i campi devono essere compilati.');
@@ -222,6 +223,11 @@ function CreaTac(): JSX.Element {
                   >
                     Salva tac
                   </Button>
+                </div>
+                <div className="riga">
+                  <Typography variant="h5" color="black" textAlign="center">
+                    {predizione}
+                  </Typography>
                 </div>
               </form>
             </Stack>

@@ -1,7 +1,7 @@
 import {
-  Box,
   Button,
   Card,
+  Grid,
   CardContent,
   TextField,
   Typography,
@@ -89,30 +89,42 @@ function CompilaQuiz(): JSX.Element {
   };
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
+    <>
       {data &&
         Object.keys(data.domandeRisposte).map((dom) => (
-          <Card key={dom}>
+          <Card
+            key={dom}
+            sx={{
+              maxWidth: '400px',
+              width: '100%',
+              textAlign: 'center',
+              margin: 'auto',
+              marginTop: 4,
+              marginBottom: '2em',
+            }}
+          >
             <CardContent>
               <Typography variant="h4" color="blueviolet" textAlign="center">
                 {data.domandeRisposte[dom].domanda}
               </Typography>
-              <TextField
-                margin="normal"
-                required
-                sx={{ width: '20em' }}
-                name="Risposta"
-                label="Risposta"
-                id="risposta"
-                variant="outlined"
-                color="secondary"
-                onChange={(e) => {
-                  handleUpdateAnswer(e, dom);
-                }}
-                value={
-                  data.domandeRisposte[dom].rispostaPaziente.risposta ?? ''
-                }
-              />
+              <Grid container justifyContent="center" alignItems="center">
+                <TextField
+                  margin="normal"
+                  required
+                  sx={{ width: '80%' }}
+                  name="Risposta"
+                  label="Risposta"
+                  id="risposta"
+                  variant="outlined"
+                  color="secondary"
+                  onChange={(e) => {
+                    handleUpdateAnswer(e, dom);
+                  }}
+                  value={
+                    data.domandeRisposte[dom].rispostaPaziente.risposta ?? ''
+                  }
+                />
+              </Grid>
             </CardContent>
           </Card>
         ))}
@@ -120,6 +132,9 @@ function CompilaQuiz(): JSX.Element {
         <Button
           variant="contained"
           color="secondary"
+          style={{
+            margin: '1em',
+          }}
           onClick={() => {
             handleSubmitAnswers();
           }}
@@ -127,7 +142,7 @@ function CompilaQuiz(): JSX.Element {
           Conferma
         </Button>
       </div>
-    </Box>
+    </>
   );
 }
 

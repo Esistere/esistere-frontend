@@ -8,25 +8,38 @@ import {
 } from '@mui/material';
 import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObjectQP';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'app/css/gestione_app/FormElements.css';
-import { RispostaQuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/RispostaQuizPreliminare';
 import QuizPreliminareControl from 'app/control/gestione_quiz_preliminare/QuizPreliminareControl';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 
 function CompilaQuiz(): JSX.Element {
   const [data, setData] = useState<ResponseObjectQP>();
 
   const navigate = useNavigate();
 
-  const location = useLocation();
+  const [avvia, setAvvia] = useState<boolean>(true);
 
-  const quiz = location.state;
+  const fetchData = async (): Promise<void> => {
+    const pazienteControl: PazienteControl = new PazienteControl();
+    const cf = await pazienteControl.fetchCodicePaziente(
+      Number(localStorage.getItem('id'))
+    );
+    console.log(cf);
+    const quizPreliminareControl: QuizPreliminareControl =
+      new QuizPreliminareControl();
+    const risultato =
+      await quizPreliminareControl.visualizzaQuizPreliminareByPaz(cf);
+    setData(risultato);
+    setAvvia(false);
+  };
 
   useEffect(() => {
-    setData(quiz);
-  }, [quiz]);
-
-  const [risposte, setRisposte] = useState<RispostaQuizPreliminare[]>([]);
+    if (avvia) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [avvia]);
 
   const handleUpdateAnswer = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -47,8 +60,8 @@ function CompilaQuiz(): JSX.Element {
             ...prevData.domandeRisposte,
             [index]: {
               ...prevData.domandeRisposte[index],
-              risposta: {
-                ...prevData.domandeRisposte[index].risposta,
+              rispostaPaziente: {
+                ...prevData.domandeRisposte[index].rispostaPaziente,
                 risposta: event.target.value,
               },
             },
@@ -63,22 +76,15 @@ function CompilaQuiz(): JSX.Element {
 
   const handleSubmitAnswers = async (): Promise<void> => {
     if (data !== undefined) {
-      const updatedRisposte: RispostaQuizPreliminare[] = Object.keys(
-        data.domandeRisposte
-      ).map((dom) => ({
-        id: data.domandeRisposte[dom].risposta.id,
-        domanda: data.domandeRisposte[dom].risposta.domanda,
-        risposta: data.domandeRisposte[dom].risposta.risposta,
-        paziente: data.domandeRisposte[dom].risposta.paziente,
-      }));
-
-      setRisposte(updatedRisposte);
+      const updatedRisposte = Object.values(data.domandeRisposte).map(
+        (item) => item.rispostaPaziente
+      );
+      console.log(updatedRisposte);
 
       const quizPreliminareControl: QuizPreliminareControl =
         new QuizPreliminareControl();
-
       const risultato =
-        quizPreliminareControl.aggiungiRispostePreliminare(risposte);
+        quizPreliminareControl.aggiungiRispostePreliminare(updatedRisposte);
 
       if (await risultato) {
         navigate('/');
@@ -93,7 +99,7 @@ function CompilaQuiz(): JSX.Element {
           <Card key={dom}>
             <CardContent>
               <Typography variant="h4" color="blueviolet" textAlign="center">
-                {data.domandeRisposte[dom].domanda.domanda}
+                {data.domandeRisposte[dom].domanda}
               </Typography>
               <TextField
                 margin="normal"
@@ -107,7 +113,9 @@ function CompilaQuiz(): JSX.Element {
                 onChange={(e) => {
                   handleUpdateAnswer(e, dom);
                 }}
-                value={data.domandeRisposte[dom].risposta.risposta || ''}
+                value={
+                  data.domandeRisposte[dom].rispostaPaziente.risposta ?? ''
+                }
               />
             </CardContent>
           </Card>

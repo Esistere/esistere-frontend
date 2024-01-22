@@ -507,6 +507,7 @@ function Navbar(): JSX.Element {
           </Toolbar>
         </Container>
       </AppBar>
+      <div style={{ height: '3.5em' }}></div>
     </div>
   );
 }

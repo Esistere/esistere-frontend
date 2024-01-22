@@ -84,6 +84,14 @@ function CreaQuizPreliminare(): JSX.Element {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
+
+  const [coloreAggBottone, impostaColoreAggBottone] =
+    useState<string>('#9149f3');
+
+  const gestisciAggHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaColoreAggBottone(nuovoColore);
+  };
   const handleQuestionChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
@@ -180,13 +188,13 @@ function CreaQuizPreliminare(): JSX.Element {
         <div className="riga">
           <Button
             style={{
-              background: coloreBottone,
+              background: coloreAggBottone,
               margin: '1em',
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
+            onMouseEnter={() => gestisciAggHover(true)}
+            onMouseLeave={() => gestisciAggHover(false)}
             onClick={handleAddQuestion}
           >
             Aggingi Domanda

@@ -33,7 +33,7 @@ function CreaFilastrocca(): JSX.Element {
       <>
         <Navbar />
         <Typography
-          variant="h3"
+          variant="h4"
           color="blueviolet"
           textAlign="center"
           marginTop="1em"
@@ -44,7 +44,7 @@ function CreaFilastrocca(): JSX.Element {
           <CssBaseline />
           <Card
             sx={{
-              marginTop: 8,
+              marginTop: 4,
               display: 'flex',
               alignItems: 'center',
               padding: (theme) => theme.spacing(3),
@@ -106,19 +106,21 @@ function CreaFilastrocca(): JSX.Element {
                     style={{ boxSizing: 'border-box', marginBottom: '1em' }}
                   />
                 </div>
-
-                <Button
-                  style={{
-                    background: coloreBottone,
-                    margin: '1em',
-                  }}
-                  type="submit"
-                  variant="contained"
-                  onMouseEnter={() => gestisciHover(true)}
-                  onMouseLeave={() => gestisciHover(false)}
-                >
-                  Crea Filastrocca
-                </Button>
+                <div>
+                  <Button
+                    style={{
+                      background: coloreBottone,
+                      margin: '1em',
+                      width: '40%',
+                    }}
+                    type="submit"
+                    variant="contained"
+                    onMouseEnter={() => gestisciHover(true)}
+                    onMouseLeave={() => gestisciHover(false)}
+                  >
+                    Crea Filastrocca
+                  </Button>
+                </div>
               </form>
             </Stack>
           </Card>

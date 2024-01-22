@@ -160,7 +160,7 @@ function CreaStoria(): JSX.Element {
           <CssBaseline />
           <Card
             sx={{
-              marginTop: 4,
+              marginTop: 8,
               display: 'flex',
               alignItems: 'column',
               padding: (theme) => theme.spacing(3),

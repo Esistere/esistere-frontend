@@ -26,7 +26,7 @@ function CreaQuizPreliminare(): JSX.Element {
     numero_domande: 0,
     sage: false,
     punteggio_totale: 0,
-    med: Number(localStorage.getItem('med')) || 0,
+    med: Number(localStorage.getItem('id')),
     paziente: cf,
   });
   const [domandeRisposte, setDomandeRisposte] = useState<DomandaRispostaQP[]>(
@@ -50,12 +50,10 @@ function CreaQuizPreliminare(): JSX.Element {
         const newQuestions = Array.from(
           { length: additionalQuestions },
           (): DomandaRispostaQP => ({
-            domanda: {
-              id: undefined,
-              domanda: '',
-              quiz_preliminare: undefined,
-            },
-            risposta: {
+            id: undefined,
+            domanda: '',
+            quiz_preliminare: undefined,
+            rispostaPaziente: {
               id: undefined,
               domanda: undefined,
               paziente: cf,
@@ -91,26 +89,15 @@ function CreaQuizPreliminare(): JSX.Element {
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newQuestionData = [...domandeRisposte];
-    newQuestionData[questionIndex].domanda.domanda = event.target.value;
-    setDomandeRisposte(newQuestionData);
-  };
-
-  const handleOptionChange = (
-    questionIndex: number,
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const newQuestionData = [...domandeRisposte];
-    newQuestionData[questionIndex].risposta.risposta = event.target.value;
+    newQuestionData[questionIndex].domanda = event.target.value;
     setDomandeRisposte(newQuestionData);
   };
 
   const newQuestion: DomandaRispostaQP = {
-    domanda: {
-      id: undefined,
-      domanda: '',
-      quiz_preliminare: undefined,
-    },
-    risposta: {
+    id: undefined,
+    domanda: '',
+    quiz_preliminare: undefined,
+    rispostaPaziente: {
       id: undefined,
       domanda: undefined,
       paziente: cf,
@@ -134,6 +121,7 @@ function CreaQuizPreliminare(): JSX.Element {
       domandeRisposte: Object.assign({}, ...domaRisp),
       quizPreliminare: quizPreliminare,
     };
+    console.log(domRes);
     const quizPreliminareControl: QuizPreliminareControl =
       new QuizPreliminareControl();
     const risultato = await quizPreliminareControl.inviaQuizPreliminare(domRes);
@@ -177,18 +165,9 @@ function CreaQuizPreliminare(): JSX.Element {
                   <TextField
                     label="Domanda"
                     fullWidth
-                    value={question.domanda.domanda}
+                    value={question.domanda}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                       handleQuestionChange(questionIndex, event)
-                    }
-                    style={{ width: '20em', margin: 'auto' }}
-                  />
-                  <TextField
-                    label="Risposta"
-                    fullWidth
-                    value={question.risposta.risposta}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      handleOptionChange(questionIndex, event)
                     }
                     style={{ width: '20em', margin: 'auto' }}
                   />

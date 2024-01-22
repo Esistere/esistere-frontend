@@ -65,6 +65,7 @@ function CreaStoria(): JSX.Element {
   };
 
   const [file, setFile] = useState<File | null>(null);
+  const [messaggioErrore, setMessaggioErrore] = useState<string>('');
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -76,25 +77,34 @@ function CreaStoria(): JSX.Element {
       console.log('Nome del file:', nomeFile);
 
       const tipo = event.target.files[0].type;
-      const numTipo = tipo.startsWith('image/') ? 0 : 1;
-      if (tipo.startsWith('image/')) {
-        if (file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            if (e && e.target !== null) {
-              setDatiStoria((prev) => ({
-                ...prev,
-                media: {
-                  ...prev.media,
-                  tipo: numTipo,
-                },
-              }));
-            } else {
-              console.error('Errore durante la lettura del file.');
-            }
-          };
+      if (tipo.startsWith('image/') || tipo.startsWith('audio/')) {
+        setMessaggioErrore('');
+        const numTipo = tipo.startsWith('image/') ? 0 : 1;
+        if (tipo.startsWith('image/')) {
+          if (file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+              if (e && e.target !== null) {
+                setDatiStoria((prev) => ({
+                  ...prev,
+                  media: {
+                    ...prev.media,
+                    tipo: numTipo,
+                  },
+                }));
+              } else {
+                console.error('Errore durante la lettura del file.');
+                setMessaggioErrore('Errore durante la lettura del file.');
+              }
+            };
+          }
         }
+      } else {
+        setFile(null);
+        setMessaggioErrore(
+          'Il file selezionato non è un file immagine o audio.'
+        );
       }
     }
   };
@@ -232,10 +242,15 @@ function CreaStoria(): JSX.Element {
                     <VisuallyHiddenInput
                       name="file"
                       type="file"
-                      accept="image/*,audio/*"
+                      accept=".png, .jpg, .jpeg, .bmp, .tif, .tiff, audio/*"
                       onChange={handleFileChange}
                     />
                   </Button>
+                </div>
+                <div className="riga">
+                  {messaggioErrore && (
+                    <div style={{ color: '#D32F2F' }}>{messaggioErrore}</div>
+                  )}
                 </div>
                 <div className="riga">
                   <TextField

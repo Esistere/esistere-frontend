@@ -27,6 +27,11 @@ class LoginControl {
 
       localStorage.setItem('jwt', data.jwt);
       localStorage.setItem('id', data.id);
+      setTimeout(function () {
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('id');
+      }, 3600 * 1000);
+
       return data.userType === 'medico' ? UserType.medico : UserType.caregiver;
     } catch (error) {
       throw new Error('Error');

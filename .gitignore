@@ -4,4 +4,5 @@
 *.pem
 node_modules
 coverage
+tests_output
 package-lock.json

@@ -266,22 +266,22 @@ function Login(): JSX.Element {
                     sx={{ mt: 3, mb: 2 }}
                     color="primary"
                   />
-
-                  <Snackbar
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                  >
-                    <Alert
+                  <div id='test'>
+                    <Snackbar
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      open={open}
+                      autoHideDuration={6000}
                       onClose={handleClose}
-                      severity="error"
-                      sx={{ width: '100%' }}
                     >
-                      Login Fallito!
-                    </Alert>
-                  </Snackbar>
-
+                      <Alert
+                        onClose={handleClose}
+                        severity="error"
+                        sx={{ width: '100%' }}
+                      >
+                        Login Fallito!
+                      </Alert>
+                    </Snackbar>
+                  </div>
                   <Typography variant="body2" sx={{ mb: 2 }}>
                     Non hai un account?{' '}
                     <Link

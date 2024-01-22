@@ -258,6 +258,60 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  const [isNomeValid, setIsNomeValid] = useState<boolean>(true);
+  const [nomeError, setNomeError] = useState('');
+  const handleNomeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newNome = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      nome: newNome,
+    }));
+
+    const isValid = newNome.length < 30 || newNome === '';
+    setIsNomeValid(isValid);
+    if (!isValid) {
+      setNomeError('Inserisci un nome valido.');
+    } else {
+      setNomeError('');
+    }
+  };
+
+  const [isCognomeValid, setIsCognomeValid] = useState<boolean>(true);
+  const [cognomeError, setCognomeError] = useState('');
+  const handleCognomeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCognome = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      cognome: newCognome,
+    }));
+
+    const isValid = newCognome.length < 30 || newCognome === '';
+    setIsCognomeValid(isValid);
+    if (!isValid) {
+      setCognomeError('Inserisci un cognome valido.');
+    } else {
+      setCognomeError('');
+    }
+  };
+
+  const [isCittaValid, setIsCittaValid] = useState<boolean>(true);
+  const [cittaError, setCittaError] = useState('');
+  const handleCittaChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCitta = event.target.value;
+    setFormDataCaregiverFamiliare((prevFormData) => ({
+      ...prevFormData,
+      citta: newCitta,
+    }));
+
+    const isValid = newCitta.length < 30 || newCitta === '';
+    setIsCittaValid(isValid);
+    if (!isValid) {
+      setCittaError('Inserisci una città valida.');
+    } else {
+      setCittaError('');
+    }
+  };
+
   const handleInserisciPaziente = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
@@ -479,20 +533,25 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="nome"
                     id="outlined-nome-input"
                     label="Nome"
+                    error={!isNomeValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleNomeChange}
                     required
                   />
+                  {nomeError && (
+                    <div style={{ color: '#D32F2F' }}>{nomeError}</div>
+                  )}
                   <TextField
                     type="text"
                     name="cognome"
                     id="outlined-cognome-input"
                     label="Cognome"
+                    error={!isCognomeValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -501,8 +560,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleCognomeChange}
                   />
+                  {cognomeError && (
+                    <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
+                  )}
                 </div>
                 <div className="riga">
                   <TextField
@@ -556,6 +618,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     name="citta"
                     id="outlined-citta-input"
                     label="Città"
+                    error={!isCittaValid}
                     style={{
                       width: '16.15em',
                       margin: '1em',
@@ -564,8 +627,11 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
                     required
-                    onChange={handleChangeCaregiverFamiliare}
+                    onChange={handleCittaChange}
                   />
+                  {cittaError && (
+                    <div style={{ color: '#D32F2F' }}>{cittaError}</div>
+                  )}
                   <TextField
                     name="data_di_nascita"
                     id="outlined-birthdate-input"
@@ -723,6 +789,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 </div>
                 <div className="riga">
                   <Button
+                    id="paziente-button"
                     style={{
                       background: coloreBottone,
                       display:
@@ -751,16 +818,18 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 onSubmit={handleSubmit}
               >
                 {/* paziente */}
-                <Typography
-                  className="testo"
-                  component="h1"
-                  variant="h5"
-                  color="#8A2BE2"
-                  id="cg-title"
-                  sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
-                >
-                  Inserisci i dati del tuo paziente!
-                </Typography>
+                <div id="cg-fam-title">
+                  <Typography
+                    className="testo"
+                    component="h1"
+                    variant="h5"
+                    color="#8A2BE2"
+                    id="cg-title"
+                    sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
+                  >
+                    Inserisci i dati del tuo paziente!
+                  </Typography>
+                </div>
                 <div className="riga">
                   <TextField
                     required

@@ -38,10 +38,12 @@ const HomeCaregiver: React.FC = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box margin="2em">
-              <Typography variant="h4" style={{ textAlign: 'right' }}>
-                Supporta il tuo paziente entrando nel suo mondo tramite il Sage
-                Test
-              </Typography>
+              <div id='div-caregiver'>
+                <Typography variant="h4" style={{ textAlign: 'right' }}>
+                  Supporta il tuo paziente entrando nel suo mondo tramite il Sage
+                  Test
+                </Typography>
+              </div>
               <br />
               <Typography variant="h6" style={{ textAlign: 'right' }}>
                 I risultati ti guideranno nella creazione di attività e storie

@@ -21,7 +21,8 @@ import {
 } from '@mui/material';
 import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const drawerWidth = 338;
 interface Props {
@@ -32,6 +33,11 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
   const [quizAllenamento, setQuizAllenamento] = useState<
     QuizAllenamentoGiornaliero[]
   >([]);
+
+  const navigate = useNavigate();
+  const handleGoBack = (): void => {
+    navigate(-1);
+  };
 
   const location = useLocation();
 
@@ -116,6 +122,19 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
     return (
       <div>
         <Navbar />
+        <ArrowBackIcon
+          onClick={handleGoBack}
+          style={{
+            color: 'blueviolet',
+            position: 'absolute',
+            zIndex: 9999,
+            bottom: '1.5em',
+            left: '1.5em',
+            height: '2.5em',
+            width: '2.5em',
+            cursor: 'pointer',
+          }}
+        />
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
           <AppBar

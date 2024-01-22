@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,10 +14,17 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { UserType, useUser } from './gestione_autenticazione/UserProvider';
 import logonavbar from 'app/assets/logonavbar.png';
 
 function Navbar(): JSX.Element {
+  const handleGoBack = (): void => {
+    window.history.back();
+  };
+  const location = useLocation();
+  const path = location.pathname;
+
   const navigate = useNavigate();
   const { userType, loading } = useUser();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -111,7 +118,11 @@ function Navbar(): JSX.Element {
                 onClose={handleCloseDrawer}
                 variant="temporary"
                 sx={{
-                  '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+                  '& .MuiDrawer-paper': {
+                    boxSizing: 'border-box',
+                    width: 240,
+                    zIndex: 1190,
+                  },
                 }}
               >
                 <Link
@@ -508,6 +519,21 @@ function Navbar(): JSX.Element {
         </Container>
       </AppBar>
       <div style={{ height: '3.5em' }}></div>
+      {path !== '/' && path !== '/caregiver' && path !== '/medico' && (
+        <ArrowBackIcon
+          onClick={handleGoBack}
+          style={{
+            color: 'blueviolet',
+            position: 'fixed',
+            zIndex: 1100,
+            bottom: '1.5em',
+            left: '1.5em',
+            height: '2.5em',
+            width: '2.5em',
+            cursor: 'pointer',
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Navbar from 'app/components/Navbar';
 import Caricamento from 'app/components/gestione_app/Caricamento';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React, { useEffect, useState } from 'react';
 
 import 'app/css/gestione_app/FormElements.css';
@@ -18,7 +18,7 @@ import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import ToDoListControl from 'app/control/gestione_todolist/ToDoListControl';
 import ElementoDatiToDoList from './ElementoDatiToDoList';
 import ElementoToDoList from './ElementoToDoList';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const drawerWidth = 338;
 
@@ -34,6 +34,11 @@ function ListaToDoList(props: Props): JSX.Element {
   );
   const location = useLocation();
   const cf = location.state;
+
+  const navigate = useNavigate();
+  const handleGoBack = (): void => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -97,6 +102,19 @@ function ListaToDoList(props: Props): JSX.Element {
   return (
     <div>
       <Navbar />
+      <ArrowBackIcon
+        onClick={handleGoBack}
+        style={{
+          color: 'blueviolet',
+          position: 'absolute',
+          zIndex: 9999,
+          bottom: '1.5em',
+          left: '1.5em',
+          height: '2.5em',
+          width: '2.5em',
+          cursor: 'pointer',
+        }}
+      />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar

@@ -74,10 +74,11 @@ function CreaToDoList(): JSX.Element {
     const nuovoColore = isHoveredCrea ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
-
+  const [coloreAggBottone, impostaColoreAggBottone] =
+    useState<string>('#9149f3');
   const gestisciHoverAgg = (isHoveredAgg: boolean): void => {
     const nuovoColore = isHoveredAgg ? '#8036a1' : '#9149f3';
-    impostaColoreBottone(nuovoColore);
+    impostaColoreAggBottone(nuovoColore);
   };
   const handleQuestionChange = (
     questionIndex: number,
@@ -99,9 +100,9 @@ function CreaToDoList(): JSX.Element {
 
   const handleAddQuestion = (): void => {
     setAttivita([...attivita, newQuestion]);
-    setToDoList((prevQuiz) => ({
-      ...prevQuiz,
-      numero_domande: prevQuiz.num_attivita + 1,
+    setToDoList((prevToDoList) => ({
+      ...prevToDoList,
+      num_attivita: prevToDoList.num_attivita + 1,
     }));
   };
 
@@ -124,10 +125,12 @@ function CreaToDoList(): JSX.Element {
     <ThemeProvider theme={theme}>
       <div>
         <Navbar />
-        <form className="formflex">
+        <div className="riga" style={{ marginTop: '3.5em' }}>
           <Typography variant="h4" style={{ color: 'blueviolet' }}>
             Creazione ToDoList
           </Typography>
+        </div>
+        <form className="formflex" style={{ marginTop: '2.5em' }}>
           <TextField
             label="Numero di Attività"
             type="number"
@@ -151,7 +154,7 @@ function CreaToDoList(): JSX.Element {
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                       handleQuestionChange(questionIndex, event)
                     }
-                    style={{ width: '20em', margin: 'auto' }}
+                    style={{ width: '20em', marginTop: '3.5em' }}
                   />
                 </Paper>
               </Grid>
@@ -162,7 +165,7 @@ function CreaToDoList(): JSX.Element {
         <div className="riga">
           <Button
             style={{
-              background: coloreBottone,
+              background: coloreAggBottone,
               margin: '1em',
             }}
             type="submit"

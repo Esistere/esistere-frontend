@@ -132,6 +132,7 @@ class QuizPreliminareControl {
     quizPreliminare: ResponseObjectQP
   ): Promise<boolean> {
     const url = `${this.baseUrl}/salva_quiz_preliminare`;
+    console.log(quizPreliminare);
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -160,6 +161,28 @@ class QuizPreliminareControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const ResponseObject = await response.json();
+      return ResponseObject;
+    } catch (error) {
+      throw new Error('Error');
+    }
+  }
+
+  async visualizzaQuizPreliminareByPaz(paz: string): Promise<ResponseObjectQP> {
+    const url = `${this.baseUrl}/visualizza_quiz_preliminare_paziente`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(paz),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

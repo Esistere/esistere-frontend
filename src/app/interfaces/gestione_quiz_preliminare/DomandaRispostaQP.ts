@@ -1,7 +1,8 @@
-import { DomandaQuizPreliminare } from './DomandaQuizPreliminare';
 import { RispostaQuizPreliminare } from './RispostaQuizPreliminare';
 
 export interface DomandaRispostaQP {
-  domanda: DomandaQuizPreliminare;
-  risposta: RispostaQuizPreliminare;
+  id?: number | undefined;
+  domanda: string;
+  quiz_preliminare: number | undefined;
+  rispostaPaziente: RispostaQuizPreliminare;
 }

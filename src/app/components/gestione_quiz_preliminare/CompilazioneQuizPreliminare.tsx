@@ -83,12 +83,8 @@ function CompilaQuiz(): JSX.Element {
 
       const quizPreliminareControl: QuizPreliminareControl =
         new QuizPreliminareControl();
-      const risultato =
-        quizPreliminareControl.aggiungiRispostePreliminare(updatedRisposte);
-
-      if (await risultato) {
-        navigate('/');
-      }
+      quizPreliminareControl.aggiungiRispostePreliminare(updatedRisposte);
+      navigate('/');
     }
   };
 

@@ -174,10 +174,10 @@ class QuizPreliminareControl {
 
   async visualizzaQuizPreliminareByPaz(paz: string): Promise<ResponseObjectQP> {
     const url = `${this.baseUrl}/visualizza_quiz_preliminare_paziente`;
-
+    console.log(paz);
     try {
       const response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -198,6 +198,7 @@ class QuizPreliminareControl {
     risposte: RispostaQuizPreliminare[]
   ): Promise<boolean> {
     const url = `${this.baseUrl}/aggiungi_risposte_preliminare`;
+    console.log(risposte);
     try {
       const response = await fetch(url, {
         method: 'POST',

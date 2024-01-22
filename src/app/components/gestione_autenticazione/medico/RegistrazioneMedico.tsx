@@ -88,6 +88,29 @@ const RegistrazioneMedico: React.FC = () => {
     }
   };
 
+  const [confermaPasswd, setConfermaPasswd] = useState<string>('');
+  const [isConfermaPassValid, setIsConfermaPassValid] = useState<boolean>(true);
+  const [confermaPasswordError, setConfermaPasswordError] = useState('');
+  const handleConfermaPasswordChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newPass = event.target.value;
+
+    setConfermaPasswd(newPass);
+    if (newPass === formData.passwd) {
+      const isValid = passwordRegex.test(newPass) || newPass === '';
+      setIsConfermaPassValid(isValid);
+    } else {
+      setIsConfermaPassValid(false);
+      setConfermaPasswordError('Le password non corrispondono.');
+    }
+    if (isConfermaPassValid) {
+      setConfermaPasswordError('Le password non corrispondono.');
+    } else {
+      setConfermaPasswordError('');
+    }
+  };
+
   const [isStudioValid, setIsStudioValid] = useState<boolean>(true);
   const [studioError, setStudioError] = useState('');
   const handleStudioChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -173,6 +196,7 @@ const RegistrazioneMedico: React.FC = () => {
       requiredFieldsFilled &&
       isEmailValid &&
       isPassValid &&
+      isConfermaPassValid &&
       isStudioValid &&
       isNumCivStudioValid &&
       isNumStudioValid
@@ -468,6 +492,55 @@ const RegistrazioneMedico: React.FC = () => {
                       }}
                     >
                       {passwordError}
+                    </div>
+                  )}
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  <TextField
+                    type={showPassword ? 'text' : 'password'}
+                    name="conferma-passwd"
+                    id="conferma-passwd"
+                    required
+                    value={confermaPasswd}
+                    label="Conferma Password"
+                    error={!isConfermaPassValid && confermaPasswd.length > 0}
+                    style={{
+                      flexBasis: '26em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={handleConfermaPasswordChange}
+                  />
+                  {confermaPasswordError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {confermaPasswordError}
                     </div>
                   )}
                 </div>

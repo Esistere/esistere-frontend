@@ -181,6 +181,30 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       setPasswordError('');
     }
   };
+
+  const [confermaPasswd, setConfermaPasswd] = useState<string>('');
+  const [isConfermaPassValid, setIsConfermaPassValid] = useState<boolean>(true);
+  const [confermaPasswordError, setConfermaPasswordError] = useState('');
+  const handleConfermaPasswordChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newPass = event.target.value;
+
+    setConfermaPasswd(newPass);
+    if (newPass === formDataCaregiverFamiliare.passwd) {
+      const isValid = passwordRegex.test(newPass) || newPass === '';
+      setIsConfermaPassValid(isValid);
+    } else {
+      setIsConfermaPassValid(false);
+      setConfermaPasswordError('Le password non corrispondono.');
+    }
+    if (isConfermaPassValid) {
+      setConfermaPasswordError('Le password non corrispondono.');
+    } else {
+      setConfermaPasswordError('');
+    }
+  };
+
   const [isAndressValid, setIsAndressValid] = useState<boolean>(true);
   const [andressError, setAndressError] = useState('');
   const handleAndressChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -324,6 +348,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       requiredFieldsFilled &&
       isEmailValid &&
       isPassValid &&
+      isConfermaPassValid &&
       isAndressValid &&
       isNumCivValid &&
       isBirthDateValid &&
@@ -405,16 +430,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         open = true;
         status = value;
       });
-  };
-
-  const handleChangeCaregiverFamiliare = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    const { name, value } = event.target;
-    setFormDataCaregiverFamiliare({
-      ...formDataCaregiverFamiliare,
-      [name]: value,
-    });
   };
 
   const handleChangePaziente = (
@@ -784,6 +799,55 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       }}
                     >
                       {passwordError}
+                    </div>
+                  )}
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                  }}
+                >
+                  <TextField
+                    type={showPassword ? 'text' : 'password'}
+                    name="conferma-passwd"
+                    id="conferma-passwd"
+                    required
+                    value={confermaPasswd}
+                    label="Conferma Password"
+                    error={!isConfermaPassValid && confermaPasswd.length > 0}
+                    style={{
+                      flexBasis: '26em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={handleConfermaPasswordChange}
+                  />
+                  {confermaPasswordError && (
+                    <div
+                      style={{
+                        color: '#D32F2F',
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {confermaPasswordError}
                     </div>
                   )}
                 </div>

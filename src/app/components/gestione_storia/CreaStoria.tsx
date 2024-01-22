@@ -76,25 +76,29 @@ function CreaStoria(): JSX.Element {
       console.log('Nome del file:', nomeFile);
 
       const tipo = event.target.files[0].type;
-      const numTipo = tipo.startsWith('image/') ? 0 : 1;
-      if (tipo.startsWith('image/')) {
-        if (file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            if (e && e.target !== null) {
-              setDatiStoria((prev) => ({
-                ...prev,
-                media: {
-                  ...prev.media,
-                  tipo: numTipo,
-                },
-              }));
-            } else {
-              console.error('Errore durante la lettura del file.');
-            }
-          };
+      if (tipo.startsWith('image/') || tipo.startsWith('audio/')) {
+        const numTipo = tipo.startsWith('image/') ? 0 : 1;
+        if (tipo.startsWith('image/')) {
+          if (file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+              if (e && e.target !== null) {
+                setDatiStoria((prev) => ({
+                  ...prev,
+                  media: {
+                    ...prev.media,
+                    tipo: numTipo,
+                  },
+                }));
+              } else {
+                console.error('Errore durante la lettura del file.');
+              }
+            };
+          }
         }
+      } else {
+        setFile(null);
       }
     }
   };

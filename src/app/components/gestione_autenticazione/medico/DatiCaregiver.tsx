@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
 import { CaregiverFamiliare } from 'app/interfaces/gestione_autenticazione/CaregiverFamiliare';
 
-import Typography from '@mui/material/Typography';
 import Navbar from 'app/components/Navbar';
 
 import {
@@ -12,6 +11,7 @@ import {
   CardContent,
   Container,
   CssBaseline,
+  Typography,
 } from '@mui/material';
 import avataricon from 'app/assets/avatar-icon.png';
 
@@ -61,13 +61,18 @@ function DatiCaregiver(): JSX.Element {
   return (
     <>
       <Navbar />
+      <div className="riga" style={{ marginTop: '3.5em' }}>
+        <Typography variant="h4" style={{ color: 'blueviolet' }}>
+          Dati Caregiver
+        </Typography>
+      </div>
       <Container component="main" maxWidth="lg">
         <CssBaseline />
 
         <Card
           sx={{
             margin: 'auto',
-            marginTop: 8,
+            marginTop: '2.5em',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -94,7 +99,7 @@ function DatiCaregiver(): JSX.Element {
                   alt={`${caregiverData.nome} ${caregiverData?.cognome}`}
                   src={avataricon}
                   sx={{
-                    width: '30%',
+                    width: '40%',
                     height: 'auto',
                     aspectRatio: 1 / 1,
                   }}

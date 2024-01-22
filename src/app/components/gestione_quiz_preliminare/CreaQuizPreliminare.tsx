@@ -50,12 +50,12 @@ function CreaQuizPreliminare(): JSX.Element {
         const newQuestions = Array.from(
           { length: additionalQuestions },
           (): DomandaRispostaQP => ({
-            id: undefined,
+            idDomanda: undefined,
             domanda: '',
             quiz_preliminare: undefined,
             rispostaPaziente: {
-              id: undefined,
-              domanda: undefined,
+              idRisposta: undefined,
+              domanda_preliminare: undefined,
               paziente: cf,
               risposta: '',
             },
@@ -94,12 +94,12 @@ function CreaQuizPreliminare(): JSX.Element {
   };
 
   const newQuestion: DomandaRispostaQP = {
-    id: undefined,
+    idDomanda: undefined,
     domanda: '',
     quiz_preliminare: undefined,
     rispostaPaziente: {
-      id: undefined,
-      domanda: undefined,
+      idRisposta: undefined,
+      domanda_preliminare: undefined,
       paziente: cf,
       risposta: '',
     },

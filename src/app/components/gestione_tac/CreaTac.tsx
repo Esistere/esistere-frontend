@@ -120,7 +120,11 @@ function CreaTac(): JSX.Element {
     <ThemeProvider theme={theme}>
       <>
         <Navbar />
-        <Container component="main" maxWidth="lg">
+        <Container
+          component="main"
+          maxWidth="lg"
+          style={{ marginTop: '3.5em' }}
+        >
           {show && <ResponsiveDialog onClose={() => setShow(false)} />}
           <CssBaseline />
           <Card

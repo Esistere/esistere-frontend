@@ -16,9 +16,8 @@ import {
 } from '@mui/material';
 import { Tac } from 'app/interfaces/gestione_tac/Tac';
 import TacControl from 'app/control/gestione_tac/TACControl';
-import { useLocation } from 'react-router-dom';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {

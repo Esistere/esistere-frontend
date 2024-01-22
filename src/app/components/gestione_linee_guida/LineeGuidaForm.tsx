@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TextField from '@mui/material/TextField';
+import { TextField, Typography } from '@mui/material';
 import 'app/css/gestione_app/FormElements.css';
 import LineaGuidaControl from 'app/control/gestione_autenticazione/LineaGuidaControl';
 import { LineaGuida } from 'app/interfaces/gestione_autenticazione/LineaGuida';
@@ -58,17 +58,12 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
-      <h2
-        style={{
-          textAlign: 'center',
-          color: coloreBottone,
-          marginTop: '3.5em',
-        }}
-      >
-        Creazione Linee Guida
-      </h2>
-      <form className="formflex">
-        <div className="riga">
+      <div className="riga" style={{ marginTop: '3.5em' }}>
+        <Typography variant="h4" style={{ color: 'blueviolet' }}>
+          Creazione Linee Guida
+        </Typography>
+
+        <div className="riga" style={{ marginTop: '2.5em' }}>
           <TextField
             required
             label="Linea guida"
@@ -97,7 +92,7 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
             Salva
           </Button>
         </div>
-      </form>
+      </div>
     </ThemeProvider>
   );
 };

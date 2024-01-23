@@ -110,16 +110,6 @@ function CreaStoria(): JSX.Element {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { id, value } = event.target;
-    if (value.length <= 300) {
-      setDatiStoria((prevDatiStoria) => ({
-        ...prevDatiStoria,
-        [id]: value,
-      }));
-    }
-  };
-
   const areFieldsFilled = (): boolean => {
     return (
       datiStoria.testo.trim() !== '' &&
@@ -276,7 +266,7 @@ function CreaStoria(): JSX.Element {
                       onChange={handleTestoChange}
                       style={{
                         margin: '1em ',
-                        width: '60%',
+                        width: '20em',
                         boxSizing: 'border-box',
                       }}
                     />
@@ -329,7 +319,7 @@ function CreaStoria(): JSX.Element {
                       onChange={handleDescrizioneChange}
                       style={{
                         margin: '1.5em ',
-                        width: '60%',
+                        width: '20em',
                         boxSizing: 'border-box',
                       }}
                     />

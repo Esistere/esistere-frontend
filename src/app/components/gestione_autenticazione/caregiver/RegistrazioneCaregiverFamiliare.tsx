@@ -42,7 +42,7 @@ interface caricaMediciResult {
 
 let opzioni: MedicoPerAutocomplete[] = [
   {
-    name: 'MedicoEsempio',
+    name: 'Ricaricare la pagina',
     value: '0',
   },
 ];
@@ -192,14 +192,18 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     const newPass = event.target.value;
 
     setConfermaPasswd(newPass);
+    console.log(newPass === formDataCaregiverFamiliare.passwd);
     if (newPass === formDataCaregiverFamiliare.passwd) {
       const isValid = passwordRegex.test(newPass) || newPass === '';
+      console.log(isValid);
       setIsConfermaPassValid(isValid);
+      console.log(isConfermaPassValid);
     } else {
       setIsConfermaPassValid(false);
       setConfermaPasswordError('Le password non corrispondono.');
     }
-    if (isConfermaPassValid) {
+    console.log(isConfermaPassValid);
+    if (!isConfermaPassValid) {
       setConfermaPasswordError('Le password non corrispondono.');
     } else {
       setConfermaPasswordError('');
@@ -530,6 +534,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       data_di_nascita: new Date(formDataPaziente.data_di_nascita),
       med: Number(formDataPaziente.med),
       cg_fam: codice_identificativo,
+      codice_fiscale: formDataPaziente.codice_fiscale.toUpperCase(),
     };
 
     console.log(codice_identificativo);

@@ -197,7 +197,7 @@ function CreaQuizPreliminare(): JSX.Element {
             onMouseLeave={() => gestisciAggHover(false)}
             onClick={handleAddQuestion}
           >
-            Aggingi Domanda
+            Aggiungi Domanda
           </Button>
           <Button
             style={{

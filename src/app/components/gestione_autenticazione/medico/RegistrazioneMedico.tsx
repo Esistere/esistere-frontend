@@ -132,7 +132,7 @@ const RegistrazioneMedico: React.FC = () => {
       setIsConfermaPassValid(false);
       setConfermaPasswordError('Le password non corrispondono.');
     }
-    if (isConfermaPassValid) {
+    if (!isConfermaPassValid) {
       setConfermaPasswordError('Le password non corrispondono.');
     } else {
       setConfermaPasswordError('');

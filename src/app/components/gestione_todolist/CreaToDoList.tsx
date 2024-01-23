@@ -153,7 +153,10 @@ function CreaToDoList(): JSX.Element {
     to_do_list: undefined,
   };
 
+  const newToDo: ToDoTest = { filled: undefined };
+
   const handleAddQuestion = (): void => {
+    setTest([...test, newToDo]);
     setAttivita([...attivita, newQuestion]);
     setToDoList((prevToDoList) => ({
       ...prevToDoList,

@@ -34,14 +34,14 @@ function Filastrocca(): JSX.Element {
         <Navbar />
         <div className="optionContainer">
           <div className="option">
-            <div className="optionIcon" id="home-quiz">
+            <div className="optionIcon" id="home-filastrocca">
               <AddIcon style={{ fontSize: '5rem' }} />
             </div>
 
             <Pulsante
               tipologia="scuro"
-              testo="Crea un nuovo Quiz"
-              nome="crea-quiz"
+              testo="Crea una nuova filastrocca"
+              nome="crea-filastrocca"
               className="optionText"
               onClick={() => {
                 navigate('/caregiver/crea_filastrocca');
@@ -61,31 +61,6 @@ function Filastrocca(): JSX.Element {
               className="optionText"
               onClick={() => {
                 navigate('/caregiver/visualizza_filastrocche');
-                window.location.reload();
-              }}
-            />
-          </div>
-        </div>
-      </>
-    );
-  }
-
-  if (userType === UserType.medico) {
-    return (
-      <>
-        <Navbar />
-        <div className="optionContainer">
-          <div className="option">
-            <div className="optionIcon">
-              <PreviewIcon style={{ fontSize: '5rem' }} />
-            </div>
-            <Pulsante
-              tipologia="scuro"
-              testo="Visualizza le filastrocche"
-              nome="visualizza-filastrocche"
-              className="optionText"
-              onClick={() => {
-                navigate('/medico/visualizza_quiz_allenamento');
                 window.location.reload();
               }}
             />

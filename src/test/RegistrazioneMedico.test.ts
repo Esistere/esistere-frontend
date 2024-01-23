@@ -15,6 +15,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '0987654321')
       .setValue('input[name=email]', 'aleparziale@example.it')
       .setValue('input[name=passwd]', 'AleParz2000?')
+      .setValue('input[name=conferma-passwd]', 'AleParz2000?')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -41,6 +42,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '1264872627291468')
       .setValue('input[name=email]', 'virginia@example.com')
       .setValue('input[name=passwd]', 'Virginia1882?')
+      .setValue('input[name=conferma-passwd]', 'Virginia1882?')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -66,6 +68,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '2618946372')
       .setValue('input[name=email]', 'gracehopper@example.it')
       .setValue('input[name=passwd]', 'GraceHopper1906#')
+      .setValue('input[name=conferma-passwd]', 'GraceHopper1906#')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -92,6 +95,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '1237854312')
       .setValue('input[name=email]', 'marghe@example.it')
       .setValue('input[name=passwd]', 'MargheHack14@')
+      .setValue('input[name=conferma-passwd]', 'MargheHack14@')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -118,6 +122,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '1237854312')
       .setValue('input[name=email]', 'archie@example.it')
       .setValue('input[name=passwd]', 'Archibald4@')
+      .setValue('input[name=conferma-passwd]', 'Archibald4@')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -147,6 +152,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '4562810987')
       .setValue('input[name=email]', 'elebea@exampleit')
       .setValue('input[name=passwd]', 'EleBea45?')
+      .setValue('input[name=conferma-passwd]', 'EleBea45?')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -176,6 +182,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '3333333333')
       .setValue('input[name=email]', 'oscar@example.com')
       .setValue('input[name=passwd]', 'Oscar!')
+      .setValue('input[name=conferma-passwd]', 'Oscar!')
 
       .click('button[type=submit]')
       .assert.textContains(
@@ -202,6 +209,7 @@ module.exports = {
       .setValue('input[name=numero_telefono_studio]', '1234567891')
       .setValue('input[name=email]', 'leodavinci')
       .setValue('input[name=passwd]', 'LeoDavinci45!!')
+      .setValue('input[name=conferma-passwd]', 'LeoDavinci45!!')
 
       .click('button[type=submit]')
       .assert.textContains(

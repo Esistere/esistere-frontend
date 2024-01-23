@@ -190,21 +190,19 @@ function CreaFilastrocca(): JSX.Element {
                 onSubmit={handleInserisciFilastrocca}
               >
                 <div className="riga">
-                  <div id="titolo-text-area">
-                    <TextField
-                      required
-                      fullWidth
-                      name="titolo"
-                      id="outlined-multiline-titolo"
-                      label="Titolo Filastrocca"
-                      multiline
-                      maxRows={1}
-                      style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                      onChange={handleTitoloChange}
-                      value={filastrocca.titolo}
-                      error={!isTitoloValid && filastrocca.titolo.length > 0}
-                    />
-                  </div>
+                  <TextField
+                    required
+                    fullWidth
+                    name="titolo"
+                    id="titolo-text-area"
+                    label="Titolo Filastrocca"
+                    multiline
+                    maxRows={1}
+                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                    onChange={handleTitoloChange}
+                    value={filastrocca.titolo}
+                    error={!isTitoloValid && filastrocca.titolo.length > 0}
+                  />
                 </div>
                 <div
                   className="riga"
@@ -216,21 +214,19 @@ function CreaFilastrocca(): JSX.Element {
                 </div>
 
                 <div className="riga">
-                  <div id="testo-text-area">
-                    <TextField
-                      required
-                      fullWidth
-                      name="testo"
-                      id="outlined-multiline-filastrocca"
-                      label="Testo Filastrocca"
-                      multiline
-                      rows={15}
-                      style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                      onChange={handleTestoChange}
-                      value={filastrocca.testo}
-                      error={!isTestoValid && filastrocca.testo.length > 0}
-                    />
-                  </div>
+                  <TextField
+                    required
+                    fullWidth
+                    name="testo"
+                    id="testo-text-area"
+                    label="Testo Filastrocca"
+                    multiline
+                    rows={15}
+                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                    onChange={handleTestoChange}
+                    value={filastrocca.testo}
+                    error={!isTestoValid && filastrocca.testo.length > 0}
+                  />
                 </div>
                 <div
                   className="riga"
@@ -242,21 +238,19 @@ function CreaFilastrocca(): JSX.Element {
                 </div>
 
                 <div className="riga">
-                  <div id="autore-text-area">
-                    <TextField
-                      required
-                      fullWidth
-                      name="autore"
-                      id="outlined-multiline-flexible"
-                      label="Autore Filastrocca"
-                      multiline
-                      maxRows={1}
-                      style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                      onChange={handleAutoreChange}
-                      value={filastrocca.autore}
-                      error={!isAutoreValid && filastrocca.autore.length > 0}
-                    />
-                  </div>
+                  <TextField
+                    required
+                    fullWidth
+                    name="autore"
+                    id="autore-text-area"
+                    label="Autore Filastrocca"
+                    multiline
+                    maxRows={1}
+                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                    onChange={handleAutoreChange}
+                    value={filastrocca.autore}
+                    error={!isAutoreValid && filastrocca.autore.length > 0}
+                  />
                 </div>
                 <div
                   className="riga"

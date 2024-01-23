@@ -21,9 +21,9 @@ module.exports = {
 
       // Caricamento storia
       .waitForElementVisible('body')
-      .assert.visible('div[id=titolo-text-area]')
-      .assert.visible('div[id=testo-text-area]')
-      .assert.visible('div[id=autore-text-area]')
+      .assert.visible('textarea[id=titolo-text-area]')
+      .assert.visible('textarea[id=testo-text-area]')
+      .assert.visible('textarea[id=autore-text-area]')
       .setValue('textarea[id=titolo-text-area]', 'Titolo')
       .setValue('textarea[id=testo-text-area]', 'Testo')
       .setValue('textarea[id=autore-text-area]', 'Autore')

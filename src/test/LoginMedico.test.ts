@@ -1,5 +1,5 @@
 module.exports = {
-  'Login Giusto Test': (browser) => {
+  'Login: successo login medico': (browser) => {
     browser
       .url('http://localhost:3000/esistere-frontend#/login')
       .waitForElementVisible('body')
@@ -9,7 +9,7 @@ module.exports = {
       .setValue('input[name=passwd]', 'AleParz2000?')
       .click('button[id=login]')
       .waitForElementVisible('div[id=div-medico]', 40000)
-      .assert.containsText(
+      .assert.textContains(
         'div[id=div-medico]',
         'Visualizza la lista dei tuoi pazienti'
       )

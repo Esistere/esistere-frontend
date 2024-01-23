@@ -71,6 +71,8 @@ class PazienteControl {
 
   async inviaDatiPaziente(datiPaziente: Paziente): Promise<number> {
     const url = `${this.baseUrl}/salva_paziente`;
+    
+    console.log({dati: datiPaziente});
 
     let risp = 200;
     try {

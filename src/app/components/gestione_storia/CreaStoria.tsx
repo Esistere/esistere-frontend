@@ -226,21 +226,23 @@ function CreaStoria(): JSX.Element {
                 encType="multipart/form-data"
               >
                 <div className="riga">
-                  <TextField
-                    required
-                    id="testo"
-                    name="testo"
-                    label="Testo Storia"
-                    multiline
-                    rows={8}
-                    value={datiStoria.testo}
-                    onChange={handleChange}
-                    style={{
-                      margin: '1em ',
-                      width: '60%',
-                      boxSizing: 'border-box',
-                    }}
-                  />
+                  <div id="text-area">
+                    <TextField
+                      required
+                      id="testo"
+                      name="testo"
+                      label="Testo Storia"
+                      multiline
+                      rows={8}
+                      value={datiStoria.testo}
+                      onChange={handleChange}
+                      style={{
+                        margin: '1em ',
+                        width: '60%',
+                        boxSizing: 'border-box',
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="riga">
                   <Button
@@ -271,26 +273,29 @@ function CreaStoria(): JSX.Element {
                     <div style={{ color: '#D32F2F' }}>{messaggioErrore}</div>
                   )}
                 </div>
-                <div className="riga">
-                  <TextField
-                    required
-                    fullWidth
-                    id="descrizione"
-                    name="descrizione"
-                    label="Descrizione File"
-                    multiline
-                    rows={4}
-                    value={datiStoria.media.descrizione}
-                    onChange={handleDescrChange}
-                    style={{
-                      margin: '1.5em ',
-                      width: '60%',
-                      boxSizing: 'border-box',
-                    }}
-                  />
+                <div id="descrizione-file">
+                  <div className="riga">
+                    <TextField
+                      required
+                      fullWidth
+                      id="descrizione"
+                      name="descrizione"
+                      label="Descrizione File"
+                      multiline
+                      rows={4}
+                      value={datiStoria.media.descrizione}
+                      onChange={handleDescrChange}
+                      style={{
+                        margin: '1.5em ',
+                        width: '60%',
+                        boxSizing: 'border-box',
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="riga">
                   <Button
+                    id="salvaStoria"
                     style={{
                       backgroundColor: coloreBottoneSalva,
                       color: '#ffffff',

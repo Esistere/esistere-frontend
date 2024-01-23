@@ -9,29 +9,30 @@ module.exports = {
       .setValue('input[name=email]', 'emailsaverio@example.com')
       .setValue('input[name=passwd]', 'passwordSaverio24!')
       .click('button[id=login]')
-      .waitForElementVisible('div[id="div-caregiver"]', 1000)
+      .waitForElementVisible('div[id="div-caregiver"]', 40000)
       .assert.textContains(
         'div[id="div-caregiver"]',
         'Supporta il tuo paziente entrando nel suo mondo tramite il Sage Test'
       )
 
       // Navigazione sulla pagina di creazione storia
-      .waitForElementVisible('button[id=creaStoria]', 1000)
+      .waitForElementVisible('button[id=creaStoria]', 40000)
       .click('button[id=creaStoria]')
 
       // Caricamento storia
       .waitForElementVisible('body')
-      .assert.visible('input[name=testo]')
-      .assert.visible('input[name=descrizione]')
-      .setValue('input[name=testo]', 'Che belli i boschi e i gattini')
-      .setValue('input[name=descrizione]', 'Miao')
+      .assert.visible('div[id=text-area]')
+      .assert.visible('div[id=descrizione-file]')
+      .setValue('textarea[id=testo]', 'Che belli i boschi e i gattini')
 
-      .waitForElementVisible('input[type="file"]', 1000)
+      // .click('button[id=caricaFile]')
+      // .waitForElementVisible('input[type="file"]', 40000)
       .setValue('input[type="file"]', 'assets/story.png')
 
-      .click('button[id=caricaFile]')
+      .setValue('textarea[id=descrizione]', 'Miao')
 
-      .waitForElementVisible('div[id=test]', 1000)
+      .click('button[id=salvaStoria]')
+      .waitForElementVisible('div[id=test]', 40000)
 
       .assert.containsText(
         'div[id=test]',

@@ -26,6 +26,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import {
   codiceFiscaleRegex,
+  dataNascitaregex,
   emailRegex,
   indirizzoRegex,
   numCivicoRegex,
@@ -34,6 +35,7 @@ import {
 } from 'app/regex';
 import { theme } from 'app/components/gestione_app/FormTheme';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
+import { useNavigate } from 'react-router-dom';
 interface caricaMediciResult {
   fetchMediciData: () => Promise<void>;
 }
@@ -51,7 +53,6 @@ let selectedMedico: {
 } | null;
 let deveCaricare = true;
 let success: boolean | null = null;
-let status: string | null = null;
 let open = false;
 function RegistrazioneCaregiverFamiliare(): JSX.Element {
   const [visibility, setVisibility] = useState({
@@ -244,17 +245,24 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
 
   const [isBirthDateValid, setIsBirthDateValid] = useState<boolean>(true);
   const [birthDateError, setBirthDateError] = useState('');
-
   const handleBirthDateChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    const { name, value } = event.target;
+    const newData = event.target.value;
     setFormDataCaregiverFamiliare({
       ...formDataCaregiverFamiliare,
-      [name]: value,
+      data_di_nascita: newData.split('T')[0],
     });
 
-    const isValid = value !== '';
+    const inputDate = new Date(newData);
+    const currentDate = new Date();
+    console.log(inputDate, currentDate, inputDate <= currentDate);
+
+    const isValid =
+      (dataNascitaregex.test(convertDate(newData)) &&
+        inputDate <= currentDate) ||
+      newData === '';
+
     setIsBirthDateValid(isValid);
 
     if (!isValid) {
@@ -318,6 +326,47 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  const [isNomePazienteValid, setIsNomePazienteValid] = useState<boolean>(true);
+  const [nomePazienteError, setNomePazienteError] = useState('');
+  const handleNomePazienteChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newNomePaziente = event.target.value;
+    setFormDataPaziente((prevFormData) => ({
+      ...prevFormData,
+      nome: newNomePaziente,
+    }));
+
+    const isValid = newNomePaziente.length < 30 || newNomePaziente === '';
+    setIsNomePazienteValid(isValid);
+    if (!isValid) {
+      setNomePazienteError('Inserisci un nome valido.');
+    } else {
+      setNomePazienteError('');
+    }
+  };
+
+  const [isCognomePazienteValid, setIsCognomePazienteValid] =
+    useState<boolean>(true);
+  const [cognomePazienteError, setCognomePazienteError] = useState('');
+  const handleCognomePazienteChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newCognomePaziente = event.target.value;
+    setFormDataPaziente((prevFormData) => ({
+      ...prevFormData,
+      cognome: newCognomePaziente,
+    }));
+
+    const isValid = newCognomePaziente.length < 30 || newCognomePaziente === '';
+    setIsCognomePazienteValid(isValid);
+    if (!isValid) {
+      setCognomePazienteError('Inserisci un cognome valido.');
+    } else {
+      setCognomePazienteError('');
+    }
+  };
+
   const [isCittaValid, setIsCittaValid] = useState<boolean>(true);
   const [cittaError, setCittaError] = useState('');
   const handleCittaChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -336,47 +385,44 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
-  const handleInserisciPaziente = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
+  const convertDate = (dateStr: string): string => {
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
+  };
 
-    const requiredFieldsFilled = Object.values(
-      formDataCaregiverFamiliare
-    ).every((value) => value !== '');
-    if (
-      requiredFieldsFilled &&
-      isEmailValid &&
-      isPassValid &&
-      isConfermaPassValid &&
-      isAndressValid &&
-      isNumCivValid &&
-      isBirthDateValid &&
-      isNumberValid
-    ) {
-      setAvvia(true);
+  const [isPazienteBirthDateValid, setIsPazienteBirthDateValid] =
+    useState<boolean>(true);
+  const [pazienteBirthDateError, setPazienteBirthDateError] = useState('');
+  const handlePazienteBirthDateChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    const newDataPaziente = event.target.value;
+    setFormDataPaziente({
+      ...formDataPaziente,
+      data_di_nascita: newDataPaziente.split('T')[0],
+    });
+
+    const inputDate = new Date(newDataPaziente);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+
+    const isValid =
+      (dataNascitaregex.test(convertDate(newDataPaziente)) &&
+        inputDate <= currentDate) ||
+      newDataPaziente === '';
+    setIsPazienteBirthDateValid(isValid);
+
+    if (!isValid) {
+      setPazienteBirthDateError('Inserisci una data di nascita valida.');
     } else {
-      setShow(true);
-      console.log(
-        'req',
-        requiredFieldsFilled,
-        'email',
-        isEmailValid,
-        'pass',
-        isPassValid,
-        'address',
-        isAndressValid,
-        'numCiv',
-        isNumCivValid,
-        'date',
-        isBirthDateValid,
-        'number',
-        isNumberValid
-      );
+      setPazienteBirthDateError('');
     }
   };
 
-  const [isCodeValid, setIsCodeValid] = useState<boolean>(false);
+  const [isCodeValid, setIsCodeValid] = useState<boolean>(true);
   const [codeError, setCodeError] = useState('');
   const handleCodeChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newCode = event.target.value;
@@ -394,15 +440,79 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  const insertValidateCgFam = (formDataCaregiverFamiliare: any): boolean => {
+    const requiredFieldsFilled = Object.values(
+      formDataCaregiverFamiliare
+    ).every((value) => value !== '');
+
+    if (
+      requiredFieldsFilled &&
+      isEmailValid &&
+      isPassValid &&
+      isConfermaPassValid &&
+      isNomeValid &&
+      isCognomeValid &&
+      isCittaValid &&
+      isAndressValid &&
+      isNumCivValid &&
+      isBirthDateValid &&
+      isNumberValid
+    )
+      return true;
+    else return false;
+  };
+
+  const handleInserisciPaziente = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+
+    if (insertValidateCgFam(formDataCaregiverFamiliare)) {
+      setAvvia(true);
+    } else {
+      setShow(true);
+    }
+  };
+
+  const insertValidatePaziente = (formDataPaziente: any): boolean => {
+    console.log(formDataPaziente);
+    const requiredFieldsFilled = Object.values(formDataPaziente).every(
+      (value) => value !== ''
+    );
+    console.log(
+      'req',
+      requiredFieldsFilled,
+      'nome',
+      isNomePazienteValid,
+      'cognome',
+      isCognomePazienteValid,
+      'data',
+      isPazienteBirthDateValid,
+      'code',
+      isCodeValid
+    );
+    if (
+      requiredFieldsFilled &&
+      isNomePazienteValid &&
+      isCognomePazienteValid &&
+      isPazienteBirthDateValid &&
+      isCodeValid
+    )
+      return true;
+    else return false;
+  };
+  const navigate = useNavigate();
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+
     const caregiverFamiliare: CaregiverFamiliare = {
       ...formDataCaregiverFamiliare,
       data_di_nascita: new Date(formDataCaregiverFamiliare.data_di_nascita),
     };
 
+    console.log(caregiverFamiliare);
     const caregiverFamiliareControl: CaregiverFamiliareControl =
       new CaregiverFamiliareControl();
 
@@ -418,28 +528,27 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       cg_fam: codice_identificativo,
     };
 
+    console.log(codice_identificativo);
     const pazienteControl: PazienteControl = new PazienteControl();
+    console.log(paziente);
+    if (!insertValidatePaziente(paziente)) {
+      console.log('paziente non valido');
+      return;
+    }
+
     pazienteControl
       .inviaDatiPaziente(paziente)
       .then(() => {
         success = true;
         open = true;
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
       })
       .catch((value) => {
         success = false;
         open = true;
-        status = value;
       });
-  };
-
-  const handleChangePaziente = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    const { name, value } = event.target;
-    setFormDataPaziente({
-      ...formDataPaziente,
-      [name]: value,
-    });
   };
 
   const handleChangeMedico = (
@@ -486,7 +595,6 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   };
 
   const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
-
   const gestisciHover = (isHovered: boolean): void => {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
@@ -611,7 +719,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     label="Numero Civico"
                     error={
                       !isNumCivValid &&
-                      formDataCaregiverFamiliare.numero_civico.length > 0
+                      formDataCaregiverFamiliare.numero_civico.length > 5
                     }
                     style={{
                       width: '16.15em',
@@ -894,96 +1002,100 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     Inserisci i dati del tuo paziente!
                   </Typography>
                 </div>
-                <div className="riga">
-                  <TextField
-                    required
-                    type="text"
-                    label="Codice Fiscale"
-                    error={
-                      !isCodeValid &&
-                      formDataPaziente.codice_fiscale.length > 16 &&
-                      formDataPaziente.codice_fiscale.length < 16
-                    }
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    name="codice_fiscale"
-                    inputProps={{ style: { textTransform: 'uppercase' } }}
-                    onChange={handleCodeChange}
-                  />
-                  {codeError && (
-                    <div style={{ color: '#D32F2F' }}>{codeError}</div>
-                  )}
-
-                  <TextField
-                    required
-                    type="text"
-                    label="Nome"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    name="nome"
-                    onChange={handleChangePaziente}
-                  />
+                <div id="codice-fiscale">
+                  <div className="riga">
+                    <TextField
+                      required
+                      type="text"
+                      label="Codice Fiscale"
+                      error={!isCodeValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      name="codice_fiscale"
+                      inputProps={{ style: { textTransform: 'uppercase' } }}
+                      onChange={handleCodeChange}
+                    />
+                    {codeError && (
+                      <div style={{ color: '#D32F2F' }}>{codeError}</div>
+                    )}
+                  </div>
+                  <div id="nome-paziente">
+                    <TextField
+                      required
+                      type="text"
+                      label="Nome"
+                      error={!isNomePazienteValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      name="nome_paziente"
+                      onChange={handleNomePazienteChange}
+                    />
+                    {nomePazienteError && (
+                      <div style={{ color: '#D32F2F' }}>
+                        {nomePazienteError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="riga">
-                  <TextField
-                    required
-                    type="text"
-                    label="Cognome"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    name="cognome"
-                    onChange={handleChangePaziente}
-                  />
-                  <TextField
-                    name="data_di_nascita"
-                    id="outlined-birthdate-input"
-                    label="Data di nascita"
-                    error={!isBirthDateValid}
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    required
-                    onFocus={onFocusPaziente}
-                    onBlur={onBlurPaziente}
-                    type={hasValuePaziente || focusPaziente ? 'date' : 'text'}
-                    onChange={(e) => {
-                      if (e.target.value) setHasValuePaziente(true);
-                      else setHasValuePaziente(false);
-                      handleBirthDateChange(e);
-                    }}
-                  />
-                  {birthDateError && (
-                    <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
-                  )}
-                  {/* <TextField
-                    required
-                    type="date"
-                    name="data_di_nascita"
-                    id="outlined-birthdate-input"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    onChange={handleChangePaziente}
-                  /> */}
+                  <div id="cognome-paziente">
+                    <TextField
+                      required
+                      type="text"
+                      label="Cognome"
+                      error={!isCognomePazienteValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      name="cognome_paziente"
+                      onChange={handleCognomePazienteChange}
+                    />
+                    {cognomePazienteError && (
+                      <div style={{ color: '#D32F2F' }}>
+                        {cognomePazienteError}
+                      </div>
+                    )}
+                  </div>
+                  <div id="data-di-nascita-paziente">
+                    <TextField
+                      name="data_di_nascita_paziente"
+                      id="outlined-birthdate-input"
+                      label="Data di nascita"
+                      error={!isPazienteBirthDateValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onFocus={onFocusPaziente}
+                      onBlur={onBlurPaziente}
+                      type={hasValuePaziente || focusPaziente ? 'date' : 'text'}
+                      onChange={(e) => {
+                        if (e.target.value) setHasValuePaziente(true);
+                        else setHasValuePaziente(false);
+                        handlePazienteBirthDateChange(e);
+                      }}
+                    />
+                    {pazienteBirthDateError && (
+                      <div style={{ color: '#D32F2F' }}>
+                        {pazienteBirthDateError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="riga">
                   <Autocomplete
@@ -993,6 +1105,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                     onChange={handleChangeMedico}
                     renderInput={(params) => (
                       <TextField
+                        name="autocomplete"
                         {...params}
                         label="Scegli un medico"
                         style={{
@@ -1011,6 +1124,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                       background: coloreBottone,
                     }}
                     type="submit"
+                    id="registrazione-button"
                     variant="contained"
                     onMouseEnter={() => gestisciHover(true)}
                     onMouseLeave={() => gestisciHover(false)}
@@ -1025,7 +1139,12 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
           </Card>
         </Container>
       </ThemeProvider>
-      <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
         <Alert
           onClose={handleClose}
           severity={success ? 'success' : 'error'}
@@ -1033,7 +1152,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         >
           {success
             ? 'Registrazione effettuata con successo!'
-            : `Registrazione fallita. Errore : ${status}`}
+            : 'Registrazione fallita'}
         </Alert>
       </Snackbar>
     </>

@@ -180,6 +180,7 @@ function Login(): JSX.Element {
           >
             <img
               src={logo}
+              id='login'
               alt="Logo"
               style={{ height: '100px', marginTop: '20px' }}
             />

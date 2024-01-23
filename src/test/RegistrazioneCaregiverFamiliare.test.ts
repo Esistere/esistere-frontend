@@ -162,7 +162,10 @@ module.exports = {
       .setValue('input[name=email]', 'albert@example.it')
       .setValue('input[name=passwd]', 'Albert1879$')
 
-      .assert.textContains('body', 'Inserisci un numero civico valido. Es. 34523 o 123/A')
+      .assert.textContains(
+        'body',
+        'Inserisci un numero civico valido. Es. 34523 o 123/A'
+      )
 
       .end();
   },
@@ -191,7 +194,7 @@ module.exports = {
 
       .end();
   },
-  
+
   'Caregiver/Familiare: Numero Telefono Fail Test': function (browser) {
     browser
       .url('http://localhost:3000/esistere-frontend#/registrazione')
@@ -214,7 +217,4 @@ module.exports = {
 
       .end();
   },
-
-
-
 };

@@ -159,7 +159,18 @@ function CreaQuizAllenamento(): JSX.Element {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
+  const [aColoreBottone, impostaAColoreBottone] = useState<string>('#9149f3');
 
+  const gestisciHoverA = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaAColoreBottone(nuovoColore);
+  };
+  const [cColoreBottone, impostaCColoreBottone] = useState<string>('#9149f3');
+
+  const gestisciHoverC = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
+    impostaCColoreBottone(nuovoColore);
+  };
   const handleQuestionChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
@@ -477,27 +488,27 @@ function CreaQuizAllenamento(): JSX.Element {
         <div className="riga">
           <Button
             style={{
-              background: coloreBottone,
+              background: aColoreBottone,
               margin: '1em',
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
+            onMouseEnter={() => gestisciHoverA(true)}
+            onMouseLeave={() => gestisciHoverA(false)}
             onClick={handleAddQuestion}
           >
-            Aggingi Domanda
+            Aggiungi Domanda
           </Button>
           <Button
             id="crea-quiz-button"
             style={{
-              background: coloreBottone,
+              background: cColoreBottone,
               margin: '1em',
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
+            onMouseEnter={() => gestisciHoverC(true)}
+            onMouseLeave={() => gestisciHoverC(false)}
             onClick={handleQuizCreation}
           >
             Crea Quiz

@@ -10,6 +10,7 @@ import {
   CardContent,
   Container,
   CssBaseline,
+  Typography,
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import Pulsante from 'app/components/gestione_app/Pulsante';
@@ -144,8 +145,13 @@ function AreaPersonaleCaregiver(): JSX.Element {
                   <Avatar
                     alt={`${caregiverData?.nome} ${caregiverData?.cognome}`}
                     src={avataricon}
-                    sx={{ width: '30%', height: 'auto', aspectRatio: 1 / 1 }}
+                    sx={{ width: '50%', height: 'auto', aspectRatio: 1 / 1 }}
                   />
+                </div>
+                <div className="riga">
+                  <Typography variant="h4" color="black" textAlign="center">
+                    {`${caregiverData?.nome} ${caregiverData?.cognome}`}
+                  </Typography>
                 </div>
                 <div className="riga">
                   <Pulsante

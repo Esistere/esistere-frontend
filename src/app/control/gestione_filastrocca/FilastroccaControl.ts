@@ -7,7 +7,7 @@ class FilastroccaControl {
     this.baseUrl = WEBSERVER;
   }
   async fetchFilastrocche(id: number): Promise<Filastrocca[]> {
-    const url = `${this.baseUrl}/filastrocche_cgfam` + `idCgFam=${id}`;
+    const url = `${this.baseUrl}/filastrocche_cgfam` + `?idCgFam=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',

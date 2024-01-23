@@ -46,6 +46,7 @@ function ListaToDoList(props: Props): JSX.Element {
 
       try {
         if (cf) {
+          console.log(cf);
           const data = await toDoListControl.fetchToDoListByPaziente(cf);
           setToDoList(data);
           setIsLoading(false);

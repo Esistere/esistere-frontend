@@ -113,7 +113,11 @@ function ListaPazienti(props: Props): JSX.Element {
             <p>Non ci sono pazienti.</p>
           ) : (
             pazienti.map((paziente, index) => (
-              <div key={index} onClick={() => handlePazienteClick(paziente)}>
+              <div
+                id={`paziente${index}`}
+                key={index}
+                onClick={() => handlePazienteClick(paziente)}
+              >
                 <ElementoLista key={index} index={index} patient={paziente} />
                 {index < pazienti.length - 1 && <Divider />}
               </div>
@@ -289,6 +293,7 @@ function ListaPazienti(props: Props): JSX.Element {
                     </Button>
 
                     <Button
+                      id="creaToDoList"
                       style={{
                         color: isHoveredCreaTodoList ? '#ffffff' : '#8036a1',
                         borderColor: '#000000',

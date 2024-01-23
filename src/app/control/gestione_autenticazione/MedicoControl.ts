@@ -94,7 +94,7 @@ class MedicoControl {
   }
 
   async fetchPaziente(cf: string): Promise<Paziente> {
-    const url = `${WEBSERVER}/visualizza_paziente_med` + `cf=${cf}`;
+    const url = `${this.baseUrl}/visualizza_paziente_med` + `?cf=${cf}`;
 
     try {
       const response = await fetch(url, {

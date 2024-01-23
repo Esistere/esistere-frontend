@@ -56,6 +56,7 @@ const HomeMedico: React.FC = () => {
                 }}
               >
                 <Button
+                  id="visualizzaPazienti"
                   variant="contained"
                   style={{
                     backgroundColor: 'blueviolet',

@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography, Grid, Paper } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Paper,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import { Attivita } from 'app/interfaces/gestione_todolist/Attivita';
@@ -7,7 +15,12 @@ import { ResponseObjectToDoList } from 'app/interfaces/gestione_todolist/Respons
 import ToDoListControl from 'app/control/gestione_todolist/ToDoListControl';
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import ResponsiveDialog from '../gestione_app/ResponsiveDialog';
+
+interface ToDoTest {
+  filled: boolean | undefined;
+}
 
 const theme = createTheme({
   palette: {
@@ -18,9 +31,37 @@ const theme = createTheme({
 });
 
 function CreaToDoList(): JSX.Element {
-  const navigate = useNavigate();
   const location = useLocation();
   const cf = location.state;
+
+  const errorMessage = (element: boolean | undefined): JSX.Element | null => {
+    return element === false && element !== undefined ? (
+      <div style={{ color: '#D32F2F' }}>
+        Inserisci un argomento di al pi&ugrave; 300 caratteri.
+      </div>
+    ) : null;
+  };
+
+  const testa = (element: string): boolean => {
+    return element.length <= 300;
+  };
+
+  const [test, setTest] = useState<ToDoTest[]>([]);
+
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [showFail, setShowFail] = React.useState<boolean>(false);
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const [toDoList, setToDoList] = useState<ToDoList>({
     med: Number(localStorage.getItem('id')),
     id: undefined,
@@ -33,6 +74,7 @@ function CreaToDoList(): JSX.Element {
   const handleNumberOfQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
+    console.log(cf);
     const newNumberOfQuestions = Number(event.target.value);
     if (newNumberOfQuestions >= 0) {
       setToDoList({
@@ -54,10 +96,17 @@ function CreaToDoList(): JSX.Element {
             to_do_list: undefined,
           })
         );
+        const newTests = Array.from(
+          { length: additionalQuestions },
+          (): ToDoTest => ({ filled: undefined })
+        );
+        setTest([...test, ...newTests]);
         setAttivita([...attivita, ...newQuestions]);
       } else if (newNumberOfQuestions < attivita.length) {
         // Rimuovi domande se il nuovo numero è minore
         const remainingQuestions = attivita.slice(0, newNumberOfQuestions);
+        const remainingToDos = test.slice(0, newNumberOfQuestions);
+        setTest(remainingToDos);
         setAttivita(remainingQuestions);
       }
     } else {
@@ -70,21 +119,27 @@ function CreaToDoList(): JSX.Element {
   };
   const [coloreBottone, impostaColoreBottone] = useState<string>('#9149f3');
 
-  const gestisciHoverCrea = (isHoveredCrea: boolean): void => {
-    const nuovoColore = isHoveredCrea ? '#8036a1' : '#9149f3';
+  const gestisciHover = (isHovered: boolean): void => {
+    const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
-  const [coloreAggBottone, impostaColoreAggBottone] =
+
+  const [coloreConfermaBottone, impostaColoreConfermaBottone] =
     useState<string>('#9149f3');
-  const gestisciHoverAgg = (isHoveredAgg: boolean): void => {
-    const nuovoColore = isHoveredAgg ? '#8036a1' : '#9149f3';
-    impostaColoreAggBottone(nuovoColore);
+
+  const gestisciHoverConferma = (isHoveredCrea: boolean): void => {
+    const nuovoColore = isHoveredCrea ? '#8036a1' : '#9149f3';
+    impostaColoreConfermaBottone(nuovoColore);
   };
   const handleQuestionChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newQuestionData = [...attivita];
+    const newToDo = [...test];
+    newToDo[questionIndex].filled =
+      testa(event.target.value) && event.target.value.length > 0;
+    setTest(newToDo);
     newQuestionData[questionIndex].testo = event.target.value;
     setAttivita(newQuestionData);
   };
@@ -111,13 +166,21 @@ function CreaToDoList(): JSX.Element {
       attivita: attivita,
       toDoList: toDoList,
     };
-
-    console.log(domRes);
-    const quizAllenamentoContol: ToDoListControl = new ToDoListControl();
-    const risultato = await quizAllenamentoContol.inviaDatiToDoList(domRes);
-    console.log(risultato);
-    if (risultato) {
-      navigate('/');
+    const isValid = Object.values(test).every((element) => element.filled);
+    if (!isValid || toDoList.num_attivita === 0) {
+      setShowFail(true);
+    } else {
+      console.log(domRes);
+      const quizAllenamentoContol: ToDoListControl = new ToDoListControl();
+      const risultato = await quizAllenamentoContol.inviaDatiToDoList(domRes);
+      console.log(risultato);
+      if (risultato) {
+        setSuccess(true);
+        setOpen(true);
+      } else {
+        setSuccess(false);
+        setOpen(true);
+      }
     }
   };
 
@@ -125,6 +188,25 @@ function CreaToDoList(): JSX.Element {
     <ThemeProvider theme={theme}>
       <div>
         <Navbar />
+        {showFail && <ResponsiveDialog onClose={() => setShowFail(false)} />}
+        <div id="test">
+          <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity={success ? 'success' : 'error'}
+              sx={{ width: '100%' }}
+            >
+              {success
+                ? 'Caricamento ToDoList effettuato con successo!'
+                : 'Caricamento ToDoList fallito'}
+            </Alert>
+          </Snackbar>
+        </div>
         <div className="riga" style={{ marginTop: '3.5em' }}>
           <Typography variant="h4" style={{ color: 'blueviolet' }}>
             Creazione ToDoList
@@ -134,6 +216,7 @@ function CreaToDoList(): JSX.Element {
           <TextField
             label="Numero di Attività"
             type="number"
+            id="numAttivita"
             value={toDoList.num_attivita}
             onChange={handleNumberOfQuestionsChange}
           />
@@ -149,6 +232,7 @@ function CreaToDoList(): JSX.Element {
                   </Typography>
                   <TextField
                     label="Attività"
+                    id={`attivita${questionIndex + 1}`}
                     fullWidth
                     value={question.testo}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -156,6 +240,7 @@ function CreaToDoList(): JSX.Element {
                     }
                     style={{ width: '20em', marginTop: '3.5em' }}
                   />
+                  {errorMessage(test[questionIndex].filled)}
                 </Paper>
               </Grid>
             ))}
@@ -165,26 +250,27 @@ function CreaToDoList(): JSX.Element {
         <div className="riga">
           <Button
             style={{
-              background: coloreAggBottone,
-              margin: '1em',
-            }}
-            type="submit"
-            variant="contained"
-            onMouseEnter={() => gestisciHoverAgg(true)}
-            onMouseLeave={() => gestisciHoverAgg(false)}
-            onClick={handleAddQuestion}
-          >
-            Aggingi Attivit&agrave;
-          </Button>
-          <Button
-            style={{
               background: coloreBottone,
               margin: '1em',
             }}
             type="submit"
             variant="contained"
-            onMouseEnter={() => gestisciHoverCrea(true)}
-            onMouseLeave={() => gestisciHoverCrea(false)}
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={handleAddQuestion}
+          >
+            Aggiungi Attivit&agrave;
+          </Button>
+          <Button
+            style={{
+              background: coloreConfermaBottone,
+              margin: '1em',
+            }}
+            id="salvaToDoList"
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHoverConferma(true)}
+            onMouseLeave={() => gestisciHoverConferma(false)}
             onClick={handleQuizCreation}
           >
             Crea ToDoList

@@ -48,7 +48,7 @@ class FilastroccaControl {
     }
   }
 
-  async inviaDatiFilastrocca(datiFilastrocca: Filastrocca): Promise<void> {
+  async inviaDatiFilastrocca(datiFilastrocca: Filastrocca): Promise<boolean> {
     const url = `${this.baseUrl}/salva_filastrocca`;
 
     try {
@@ -63,6 +63,7 @@ class FilastroccaControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
+      return response.ok ? true : false;
     } catch (error) {
       throw new Error('Error');
     }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'app/css/gestione_app/FormElements.css';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import TextField from '@mui/material/TextField';
 import Navbar from '../Navbar';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import {
@@ -94,22 +93,23 @@ function CreaTac(): JSX.Element {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { id, value } = event.target;
-    if (value.length <= 300) {
-      setDatiTac((prevDatiTac) => ({
-        ...prevDatiTac,
-        [id]: value,
-      }));
-    }
-  };
-
   const [predizione, setPredizione] = useState<string>('');
   const handleSave = async (): Promise<void> => {
     if (datiTac.stadio.trim() !== '' && file !== null) {
       await tacControl.inviaTac(datiTac, file);
       const pred = await tacControl.getPredizione(file);
       setPredizione(pred);
+      if (pred === 'Demented') {
+        setDatiTac((prevDatiTac) => ({
+          ...prevDatiTac,
+          stadio: 'Si',
+        }));
+      } else {
+        setDatiTac((prevDatiTac) => ({
+          ...prevDatiTac,
+          stadio: 'No',
+        }));
+      }
     } else {
       setShow(true);
       console.log('Errore: Tutti i campi devono essere compilati.');
@@ -149,6 +149,12 @@ function CreaTac(): JSX.Element {
               <div className="formflex2" style={{ alignItems: 'top' }}>
                 <div className="riga">
                   <CardContent>
+                    <div className="riga">
+                      <Typography variant="h5" color="black" textAlign="center">
+                        Test risultato{' '}
+                        {predizione === 'Demented' ? 'positivo' : 'negativo'}
+                      </Typography>
+                    </div>
                     <Typography
                       variant="h4"
                       color="blueviolet"
@@ -175,20 +181,6 @@ function CreaTac(): JSX.Element {
                 method="post"
                 encType="multipart/form-data"
               >
-                <div className="riga">
-                  <TextField
-                    required
-                    id="stadio"
-                    label="Stadio"
-                    value={datiTac.stadio}
-                    onChange={handleChange}
-                    style={{
-                      margin: '1em ',
-                      width: '60%',
-                      boxSizing: 'border-box',
-                    }}
-                  />
-                </div>
                 <div className="riga">
                   <Button
                     component="label"
@@ -227,11 +219,6 @@ function CreaTac(): JSX.Element {
                   >
                     Salva tac
                   </Button>
-                </div>
-                <div className="riga">
-                  <Typography variant="h5" color="black" textAlign="center">
-                    {predizione}
-                  </Typography>
                 </div>
               </form>
             </Stack>

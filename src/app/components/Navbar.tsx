@@ -17,6 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { UserType, useUser } from './gestione_autenticazione/UserProvider';
 import logonavbar from 'app/assets/logonavbar.png';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 
 function Navbar(): JSX.Element {
   const handleGoBack = (): void => {
@@ -47,7 +48,21 @@ function Navbar(): JSX.Element {
   const handleCloseDrawer = (): void => {
     setDrawerOpen(false);
   };
-
+  const [codice, setCodice] = useState<string | undefined>(undefined);
+  const fetchCodice = async (): Promise<void> => {
+    if (userType === UserType.caregiver) {
+      const pazienteControl = new PazienteControl();
+      try {
+        const data = await pazienteControl.fetchCodicePaziente(
+          Number(localStorage.getItem('id'))
+        );
+        setCodice(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching dati caregiver familiare:', error);
+      }
+    }
+  };
   useEffect(() => {
     const handleResize = (): void => {
       if (window.innerWidth >= 600) {
@@ -56,9 +71,12 @@ function Navbar(): JSX.Element {
     };
     window.addEventListener('resize', handleResize);
 
+    fetchCodice();
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* eslint-disable */
@@ -71,6 +89,11 @@ function Navbar(): JSX.Element {
       : '');
   /* eslint-enable */
 
+  const naviga = (): void => {
+    navigate('/caregiver/visualizza_todolist', {
+      state: codice,
+    });
+  };
   return (
     <div>
       <AppBar
@@ -273,21 +296,22 @@ function Navbar(): JSX.Element {
                     </Button>
                   )}
                 </Link>
-                <Link
-                  to="/caregiver/visualizza_todolist"
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userType === UserType.caregiver && (
-                    <Button
-                      onClick={handleCloseDrawer}
-                      sx={{ my: 2, color: 'black', display: 'block' }}
-                    >
-                      ToDoList
-                    </Button>
-                  )}
-                </Link>
+                {userType === UserType.caregiver && (
+                  <Button
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                      display: 'block',
+                      textAlign: 'left',
+                    }}
+                    onClick={() => {
+                      handleCloseDrawer();
+                      naviga();
+                    }}
+                  >
+                    ToDoList
+                  </Button>
+                )}
               </Drawer>
             </Box>
             <Typography
@@ -414,21 +438,17 @@ function Navbar(): JSX.Element {
                   </Button>
                 )}
               </Link>
-              <Link
-                to="/caregiver/visualizza_todolist"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                {userType === UserType.caregiver && (
-                  <Button
-                    onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    ToDoList
-                  </Button>
-                )}
-              </Link>
+              {userType === UserType.caregiver && (
+                <Button
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={() => {
+                    handleCloseDrawer();
+                    naviga();
+                  }}
+                >
+                  ToDoList
+                </Button>
+              )}
             </Box>
             {userType != null && (
               <Box sx={{ flexGrow: 0 }}>

@@ -102,7 +102,7 @@ const HomeMedico: React.FC = () => {
                 affrontare la situazione del paziente che stai seguendo
               </Typography>
               <Link
-                to="/medico/quiz_preliminare"
+                to="/medico/lista"
                 style={{
                   textDecoration: 'none',
                 }}

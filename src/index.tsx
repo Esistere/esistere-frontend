@@ -31,6 +31,13 @@ import CompilazioneQuizPreliminare from './app/components/gestione_quiz_prelimin
 import CreaQuizPreliminare from './app/components/gestione_quiz_preliminare/CreaQuizPreliminare';
 import DatiCaregiver from './app/components/gestione_autenticazione/medico/DatiCaregiver';
 import Filastrocca from './app/components/gestione_filastrocca/Filastrocca';
+import { ThemeProvider, createTheme } from '@mui/material';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Geologica, sans-serif',
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -38,115 +45,123 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <HashRouter>
-        <Routes>
-          {/* Global paths */}
-          <Route path="/" element={<App />} />
-          <Route path="/registrazione" element={<Registrazione />} />
-          <Route path="/login" element={<Login />} />
+    <ThemeProvider theme={theme}>
+      <UserProvider>
+        <HashRouter>
+          <Routes>
+            {/* Global paths */}
+            <Route path="/" element={<App />} />
+            <Route path="/registrazione" element={<Registrazione />} />
+            <Route path="/login" element={<Login />} />
 
-          {/* Medico paths */}
-          <Route
-            path="/medico"
-            element={React.createElement(withMedico(HomeMedico))}
-          />
-          <Route
-            path="/medico/area_personale"
-            element={React.createElement(withMedico(AreaPersonaleMedico))}
-          />
-          <Route
-            path="/medico/lista"
-            element={React.createElement(withMedico(ListaPazienti))}
-          />
-          <Route
-            path="/medico/visualizza_todolist"
-            element={React.createElement(withMedico(ListaToDoList))}
-          />
-          <Route
-            path="/medico/crea_todolist"
-            element={React.createElement(withMedico(CreaToDoList))}
-          />
-          <Route
-            path="/medico/visualizza_quiz_allenamento"
-            element={React.createElement(
-              withMedico(ListaQuizAllenamentoMedico)
-            )}
-          />
-          <Route
-            path="/medico/lineeguidaform"
-            element={React.createElement(withMedico(LineeGuidaForm))}
-          />
-          <Route
-            path="/medico/visualizza_caregiver"
-            element={React.createElement(withMedico(DatiCaregiver))}
-          />
-          <Route
-            path="/medico/crea_tac"
-            element={React.createElement(withMedico(CreaTac))}
-          />
-          <Route
-            path="/medico/crea_quiz_preliminare"
-            element={React.createElement(withMedico(CreaQuizPreliminare))}
-          />
-          <Route
-            path="/medico/visualizza_quiz_preliminare"
-            element={React.createElement(withMedico(VisualizzaQuizPreliminare))}
-          />
-          {/* Caregiver paths */}
-          <Route
-            path="/caregiver"
-            element={React.createElement(withCaregiver(HomeCaregiver))}
-          />
-          <Route
-            path="/caregiver/area_personale"
-            element={React.createElement(withCaregiver(AreaPersonaleCaregiver))}
-          />
-          <Route
-            path="/caregiver/crea_storia"
-            element={React.createElement(withCaregiver(CreaStoria))}
-          />
-          <Route
-            path="/caregiver/quiz_allenamento"
-            element={React.createElement(withCaregiver(QuizAllenamento))}
-          />
-          <Route
-            path="/caregiver/crea_quiz_allenamento"
-            element={React.createElement(withCaregiver(CreaQuizAllenamento))}
-          />
-          <Route
-            path="/caregiver/visualizza_quiz_allenamento"
-            element={React.createElement(withCaregiver(ListaQuizAllenamento))}
-          />
-          <Route
-            path="/caregiver/compila_quiz_allenamento"
-            element={React.createElement(withCaregiver(CompilaQuizAllenamento))}
-          />
-          <Route
-            path="/caregiver/crea_filastrocca"
-            element={React.createElement(withCaregiver(CreaFilastrocca))}
-          />
-          <Route
-            path="/caregiver/filastrocca"
-            element={React.createElement(withCaregiver(Filastrocca))}
-          />
-          <Route
-            path="/caregiver/visualizza_filastrocche"
-            element={React.createElement(withCaregiver(ListaFilastrocche))}
-          />
-          <Route
-            path="/caregiver/visualizza_todolist"
-            element={React.createElement(withCaregiver(ListaToDoList))}
-          />
-          <Route
-            path="/caregiver/compila_quiz_preliminare"
-            element={React.createElement(
-              withCaregiver(CompilazioneQuizPreliminare)
-            )}
-          />
-        </Routes>
-      </HashRouter>
-    </UserProvider>
+            {/* Medico paths */}
+            <Route
+              path="/medico"
+              element={React.createElement(withMedico(HomeMedico))}
+            />
+            <Route
+              path="/medico/area_personale"
+              element={React.createElement(withMedico(AreaPersonaleMedico))}
+            />
+            <Route
+              path="/medico/lista"
+              element={React.createElement(withMedico(ListaPazienti))}
+            />
+            <Route
+              path="/medico/visualizza_todolist"
+              element={React.createElement(withMedico(ListaToDoList))}
+            />
+            <Route
+              path="/medico/crea_todolist"
+              element={React.createElement(withMedico(CreaToDoList))}
+            />
+            <Route
+              path="/medico/visualizza_quiz_allenamento"
+              element={React.createElement(
+                withMedico(ListaQuizAllenamentoMedico)
+              )}
+            />
+            <Route
+              path="/medico/lineeguidaform"
+              element={React.createElement(withMedico(LineeGuidaForm))}
+            />
+            <Route
+              path="/medico/visualizza_caregiver"
+              element={React.createElement(withMedico(DatiCaregiver))}
+            />
+            <Route
+              path="/medico/crea_tac"
+              element={React.createElement(withMedico(CreaTac))}
+            />
+            <Route
+              path="/medico/crea_quiz_preliminare"
+              element={React.createElement(withMedico(CreaQuizPreliminare))}
+            />
+            <Route
+              path="/medico/visualizza_quiz_preliminare"
+              element={React.createElement(
+                withMedico(VisualizzaQuizPreliminare)
+              )}
+            />
+            {/* Caregiver paths */}
+            <Route
+              path="/caregiver"
+              element={React.createElement(withCaregiver(HomeCaregiver))}
+            />
+            <Route
+              path="/caregiver/area_personale"
+              element={React.createElement(
+                withCaregiver(AreaPersonaleCaregiver)
+              )}
+            />
+            <Route
+              path="/caregiver/crea_storia"
+              element={React.createElement(withCaregiver(CreaStoria))}
+            />
+            <Route
+              path="/caregiver/quiz_allenamento"
+              element={React.createElement(withCaregiver(QuizAllenamento))}
+            />
+            <Route
+              path="/caregiver/crea_quiz_allenamento"
+              element={React.createElement(withCaregiver(CreaQuizAllenamento))}
+            />
+            <Route
+              path="/caregiver/visualizza_quiz_allenamento"
+              element={React.createElement(withCaregiver(ListaQuizAllenamento))}
+            />
+            <Route
+              path="/caregiver/compila_quiz_allenamento"
+              element={React.createElement(
+                withCaregiver(CompilaQuizAllenamento)
+              )}
+            />
+            <Route
+              path="/caregiver/crea_filastrocca"
+              element={React.createElement(withCaregiver(CreaFilastrocca))}
+            />
+            <Route
+              path="/caregiver/filastrocca"
+              element={React.createElement(withCaregiver(Filastrocca))}
+            />
+            <Route
+              path="/caregiver/visualizza_filastrocche"
+              element={React.createElement(withCaregiver(ListaFilastrocche))}
+            />
+            <Route
+              path="/caregiver/visualizza_todolist"
+              element={React.createElement(withCaregiver(ListaToDoList))}
+            />
+            <Route
+              path="/caregiver/compila_quiz_preliminare"
+              element={React.createElement(
+                withCaregiver(CompilazioneQuizPreliminare)
+              )}
+            />
+          </Routes>
+        </HashRouter>
+      </UserProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

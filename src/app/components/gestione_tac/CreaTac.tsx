@@ -151,8 +151,11 @@ function CreaTac(): JSX.Element {
                   <CardContent>
                     <div className="riga">
                       <Typography variant="h5" color="black" textAlign="center">
-                        Test risultato{' '}
-                        {predizione === 'Demented' ? 'positivo' : 'negativo'}
+                        {predizione !== ''
+                          ? predizione === 'Demented'
+                            ? 'Test risultato positivo'
+                            : 'Test risultato negativo'
+                          : ''}
                       </Typography>
                     </div>
                     <Typography
@@ -160,13 +163,21 @@ function CreaTac(): JSX.Element {
                       color="blueviolet"
                       textAlign="center"
                       style={{
-                        marginBottom: '2em',
+                        marginBottom: '0.4em',
                       }}
                     >
                       Carica la tac di un paziente
                     </Typography>
-                    <Typography variant="h5" color="black" textAlign="left">
-                      Caricare la tac del paziente
+                    <Typography
+                      variant="h5"
+                      color="black"
+                      textAlign="center"
+                      style={{
+                        marginBottom: '1em',
+                      }}
+                    >
+                      Caricando la TAC di un paziente potrai avere un supporto
+                      alla diagnosi da parte della nostra IA
                     </Typography>
                   </CardContent>
                   <CardMedia

@@ -81,8 +81,8 @@ function Filastrocca(): JSX.Element {
             </div>
             <Pulsante
               tipologia="scuro"
-              testo="Visualizza i quiz"
-              nome="visualizza-quiz"
+              testo="Visualizza le filastrocche"
+              nome="visualizza-filastrocche"
               className="optionText"
               onClick={() => {
                 navigate('/medico/visualizza_quiz_allenamento');

@@ -40,12 +40,40 @@ const RegistrazioneMedico: React.FC = () => {
     passwd: '',
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const [isNomeValid, setIsNomeValid] = useState<boolean>(true);
+  const [nomeError, setNomeError] = useState('');
+  const handleNomeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newNome = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      nome: newNome,
+    }));
+
+    const isValid = newNome.length < 30 || newNome === '';
+    setIsNomeValid(isValid);
+    if (!isValid) {
+      setNomeError('Inserisci un nome valido');
+    } else {
+      setNomeError('');
+    }
+  };
+
+  const [isCognomeValid, setIsCognomeValid] = useState<boolean>(true);
+  const [cognomeError, setCognomeError] = useState('');
+  const handleCognomeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCognome = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      cognome: newCognome,
+    }));
+
+    const isValid = newCognome.length < 30 || newCognome === '';
+    setIsCognomeValid(isValid);
+    if (!isValid) {
+      setCognomeError('Inserisci un cognome valido');
+    } else {
+      setCognomeError('');
+    }
   };
 
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
@@ -121,11 +149,13 @@ const RegistrazioneMedico: React.FC = () => {
       indirizzo_studio: newStudio,
     }));
 
-    const isValid = indirizzoStudioRegex.test(newStudio) || newStudio !== '';
+    const isValid =
+      (indirizzoStudioRegex.test(newStudio) && newStudio.length <= 30) ||
+      newStudio === '';
     setIsStudioValid(isValid);
 
     if (!isValid) {
-      setStudioError('Inserisci un indirizzo studio.');
+      setStudioError('Inserisci un indirizzo studio valido.');
     } else {
       setStudioError('');
     }
@@ -168,12 +198,33 @@ const RegistrazioneMedico: React.FC = () => {
       numero_telefono_studio: newNumStudio,
     }));
     const isValid =
-      numeroTelefonoStudioRegex.test(newNumStudio) || newNumStudio === '';
+      (numeroTelefonoStudioRegex.test(newNumStudio) &&
+        newNumStudio.length === 10) ||
+      newNumStudio === '';
     setIsNumStudioValid(isValid);
     if (!isValid) {
       setNumStudioError('Inserisci un numero telefono studio valido.');
     } else {
       setNumStudioError('');
+    }
+  };
+
+  const [isCittaStudioValid, setIsCittaStudioValid] = useState<boolean>(true);
+  const [cittaStudioError, setCittaStudioError] = useState('');
+  const HandleCittaStudioChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newCittaStudio = event.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      citta: newCittaStudio,
+    }));
+    const isValid = newCittaStudio.length < 30 || newCittaStudio === '';
+    setIsCittaStudioValid(isValid);
+    if (!isValid) {
+      setCittaStudioError('Inserisci una citta studio valida.');
+    } else {
+      setCittaStudioError('');
     }
   };
 
@@ -297,108 +348,180 @@ const RegistrazioneMedico: React.FC = () => {
 
               <form method="post" className="formflex" onSubmit={handleSubmit}>
                 <div className="riga">
-                  <TextField
-                    type="text"
-                    name="nome"
-                    id="outlined-nome-input"
-                    required
-                    label="Nome"
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap,',
                     }}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    type="text"
-                    name="cognome"
-                    id="outlined-cognome-input"
-                    required
-                    label="Cognome"
+                  >
+                    <TextField
+                      type="text"
+                      name="nome"
+                      id="outlined-nome-input"
+                      required
+                      label="Nome"
+                      error={!isNomeValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleNomeChange}
+                    />
+                    {nomeError && (
+                      <div style={{ color: '#D32F2F' }}>{nomeError}</div>
+                    )}
+                  </div>
+
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    onChange={handleChange}
-                  />
+                  >
+                    <TextField
+                      type="text"
+                      name="cognome"
+                      id="outlined-cognome-input"
+                      required
+                      label="Cognome"
+                      error={!isCognomeValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleCognomeChange}
+                    />
+                    {cognomeError && (
+                      <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
+                    )}
+                  </div>
                 </div>
+
                 <div className="riga">
-                  <TextField
-                    type="text"
-                    name="indirizzo_studio"
-                    id="outlined-indirizzo-input"
-                    required
-                    label="Indirizzo Studio"
-                    error={!isStudioValid}
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap,',
                     }}
-                    onChange={handleStudioChange}
-                  />
-                  {studioError && (
-                    <div style={{ color: '#D32F2F' }}>{studioError}</div>
-                  )}
-                  <TextField
-                    type="text"
-                    name="numero_civico"
-                    id="outlined-num-civico-input"
-                    required
-                    label="Numero Civico"
-                    error={
-                      !isNumCivStudioValid && formData.numero_civico.length > 0
-                    }
+                  >
+                    <TextField
+                      type="text"
+                      name="indirizzo_studio"
+                      id="outlined-indirizzo-input"
+                      required
+                      label="Indirizzo Studio"
+                      error={
+                        !isStudioValid && formData.indirizzo_studio.length > 0
+                      }
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleStudioChange}
+                    />
+                    {studioError && (
+                      <div style={{ color: '#D32F2F' }}>{studioError}</div>
+                    )}
+                  </div>
+
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
+                      justifyContent: 'center',
                     }}
-                    onChange={handleNumCivStudioChange}
-                  />
+                  >
+                    <TextField
+                      type="text"
+                      name="numero_civico"
+                      id="outlined-num-civico-input"
+                      required
+                      label="Numero Civico"
+                      error={
+                        !isNumCivStudioValid &&
+                        formData.numero_civico.length > 0
+                      }
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleNumCivStudioChange}
+                    />
+
+                    {numCivStudioError && (
+                      <div style={{ color: '#D32F2F', width: '16em' }}>
+                        {numCivStudioError}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                {numCivStudioError && (
-                  <div style={{ color: '#D32F2F' }}>{numCivStudioError}</div>
-                )}
+
                 <div className="riga">
-                  <TextField
-                    type="text"
-                    name="citta"
-                    id="outlined-citta-input"
-                    required
-                    label="Città"
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    onChange={handleChange}
-                  />
-                  <TextField
-                    type="text"
-                    name="numero_telefono_studio"
-                    id="outlined-num-telefono-input"
-                    required
-                    label="Telefono Studio"
-                    error={!isNumStudioValid}
+                  >
+                    <TextField
+                      type="text"
+                      name="citta"
+                      id="outlined-citta-input"
+                      required
+                      error={!isCittaStudioValid}
+                      label="Città"
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={HandleCittaStudioChange}
+                    />
+                    {cittaStudioError && (
+                      <div style={{ color: '#D32F2F' }}>{cittaStudioError}</div>
+                    )}
+                  </div>
+
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    onChange={handleNumStudioChange}
-                  />
-                  {numStudioError && (
-                    <div style={{ color: '#D32F2F' }}>{numStudioError}</div>
-                  )}
+                  >
+                    <TextField
+                      type="text"
+                      name="numero_telefono_studio"
+                      id="outlined-num-telefono-input"
+                      required
+                      label="Telefono Studio"
+                      error={!isNumStudioValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleNumStudioChange}
+                    />
+                    {numStudioError && (
+                      <div style={{ color: '#D32F2F' }}>{numStudioError}</div>
+                    )}
+                  </div>
                 </div>
                 <div
                   style={{

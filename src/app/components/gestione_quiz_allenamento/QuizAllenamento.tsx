@@ -34,7 +34,7 @@ function QuizAllenamento(): JSX.Element {
         <Navbar />
         <div className="optionContainer">
           <div className="option">
-            <div className="optionIcon">
+            <div className="optionIcon" id="home-quiz">
               <AddIcon style={{ fontSize: '5rem' }} />
             </div>
 

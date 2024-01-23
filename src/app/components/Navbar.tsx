@@ -229,6 +229,7 @@ function Navbar(): JSX.Element {
                 >
                   {userType === UserType.caregiver && (
                     <Button
+                      id='button-quiz-allenamento'
                       onClick={handleCloseDrawer}
                       sx={{ my: 2, color: 'black', display: 'block' }}
                     >

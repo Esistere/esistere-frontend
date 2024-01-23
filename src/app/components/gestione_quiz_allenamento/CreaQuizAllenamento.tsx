@@ -284,7 +284,7 @@ function CreaQuizAllenamento(): JSX.Element {
     });
 
     console.log(isValid);
-    if (!isValid) {
+    if (!isValid || quizAllenamento.numero_domande === 0) {
       setShowFail(true);
     } else {
       const domRes: ResponseObject = {
@@ -381,16 +381,18 @@ function CreaQuizAllenamento(): JSX.Element {
                   <Typography variant="h6">
                     Domanda {questionIndex + 1}
                   </Typography>
-                  <TextField
-                    label="Domanda"
-                    fullWidth
-                    value={question.domanda}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(questionIndex, event)
-                    }
-                    style={{ width: '20em', margin: 'auto' }}
-                  />
-                  <div id={`Domanda ${questionIndex + 1}`}>
+                  <div id={`Domanda-${questionIndex + 1}`}>
+                    <TextField
+                      id={`Domanda-${questionIndex + 1}`}
+                      label="Domanda"
+                      fullWidth
+                      value={question.domanda}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        handleQuestionChange(questionIndex, event)
+                      }
+                      style={{ width: '20em', margin: 'auto' }}
+                    />
+
                     <Typography variant="h6">
                       {errorMessage(testQuiz[questionIndex].domanda)}
                     </Typography>
@@ -429,6 +431,9 @@ function CreaQuizAllenamento(): JSX.Element {
                             label={
                               <>
                                 <TextField
+                                  id={`Risposta-${questionIndex + 1}.${
+                                    optionIndex + 1
+                                  }`}
                                   label={`Risposta ${optionIndex + 1}`}
                                   fullWidth
                                   value={option.risposta}
@@ -484,6 +489,7 @@ function CreaQuizAllenamento(): JSX.Element {
             Aggingi Domanda
           </Button>
           <Button
+            id="crea-quiz-button"
             style={{
               background: coloreBottone,
               margin: '1em',

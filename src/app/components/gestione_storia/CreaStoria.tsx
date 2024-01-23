@@ -119,20 +119,6 @@ function CreaStoria(): JSX.Element {
       }));
     }
   };
-  const handleDescrChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const { value } = event.target;
-    if (value.length <= 300) {
-      setDatiStoria((prevDatiStoria) => ({
-        ...prevDatiStoria,
-        media: {
-          ...prevDatiStoria.media,
-          descrizione: value,
-        },
-      }));
-    }
-  };
 
   const areFieldsFilled = (): boolean => {
     return (
@@ -150,6 +136,57 @@ function CreaStoria(): JSX.Element {
     } else {
       setShow(true);
       console.log('Errore: Tutti i campi devono essere compilati.');
+    }
+  };
+
+  // Controlli
+  const [isTestoValid, setIsTestoValid] = useState<boolean>(true);
+  const [testoErrore, setTestoErrore] = useState<string>('');
+  const handleTestoChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newTesto = event.target.value;
+    setDatiStoria((prevDatiStoria) => ({
+      ...prevDatiStoria,
+      testo: newTesto,
+      media: {
+        ...prevDatiStoria.media,
+      },
+    }));
+
+    const isTestoValid = newTesto.length <= 300;
+    setIsTestoValid(isTestoValid);
+
+    if (!isTestoValid) {
+      setTestoErrore('Il campo testo deve essere lungo al più 30 caratteri.');
+    } else {
+      setTestoErrore('');
+    }
+  };
+
+  const [isDescrizioneValid, setIsDescrizioneValid] = useState<boolean>(true);
+  const [descrizioneErrore, setDescrizioneErrore] = useState<string>('');
+  const handleDescrizioneChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newDescrizione = event.target.value;
+    setDatiStoria((prevDatiStoria) => ({
+      ...prevDatiStoria,
+      media: {
+        ...prevDatiStoria.media,
+        descrizione: newDescrizione,
+      },
+    }));
+
+    const isDescrizioneValid = newDescrizione.length <= 300;
+    setIsDescrizioneValid(isTestoValid);
+
+    if (!isDescrizioneValid) {
+      setDescrizioneErrore(
+        'Il campo descrizione deve essere lungo al più 30 caratteri.'
+      );
+    } else {
+      setDescrizioneErrore('');
     }
   };
 
@@ -229,19 +266,23 @@ function CreaStoria(): JSX.Element {
                   <div id="text-area">
                     <TextField
                       required
+                      error={!isTestoValid}
                       id="testo"
                       name="testo"
                       label="Testo Storia"
                       multiline
                       rows={8}
                       value={datiStoria.testo}
-                      onChange={handleChange}
+                      onChange={handleTestoChange}
                       style={{
                         margin: '1em ',
                         width: '60%',
                         boxSizing: 'border-box',
                       }}
                     />
+                    {testoErrore && (
+                      <div style={{ color: '#D32F2F' }}>{testoErrore}</div>
+                    )}
                   </div>
                 </div>
                 <div className="riga">
@@ -282,15 +323,21 @@ function CreaStoria(): JSX.Element {
                       name="descrizione"
                       label="Descrizione File"
                       multiline
+                      error={!isDescrizioneValid}
                       rows={4}
                       value={datiStoria.media.descrizione}
-                      onChange={handleDescrChange}
+                      onChange={handleDescrizioneChange}
                       style={{
                         margin: '1.5em ',
                         width: '60%',
                         boxSizing: 'border-box',
                       }}
                     />
+                    {descrizioneErrore && (
+                      <div style={{ color: '#D32F2F' }}>
+                        {descrizioneErrore}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="riga">

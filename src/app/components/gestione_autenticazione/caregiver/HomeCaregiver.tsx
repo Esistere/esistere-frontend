@@ -135,6 +135,7 @@ const HomeCaregiver: React.FC = () => {
               </Typography>
               <Link to="/caregiver/quiz_allenamento">
                 <Button
+                  id='button-quiz-allenamento'
                   variant="contained"
                   style={{
                     backgroundColor: 'blueviolet',

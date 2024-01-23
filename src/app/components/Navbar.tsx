@@ -298,7 +298,12 @@ function Navbar(): JSX.Element {
                 </Link>
                 {userType === UserType.caregiver && (
                   <Button
-                    sx={{ my: 2, color: 'black', display: 'block' }}
+                    sx={{
+                      my: 2,
+                      color: 'black',
+                      display: 'block',
+                      textAlign: 'left',
+                    }}
                     onClick={() => {
                       handleCloseDrawer();
                       naviga();

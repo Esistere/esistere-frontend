@@ -13,7 +13,7 @@ import {
   ThemeProvider,
   Typography,
 } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -70,7 +70,7 @@ const RegistrazioneMedico: React.FC = () => {
     const isValid = newCognome.length < 30 || newCognome === '';
     setIsCognomeValid(isValid);
     if (!isValid) {
-      setCognomeError('Inserisci un cognome valido');
+      setCognomeError('Inserisci un cognome valido.');
     } else {
       setCognomeError('');
     }
@@ -90,7 +90,7 @@ const RegistrazioneMedico: React.FC = () => {
     setIsEmailValid(isValid);
 
     if (!isValid) {
-      setEmailError('Inserisci un indirizzo email valido.');
+      setEmailError('Inserisci un indirizzo email valid.');
     } else {
       setEmailError('');
     }
@@ -138,7 +138,14 @@ const RegistrazioneMedico: React.FC = () => {
       setConfermaPasswordError('');
     }
   };
-
+  useEffect(() => {
+    const isValid = formData.passwd === confermaPasswd;
+    setIsConfermaPassValid(isValid || confermaPasswd === '');
+    setConfermaPasswordError(
+      isValid || confermaPasswd === '' ? '' : 'Le password non corrispondono.'
+    );
+  }, [formData.passwd, confermaPasswd]);
+  
   const [isStudioValid, setIsStudioValid] = useState<boolean>(true);
   const [studioError, setStudioError] = useState('');
   const handleStudioChange = (event: ChangeEvent<HTMLInputElement>): void => {

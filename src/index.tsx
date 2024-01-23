@@ -30,6 +30,7 @@ import VisualizzaQuizPreliminare from './app/components/gestione_quiz_preliminar
 import CompilazioneQuizPreliminare from './app/components/gestione_quiz_preliminare/CompilazioneQuizPreliminare';
 import CreaQuizPreliminare from './app/components/gestione_quiz_preliminare/CreaQuizPreliminare';
 import DatiCaregiver from './app/components/gestione_autenticazione/medico/DatiCaregiver';
+import Filastrocca from './app/components/gestione_filastrocca/Filastrocca';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -124,6 +125,10 @@ root.render(
           <Route
             path="/caregiver/crea_filastrocca"
             element={React.createElement(withCaregiver(CreaFilastrocca))}
+          />
+          <Route
+            path="/caregiver/filastrocca"
+            element={React.createElement(withCaregiver(Filastrocca))}
           />
           <Route
             path="/caregiver/visualizza_filastrocche"

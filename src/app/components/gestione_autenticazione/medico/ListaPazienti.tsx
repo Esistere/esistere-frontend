@@ -79,6 +79,11 @@ function ListaPazienti(props: Props): JSX.Element {
   const [isHoveredCreaTodoList, setIsHoveredCreaTodoList] = useState(false);
   const [isHoveredQuizGiornaliero, setIsHoveredQuizGiornaliero] =
     useState(false);
+
+  const [isH, setIsH] = useState(false);
+  const gestisciHoverH = (hovered: boolean): void => {
+    setIsH(hovered);
+  };
   const [isHoveredCg, setIsHoveredCg] = useState(false);
   const [isHoveredTac, setIsHoveredTac] = useState(false);
 
@@ -256,6 +261,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       variant="outlined"
                       onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
@@ -273,16 +279,15 @@ function ListaPazienti(props: Props): JSX.Element {
                       style={{
                         color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
                         borderColor: '#000000',
-                        backgroundColor: isHoveredQuizPreliminare
-                          ? '#b2a1c7'
-                          : '#ffffff',
+                        backgroundColor: isH ? '#b2a1c7' : '#ffffff',
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       variant="outlined"
-                      onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
-                      onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
+                      onMouseEnter={() => gestisciHoverH(true)}
+                      onMouseLeave={() => gestisciHoverH(false)}
                       startIcon={<DocumentScannerIcon />}
                       onClick={() => {
                         navigate('/medico/visualizza_quiz_preliminare', {
@@ -302,6 +307,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       onClick={() => {
                         navigate('/medico/visualizza_todolist', {
@@ -315,7 +321,8 @@ function ListaPazienti(props: Props): JSX.Element {
                     >
                       lista todo list
                     </Button>
-
+                  </div>
+                  <div className="riga">
                     <Button
                       id="creaToDoList"
                       style={{
@@ -327,6 +334,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       onClick={() => {
                         navigate('/medico/crea_todolist', {
@@ -340,8 +348,6 @@ function ListaPazienti(props: Props): JSX.Element {
                     >
                       Crea todo list
                     </Button>
-                  </div>
-                  <div className="riga">
                     <Button
                       style={{
                         color: isHoveredQuizGiornaliero ? '#ffffff' : '#8036a1',
@@ -352,6 +358,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       variant="outlined"
                       onMouseEnter={() => gestisciHoverQuizGiornaliero(true)}
@@ -374,6 +381,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       variant="outlined"
                       onMouseEnter={() => gestisciHoverCg(true)}
@@ -396,6 +404,7 @@ function ListaPazienti(props: Props): JSX.Element {
                         width: '16.15em',
                         margin: '1em',
                         boxSizing: 'border-box',
+                        height: '4.5em',
                       }}
                       onClick={() => {
                         navigate('/medico/crea_tac', {

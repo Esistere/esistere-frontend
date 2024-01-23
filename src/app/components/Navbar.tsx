@@ -125,6 +125,12 @@ function Navbar(): JSX.Element {
                   },
                 }}
               >
+                <Button
+                  onClick={handleCloseDrawer}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
+                >
+                  {' '}
+                </Button>
                 <Link
                   to="/"
                   style={{
@@ -229,7 +235,7 @@ function Navbar(): JSX.Element {
                 >
                   {userType === UserType.caregiver && (
                     <Button
-                      id='button-quiz-allenamento'
+                      id="button-quiz-allenamento"
                       onClick={handleCloseDrawer}
                       sx={{ my: 2, color: 'black', display: 'block' }}
                     >
@@ -238,37 +244,7 @@ function Navbar(): JSX.Element {
                   )}
                 </Link>
                 <Link
-                  to="/caregiver/crea_filastrocca"
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userType === UserType.caregiver && (
-                    <Button
-                      onClick={handleCloseDrawer}
-                      sx={{ my: 2, color: 'black', display: 'block' }}
-                    >
-                      Crea filastrocca
-                    </Button>
-                  )}
-                </Link>
-                <Link
-                  to="/caregiver/visualizza_filastrocche"
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userType === UserType.caregiver && (
-                    <Button
-                      onClick={handleCloseDrawer}
-                      sx={{ my: 2, color: 'black', display: 'block' }}
-                    >
-                      Visualizza filastrocche
-                    </Button>
-                  )}
-                </Link>
-                <Link
-                  to="/caregiver/crea_todo_list"
+                  to="/medico/lineeguidaform"
                   style={{
                     textDecoration: 'none',
                   }}
@@ -278,7 +254,37 @@ function Navbar(): JSX.Element {
                       onClick={handleCloseDrawer}
                       sx={{ my: 2, color: 'black', display: 'block' }}
                     >
-                      Crea ToDoList
+                      linee guida
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/filastrocca"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      Filastrocca
+                    </Button>
+                  )}
+                </Link>
+                <Link
+                  to="/caregiver/visualizza_todolist"
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userType === UserType.caregiver && (
+                    <Button
+                      onClick={handleCloseDrawer}
+                      sx={{ my: 2, color: 'black', display: 'block' }}
+                    >
+                      ToDoList
                     </Button>
                   )}
                 </Link>
@@ -347,6 +353,7 @@ function Navbar(): JSX.Element {
                   </Button>
                 )}
               </Link>
+
               <Link
                 to="/caregiver/crea_storia"
                 style={{
@@ -378,7 +385,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to="/caregiver/crea_filastrocca"
+                to="/caregiver/filastrocca"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -388,7 +395,7 @@ function Navbar(): JSX.Element {
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    Crea filastrocca
+                    Filastrocca
                   </Button>
                 )}
               </Link>
@@ -408,7 +415,7 @@ function Navbar(): JSX.Element {
                 )}
               </Link>
               <Link
-                to="/caregiver/visualizza_filastrocche"
+                to="/caregiver/visualizza_todolist"
                 style={{
                   textDecoration: 'none',
                 }}
@@ -418,23 +425,7 @@ function Navbar(): JSX.Element {
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    Visualizza filastrocche
-                  </Button>
-                )}
-              </Link>
-              <Link
-                to="/medico/crea_todolist"
-                style={{
-                  textDecoration: 'none',
-                }}
-              >
-                {userType === UserType.medico && (
-                  <Button
-                    id="creaToDoList"
-                    onClick={handleCloseDrawer}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    Crea ToDoList
+                    ToDoList
                   </Button>
                 )}
               </Link>

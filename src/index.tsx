@@ -26,7 +26,7 @@ import reportWebVitals from './app/reportWebVitals';
 import withCaregiver from './app/components/gestione_autenticazione/caregiver/CaregiverHOC';
 import withMedico from './app/components/gestione_autenticazione/medico/MedicoHOC';
 import LineeGuidaForm from './app/components/gestione_linee_guida/LineeGuidaForm';
-import ListaQuiPreliminare from './app/components/gestione_quiz_preliminare/ListaQuizPreliminare';
+import VisualizzaQuizPreliminare from './app/components/gestione_quiz_preliminare/VisualizzaQuizPreliminare';
 import CompilazioneQuizPreliminare from './app/components/gestione_quiz_preliminare/CompilazioneQuizPreliminare';
 import CreaQuizPreliminare from './app/components/gestione_quiz_preliminare/CreaQuizPreliminare';
 import DatiCaregiver from './app/components/gestione_autenticazione/medico/DatiCaregiver';
@@ -59,20 +59,12 @@ root.render(
             element={React.createElement(withMedico(ListaPazienti))}
           />
           <Route
-            path="/medico/visualizza_quiz_allenamento"
-            element={React.createElement(withMedico(ListaQuizAllenamento))}
-          />
-          <Route
             path="/medico/visualizza_todolist"
             element={React.createElement(withMedico(ListaToDoList))}
           />
           <Route
             path="/medico/crea_todolist"
             element={React.createElement(withMedico(CreaToDoList))}
-          />
-          <Route
-            path="/medico/quiz_preliminare"
-            element={React.createElement(withMedico(ListaQuiPreliminare))}
           />
           <Route
             path="/medico/visualizza_quiz_allenamento"
@@ -95,6 +87,10 @@ root.render(
           <Route
             path="/medico/crea_quiz_preliminare"
             element={React.createElement(withMedico(CreaQuizPreliminare))}
+          />
+          <Route
+            path="/medico/visualizza_quiz_preliminare"
+            element={React.createElement(withMedico(VisualizzaQuizPreliminare))}
           />
           {/* Caregiver paths */}
           <Route

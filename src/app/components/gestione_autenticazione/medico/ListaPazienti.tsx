@@ -25,6 +25,7 @@ import Button from '@mui/material/Button';
 import MedicoControl from 'app/control/gestione_autenticazione/MedicoControl';
 import 'app/css/gestione_app/FormElements.css';
 import logo from 'app/assets/avatar-icon.png';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 const drawerWidth = 338;
 
@@ -266,7 +267,30 @@ function ListaPazienti(props: Props): JSX.Element {
                         });
                       }}
                     >
-                      quiz preliminare
+                      Aggiungi quiz preliminare
+                    </Button>
+                    <Button
+                      style={{
+                        color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
+                        borderColor: '#000000',
+                        backgroundColor: isHoveredQuizPreliminare
+                          ? '#b2a1c7'
+                          : '#ffffff',
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                      }}
+                      variant="outlined"
+                      onMouseEnter={() => gestisciHoverQuizPreliminare(true)}
+                      onMouseLeave={() => gestisciHoverQuizPreliminare(false)}
+                      startIcon={<DocumentScannerIcon />}
+                      onClick={() => {
+                        navigate('/medico/visualizza_quiz_preliminare', {
+                          state: selectedPaziente.codice_fiscale,
+                        });
+                      }}
+                    >
+                      Visualizza quiz preliminare
                     </Button>
                     <Button
                       style={{

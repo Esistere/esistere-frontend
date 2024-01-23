@@ -25,8 +25,9 @@ class LineaGuidaControl {
   }
 
   async fetchLineaGuidaByMed(id: number): Promise<LineaGuida> {
-    const url = `${this.baseUrl}/visualizza_linea_guida_medico` + `id= ${id}`;
+    const url = `${this.baseUrl}/visualizza_linea_guida_medico` + `?id=${id}`;
     try {
+      console.log('sono qui');
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -38,8 +39,9 @@ class LineaGuidaControl {
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
-
+      console.log(response.status);
       const data: LineaGuida = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       if (error instanceof Error)

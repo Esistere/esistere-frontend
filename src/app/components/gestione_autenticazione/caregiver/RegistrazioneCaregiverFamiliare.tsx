@@ -281,7 +281,9 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       numero_di_telefono: newNumber,
     }));
 
-    const isValid = numeroTelefonoRegex.test(newNumber) || newNumber === '';
+    const isValid =
+      (numeroTelefonoRegex.test(newNumber) && newNumber.length === 10) ||
+      newNumber === '';
     setIsNumberValid(isValid);
     if (!isValid) {
       setNumberError('Inserisci un numero di telefono valido.');
@@ -651,164 +653,228 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
                 style={{ display: visibility.visibilityCG }}
               >
                 <div className="riga">
-                  <TextField
-                    type="text"
-                    name="nome"
-                    id="outlined-nome-input"
-                    label="Nome"
-                    error={!isNomeValid}
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    onChange={handleNomeChange}
-                    required
-                  />
-                  {nomeError && (
-                    <div style={{ color: '#D32F2F' }}>{nomeError}</div>
-                  )}
-                  <TextField
-                    type="text"
-                    name="cognome"
-                    id="outlined-cognome-input"
-                    label="Cognome"
-                    error={!isCognomeValid}
+                  >
+                    <TextField
+                      type="text"
+                      name="nome"
+                      id="outlined-nome-input"
+                      label="Nome"
+                      error={!isNomeValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      onChange={handleNomeChange}
+                      required
+                    />
+                    {nomeError && (
+                      <div style={{ color: '#D32F2F' }}>{nomeError}</div>
+                    )}
+                  </div>
+
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    required
-                    onChange={handleCognomeChange}
-                  />
-                  {cognomeError && (
-                    <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
-                  )}
-                </div>
-                <div className="riga">
-                  <TextField
-                    type="text"
-                    name="indirizzo"
-                    id="outlined-indirizzo-input"
-                    label="Indirizzo"
-                    error={
-                      !isAndressValid &&
-                      formDataCaregiverFamiliare.indirizzo.length > 0
-                    }
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    required
-                    onChange={handleAndressChange}
-                  />
-                  {andressError && (
-                    <div style={{ color: '#D32F2F' }}>{andressError}</div>
-                  )}
-                  <TextField
-                    type="text"
-                    name="numero_civico"
-                    id="outlined-num-civico-input"
-                    label="Numero Civico"
-                    error={
-                      !isNumCivValid &&
-                      formDataCaregiverFamiliare.numero_civico.length > 5
-                    }
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    required
-                    onChange={handleNumCivChange}
-                  />
-                  {numCivError && (
-                    <div style={{ color: '#D32F2F' }}>{numCivError}</div>
-                  )}
-                </div>
-                <div className="riga">
-                  <TextField
-                    type="text"
-                    name="citta"
-                    id="outlined-citta-input"
-                    label="Città"
-                    error={!isCittaValid}
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    required
-                    onChange={handleCittaChange}
-                  />
-                  {cittaError && (
-                    <div style={{ color: '#D32F2F' }}>{cittaError}</div>
-                  )}
-                  <TextField
-                    name="data_di_nascita"
-                    id="outlined-birthdate-input"
-                    label="Data di nascita"
-                    error={!isBirthDateValid}
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    required
-                    onFocus={onFocusCgFam}
-                    onBlur={onBlurCgFam}
-                    type={hasValueCgFam || focusCgFam ? 'date' : 'text'}
-                    onChange={(e) => {
-                      if (e.target.value) setHasValueCgFam(true);
-                      else setHasValueCgFam(false);
-                      handleBirthDateChange(e);
-                    }}
-                  />
-                  {birthDateError && (
-                    <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
-                  )}
+                  >
+                    <TextField
+                      type="text"
+                      name="cognome"
+                      id="outlined-cognome-input"
+                      label="Cognome"
+                      error={!isCognomeValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onChange={handleCognomeChange}
+                    />
+                    {cognomeError && (
+                      <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="riga">
-                  <TextField
-                    type="text"
-                    name="numero_di_telefono"
-                    id="outlined-num-telefono-input"
-                    value={formDataCaregiverFamiliare.numero_di_telefono}
-                    label="Numero Telefono"
-                    error={
-                      !isNumberValid &&
-                      formDataCaregiverFamiliare.numero_di_telefono.length <
-                        10 &&
-                      formDataCaregiverFamiliare.numero_di_telefono.length > 10
-                    }
+                  <div
                     style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      backgroundColor: '#F6EFF',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
                     }}
-                    required
-                    onChange={handleNumberChange}
-                  />
-                  {numberError && (
-                    <div style={{ color: '#D32F2F' }}>{numberError}</div>
-                  )}
+                  >
+                    <TextField
+                      type="text"
+                      name="indirizzo"
+                      id="outlined-indirizzo-input"
+                      label="Indirizzo"
+                      error={
+                        !isAndressValid &&
+                        formDataCaregiverFamiliare.indirizzo.length > 0
+                      }
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onChange={handleAndressChange}
+                    />
+                    {andressError && (
+                      <div style={{ color: '#D32F2F' }}>{andressError}</div>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <TextField
+                      type="text"
+                      name="numero_civico"
+                      id="outlined-num-civico-input"
+                      label="Numero Civico"
+                      error={
+                        !isNumCivValid &&
+                        formDataCaregiverFamiliare.numero_civico.length > 5
+                      }
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onChange={handleNumCivChange}
+                    />
+                    {numCivError && (
+                      <div style={{ color: '#D32F2F', width: '16em' }}>
+                        {numCivError}
+                      </div>
+                    )}
+                  </div>
                 </div>
+
+                <div className="riga">
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
+                    }}
+                  >
+                    <TextField
+                      type="text"
+                      name="citta"
+                      id="outlined-citta-input"
+                      label="Città"
+                      error={!isCittaValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onChange={handleCittaChange}
+                    />
+                    {cittaError && (
+                      <div style={{ color: '#D32F2F' }}>{cittaError}</div>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
+                    }}
+                  >
+                    <TextField
+                      name="data_di_nascita"
+                      id="outlined-birthdate-input"
+                      label="Data di nascita"
+                      error={!isBirthDateValid}
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onFocus={onFocusCgFam}
+                      onBlur={onBlurCgFam}
+                      type={hasValueCgFam || focusCgFam ? 'date' : 'text'}
+                      onChange={(e) => {
+                        if (e.target.value) setHasValueCgFam(true);
+                        else setHasValueCgFam(false);
+                        handleBirthDateChange(e);
+                      }}
+                    />
+                    {birthDateError && (
+                      <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="riga">
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      flex: 'wrap',
+                    }}
+                  >
+                    <TextField
+                      type="text"
+                      name="numero_di_telefono"
+                      id="outlined-num-telefono-input"
+                      value={formDataCaregiverFamiliare.numero_di_telefono}
+                      label="Numero Telefono"
+                      error={
+                        !isNumberValid &&
+                        formDataCaregiverFamiliare.numero_di_telefono.length ===
+                          10
+                      }
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        backgroundColor: '#F6EFF',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                      required
+                      onChange={handleNumberChange}
+                    />
+                    {numberError && (
+                      <div style={{ color: '#D32F2F' }}>{numberError}</div>
+                    )}
+                  </div>
+                </div>
+
                 <div
                   style={{
                     width: '100%',

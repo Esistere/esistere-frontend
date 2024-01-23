@@ -44,7 +44,7 @@ class PazienteControl {
       });
 
       const codice = await response.json();
-      return codice;
+      return codice.codice_fiscale;
     } catch (error) {
       throw new Error('Error fetching paziente');
     }
@@ -71,8 +71,6 @@ class PazienteControl {
 
   async inviaDatiPaziente(datiPaziente: Paziente): Promise<number> {
     const url = `${this.baseUrl}/salva_paziente`;
-    
-    console.log({dati: datiPaziente});
 
     let risp = 200;
     try {
@@ -108,6 +106,29 @@ class PazienteControl {
         throw new Error(`Server returned ${response.status}`);
       }
       const data: CaregiverFamiliare = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(JSON.stringify(error));
+    }
+  }
+
+  async visualizzaMedByPaziente(corpo: {
+    codice_fiscale: string;
+  }): Promise<number> {
+    const url = `${this.baseUrl}/visualizza_medico`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+        body: JSON.stringify(corpo),
+      });
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      const data: number = await response.json();
       return data;
     } catch (error) {
       throw new Error(JSON.stringify(error));

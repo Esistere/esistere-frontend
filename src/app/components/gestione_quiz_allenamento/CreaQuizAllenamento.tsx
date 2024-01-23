@@ -9,6 +9,8 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { QuizAllenamentoGiornaliero } from 'app/interfaces/gestione_quiz_allenamento/QuizAllenamentoGiornaliero';
@@ -17,7 +19,7 @@ import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/Res
 import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAllenamentoControl';
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
-import { useNavigate } from 'react-router-dom';
+import ResponsiveLineaGuida from '../gestione_linee_guida/ResponsiveLineaGuida';
 
 const theme = createTheme({
   palette: {
@@ -27,7 +29,6 @@ const theme = createTheme({
   },
 });
 function CreaQuizAllenamento(): JSX.Element {
-  const navigate = useNavigate();
   const [quizAllenamento, setQuizAllenamento] =
     useState<QuizAllenamentoGiornaliero>({
       cg_fam: Number(localStorage.getItem('id')),
@@ -205,18 +206,70 @@ function CreaQuizAllenamento(): JSX.Element {
     const risultato = await quizAllenamentoContol.inviaQuizAllenamento(domRes);
     console.log(risultato);
     if (risultato) {
-      navigate('/');
+      setSuccess(success);
+      setOpen(true);
+    } else {
+      console.log('Errore: Tutti i campi devono essere compilati.');
     }
+  };
+  // Snackbar
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const [show, setShow] = React.useState(false);
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <Navbar />
+        {show && <ResponsiveLineaGuida onClose={() => setShow(false)} />}
+        <div id="test">
+          <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity={success ? 'success' : 'error'}
+              sx={{ width: '100%' }}
+            >
+              {success
+                ? 'Caricamento quiz effettuato con successo!'
+                : 'Caricamento quiz fallito'}
+            </Alert>
+          </Snackbar>
+        </div>
         <form className="formflex">
           <Typography variant="h4" style={{ color: 'blueviolet' }}>
             Creazione Quiz Allenamento Giornaliero
           </Typography>
+          <Button
+            style={{
+              background: coloreBottone,
+              margin: '1em',
+            }}
+            name="lineaguida"
+            id="lineaguida"
+            type="submit"
+            variant="contained"
+            onMouseEnter={() => gestisciHover(true)}
+            onMouseLeave={() => gestisciHover(false)}
+            onClick={() => setShow(true)}
+          >
+            Linea guida
+          </Button>
           <TextField
             label="Numero di domande"
             type="number"

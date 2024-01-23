@@ -33,21 +33,23 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const medicoId = parseInt(localStorage.getItem('medicoId') ?? '', 10);
-        const medicoLineaGuida = await getMedicoLineaGuida(medicoId);
-        setLineaGuida({ ...lineaGuida, ...medicoLineaGuida });
+        console.log('sono arrivato qua');
+        const medicoId = Number(localStorage.getItem('id'));
+        console.log(medicoId);
+        const lineaGuidaControl = new LineaGuidaControl();
+        const risultato = await lineaGuidaControl.fetchLineaGuidaByMed(
+          medicoId
+        );
+        console.log(risultato, risultato === null);
+        setLineaGuida({ ...lineaGuida, ...risultato });
       } catch (error) {
         console.error('Errore durante il recupero dei dati:', error);
       }
     };
 
     fetchData();
-  }, [lineaGuida]);
-
-  const getMedicoLineaGuida = async (id: number): Promise<LineaGuida> => {
-    const lineaGuidaControl = new LineaGuidaControl();
-    return await lineaGuidaControl.fetchLineaGuidaByMed(id);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSave = async (): Promise<void> => {
     const lineaGuidaControl = new LineaGuidaControl();

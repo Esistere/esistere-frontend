@@ -20,7 +20,7 @@
   margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
-  max-width: 20em;
+  width: 15em;
   height: 20em;
 }
 .optionContainer {
@@ -60,7 +60,6 @@
 
 .optionIcon {
   margin-bottom: 1rem;
-  margin-top: 4em;
 }
 
 .regicontainer {

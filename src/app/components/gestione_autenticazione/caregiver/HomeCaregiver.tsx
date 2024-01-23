@@ -185,6 +185,7 @@ const HomeCaregiver: React.FC = () => {
               <Link to="/caregiver/crea_storia">
                 <Button
                   variant="contained"
+                  id="creaStoria"
                   style={{ backgroundColor: 'blueviolet', marginTop: '0.5em' }}
                 >
                   Storia

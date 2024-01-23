@@ -209,6 +209,13 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
       setConfermaPasswordError('');
     }
   };
+  useEffect(() => {
+    const isValid = formDataCaregiverFamiliare.passwd === confermaPasswd;
+    setIsConfermaPassValid(isValid || confermaPasswd === '');
+    setConfermaPasswordError(
+      isValid || confermaPasswd === '' ? '' : 'Le password non corrispondono.'
+    );
+  }, [formDataCaregiverFamiliare.passwd, confermaPasswd]);
 
   const [isAndressValid, setIsAndressValid] = useState<boolean>(true);
   const [andressError, setAndressError] = useState('');

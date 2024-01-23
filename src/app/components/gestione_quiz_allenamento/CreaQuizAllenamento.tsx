@@ -20,6 +20,15 @@ import QuizAllenamentoControl from 'app/control/gestione_quiz_allenamento/QuizAl
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
 import ResponsiveLineaGuida from '../gestione_linee_guida/ResponsiveLineaGuida';
+import ResponsiveDialog from '../gestione_app/ResponsiveDialog';
+
+interface TestQuiz {
+  domanda: boolean | undefined;
+  selezionata: boolean | undefined;
+  risposta: {
+    risposta: boolean | undefined;
+  }[];
+}
 
 const theme = createTheme({
   palette: {
@@ -28,13 +37,27 @@ const theme = createTheme({
     },
   },
 });
+
 function CreaQuizAllenamento(): JSX.Element {
+  const errorMessage = (element: boolean | undefined): JSX.Element | null => {
+    return element === false && element !== undefined ? (
+      <div style={{ color: '#D32F2F' }}>
+        Inserisci un argomento di al pi&ugrave; 300 caratteri.
+      </div>
+    ) : null;
+  };
+
+  const testa = (element: string): boolean => {
+    return element.length <= 300;
+  };
+
   const [quizAllenamento, setQuizAllenamento] =
     useState<QuizAllenamentoGiornaliero>({
       cg_fam: Number(localStorage.getItem('id')),
       numero_domande: 0,
     });
   const [domandeRisposte, setDomandeRisposte] = useState<DomandaRisposta[]>([]);
+  const [testQuiz, setTestQuiz] = useState<TestQuiz[]>([]);
 
   const handleNumberOfQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -50,6 +73,27 @@ function CreaQuizAllenamento(): JSX.Element {
         // Aggiungi nuove domande se il nuovo numero è maggiore
         const additionalQuestions =
           newNumberOfQuestions - domandeRisposte.length;
+        const newTestQuiz = Array.from(
+          { length: additionalQuestions },
+          (): TestQuiz => ({
+            domanda: undefined,
+            selezionata: undefined,
+            risposta: [
+              {
+                risposta: undefined,
+              },
+              {
+                risposta: undefined,
+              },
+              {
+                risposta: undefined,
+              },
+              {
+                risposta: undefined,
+              },
+            ],
+          })
+        );
         const newQuestions = Array.from(
           { length: additionalQuestions },
           (): DomandaRisposta => ({
@@ -89,6 +133,7 @@ function CreaQuizAllenamento(): JSX.Element {
             ],
           })
         );
+        setTestQuiz([...testQuiz, ...newTestQuiz]);
         setDomandeRisposte([...domandeRisposte, ...newQuestions]);
       } else if (newNumberOfQuestions < domandeRisposte.length) {
         // Rimuovi domande se il nuovo numero è minore
@@ -96,6 +141,8 @@ function CreaQuizAllenamento(): JSX.Element {
           0,
           newNumberOfQuestions
         );
+        const remainingTestQuiz = testQuiz.slice(0, newNumberOfQuestions);
+        setTestQuiz(remainingTestQuiz);
         setDomandeRisposte(remainingQuestions);
       }
     } else {
@@ -112,12 +159,16 @@ function CreaQuizAllenamento(): JSX.Element {
     const nuovoColore = isHovered ? '#8036a1' : '#9149f3';
     impostaColoreBottone(nuovoColore);
   };
+
   const handleQuestionChange = (
     questionIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newQuestionData = [...domandeRisposte];
     newQuestionData[questionIndex].domanda = event.target.value;
+    const newTestQuiz = [...testQuiz];
+    newTestQuiz[questionIndex].domanda = testa(event.target.value);
+    setTestQuiz(newTestQuiz);
     setDomandeRisposte(newQuestionData);
   };
 
@@ -129,6 +180,11 @@ function CreaQuizAllenamento(): JSX.Element {
     const newQuestionData = [...domandeRisposte];
     newQuestionData[questionIndex].risposte[optionIndex].risposta =
       event.target.value;
+    const newTestQuiz = [...testQuiz];
+    newTestQuiz[questionIndex].risposta[optionIndex].risposta = testa(
+      event.target.value
+    );
+    setTestQuiz(newTestQuiz);
     setDomandeRisposte(newQuestionData);
   };
 
@@ -143,11 +199,31 @@ function CreaQuizAllenamento(): JSX.Element {
       ...option,
       corretta: event.target.value === option.risposta,
     }));
+    const newTestQuiz = [...testQuiz];
+    newTestQuiz[questionIndex].selezionata = true;
+    setTestQuiz(newTestQuiz);
     console.log(newQuestionData);
     setDomandeRisposte(newQuestionData);
     console.log(newQuestionData);
   };
-
+  const newTQ = {
+    domanda: undefined,
+    selezionata: undefined,
+    risposta: [
+      {
+        risposta: undefined,
+      },
+      {
+        risposta: undefined,
+      },
+      {
+        risposta: undefined,
+      },
+      {
+        risposta: undefined,
+      },
+    ],
+  };
   const newQuestion: DomandaRisposta = {
     idDomanda: undefined,
     quiz_ag: undefined,
@@ -187,6 +263,7 @@ function CreaQuizAllenamento(): JSX.Element {
 
   const handleAddQuestion = (): void => {
     setDomandeRisposte([...domandeRisposte, newQuestion]);
+    setTestQuiz([...testQuiz, newTQ]);
     setQuizAllenamento((prevQuiz) => ({
       ...prevQuiz,
       numero_domande: prevQuiz.numero_domande + 1,
@@ -197,19 +274,35 @@ function CreaQuizAllenamento(): JSX.Element {
     const domaRisp = domandeRisposte.map((domanda, index) => ({
       [`domanda ${index}`]: domanda,
     }));
-    const domRes: ResponseObject = {
-      domandeRisposte: Object.assign({}, ...domaRisp),
-      quizAllenamento: quizAllenamento,
-    };
-    const quizAllenamentoContol: QuizAllenamentoControl =
-      new QuizAllenamentoControl();
-    const risultato = await quizAllenamentoContol.inviaQuizAllenamento(domRes);
-    console.log(risultato);
-    if (risultato) {
-      setSuccess(success);
-      setOpen(true);
+    console.log(testQuiz);
+    const isValid = Object.values(testQuiz).every((test) => {
+      return (
+        test.domanda === true &&
+        test.selezionata === true &&
+        test.risposta.every((risposta) => risposta.risposta === true)
+      );
+    });
+
+    console.log(isValid);
+    if (!isValid) {
+      setShowFail(true);
     } else {
-      console.log('Errore: Tutti i campi devono essere compilati.');
+      const domRes: ResponseObject = {
+        domandeRisposte: Object.assign({}, ...domaRisp),
+        quizAllenamento: quizAllenamento,
+      };
+      const quizAllenamentoContol: QuizAllenamentoControl =
+        new QuizAllenamentoControl();
+      const risultato = await quizAllenamentoContol.inviaQuizAllenamento(
+        domRes
+      );
+      console.log(risultato);
+      if (risultato) {
+        setSuccess(true);
+        setOpen(true);
+      } else {
+        console.log('Errore: Tutti i campi devono essere compilati.');
+      }
     }
   };
   // Snackbar
@@ -217,6 +310,7 @@ function CreaQuizAllenamento(): JSX.Element {
   const [success, setSuccess] = useState<boolean>(false);
 
   const [show, setShow] = React.useState(false);
+  const [showFail, setShowFail] = React.useState<boolean>(false);
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -233,6 +327,7 @@ function CreaQuizAllenamento(): JSX.Element {
       <div>
         <Navbar />
         {show && <ResponsiveLineaGuida onClose={() => setShow(false)} />}
+        {showFail && <ResponsiveDialog onClose={() => setShowFail(false)} />}
         <div id="test">
           <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -295,6 +390,11 @@ function CreaQuizAllenamento(): JSX.Element {
                     }
                     style={{ width: '20em', margin: 'auto' }}
                   />
+                  <div id={`Domanda ${questionIndex + 1}`}>
+                    <Typography variant="h6">
+                      {errorMessage(testQuiz[questionIndex].domanda)}
+                    </Typography>
+                  </div>
                   <div className="riga">
                     <FormControl component="fieldset">
                       <RadioGroup
@@ -327,21 +427,36 @@ function CreaQuizAllenamento(): JSX.Element {
                             value={option.risposta}
                             control={<Radio />}
                             label={
-                              <TextField
-                                label={`Risposta ${optionIndex + 1}`}
-                                fullWidth
-                                value={option.risposta}
-                                onChange={(
-                                  event: React.ChangeEvent<HTMLInputElement>
-                                ) =>
-                                  handleOptionChange(
-                                    questionIndex,
-                                    optionIndex,
-                                    event
-                                  )
-                                }
-                                style={{ marginTop: '8px' }}
-                              />
+                              <>
+                                <TextField
+                                  label={`Risposta ${optionIndex + 1}`}
+                                  fullWidth
+                                  value={option.risposta}
+                                  onChange={(
+                                    event: React.ChangeEvent<HTMLInputElement>
+                                  ) =>
+                                    handleOptionChange(
+                                      questionIndex,
+                                      optionIndex,
+                                      event
+                                    )
+                                  }
+                                  style={{ marginTop: '8px' }}
+                                />
+                                <div
+                                  id={`Risposta ${questionIndex + 1}.${
+                                    optionIndex + 1
+                                  }`}
+                                >
+                                  <Typography variant="h6">
+                                    {errorMessage(
+                                      testQuiz[questionIndex].risposta[
+                                        optionIndex
+                                      ].risposta
+                                    )}
+                                  </Typography>
+                                </div>
+                              </>
                             }
                           />
                         ))}

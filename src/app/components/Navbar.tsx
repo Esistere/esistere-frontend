@@ -429,6 +429,7 @@ function Navbar(): JSX.Element {
               >
                 {userType === UserType.medico && (
                   <Button
+                    id="creaToDoList"
                     onClick={handleCloseDrawer}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >

@@ -19,7 +19,7 @@ import ElementoListaFilastrocca from './ElementoListaFilastrocca';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const drawerWidth = 338; //240 provare
+const drawerWidth = 338;
 
 interface Props {
   window?: () => Window;

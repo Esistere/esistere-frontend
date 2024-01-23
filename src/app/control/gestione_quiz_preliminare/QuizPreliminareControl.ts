@@ -152,7 +152,7 @@ class QuizPreliminareControl {
   }
 
   async visualizzaQuizPreliminare(idQuiz: number): Promise<ResponseObjectQP> {
-    const url = `${this.baseUrl}/visualizza_quiz_preliminare` + `id=${idQuiz}`;
+    const url = `${this.baseUrl}/visualizza_quiz_preliminare` + `?id=${idQuiz}`;
 
     try {
       const response = await fetch(url, {
@@ -182,7 +182,7 @@ class QuizPreliminareControl {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify(paz),
+        body: JSON.stringify({ codice_fiscale: paz }),
       });
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);

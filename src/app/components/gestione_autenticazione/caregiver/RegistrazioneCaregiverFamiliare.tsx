@@ -442,6 +442,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const insertValidateCgFam = (formDataCaregiverFamiliare: any): boolean => {
     const requiredFieldsFilled = Object.values(
       formDataCaregiverFamiliare
@@ -476,6 +477,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const insertValidatePaziente = (formDataPaziente: any): boolean => {
     console.log(formDataPaziente);
     const requiredFieldsFilled = Object.values(formDataPaziente).every(
@@ -547,7 +549,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
           navigate('/login');
         }, 1000);
       })
-      .catch((value) => {
+      .catch(() => {
         success = false;
         open = true;
       });

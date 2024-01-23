@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
 import Caricamento from 'app/components/gestione_app/Caricamento';
 import Footer from 'app/components/Footer';
 import { Box, Button, CardMedia, Grid, Typography } from '@mui/material';
 import Navbar from 'app/components/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 
 const HomeCaregiver: React.FC = () => {
   // const [caregiver, setCaregiver] = useState<CaregiverFamiliare[]>([]);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [codice, setCodice] = useState<string | undefined>(undefined);
   const fetchData = async (): Promise<void> => {
-    const caregiverFamiliareControl = new CaregiverFamiliareControl();
+    const pazienteControl = new PazienteControl();
 
     try {
-      const data = await caregiverFamiliareControl.fetchDatiCaregiverFamiliare(
+      const data = await pazienteControl.fetchCodicePaziente(
         Number(localStorage.getItem('id'))
       );
-
+      setCodice(data);
       console.log(data);
       setIsLoading(false);
     } catch (error) {
@@ -100,18 +101,20 @@ const HomeCaregiver: React.FC = () => {
                 progresso e per aiutare il medico ad adattarsi alle tue
                 esigenze.
               </Typography>
-              <Link to="/caregiver/visualizza_todolist">
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: 'blueviolet',
-                    float: 'left',
-                    marginTop: '0.5em',
-                  }}
-                >
-                  Visualizza ToDo List
-                </Button>
-              </Link>
+
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: 'blueviolet',
+                  float: 'left',
+                  marginTop: '0.5em',
+                }}
+                onClick={() => {
+                  navigate('/caregiver/visualizza_todolist', { state: codice });
+                }}
+              >
+                Visualizza ToDo List
+              </Button>
             </Box>
           </Grid>
         </Grid>
@@ -135,7 +138,7 @@ const HomeCaregiver: React.FC = () => {
               </Typography>
               <Link to="/caregiver/quiz_allenamento">
                 <Button
-                  id='button-quiz-allenamento'
+                  id="button-quiz-allenamento"
                   variant="contained"
                   style={{
                     backgroundColor: 'blueviolet',

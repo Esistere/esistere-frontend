@@ -34,6 +34,7 @@ function ListaToDoList(props: Props): JSX.Element {
   );
   const location = useLocation();
   const cf = location.state;
+  console.log(cf);
 
   const navigate = useNavigate();
   const handleGoBack = (): void => {

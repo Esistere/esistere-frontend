@@ -7,17 +7,18 @@ import Navbar from '../Navbar';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import StoriaControl from 'app/control/gestione_storia/StoriaControl';
 import {
+  Alert,
   Card,
   CardContent,
   CardMedia,
   Container,
   CssBaseline,
+  Snackbar,
   Stack,
   Typography,
 } from '@mui/material';
 import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
-import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
   palette: {
     primary: {
@@ -140,15 +141,31 @@ function CreaStoria(): JSX.Element {
       file !== null
     );
   };
-  const navigate = useNavigate();
+
   const handleSave = async (): Promise<void> => {
     if (areFieldsFilled()) {
-      await storiaControl.inviaStoria(datiStoria, file);
-      navigate('/');
+      const success = await storiaControl.inviaStoria(datiStoria, file);
+      setSuccess(success);
+      setOpen(true);
     } else {
       setShow(true);
       console.log('Errore: Tutti i campi devono essere compilati.');
     }
+  };
+
+  // Snackbar
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -212,6 +229,7 @@ function CreaStoria(): JSX.Element {
                   <TextField
                     required
                     id="testo"
+                    name="testo"
                     label="Testo Storia"
                     multiline
                     rows={8}
@@ -227,6 +245,7 @@ function CreaStoria(): JSX.Element {
                 <div className="riga">
                   <Button
                     component="label"
+                    id="caricaFile"
                     variant="contained"
                     startIcon={<CloudUploadIcon />}
                     onMouseEnter={() => gestisciHoverCaricaFile(true)}
@@ -257,6 +276,7 @@ function CreaStoria(): JSX.Element {
                     required
                     fullWidth
                     id="descrizione"
+                    name="descrizione"
                     label="Descrizione File"
                     multiline
                     rows={4}
@@ -283,6 +303,24 @@ function CreaStoria(): JSX.Element {
                   >
                     Salva storia
                   </Button>
+                  <div id="test">
+                    <Snackbar
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      open={open}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                    >
+                      <Alert
+                        onClose={handleClose}
+                        severity={success ? 'success' : 'error'}
+                        sx={{ width: '100%' }}
+                      >
+                        {success
+                          ? 'Caricamento storia effettuato con successo!'
+                          : 'Caricamento storia fallita'}
+                      </Alert>
+                    </Snackbar>
+                  </div>
                 </div>
               </form>
             </Stack>

@@ -282,7 +282,7 @@ function ListaPazienti(props: Props): JSX.Element {
                     </Button>
                     <Button
                       style={{
-                        color: isHoveredQuizPreliminare ? '#ffffff' : '#8036a1',
+                        color: isH ? '#ffffff' : '#8036a1',
                         borderColor: '#000000',
                         backgroundColor: isH ? '#b2a1c7' : '#ffffff',
                         width: '16.15em',

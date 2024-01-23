@@ -7,9 +7,11 @@ import DatiPaziente from './DatiPaziente';
 function ElementoLista({
   index,
   patient,
+  id,
 }: {
   index: number;
   patient: Paziente;
+  id: string;
 }): JSX.Element {
   const { fetchPazienteData } = DatiPaziente();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -26,19 +28,23 @@ function ElementoLista({
   };
 
   return (
-    <div key={index} className="elemento" onClick={handleClick}>
-      <img
-        className="propiclist"
-        src={logo}
-        alt={'paziente ' + { index }}
-        style={{ marginRight: '0.75em' }}
-      />
-      <div style={{ display: 'block', marginTop: '10px' }}>
-        <p className="pp">
-          {patient.nome} {patient.cognome}
-        </p>
+    <>
+      <input id={id} type="button" onClick={handleClick} hidden />
+      <div id={id} key={index} className="elemento">
+        <img
+          id={id}
+          className="propiclist"
+          src={logo}
+          alt={'paziente ' + { index }}
+          style={{ marginRight: '0.75em' }}
+        />
+        <div style={{ display: 'block', marginTop: '10px' }}>
+          <p className="pp">
+            {patient.nome} {patient.cognome}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

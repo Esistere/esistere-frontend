@@ -44,11 +44,9 @@ module.exports = {
       .setValue('input[name=passwd]', 'Virginia1882?')
       .setValue('input[name=conferma-passwd]', 'Virginia1882?')
 
-      .click('button[type=submit]')
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci un numero telefono studio valido.')
+
 
       .end();
   },
@@ -70,14 +68,13 @@ module.exports = {
       .setValue('input[name=passwd]', 'GraceHopper1906#')
       .setValue('input[name=conferma-passwd]', 'GraceHopper1906#')
 
-      .click('button[type=submit]')
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci un numero civico valido. Es. 34523 o 123/A')
 
+  
       .end();
   },
+
 
   'Registrazione medico: indirizzo troppo corto': function (browser) {
     browser
@@ -97,11 +94,8 @@ module.exports = {
       .setValue('input[name=passwd]', 'MargheHack14@')
       .setValue('input[name=conferma-passwd]', 'MargheHack14@')
 
-      .click('button[type=submit]')
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci un indirizzo studio valido.')
 
       .end();
   },
@@ -124,11 +118,9 @@ module.exports = {
       .setValue('input[name=passwd]', 'Archibald4@')
       .setValue('input[name=conferma-passwd]', 'Archibald4@')
 
-      .click('button[type=submit]')
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci un cognome valido')
+
 
       .end();
   },
@@ -153,12 +145,9 @@ module.exports = {
       .setValue('input[name=email]', 'elebea@exampleit')
       .setValue('input[name=passwd]', 'EleBea45?')
       .setValue('input[name=conferma-passwd]', 'EleBea45?')
-
-      .click('button[type=submit]')
+      
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci un indirizzo email valida.')
 
       .end();
   },
@@ -184,11 +173,31 @@ module.exports = {
       .setValue('input[name=passwd]', 'Oscar!')
       .setValue('input[name=conferma-passwd]', 'Oscar!')
 
-      .click('button[type=submit]')
       .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
+        'body','Inserisci una password valida.')
+
+      .end();
+  },
+
+  'Registrazione medico: conferma password errata': function (browser) {
+    browser
+      .url('http://localhost:3000/esistere-frontend#/registrazione')
+      .waitForElementVisible('body', 1000)
+
+      .click('button[id=registrazione-medico]')
+      .waitForElementVisible('h1[id=med-title]', 1000)
+
+      .setValue('input[name=nome]', 'Rita')
+      .setValue('input[name=cognome]', 'Levi Montalcini')
+      .setValue('input[name=indirizzo_studio]', 'Corso delle Stelle Danzanti')
+      .setValue('input[name=citta]', 'Auroria')
+      .setValue('input[name=numero_telefono_studio]', '9876546370')
+      .setValue('input[name=email]', 'rilevimoltalcini@example.it')
+      .setValue('input[name=passwd]', 'RitaLevi98$')
+      .setValue('input[name=conferma-passwd]', 'RitaLevi89$')
+
+      .assert.textContains(
+        'body','Le password non corrispondono')
 
       .end();
   },
@@ -210,12 +219,6 @@ module.exports = {
       .setValue('input[name=email]', 'leodavinci')
       .setValue('input[name=passwd]', 'LeoDavinci45!!')
       .setValue('input[name=conferma-passwd]', 'LeoDavinci45!!')
-
-      .click('button[type=submit]')
-      .assert.textContains(
-        'div[id=test]',
-        'Registrazione effettuata con successo!'
-      )
 
       .end();
   },

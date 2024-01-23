@@ -16,6 +16,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '0987234532')
       .setValue('input[name=email]', 'savnapolitano@example.it')
       .setValue('input[name=passwd]', 'SavNap1999!')
+      .setValue('input[name=conferma-passwd]', 'SavNap1999!')
 
       .click('button[id=paziente-button]')
       .assert.textContains(
@@ -43,6 +44,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '1234567891')
       .setValue('input[name=email]', 'martin@example')
       .setValue('input[name=passwd]', 'Martin1929@!')
+      .setValue('input[name=conferma-passwd]', 'Martin1929@!')
 
       .assert.textContains('body', 'Inserisci un indirizzo email valido.')
 
@@ -66,8 +68,33 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '7897897897')
       .setValue('input[name=email]', 'samantha@example.com')
       .setValue('input[name=passwd]', 'Cristoforetti1977')
+      .setValue('input[name=conferma-passwd]', 'Cristoforetti1977')
 
       .assert.textContains('body', 'Inserisci una password valida.')
+
+      .end();
+  },
+
+  'Caregiver/Familiare: Confirm Password Fail Test': function (browser) {
+    browser
+      .url('http://localhost:3000/esistere-frontend#/registrazione')
+      .waitForElementVisible('body', 1000)
+
+      .click('button[id=registrazione-caregiver-familiare]')
+      .waitForElementVisible('h1[id=cg-title]', 1000)
+
+      .setValue('input[name=nome]', 'Rosalind')
+      .setValue('input[name=cognome]', 'Franklin')
+      .setValue('input[name=indirizzo]', 'Stradella del Mare')
+      .setValue('input[name=numero_civico]', '79')
+      .setValue('input[name=citta]', 'Argentovia')
+      .setValue('input[name=data_di_nascita]', '1977-01-01')
+      .setValue('input[name=numero_di_telefono]', '9433278432')
+      .setValue('input[name=email]', 'rosalind@example.it')
+      .setValue('input[name=passwd]', 'Rosalind1920##')
+      .setValue('input[name=conferma-passwd]', 'Rosalind1209#')
+
+      .assert.textContains('body', 'Le password non corrispondono.')
 
       .end();
   },
@@ -92,6 +119,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '9876546370')
       .setValue('input[name=email]', 'tea@example.it')
       .setValue('input[name=passwd]', 'Teodolinda53!?')
+      .setValue('input[name=conferma-passwd]', 'Teodolinda53!?')
 
       .assert.textContains('body', 'Inserisci un nome valido')
 
@@ -114,6 +142,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '9376452719')
       .setValue('input[name=email]', 'ale@example.it')
       .setValue('input[name=passwd]', 'AleMarchesi263?')
+      .setValue('input[name=conferma-passwd]', 'AleMarchesi263?')
 
       .assert.textContains('body', 'Inserisci un cognome valido.')
 
@@ -139,6 +168,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '0452819165')
       .setValue('input[name=email]', 'alan@example.it')
       .setValue('input[name=passwd]', 'Turing1912??')
+      .setValue('input[name=conferma-passwd]', 'Turing1912??')
 
       .assert.textContains('body', 'Inserisci un indirizzo valido.')
 
@@ -161,6 +191,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '1624582392')
       .setValue('input[name=email]', 'albert@example.it')
       .setValue('input[name=passwd]', 'Albert1879$')
+      .setValue('input[name=conferma-passwd]', 'Albert1879$')
 
       .assert.textContains(
         'body',
@@ -189,6 +220,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '2618346726')
       .setValue('input[name=email]', 'rosa@example.com')
       .setValue('input[name=passwd]', 'RosaParks1913!')
+      .setValue('input[name=conferma-passwd]', 'RosaParks1913!')
 
       .assert.textContains('body', 'Inserisci una città valida.')
 
@@ -212,6 +244,7 @@ module.exports = {
       .setValue('input[name=numero_di_telefono]', '777444777888')
       .setValue('input[name=email]', 'marie@example.com')
       .setValue('input[name=passwd]', 'Marie1867@')
+      .setValue('input[name=conferma-passwd]', 'Marie1867@')
 
       .assert.textContains('body', 'Inserisci un numero di telefono valido.')
 

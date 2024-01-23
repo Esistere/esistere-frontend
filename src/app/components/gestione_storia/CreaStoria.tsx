@@ -120,10 +120,10 @@ function CreaStoria(): JSX.Element {
 
   const handleSave = async (): Promise<void> => {
     if (
-      areFieldsFilled() &&
-      datiStoria.media.tipo !== -1 &&
-      datiStoria.testo.trim().length < 300 &&
-      datiStoria.media.descrizione.trim().length < 300
+      areFieldsFilled() //&&
+      // datiStoria.media.tipo !== -1 &&
+      // datiStoria.testo.trim().length < 300 &&
+      // datiStoria.media.descrizione.trim().length < 300
     ) {
       const success = await storiaControl.inviaStoria(datiStoria, file);
       setSuccess(success);

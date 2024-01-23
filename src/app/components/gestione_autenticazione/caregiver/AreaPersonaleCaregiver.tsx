@@ -104,6 +104,9 @@ function AreaPersonaleCaregiver(): JSX.Element {
             data_di_nascita: new Date(caregiverData.data_di_nascita),
           };
           await caregiverControl.modificaCaregiverFamiliare(cgData);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
       } catch (error) {
         console.error('Errore nel recupero dei dati del caregiver', error);

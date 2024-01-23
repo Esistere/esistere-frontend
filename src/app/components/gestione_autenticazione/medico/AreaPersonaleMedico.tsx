@@ -85,6 +85,9 @@ function AreaPersonaleMedico(): JSX.Element {
             ...medicoData,
           };
           await medicoControl.modificaMedico(mdData);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         }
       } catch (error) {
         console.error('Errore nel recupero dei dati del medico', error);

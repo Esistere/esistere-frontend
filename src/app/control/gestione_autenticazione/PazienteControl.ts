@@ -58,8 +58,9 @@ class PazienteControl {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
-        body: JSON.stringify({ codice_fiscale }),
+        body: JSON.stringify({ id: codice_fiscale }),
       });
 
       const paziente = await response.json();

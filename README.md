@@ -33,6 +33,4 @@ Per iniziare ad usare Esistere, segui queste istruzioni:
 
 ## 📖 Documentazione
 
-Per maggiori informazioni su come configurare e utilizzare Esistere, consulta la [documentazione ufficiale](#) presente nella repository.
-
-## <3
+Per maggiori informazioni su come configurare e utilizzare Esistere, consulta la [documentazione ufficiale](https://github.com/Esistere/Esistere/tree/main/Documentazione) presente nella repository principale.

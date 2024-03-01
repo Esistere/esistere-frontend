@@ -3,7 +3,7 @@ import 'app/css/gestione_app/FormElements.css';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Navbar from '../Navbar';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import {
   Card,
   CardContent,
@@ -18,13 +18,6 @@ import TacControl from 'app/control/gestione_tac/TACControl';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
 import { useLocation } from 'react-router-dom';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -95,7 +88,7 @@ function CreaTac(): JSX.Element {
 
   const [predizione, setPredizione] = useState<string>('');
   const handleSave = async (): Promise<void> => {
-    if (datiTac.stadio.trim() !== '' && file !== null) {
+    if (file !== null) {
       await tacControl.inviaTac(datiTac, file);
       const pred = await tacControl.getPredizione(file);
       setPredizione(pred);
@@ -117,126 +110,125 @@ function CreaTac(): JSX.Element {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <Navbar />
-        <Container
-          component="main"
-          maxWidth="lg"
-          style={{ marginTop: '3.5em' }}
+    <>
+      <Navbar />
+      <Container
+        component="main"
+        maxWidth="lg"
+        style={{ marginTop: '3.5em', marginBottom: '3.5em' }}
+      >
+        {show && <ResponsiveDialog onClose={() => setShow(false)} />}
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 4,
+            maginBottom: 5,
+            display: 'flex',
+            alignItems: 'column',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
+            color: '#5E35B1',
+          }}
         >
-          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
-          <CssBaseline />
-          <Card
-            sx={{
-              marginTop: 4,
-              display: 'flex',
-              alignItems: 'column',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: 'white',
-              borderRadius: '10px',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
-              color: '#5E35B1',
-            }}
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            sx={{ width: '100%' }}
           >
-            <Stack
-              direction={{ xs: 'column', md: 'row' }}
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              sx={{ width: '100%' }}
-            >
-              <div className="formflex2" style={{ alignItems: 'top' }}>
-                <div className="riga">
-                  <CardContent>
-                    <div className="riga">
-                      <Typography variant="h5" color="black" textAlign="center">
-                        {predizione !== ''
-                          ? predizione === 'Demented'
-                            ? 'Test risultato positivo'
-                            : 'Test risultato negativo'
-                          : ''}
-                      </Typography>
-                    </div>
-                    <Typography
-                      variant="h4"
-                      color="blueviolet"
-                      textAlign="center"
-                      style={{
-                        marginBottom: '0.4em',
-                      }}
-                    >
-                      Carica la tac di un paziente
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      color="black"
-                      textAlign="center"
-                      style={{
-                        marginBottom: '1em',
-                      }}
-                    >
-                      Caricando la TAC di un paziente potrai avere un supporto
-                      alla diagnosi da parte della nostra IA
-                    </Typography>
-                  </CardContent>
-                  <CardMedia
-                    component="img"
-                    style={{ width: '24em', height: 'auto', marginLeft: '2em' }}
-                    image={require('app/assets/images/tac.jpg')}
-                  />
-                </div>
+            <div className="formflex2" style={{ alignItems: 'top' }}>
+              <div className="riga">
+                <CardContent>
+                  <Typography
+                    variant="h4"
+                    color="blueviolet"
+                    textAlign="center"
+                    style={{
+                      marginBottom: '0.4em',
+                    }}
+                  >
+                    Carica la tac di un paziente
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    color="black"
+                    textAlign="center"
+                    style={{
+                      marginBottom: '1em',
+                    }}
+                  >
+                    Caricando la TAC di un paziente potrai avere un supporto
+                    alla diagnosi da parte della nostra IA
+                  </Typography>
+                </CardContent>
+                <CardMedia
+                  component="img"
+                  style={{ width: '24em', height: 'auto', marginLeft: '2em' }}
+                  image={require('app/assets/images/tac.jpg')}
+                />
               </div>
-              <form
-                className="formflex"
-                method="post"
-                encType="multipart/form-data"
-              >
-                <div className="riga">
-                  <Button
-                    component="label"
-                    variant="contained"
-                    startIcon={<CloudUploadIcon />}
-                    onMouseEnter={() => gestisciHoverCaricaFile(true)}
-                    onMouseLeave={() => gestisciHoverCaricaFile(false)}
-                    style={{
-                      backgroundColor: coloreBottoneCaricaFile,
-                      color: '#ffffff',
-                      margin: '1em',
-                      width: '25%',
-                    }}
-                  >
-                    Carica file
-                    <VisuallyHiddenInput
-                      name="file"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                    />
-                  </Button>
-                </div>
-                <div className="riga"></div>
-                <div className="riga">
-                  <Button
-                    style={{
-                      backgroundColor: coloreBottoneSalva,
-                      color: '#ffffff',
-                      margin: '1em',
-                      width: '25%',
-                    }}
-                    onClick={handleSave}
-                    onMouseEnter={() => gestisciHoverSalva(true)}
-                    onMouseLeave={() => gestisciHoverSalva(false)}
-                  >
-                    Salva tac
-                  </Button>
-                </div>
-              </form>
-            </Stack>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
+            </div>
+            <form
+              className="formflex"
+              method="post"
+              encType="multipart/form-data"
+            >
+              <div className="riga">
+                <Typography variant="h5" color="black" textAlign="center">
+                  {predizione !== ''
+                    ? predizione === 'Demented'
+                      ? 'Test risultato positivo'
+                      : 'Test risultato negativo'
+                    : ''}
+                </Typography>
+              </div>
+              <div className="riga">
+                <Button
+                  component="label"
+                  variant="contained"
+                  startIcon={<CloudUploadIcon />}
+                  onMouseEnter={() => gestisciHoverCaricaFile(true)}
+                  onMouseLeave={() => gestisciHoverCaricaFile(false)}
+                  style={{
+                    backgroundColor: coloreBottoneCaricaFile,
+                    color: '#ffffff',
+                    margin: '1em',
+                    width: '25%',
+                  }}
+                >
+                  Carica file
+                  <VisuallyHiddenInput
+                    name="file"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </Button>
+              </div>
+              <div className="riga"></div>
+              <div className="riga">
+                <Button
+                  style={{
+                    backgroundColor: coloreBottoneSalva,
+                    color: '#ffffff',
+                    margin: '1em',
+                    width: '25%',
+                  }}
+                  onClick={handleSave}
+                  onMouseEnter={() => gestisciHoverSalva(true)}
+                  onMouseLeave={() => gestisciHoverSalva(false)}
+                >
+                  Salva tac
+                </Button>
+              </div>
+            </form>
+          </Stack>
+        </Card>
+      </Container>
+    </>
   );
 }
 

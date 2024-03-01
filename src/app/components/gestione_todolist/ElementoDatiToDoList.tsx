@@ -32,7 +32,7 @@ function ElementoDatiToDoList(toDoList: ToDoList): JSX.Element {
     <div>
       {data && (
         <>
-          <Typography variant="h3">
+          <Typography variant="h4">
             {'Completata: ' + (data.toDoList.completata ? 'Si' : 'No')}
           </Typography>
 
@@ -40,17 +40,11 @@ function ElementoDatiToDoList(toDoList: ToDoList): JSX.Element {
             data.attivita.map((attivita, indexAtt) => (
               <Card key={indexAtt} style={{ marginTop: 10, marginBottom: 10 }}>
                 <CardContent>
-                  <Typography variant="h4">
+                  <Typography variant="h5">
                     {indexAtt + 1 + ') ' + attivita.testo}
                   </Typography>
-                  <Typography variant="h5">
+                  <Typography variant="h6">
                     {`Completata? ${attivita.completata ? 'Si' : 'No'}`}
-                  </Typography>
-                  <Typography variant="h5">
-                    {`Valutazione: ${attivita.valutazione ?? 'Nessuna'}`}
-                  </Typography>
-                  <Typography variant="h5">
-                    {`Commento: ${attivita.commento ?? 'Nessuno'}`}
                   </Typography>
                 </CardContent>
               </Card>

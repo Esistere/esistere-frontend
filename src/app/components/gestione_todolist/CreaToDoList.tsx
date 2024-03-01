@@ -8,7 +8,6 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ToDoList } from 'app/interfaces/gestione_todolist/ToDoList';
 import { Attivita } from 'app/interfaces/gestione_todolist/Attivita';
 import { ResponseObjectToDoList } from 'app/interfaces/gestione_todolist/ResponseObjectToDoList';
@@ -21,14 +20,6 @@ import ResponsiveDialog from '../gestione_app/ResponsiveDialog';
 interface ToDoTest {
   filled: boolean | undefined;
 }
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 
 function CreaToDoList(): JSX.Element {
   const location = useLocation();
@@ -188,7 +179,7 @@ function CreaToDoList(): JSX.Element {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <div>
         <Navbar />
         {showFail && <ResponsiveDialog onClose={() => setShowFail(false)} />}
@@ -280,7 +271,7 @@ function CreaToDoList(): JSX.Element {
           </Button>
         </div>
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 

@@ -134,12 +134,9 @@ class QuizAllenamentoControl {
     }
   }
 
-  async fetchDatiRispostaQuizAllenamento(
-    idRisposta: number
-  ): Promise<DomandaRisposta> {
+  async fetchDatiRispostaQuizAllenamento(id: number): Promise<DomandaRisposta> {
     const url =
-      `${this.baseUrl}/risposta_allenamento_giornaliero` +
-      `idRisposta = ${idRisposta}`;
+      `${this.baseUrl}/risposta_allenamento_giornaliero` + `?id=${id}`;
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -170,7 +167,7 @@ class QuizAllenamentoControl {
   ): Promise<DomandaRisposta[]> {
     const url =
       `${this.baseUrl}/risposta_allenamento_domanda_ag` +
-      `idDomanda = ${domanda_ag}`;
+      `?idDomanda=${domanda_ag}`;
     try {
       const response = await fetch(url, {
         method: 'GET',

@@ -13,18 +13,10 @@ import {
   Alert,
 } from '@mui/material';
 import Navbar from '../Navbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Filastrocca } from 'app/interfaces/gestione_filastrocche/Filastrocca';
 import ResponsiveDialog from '../gestione_app/ResponsiveDialog';
 import FilastroccaControl from 'app/control/gestione_filastrocca/FilastroccaControl';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 function CreaFilastrocca(): JSX.Element {
   const [filastrocca, setFilastrocca] = useState<Filastrocca>({
     id: undefined,
@@ -142,164 +134,162 @@ function CreaFilastrocca(): JSX.Element {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <Navbar />
-        {show && <ResponsiveDialog onClose={() => setShow(false)} />}
-        <Typography
-          variant="h4"
-          color="blueviolet"
-          textAlign="center"
-          marginTop="1em"
+    <>
+      <Navbar />
+      {show && <ResponsiveDialog onClose={() => setShow(false)} />}
+      <Typography
+        variant="h4"
+        color="blueviolet"
+        textAlign="center"
+        marginTop="1em"
+      >
+        Scrivi una nuova filastrocca
+      </Typography>
+      <Container component="main" maxWidth="lg">
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 4,
+            display: 'flex',
+            alignItems: 'center',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
+            color: '#5E35B1',
+          }}
         >
-          Scrivi una nuova filastrocca
-        </Typography>
-        <Container component="main" maxWidth="lg">
-          <CssBaseline />
-          <Card
-            sx={{
-              marginTop: 4,
-              display: 'flex',
-              alignItems: 'center',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: 'white',
-              borderRadius: '10px',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
-              color: '#5E35B1',
-            }}
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            sx={{ width: '100%' }}
           >
-            <Stack
-              direction={{ xs: 'column', md: 'row' }}
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              sx={{ width: '100%' }}
-            >
-              <div className="formflex2">
-                <div className="riga">
-                  <CardMedia
-                    component="img"
-                    style={{ width: '80%', height: '80%' }}
-                    image={require('app/assets/images/scriviFilastrocca.jpg')}
-                  />
-                </div>
+            <div className="formflex2">
+              <div className="riga">
+                <CardMedia
+                  component="img"
+                  style={{ width: '80%', height: '80%' }}
+                  image={require('app/assets/images/scriviFilastrocca.jpg')}
+                />
               </div>
-              <form
-                className="formflex2"
-                method="post"
-                onSubmit={handleInserisciFilastrocca}
+            </div>
+            <form
+              className="formflex2"
+              method="post"
+              onSubmit={handleInserisciFilastrocca}
+            >
+              <div className="riga">
+                <TextField
+                  required
+                  fullWidth
+                  name="titolo"
+                  id="titolo-text-area"
+                  label="Titolo Filastrocca"
+                  multiline
+                  maxRows={1}
+                  style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                  onChange={handleTitoloChange}
+                  value={filastrocca.titolo}
+                  error={!isTitoloValid && filastrocca.titolo.length > 0}
+                />
+              </div>
+              <div
+                className="riga"
+                style={{ marginTop: '1em', marginBottom: '2em' }}
               >
-                <div className="riga">
-                  <TextField
-                    required
-                    fullWidth
-                    name="titolo"
-                    id="titolo-text-area"
-                    label="Titolo Filastrocca"
-                    multiline
-                    maxRows={1}
-                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                    onChange={handleTitoloChange}
-                    value={filastrocca.titolo}
-                    error={!isTitoloValid && filastrocca.titolo.length > 0}
-                  />
-                </div>
-                <div
-                  className="riga"
-                  style={{ marginTop: '1em', marginBottom: '2em' }}
-                >
-                  {titoloErrore && (
-                    <div style={{ color: '#D32F2F' }}>{titoloErrore}</div>
-                  )}
-                </div>
+                {titoloErrore && (
+                  <div style={{ color: '#D32F2F' }}>{titoloErrore}</div>
+                )}
+              </div>
 
-                <div className="riga">
-                  <TextField
-                    required
-                    fullWidth
-                    name="testo"
-                    id="testo-text-area"
-                    label="Testo Filastrocca"
-                    multiline
-                    rows={15}
-                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                    onChange={handleTestoChange}
-                    value={filastrocca.testo}
-                    error={!isTestoValid && filastrocca.testo.length > 0}
-                  />
-                </div>
-                <div
-                  className="riga"
-                  style={{ marginTop: '1em', marginBottom: '2em' }}
-                >
-                  {testoErrore && (
-                    <div style={{ color: '#D32F2F' }}>{testoErrore}</div>
-                  )}
-                </div>
+              <div className="riga">
+                <TextField
+                  required
+                  fullWidth
+                  name="testo"
+                  id="testo-text-area"
+                  label="Testo Filastrocca"
+                  multiline
+                  rows={15}
+                  style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                  onChange={handleTestoChange}
+                  value={filastrocca.testo}
+                  error={!isTestoValid && filastrocca.testo.length > 0}
+                />
+              </div>
+              <div
+                className="riga"
+                style={{ marginTop: '1em', marginBottom: '2em' }}
+              >
+                {testoErrore && (
+                  <div style={{ color: '#D32F2F' }}>{testoErrore}</div>
+                )}
+              </div>
 
-                <div className="riga">
-                  <TextField
-                    required
-                    fullWidth
-                    name="autore"
-                    id="autore-text-area"
-                    label="Autore Filastrocca"
-                    multiline
-                    maxRows={1}
-                    style={{ boxSizing: 'border-box', marginBottom: '1em' }}
-                    onChange={handleAutoreChange}
-                    value={filastrocca.autore}
-                    error={!isAutoreValid && filastrocca.autore.length > 0}
-                  />
-                </div>
-                <div
-                  className="riga"
-                  style={{ marginTop: '1em', marginBottom: '2em' }}
+              <div className="riga">
+                <TextField
+                  required
+                  fullWidth
+                  name="autore"
+                  id="autore-text-area"
+                  label="Autore Filastrocca"
+                  multiline
+                  maxRows={1}
+                  style={{ boxSizing: 'border-box', marginBottom: '1em' }}
+                  onChange={handleAutoreChange}
+                  value={filastrocca.autore}
+                  error={!isAutoreValid && filastrocca.autore.length > 0}
+                />
+              </div>
+              <div
+                className="riga"
+                style={{ marginTop: '1em', marginBottom: '2em' }}
+              >
+                {autoreErrore && (
+                  <div style={{ color: '#D32F2F' }}>{autoreErrore}</div>
+                )}
+              </div>
+              <div>
+                <Button
+                  style={{
+                    background: coloreBottone,
+                    margin: '1em',
+                    width: '40%',
+                  }}
+                  id="creaFilastrocca"
+                  type="submit"
+                  variant="contained"
+                  onMouseEnter={() => gestisciHover(true)}
+                  onMouseLeave={() => gestisciHover(false)}
                 >
-                  {autoreErrore && (
-                    <div style={{ color: '#D32F2F' }}>{autoreErrore}</div>
-                  )}
-                </div>
-                <div>
-                  <Button
-                    style={{
-                      background: coloreBottone,
-                      margin: '1em',
-                      width: '40%',
-                    }}
-                    id="creaFilastrocca"
-                    type="submit"
-                    variant="contained"
-                    onMouseEnter={() => gestisciHover(true)}
-                    onMouseLeave={() => gestisciHover(false)}
-                  >
-                    Crea Filastrocca
-                  </Button>
-                </div>
-                <div id="test">
-                  <Snackbar
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    open={open}
-                    autoHideDuration={6000}
+                  Crea Filastrocca
+                </Button>
+              </div>
+              <div id="test">
+                <Snackbar
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert
                     onClose={handleClose}
+                    severity={success ? 'success' : 'error'}
+                    sx={{ width: '100%' }}
                   >
-                    <Alert
-                      onClose={handleClose}
-                      severity={success ? 'success' : 'error'}
-                      sx={{ width: '100%' }}
-                    >
-                      {success
-                        ? 'Caricamento filastrocca effettuato con successo!'
-                        : 'Caricamento filastrocca fallita'}
-                    </Alert>
-                  </Snackbar>
-                </div>
-              </form>
-            </Stack>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
+                    {success
+                      ? 'Caricamento filastrocca effettuato con successo!'
+                      : 'Caricamento filastrocca fallita'}
+                  </Alert>
+                </Snackbar>
+              </div>
+            </form>
+          </Stack>
+        </Card>
+      </Container>
+    </>
   );
 }
 

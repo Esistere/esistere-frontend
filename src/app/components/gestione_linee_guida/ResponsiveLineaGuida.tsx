@@ -28,18 +28,23 @@ function ResponsiveLineaGuida(props: ResponsiveDialogProps): JSX.Element {
 
   const fetchLineaGuida = async (): Promise<void> => {
     const pazienteControl: PazienteControl = new PazienteControl();
-    const cf = await pazienteControl.fetchCodicePaziente(
-      Number(localStorage.getItem('id'))
-    );
-    console.log(cf);
-    const medico = await pazienteControl.visualizzaMedByPaziente({
-      codice_fiscale: cf,
-    });
-    console.log(medico);
-    const lineaGuidaControl = new LineaGuidaControl();
-    const risultato = await lineaGuidaControl.fetchLineaGuidaByMed(medico);
-    setLineaGuida(risultato);
-    setOpen(true);
+    try {
+      const cf = await pazienteControl.fetchCodicePaziente(
+        Number(localStorage.getItem('id'))
+      );
+      console.log(cf);
+      const medico = await pazienteControl.visualizzaMedByPaziente({
+        codice_fiscale: cf,
+      });
+      console.log(medico);
+      const lineaGuidaControl = new LineaGuidaControl();
+      const risultato = await lineaGuidaControl.fetchLineaGuidaByMed(medico);
+      setLineaGuida(risultato);
+    } catch (e) {
+      console.error('Errore durante il recupero delle linee guida', e);
+    } finally {
+      setOpen(true);
+    }
   };
 
   useEffect(() => {

@@ -15,15 +15,7 @@ import {
 import avataricon from 'app/assets/avatar-icon.png';
 import CheckIcon from '@mui/icons-material/Check';
 import Pulsante from 'app/components/gestione_app/Pulsante';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 function AreaPersonaleMedico(): JSX.Element {
   const [medicoData, setMedicoData] = useState<Medico>({
     codice_identificativo: undefined,
@@ -97,210 +89,208 @@ function AreaPersonaleMedico(): JSX.Element {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <Navbar />
-        <Container component="main" maxWidth="lg">
-          <CssBaseline />
-          <Card
+    <>
+      <Navbar />
+      <Container component="main" maxWidth="lg" sx={{ marginBottom: '2.5em' }}>
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            alignItems: 'center',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
+            color: '#5E35B1',
+          }}
+        >
+          <CardContent
             sx={{
-              marginTop: 8,
+              width: '100%',
               display: 'flex',
-              alignItems: 'center',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: 'white',
-              borderRadius: '10px',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
-              color: '#5E35B1',
+              flexDirection: 'rows',
+              alignItems: 'top',
+              flexWrap: 'wrap',
             }}
           >
-            <CardContent
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'rows',
-                alignItems: 'top',
-                flexWrap: 'wrap',
-              }}
-            >
-              <div className="formflex2">
-                <div className="riga">
-                  <Avatar
-                    alt={`${medicoData.nome} ${medicoData?.cognome}`}
-                    src={avataricon}
-                    sx={{ width: '30%', height: 'auto', aspectRatio: 1 / 1 }}
-                  />
-                </div>
-                <div className="riga">
-                  <Pulsante
-                    tipologia="scuro"
-                    nome="modifica"
-                    testo="Modifica dati personali"
-                    onClick={() => setDisa(false)}
-                  />
-                </div>
+            <div className="formflex2">
+              <div className="riga">
+                <Avatar
+                  alt={`${medicoData.nome} ${medicoData?.cognome}`}
+                  src={avataricon}
+                  sx={{ width: '40%', height: 'auto', aspectRatio: 1 / 1 }}
+                />
               </div>
+              <div className="riga">
+                <Pulsante
+                  tipologia="scuro"
+                  nome="modifica"
+                  testo="Modifica dati personali"
+                  onClick={() => setDisa(false)}
+                />
+              </div>
+            </div>
 
-              <form className="formflex2" method="post" onSubmit={handleSubmit}>
-                <div>
-                  <TextField
-                    name="nome"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-nome"
-                    label="Nome"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.nome}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="cognome"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-cognome"
-                    label="Cognome"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.cognome}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="indirizzo_studio"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-indirizzo-studio"
-                    label="Indirizzo Studio"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.indirizzo_studio}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="citta"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-citta"
-                    label="Città"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.citta}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="numero_civico"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-numero-civico"
-                    label="Numero Civico"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.numero_civico}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="numero_telefono_studio"
-                    disabled={disa}
-                    required
-                    type="text"
-                    id="outlined-numero-telefono-studio"
-                    label="Numero Telefono Studio"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.numero_telefono_studio}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="email"
-                    required
-                    type="email"
-                    id="outlined-Email"
-                    label="Email"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.email}
-                    onChange={handleChange}
-                    InputProps={{
-                      disabled: disa,
-                    }}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    name="passwd"
-                    disabled={disa}
-                    required
-                    type="password"
-                    id="outlined-password"
-                    style={{
-                      width: '16.15em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                    }}
-                    value={medicoData.passwd}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="riga">
-                  <Button
-                    style={{
-                      background: coloreBottone,
-                      display: disa ? 'none' : 'block',
-                      width: '9em',
-                    }}
-                    type="submit"
-                    variant="contained"
-                    onMouseEnter={() => gestisciHover(true)}
-                    onMouseLeave={() => gestisciHover(false)}
-                    startIcon={<CheckIcon />}
-                  >
-                    Salva Dati
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
+            <form className="formflex2" method="post" onSubmit={handleSubmit}>
+              <div>
+                <TextField
+                  name="nome"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-nome"
+                  label="Nome"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.nome}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="cognome"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-cognome"
+                  label="Cognome"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.cognome}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="indirizzo_studio"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-indirizzo-studio"
+                  label="Indirizzo Studio"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.indirizzo_studio}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="citta"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-citta"
+                  label="Città"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.citta}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="numero_civico"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-numero-civico"
+                  label="Numero Civico"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.numero_civico}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="numero_telefono_studio"
+                  disabled={disa}
+                  required
+                  type="text"
+                  id="outlined-numero-telefono-studio"
+                  label="Numero Telefono Studio"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.numero_telefono_studio}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="email"
+                  required
+                  type="email"
+                  id="outlined-Email"
+                  label="Email"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.email}
+                  onChange={handleChange}
+                  InputProps={{
+                    disabled: disa,
+                  }}
+                />
+              </div>
+              <div>
+                <TextField
+                  name="passwd"
+                  disabled={disa}
+                  required
+                  type="password"
+                  id="outlined-password"
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                  }}
+                  value={medicoData.passwd}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="riga">
+                <Button
+                  style={{
+                    background: coloreBottone,
+                    display: disa ? 'none' : 'block',
+                    width: '9em',
+                  }}
+                  type="submit"
+                  variant="contained"
+                  onMouseEnter={() => gestisciHover(true)}
+                  onMouseLeave={() => gestisciHover(false)}
+                  startIcon={<CheckIcon />}
+                >
+                  Salva Dati
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
+    </>
   );
 }
 

@@ -8,6 +8,6 @@ export interface DomandaRisposta {
     risposta: string;
     corretta: boolean | undefined;
     selezionata: boolean | undefined;
-    idRisposta: number | undefined;
+    id: number | undefined;
   }[];
 }

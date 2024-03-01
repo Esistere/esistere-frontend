@@ -12,7 +12,6 @@ import {
   InputAdornment,
   Snackbar,
   TextField,
-  ThemeProvider,
   Typography,
 } from '@mui/material';
 import CaregiverFamiliareControl from 'app/control/gestione_autenticazione/CaregiverFamiliareControl';
@@ -33,7 +32,6 @@ import {
   numeroTelefonoRegex,
   passwordRegex,
 } from 'app/regex';
-import { theme } from 'app/components/gestione_app/FormTheme';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
 import { useNavigate } from 'react-router-dom';
 interface caricaMediciResult {
@@ -192,12 +190,9 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
     const newPass = event.target.value;
 
     setConfermaPasswd(newPass);
-    console.log(newPass === formDataCaregiverFamiliare.passwd);
     if (newPass === formDataCaregiverFamiliare.passwd) {
       const isValid = passwordRegex.test(newPass) || newPass === '';
-      console.log(isValid);
       setIsConfermaPassValid(isValid);
-      console.log(isConfermaPassValid);
     } else {
       setIsConfermaPassValid(false);
       setConfermaPasswordError('Le password non corrispondono.');
@@ -559,7 +554,7 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
         open = true;
         setTimeout(() => {
           navigate('/login');
-        }, 1000);
+        }, 5000);
       })
       .catch(() => {
         success = false;
@@ -630,595 +625,592 @@ function RegistrazioneCaregiverFamiliare(): JSX.Element {
   return (
     <>
       {/* caregiver */}
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="lg">
-          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
-          <CssBaseline />
-          <Card
+      <Container component="main" maxWidth="lg">
+        {show && <ResponsiveDialog onClose={() => setShow(false)} />}
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            alignItems: 'center',
+            padding: (theme) => theme.spacing(3),
+            bgcolor: '#fefefe',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+            color: '#5E35B1',
+          }}
+        >
+          <CardContent
             sx={{
-              marginTop: 8,
+              width: '100%',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              padding: (theme) => theme.spacing(3),
-              bgcolor: '#fefefe',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-              color: '#5E35B1',
             }}
           >
-            <CardContent
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
+            <Typography
+              component="h1"
+              variant="h5"
+              color="primary"
+              id="cg-title"
+              sx={{ mt: 2, fontWeight: 'bold' }}
             >
-              <Typography
-                component="h1"
-                variant="h5"
-                color="primary"
-                id="cg-title"
-                sx={{ mt: 2, fontWeight: 'bold' }}
-              >
-                Diventa uno dei nostri Caregiver!
-              </Typography>
-              <form
-                className="formflex"
-                style={{ display: visibility.visibilityCG }}
-              >
-                <div className="riga">
-                  <div
+              Diventa uno dei nostri Caregiver!
+            </Typography>
+            <form
+              className="formflex"
+              style={{ display: visibility.visibilityCG }}
+            >
+              <div className="riga">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="nome"
+                    id="outlined-nome-input"
+                    label="Nome"
+                    error={!isNomeValid}
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                  >
-                    <TextField
-                      type="text"
-                      name="nome"
-                      id="outlined-nome-input"
-                      label="Nome"
-                      error={!isNomeValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleNomeChange}
-                      required
-                    />
-                    {nomeError && (
-                      <div style={{ color: '#D32F2F' }}>{nomeError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="cognome"
-                      id="outlined-cognome-input"
-                      label="Cognome"
-                      error={!isCognomeValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onChange={handleCognomeChange}
-                    />
-                    {cognomeError && (
-                      <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="indirizzo"
-                      id="outlined-indirizzo-input"
-                      label="Indirizzo"
-                      error={
-                        !isAndressValid &&
-                        formDataCaregiverFamiliare.indirizzo.length > 0
-                      }
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onChange={handleAndressChange}
-                    />
-                    {andressError && (
-                      <div style={{ color: '#D32F2F' }}>{andressError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="numero_civico"
-                      id="outlined-num-civico-input"
-                      label="Numero Civico"
-                      error={
-                        !isNumCivValid &&
-                        formDataCaregiverFamiliare.numero_civico.length > 5
-                      }
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onChange={handleNumCivChange}
-                    />
-                    {numCivError && (
-                      <div style={{ color: '#D32F2F', width: '16em' }}>
-                        {numCivError}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="citta"
-                      id="outlined-citta-input"
-                      label="Città"
-                      error={!isCittaValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onChange={handleCittaChange}
-                    />
-                    {cittaError && (
-                      <div style={{ color: '#D32F2F' }}>{cittaError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      name="data_di_nascita"
-                      id="outlined-birthdate-input"
-                      label="Data di nascita"
-                      error={!isBirthDateValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onFocus={onFocusCgFam}
-                      onBlur={onBlurCgFam}
-                      type={hasValueCgFam || focusCgFam ? 'date' : 'text'}
-                      onChange={(e) => {
-                        if (e.target.value) setHasValueCgFam(true);
-                        else setHasValueCgFam(false);
-                        handleBirthDateChange(e);
-                      }}
-                    />
-                    {birthDateError && (
-                      <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="numero_di_telefono"
-                      id="outlined-num-telefono-input"
-                      value={formDataCaregiverFamiliare.numero_di_telefono}
-                      label="Numero Telefono"
-                      error={
-                        !isNumberValid &&
-                        formDataCaregiverFamiliare.numero_di_telefono.length ===
-                          10
-                      }
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onChange={handleNumberChange}
-                    />
-                    {numberError && (
-                      <div style={{ color: '#D32F2F' }}>{numberError}</div>
-                    )}
-                  </div>
+                    onChange={handleNomeChange}
+                    required
+                  />
+                  {nomeError && (
+                    <div style={{ color: '#D32F2F' }}>{nomeError}</div>
+                  )}
                 </div>
 
                 <div
                   style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
                   }}
                 >
                   <TextField
-                    type="email"
-                    name="email"
-                    id="outlined-email-input"
-                    value={formDataCaregiverFamiliare.email}
-                    label="Email"
+                    type="text"
+                    name="cognome"
+                    id="outlined-cognome-input"
+                    label="Cognome"
+                    error={!isCognomeValid}
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    required
+                    onChange={handleCognomeChange}
+                  />
+                  {cognomeError && (
+                    <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="riga">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="indirizzo"
+                    id="outlined-indirizzo-input"
+                    label="Indirizzo"
                     error={
-                      !isEmailValid &&
-                      formDataCaregiverFamiliare.email.length > 0
+                      !isAndressValid &&
+                      formDataCaregiverFamiliare.indirizzo.length > 0
                     }
                     style={{
-                      flexBasis: 'calc(26 em)',
+                      width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
-                      marginLeft: '20%',
-                      marginRight: '20%',
+                      backgroundColor: '#F6EFF',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton edge="end" disabled>
-                            <Visibility style={{ opacity: '0' }} />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
                     required
-                    onChange={handleEmailChange}
+                    onChange={handleAndressChange}
                   />
-                  {emailError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {emailError}
-                    </div>
+                  {andressError && (
+                    <div style={{ color: '#D32F2F' }}>{andressError}</div>
                   )}
                 </div>
+
                 <div
                   style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                    justifyContent: 'center',
                   }}
                 >
                   <TextField
-                    type={showPassword ? 'text' : 'password'}
-                    name="passwd"
-                    id="outlined-password-input"
-                    value={formDataCaregiverFamiliare.passwd}
-                    label="Password"
+                    type="text"
+                    name="numero_civico"
+                    id="outlined-num-civico-input"
+                    label="Numero Civico"
                     error={
-                      !isPassValid &&
-                      formDataCaregiverFamiliare.passwd.length > 0
+                      !isNumCivValid &&
+                      formDataCaregiverFamiliare.numero_civico.length > 5
                     }
                     style={{
-                      flexBasis: '26em',
+                      width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
                     required
-                    onChange={handlePasswordChange}
+                    onChange={handleNumCivChange}
                   />
-                  {passwordError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {passwordError}
+                  {numCivError && (
+                    <div style={{ color: '#D32F2F', width: '16em' }}>
+                      {numCivError}
                     </div>
                   )}
                 </div>
+              </div>
+
+              <div className="riga">
                 <div
                   style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
                   }}
                 >
                   <TextField
-                    type={showPassword ? 'text' : 'password'}
-                    name="conferma-passwd"
-                    id="conferma-passwd"
-                    required
-                    value={confermaPasswd}
-                    label="Conferma Password"
-                    error={!isConfermaPassValid && confermaPasswd.length > 0}
+                    type="text"
+                    name="citta"
+                    id="outlined-citta-input"
+                    label="Città"
+                    error={!isCittaValid}
                     style={{
-                      flexBasis: '26em',
+                      width: '16.15em',
                       margin: '1em',
                       boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
                       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    onChange={handleConfermaPasswordChange}
+                    required
+                    onChange={handleCittaChange}
                   />
-                  {confermaPasswordError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {confermaPasswordError}
-                    </div>
+                  {cittaError && (
+                    <div style={{ color: '#D32F2F' }}>{cittaError}</div>
                   )}
                 </div>
-                <div className="riga">
-                  <Button
-                    id="paziente-button"
-                    style={{
-                      background: coloreBottone,
-                      display:
-                        visibility.visibilityCG === 'block' &&
-                        visibility.visibilityPAZ === 'block'
-                          ? 'none'
-                          : 'block',
-                      height: '100%',
-                      marginTop: '1.5em',
-                    }}
-                    variant="contained"
-                    onMouseEnter={() => gestisciHover(true)}
-                    onMouseLeave={() => gestisciHover(false)}
-                    onClick={handleInserisciPaziente}
-                  >
-                    Inserisci Paziente
-                  </Button>
-                </div>
-              </form>
 
-              {isLoading ? <Caricamento /> : <></>}
-              <form
-                method="post"
-                className="formflex"
-                style={{ display: visibility.visibilityPAZ }}
-                onSubmit={handleSubmit}
-              >
-                {/* paziente */}
-                <div id="cg-fam-title">
-                  <Typography
-                    className="testo"
-                    component="h1"
-                    variant="h5"
-                    color="#8A2BE2"
-                    id="cg-title"
-                    sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
-                  >
-                    Inserisci i dati del tuo paziente!
-                  </Typography>
-                </div>
-                <div id="codice-fiscale">
-                  <div className="riga">
-                    <TextField
-                      required
-                      type="text"
-                      label="Codice Fiscale"
-                      error={!isCodeValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      name="codice_fiscale"
-                      inputProps={{ style: { textTransform: 'uppercase' } }}
-                      onChange={handleCodeChange}
-                    />
-                    {codeError && (
-                      <div style={{ color: '#D32F2F' }}>{codeError}</div>
-                    )}
-                  </div>
-                  <div id="nome-paziente">
-                    <TextField
-                      required
-                      type="text"
-                      label="Nome"
-                      error={!isNomePazienteValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      name="nome_paziente"
-                      onChange={handleNomePazienteChange}
-                    />
-                    {nomePazienteError && (
-                      <div style={{ color: '#D32F2F' }}>
-                        {nomePazienteError}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="riga">
-                  <div id="cognome-paziente">
-                    <TextField
-                      required
-                      type="text"
-                      label="Cognome"
-                      error={!isCognomePazienteValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      name="cognome_paziente"
-                      onChange={handleCognomePazienteChange}
-                    />
-                    {cognomePazienteError && (
-                      <div style={{ color: '#D32F2F' }}>
-                        {cognomePazienteError}
-                      </div>
-                    )}
-                  </div>
-                  <div id="data-di-nascita-paziente">
-                    <TextField
-                      name="data_di_nascita_paziente"
-                      id="outlined-birthdate-input"
-                      label="Data di nascita"
-                      error={!isPazienteBirthDateValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        backgroundColor: '#F6EFF',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      required
-                      onFocus={onFocusPaziente}
-                      onBlur={onBlurPaziente}
-                      type={hasValuePaziente || focusPaziente ? 'date' : 'text'}
-                      onChange={(e) => {
-                        if (e.target.value) setHasValuePaziente(true);
-                        else setHasValuePaziente(false);
-                        handlePazienteBirthDateChange(e);
-                      }}
-                    />
-                    {pazienteBirthDateError && (
-                      <div style={{ color: '#D32F2F' }}>
-                        {pazienteBirthDateError}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="riga">
-                  <Autocomplete
-                    loading
-                    options={opzioni}
-                    getOptionLabel={(op) => op.name}
-                    onChange={handleChangeMedico}
-                    renderInput={(params) => (
-                      <TextField
-                        name="autocomplete"
-                        {...params}
-                        label="Scegli un medico"
-                        style={{
-                          width: '16.15em',
-                          margin: '1em',
-                          boxSizing: 'border-box',
-                          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                        }}
-                      />
-                    )}
-                  />
-                </div>
-                <div className="riga">
-                  <Button
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    name="data_di_nascita"
+                    id="outlined-birthdate-input"
+                    label="Data di nascita"
+                    error={!isBirthDateValid}
                     style={{
-                      background: coloreBottone,
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      backgroundColor: '#F6EFF',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                     }}
-                    type="submit"
-                    id="registrazione-button"
-                    variant="contained"
-                    onMouseEnter={() => gestisciHover(true)}
-                    onMouseLeave={() => gestisciHover(false)}
-                    onClick={() => handleInserisciPaziente}
-                    endIcon={<CheckIcon />}
-                  >
-                    Registrati
-                  </Button>
+                    required
+                    onFocus={onFocusCgFam}
+                    onBlur={onBlurCgFam}
+                    type={hasValueCgFam || focusCgFam ? 'date' : 'text'}
+                    onChange={(e) => {
+                      if (e.target.value) setHasValueCgFam(true);
+                      else setHasValueCgFam(false);
+                      handleBirthDateChange(e);
+                    }}
+                  />
+                  {birthDateError && (
+                    <div style={{ color: '#D32F2F' }}>{birthDateError}</div>
+                  )}
                 </div>
-              </form>
-            </CardContent>
-          </Card>
-        </Container>
-      </ThemeProvider>
+              </div>
+
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type="text"
+                  name="numero_di_telefono"
+                  id="outlined-num-telefono-input"
+                  value={formDataCaregiverFamiliare.numero_di_telefono}
+                  label="Numero Telefono"
+                  error={
+                    !isNumberValid &&
+                    formDataCaregiverFamiliare.numero_di_telefono.length === 10
+                  }
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    marginLeft: '20%',
+                    marginRight: '20%',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  required
+                  onChange={handleNumberChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" disabled>
+                          <Visibility style={{ opacity: '0' }} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {numberError && (
+                  <div style={{ color: '#D32F2F' }}>{numberError}</div>
+                )}
+              </div>
+
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type="email"
+                  name="email"
+                  id="outlined-email-input"
+                  value={formDataCaregiverFamiliare.email}
+                  label="Email"
+                  error={
+                    !isEmailValid && formDataCaregiverFamiliare.email.length > 0
+                  }
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    marginLeft: '20%',
+                    marginRight: '20%',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" disabled>
+                          <Visibility style={{ opacity: '0' }} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  required
+                  onChange={handleEmailChange}
+                />
+                {emailError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </div>
+
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  name="passwd"
+                  id="outlined-password-input"
+                  value={formDataCaregiverFamiliare.passwd}
+                  label="Password"
+                  error={
+                    !isPassValid && formDataCaregiverFamiliare.passwd.length > 0
+                  }
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  required
+                  onChange={handlePasswordChange}
+                />
+                {passwordError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  name="conferma-passwd"
+                  id="conferma-passwd"
+                  required
+                  value={confermaPasswd}
+                  label="Conferma Password"
+                  error={!isConfermaPassValid && confermaPasswd.length > 0}
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={handleConfermaPasswordChange}
+                />
+                {confermaPasswordError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {confermaPasswordError}
+                  </div>
+                )}
+              </div>
+              <div className="riga">
+                <Button
+                  id="paziente-button"
+                  style={{
+                    background: coloreBottone,
+                    display:
+                      visibility.visibilityCG === 'block' &&
+                      visibility.visibilityPAZ === 'block'
+                        ? 'none'
+                        : 'block',
+                    height: '100%',
+                    marginTop: '1.5em',
+                  }}
+                  variant="contained"
+                  onMouseEnter={() => gestisciHover(true)}
+                  onMouseLeave={() => gestisciHover(false)}
+                  onClick={handleInserisciPaziente}
+                >
+                  Inserisci Paziente
+                </Button>
+              </div>
+            </form>
+
+            {isLoading ? <Caricamento /> : <></>}
+            <form
+              method="post"
+              className="formflex"
+              style={{ display: visibility.visibilityPAZ }}
+              onSubmit={handleSubmit}
+            >
+              {/* paziente */}
+              <div id="cg-fam-title">
+                <Typography
+                  className="testo"
+                  component="h1"
+                  variant="h5"
+                  color="#8A2BE2"
+                  id="cg-title"
+                  sx={{ mt: -3, mb: 3, fontWeight: 'bold' }}
+                >
+                  Inserisci i dati del tuo paziente!
+                </Typography>
+              </div>
+              <div id="codice-fiscale">
+                <TextField
+                  required
+                  type="text"
+                  label="Codice Fiscale"
+                  error={!isCodeValid}
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  name="codice_fiscale"
+                  inputProps={{ style: { textTransform: 'uppercase' } }}
+                  onChange={handleCodeChange}
+                />
+                {codeError && (
+                  <div style={{ color: '#D32F2F' }}>{codeError}</div>
+                )}
+              </div>
+              <div id="nome-paziente">
+                <TextField
+                  required
+                  type="text"
+                  label="Nome"
+                  error={!isNomePazienteValid}
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  name="nome_paziente"
+                  onChange={handleNomePazienteChange}
+                />
+                {nomePazienteError && (
+                  <div style={{ color: '#D32F2F' }}>{nomePazienteError}</div>
+                )}
+              </div>
+              <div id="cognome-paziente">
+                <TextField
+                  required
+                  type="text"
+                  label="Cognome"
+                  error={!isCognomePazienteValid}
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  name="cognome_paziente"
+                  onChange={handleCognomePazienteChange}
+                />
+                {cognomePazienteError && (
+                  <div style={{ color: '#D32F2F' }}>{cognomePazienteError}</div>
+                )}
+              </div>
+              <div id="data-di-nascita-paziente">
+                <TextField
+                  name="data_di_nascita_paziente"
+                  id="outlined-birthdate-input"
+                  label="Data di nascita"
+                  error={!isPazienteBirthDateValid}
+                  style={{
+                    width: '16.15em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    backgroundColor: '#F6EFF',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  required
+                  onFocus={onFocusPaziente}
+                  onBlur={onBlurPaziente}
+                  type={hasValuePaziente || focusPaziente ? 'date' : 'text'}
+                  onChange={(e) => {
+                    if (e.target.value) setHasValuePaziente(true);
+                    else setHasValuePaziente(false);
+                    handlePazienteBirthDateChange(e);
+                  }}
+                />
+                {pazienteBirthDateError && (
+                  <div style={{ color: '#D32F2F' }}>
+                    {pazienteBirthDateError}
+                  </div>
+                )}
+              </div>
+              <div className="riga">
+                <Autocomplete
+                  loading
+                  options={opzioni}
+                  getOptionLabel={(op) => op.name}
+                  onChange={handleChangeMedico}
+                  renderInput={(params) => (
+                    <TextField
+                      name="autocomplete"
+                      {...params}
+                      label="Scegli un medico"
+                      style={{
+                        width: '16.15em',
+                        margin: '1em',
+                        boxSizing: 'border-box',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      }}
+                    />
+                  )}
+                />
+              </div>
+              <div className="riga">
+                <Button
+                  style={{
+                    background: coloreBottone,
+                  }}
+                  type="submit"
+                  id="registrazione-button"
+                  variant="contained"
+                  onMouseEnter={() => gestisciHover(true)}
+                  onMouseLeave={() => gestisciHover(false)}
+                  onClick={() => handleInserisciPaziente}
+                  endIcon={<CheckIcon />}
+                >
+                  Registrati
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
       <Snackbar
         open={open}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

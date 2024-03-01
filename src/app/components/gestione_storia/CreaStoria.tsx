@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TextField from '@mui/material/TextField';
 import Navbar from '../Navbar';
-import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import StoriaControl from 'app/control/gestione_storia/StoriaControl';
 import {
   Alert,
@@ -19,13 +19,7 @@ import {
 } from '@mui/material';
 import { StoriaMedia } from 'app/interfaces/gestione_storia/StoriaMedia';
 import ResponsiveDialog from 'app/components/gestione_app/ResponsiveDialog';
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -201,180 +195,182 @@ function CreaStoria(): JSX.Element {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <Navbar />
-        <Container component="main" maxWidth="lg">
-          {show && <ResponsiveDialog onClose={() => setShow(false)} />}
-          <CssBaseline />
-          <Card
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              alignItems: 'column',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: 'white',
-              borderRadius: '10px',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
-              color: '#5E35B1',
-            }}
+    <>
+      <Navbar />
+      <Container component="main" maxWidth="lg">
+        {show && <ResponsiveDialog onClose={() => setShow(false)} />}
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 8,
+            marginBottom: 8,
+            display: 'flex',
+            alignItems: 'column',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135,.3)',
+            color: '#5E35B1',
+          }}
+        >
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            sx={{ width: '100%' }}
           >
-            <Stack
-              direction={{ xs: 'column', md: 'row' }}
-              spacing={2}
-              alignItems="center"
-              justifyContent="center"
-              sx={{ width: '100%' }}
-            >
-              <div className="formflex2" style={{ alignItems: 'top' }}>
-                <div className="riga">
-                  <CardContent>
-                    <Typography
-                      variant="h4"
-                      color="blueviolet"
-                      textAlign="center"
-                      style={{
-                        marginBottom: '2em',
-                      }}
-                    >
-                      Scrivi una nuova storia
-                    </Typography>
-                    <Typography variant="h5" color="black" textAlign="left">
-                      Caricare un&apos;immagine o un file vocale potrebbe
-                      aiutare a la persona che segui a continuare a ricordare
-                      parti importanti della sua vita!
-                    </Typography>
-                  </CardContent>
-                  <CardMedia
-                    component="img"
-                    style={{ width: '24em', height: 'auto', marginLeft: '2em' }}
-                    image={require('app/assets/images/scriviStoria.png')}
-                  />
-                </div>
-              </div>
-              <form
-                className="formflex"
-                method="post"
-                encType="multipart/form-data"
-              >
-                <div className="riga">
-                  <div id="text-area">
-                    <TextField
-                      required
-                      error={!isTestoValid}
-                      id="testo"
-                      name="testo"
-                      label="Testo Storia"
-                      multiline
-                      rows={8}
-                      value={datiStoria.testo}
-                      onChange={handleTestoChange}
-                      style={{
-                        margin: '1em ',
-                        width: '20em',
-                        boxSizing: 'border-box',
-                      }}
-                    />
-                    {testoErrore && (
-                      <div style={{ color: '#D32F2F' }}>{testoErrore}</div>
-                    )}
-                  </div>
-                </div>
-                <div className="riga">
-                  <Button
-                    component="label"
-                    id="caricaFile"
-                    variant="contained"
-                    startIcon={<CloudUploadIcon />}
-                    onMouseEnter={() => gestisciHoverCaricaFile(true)}
-                    onMouseLeave={() => gestisciHoverCaricaFile(false)}
+            <div className="formflex2" style={{ alignItems: 'top' }}>
+              <div className="riga">
+                <CardContent>
+                  <Typography
+                    variant="h4"
+                    color="blueviolet"
+                    textAlign="center"
                     style={{
-                      backgroundColor: coloreBottoneCaricaFile,
-                      color: '#ffffff',
-                      margin: '1em',
-                      width: '25%',
+                      marginBottom: '1em',
                     }}
                   >
-                    Carica file
-                    <VisuallyHiddenInput
-                      name="file"
-                      type="file"
-                      accept=".png, .jpg, .jpeg, .bmp, .tif, .tiff, audio/*"
-                      onChange={handleFileChange}
-                    />
-                  </Button>
-                </div>
-                <div className="riga">
-                  {messaggioErrore && (
-                    <div style={{ color: '#D32F2F' }}>{messaggioErrore}</div>
+                    Scrivi una nuova storia
+                  </Typography>
+                  <Typography variant="h5" color="black" textAlign="center">
+                    Caricare un&apos;immagine o un file vocale potrebbe aiutare
+                    a la persona che segui a continuare a ricordare parti
+                    importanti della sua vita!
+                  </Typography>
+                </CardContent>
+                <CardMedia
+                  component="img"
+                  style={{
+                    width: '24em',
+                    height: 'auto',
+                    marginLeft: '1em',
+                    marginTop: '1em',
+                  }}
+                  image={require('app/assets/images/scriviStoria.png')}
+                />
+              </div>
+            </div>
+            <form
+              className="formflex"
+              method="post"
+              encType="multipart/form-data"
+            >
+              <div className="riga">
+                <div id="text-area">
+                  <TextField
+                    required
+                    error={!isTestoValid}
+                    id="testo"
+                    name="testo"
+                    label="Testo Storia"
+                    multiline
+                    rows={8}
+                    value={datiStoria.testo}
+                    onChange={handleTestoChange}
+                    style={{
+                      margin: '1em ',
+                      width: '30em',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                  {testoErrore && (
+                    <div style={{ color: '#D32F2F' }}>{testoErrore}</div>
                   )}
                 </div>
-                <div id="descrizione-file">
-                  <div className="riga">
-                    <TextField
-                      required
-                      fullWidth
-                      id="descrizione"
-                      name="descrizione"
-                      label="Descrizione File"
-                      multiline
-                      error={!isDescrizioneValid}
-                      rows={4}
-                      value={datiStoria.media.descrizione}
-                      onChange={handleDescrizioneChange}
-                      style={{
-                        margin: '1.5em ',
-                        width: '20em',
-                        boxSizing: 'border-box',
-                      }}
-                    />
-                    {descrizioneErrore && (
-                      <div style={{ color: '#D32F2F' }}>
-                        {descrizioneErrore}
-                      </div>
-                    )}
-                  </div>
-                </div>
+              </div>
+              <div className="riga">
+                <Button
+                  component="label"
+                  id="caricaFile"
+                  variant="contained"
+                  startIcon={<CloudUploadIcon />}
+                  onMouseEnter={() => gestisciHoverCaricaFile(true)}
+                  onMouseLeave={() => gestisciHoverCaricaFile(false)}
+                  style={{
+                    backgroundColor: coloreBottoneCaricaFile,
+                    color: '#ffffff',
+                    margin: '1em',
+                    width: '35%',
+                  }}
+                >
+                  Carica file
+                  <VisuallyHiddenInput
+                    name="file"
+                    type="file"
+                    accept=".png, .jpg, .jpeg, .bmp, .tif, .tiff, audio/*"
+                    onChange={handleFileChange}
+                  />
+                </Button>
+              </div>
+              <div className="riga">
+                {messaggioErrore && (
+                  <div style={{ color: '#D32F2F' }}>{messaggioErrore}</div>
+                )}
+              </div>
+              <div id="descrizione-file">
                 <div className="riga">
-                  <Button
-                    id="salvaStoria"
+                  <TextField
+                    required
+                    fullWidth
+                    id="descrizione"
+                    name="descrizione"
+                    label="Descrizione File"
+                    multiline
+                    error={!isDescrizioneValid}
+                    rows={4}
+                    value={datiStoria.media.descrizione}
+                    onChange={handleDescrizioneChange}
                     style={{
-                      backgroundColor: coloreBottoneSalva,
-                      color: '#ffffff',
-                      margin: '1em',
-                      width: '25%',
+                      margin: '1.5em ',
+                      width: '30em',
+                      boxSizing: 'border-box',
                     }}
-                    onClick={handleSave}
-                    onMouseEnter={() => gestisciHoverSalva(true)}
-                    onMouseLeave={() => gestisciHoverSalva(false)}
-                  >
-                    Salva storia
-                  </Button>
-                  <div id="test">
-                    <Snackbar
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      open={open}
-                      autoHideDuration={6000}
-                      onClose={handleClose}
-                    >
-                      <Alert
-                        onClose={handleClose}
-                        severity={success ? 'success' : 'error'}
-                        sx={{ width: '100%' }}
-                      >
-                        {success
-                          ? 'Caricamento storia effettuato con successo!'
-                          : 'Caricamento storia fallita'}
-                      </Alert>
-                    </Snackbar>
-                  </div>
+                  />
+                  {descrizioneErrore && (
+                    <div style={{ color: '#D32F2F' }}>{descrizioneErrore}</div>
+                  )}
                 </div>
-              </form>
-            </Stack>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
+              </div>
+              <div className="riga">
+                <Button
+                  id="salvaStoria"
+                  style={{
+                    backgroundColor: coloreBottoneSalva,
+                    color: '#ffffff',
+                    margin: '1em',
+                    width: '35%',
+                  }}
+                  onClick={handleSave}
+                  onMouseEnter={() => gestisciHoverSalva(true)}
+                  onMouseLeave={() => gestisciHoverSalva(false)}
+                >
+                  Salva storia
+                </Button>
+                <div id="test">
+                  <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity={success ? 'success' : 'error'}
+                      sx={{ width: '100%' }}
+                    >
+                      {success
+                        ? 'Caricamento storia effettuato con successo!'
+                        : 'Caricamento storia fallita'}
+                    </Alert>
+                  </Snackbar>
+                </div>
+              </div>
+            </form>
+          </Stack>
+        </Card>
+      </Container>
+    </>
   );
 }
 

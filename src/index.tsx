@@ -37,6 +37,11 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Geologica, sans-serif',
   },
+  palette: {
+    primary: {
+      main: '#8A2BE2',
+    },
+  },
 });
 
 const root = ReactDOM.createRoot(

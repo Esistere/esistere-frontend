@@ -6,7 +6,11 @@ import Pulsante from '../gestione_app/Pulsante';
 import Caricamento from '../gestione_app/Caricamento';
 import CardDomanda from './CardDomanda';
 import SalvaRisposte from './SalvaRisposte';
-import { Typography } from '@mui/material';
+import { Alert, Snackbar, Typography } from '@mui/material';
+
+let open = false;
+
+let corretta = 0;
 
 function CompilaQuizAllenamento(): JSX.Element {
   const location = useLocation();
@@ -15,26 +19,32 @@ function CompilaQuizAllenamento(): JSX.Element {
   const [quiz, setQuiz] = useState<ResponseObject>();
   const [isLoading, setIsLoading] = useState(true);
   const [gameOver, setGameOver] = useState<boolean>(true);
-  const [corretta, setCorretta] = useState<number>(0);
   const [disa] = useState<boolean>(false);
   const salvaRis = new SalvaRisposte();
   const [numerello, setNumerello] = useState<number>(0);
 
   const fetchData = async (): Promise<void> => {
-    if (isLoading) {
-      const quizAllenamentoControl = new QuizAllenamentoControl();
-      const data: ResponseObject =
-        await quizAllenamentoControl.visualizzaQuizAllenamento(id);
-      setQuiz(data);
-      setIsLoading(false);
-      setGameOver(false);
-      console.log(data);
+    try {
+      if (isLoading) {
+        const quizAllenamentoControl = new QuizAllenamentoControl();
+        const data: ResponseObject =
+          await quizAllenamentoControl.visualizzaQuizAllenamento(id);
+        setQuiz(data);
+        setIsLoading(false);
+        setGameOver(false);
+        console.log(data);
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati:', error);
+      open = true;
     }
   };
 
   const nextQuestion = (): void => {
+    console.log(corretta, salvaRis.getLastCorretta());
     if (salvaRis.getLastCorretta() === true) {
-      setCorretta(corretta + 1);
+      corretta = corretta + 1;
+      console.log(corretta);
     }
     setNumerello(numerello + 1);
     salvaRis.setLastCorretta(false);
@@ -55,14 +65,22 @@ function CompilaQuizAllenamento(): JSX.Element {
 
   const finishQuiz = async (): Promise<void> => {
     nextQuestion();
-    const risposta = salvaRis.finishQuiz({
-      id: Number(quiz?.quizAllenamento.id),
-      numero_domande: Number(quiz?.quizAllenamento.numero_domande),
-      punteggio_totale: corretta,
-      cg_fam: Number(quiz?.quizAllenamento.cg_fam),
-    });
-    if (await risposta) {
-      navigate('/');
+    const c = corretta;
+    corretta = 0;
+    console.log('CORRETTA', corretta, c);
+    try {
+      console.log(quiz);
+      setTimeout(async () => {
+        navigate('/caregiver/visualizza_quiz_allenamento');
+      }, 1500);
+      await salvaRis.finishQuiz({
+        id: Number(quiz?.quizAllenamento.id),
+        cg_fam: Number(quiz?.quizAllenamento.cg_fam),
+        numero_domande: Number(quiz?.quizAllenamento.numero_domande),
+        punteggio_totale: c,
+      });
+    } catch (error) {
+      console.error('Errore durante il completamento del quiz:', error);
     }
   };
 
@@ -79,8 +97,31 @@ function CompilaQuizAllenamento(): JSX.Element {
     await fetchData();
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      navigate('/');
+    }
+
+    open = false;
+    navigate('/');
+  };
+
   return (
     <div>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        style={{ marginTop: '47%' }}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Errore nel recupero dei dati
+        </Alert>
+      </Snackbar>
       {gameOver === true && (
         <div
           style={{

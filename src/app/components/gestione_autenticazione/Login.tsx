@@ -13,7 +13,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import logo from 'app/assets/logo512.png';
 import LoginControl from 'app/control/gestione_autenticazione/LoginControl';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -23,14 +22,6 @@ import Pulsante from '../gestione_app/Pulsante';
 import Caricamento from '../gestione_app/Caricamento';
 import { emailRegex, passwordRegex } from 'app/regex';
 import Navbar from '../Navbar';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
@@ -156,152 +147,150 @@ function Login(): JSX.Element {
   return (
     <>
       <Navbar />
-      <ThemeProvider theme={theme}>
-        <Container
-          component="main"
-          maxWidth="xs"
-          style={{
-            marginTop: '3em',
-            marginBottom: '3em',
+      <Container
+        component="main"
+        maxWidth="xs"
+        style={{
+          marginTop: '3em',
+          marginBottom: '3em',
+        }}
+      >
+        <CssBaseline />
+        <Card
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: '#EDE7F6',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+            bgcolor: 'white',
+            color: '#5E35B1',
           }}
         >
-          <CssBaseline />
-          <Card
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: '#EDE7F6',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-              bgcolor: 'white',
-              color: '#5E35B1',
-            }}
+          <img
+            src={logo}
+            id="login"
+            alt="Logo"
+            style={{ height: '100px', marginTop: '20px' }}
+          />
+          <Typography
+            component="h1"
+            variant="h5"
+            color="primary"
+            sx={{ mt: 2, fontWeight: 'bold' }}
           >
-            <img
-              src={logo}
-              id='login'
-              alt="Logo"
-              style={{ height: '100px', marginTop: '20px' }}
-            />
-            <Typography
-              component="h1"
-              variant="h5"
-              color="primary"
-              sx={{ mt: 2, fontWeight: 'bold' }}
-            >
-              Accedi
-            </Typography>
-            <CardContent>
-              <form method="post" onSubmit={handleSubmit}>
-                <Box sx={{ mt: 1 }}>
-                  <TextField
-                    type="email"
-                    margin="normal"
-                    required
-                    sx={{ width: '20em' }}
-                    id="email"
-                    label="Email"
-                    name="email"
-                    error={!isEmailValid && formData.email.length > 0}
-                    autoComplete="email"
-                    autoFocus
-                    variant="outlined"
-                    color="primary"
-                    onChange={handleEmailChange}
-                  />
-                  {emailError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                      }}
-                    >
-                      {emailError}
-                    </div>
-                  )}
-                  <TextField
-                    margin="normal"
-                    required
-                    sx={{ width: '20em' }}
-                    name="passwd"
-                    label="Password"
-                    error={!isPassValid && formData.passwd.length > 0}
-                    id="password"
-                    autoComplete="current-password"
-                    variant="outlined"
-                    color="primary"
-                    onChange={handlePasswordChange}
-                    type={showPassword ? 'text' : 'password'}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
+            Accedi
+          </Typography>
+          <CardContent>
+            <form method="post" onSubmit={handleSubmit}>
+              <Box sx={{ mt: 1 }}>
+                <TextField
+                  type="email"
+                  margin="normal"
+                  required
+                  sx={{ width: '20em' }}
+                  id="email"
+                  label="Email"
+                  name="email"
+                  error={!isEmailValid && formData.email.length > 0}
+                  autoComplete="email"
+                  autoFocus
+                  variant="outlined"
+                  color="primary"
+                  onChange={handleEmailChange}
+                />
+                {emailError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
                     }}
-                  />
-                  {passwordError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                      }}
-                    >
-                      {passwordError}
-                    </div>
-                  )}
-                  <Pulsante
-                    name="login"
-                    tipologia="scuro"
-                    testo="Accedi"
-                    nome="login"
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    color="primary"
-                  />
-                  <div id='test'>
-                    <Snackbar
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      open={open}
-                      autoHideDuration={6000}
-                      onClose={handleClose}
-                    >
-                      <Alert
-                        onClose={handleClose}
-                        severity="error"
-                        sx={{ width: '100%' }}
-                      >
-                        Login Fallito!
-                      </Alert>
-                    </Snackbar>
+                  >
+                    {emailError}
                   </div>
-                  <Typography variant="body2" sx={{ mb: 2 }}>
-                    Non hai un account?{' '}
-                    <Link
-                      to="/registrazione"
-                      style={{
-                        fontWeight: 'bold',
-                        textDecoration: 'none',
-                        color: 'inherit',
-                      }}
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  sx={{ width: '20em' }}
+                  name="passwd"
+                  label="Password"
+                  error={!isPassValid && formData.passwd.length > 0}
+                  id="password"
+                  autoComplete="current-password"
+                  variant="outlined"
+                  color="primary"
+                  onChange={handlePasswordChange}
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {passwordError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
+                <Pulsante
+                  name="login"
+                  tipologia="scuro"
+                  testo="Accedi"
+                  nome="login"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="primary"
+                />
+                <div id="test">
+                  <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: '100%' }}
                     >
-                      Registrati qui
-                    </Link>
-                  </Typography>
-                </Box>
-              </form>
-            </CardContent>
-          </Card>
-        </Container>
-      </ThemeProvider>
+                      Login Fallito!
+                    </Alert>
+                  </Snackbar>
+                </div>
+                <Typography variant="body2" sx={{ mb: 2 }}>
+                  Non hai un account?{' '}
+                  <Link
+                    to="/registrazione"
+                    style={{
+                      fontWeight: 'bold',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                    }}
+                  >
+                    Registrati qui
+                  </Link>
+                </Typography>
+              </Box>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
     </>
   );
 }

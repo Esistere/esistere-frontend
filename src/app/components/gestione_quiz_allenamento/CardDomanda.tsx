@@ -19,29 +19,55 @@ function CardDomanda({
   const handleClick = (
     domIndex: number,
     index: number,
-    domRes: DomandaRisposta
+    domRes: DomandaRisposta,
+    rispo: string
   ): void => {
+    let updatedCorr = false;
+
     const updatedSelectedAnswers = [...selectedAnswers];
     updatedSelectedAnswers[domIndex] = index;
     setSelectedAnswers(updatedSelectedAnswers);
 
     domRes.risposte.forEach((risposta, i) => {
+      const valore =
+        risposta.risposta && risposta.risposta === rispo ? true : false;
+      risposta.selezionata = valore;
+
       risposta.selezionata = i === index;
       console.log(risposta.selezionata, risposta);
       salvaRisposte.addRisposta({
-        id: risposta.idRisposta,
+        id: risposta.id,
         domanda_ag: Number(risposta.domanda_ag),
         risposta: risposta.risposta,
         corretta: risposta.corretta,
         selezionata: risposta.selezionata,
       });
     });
+    domRes.risposte.forEach((risposta) => {
+      const valore =
+        risposta.risposta && risposta.risposta === rispo ? true : false;
+      risposta.selezionata = valore;
+
+      updatedCorr =
+        updatedCorr ||
+        (risposta.selezionata === true && risposta.corretta === true);
+
+      salvaRisposte.addRisposta({
+        id: risposta.id,
+        domanda_ag: Number(risposta.domanda_ag),
+        risposta: risposta.risposta,
+        corretta: risposta.corretta,
+        selezionata: risposta.selezionata,
+      });
+    });
+
     salvaRisposte.addDomanda({
       id: domRes.idDomanda,
       quiz_ag: Number(domRes.quiz_ag),
       domanda: domRes.domanda,
-      corretta: salvaRisposte.getLastCorretta(),
+      corretta: updatedCorr,
     });
+
     salvaRisposte.addCont();
   };
 
@@ -52,7 +78,7 @@ function CardDomanda({
           key={domIndex}
           style={{
             display: domIndex === mostra ? 'block' : 'none',
-            width: '20em',
+            width: '50em',
             alignItems: 'center',
             alignContent: 'center',
             margin: 'auto',
@@ -103,7 +129,9 @@ function CardDomanda({
                   selectedAnswers[domIndex] !== index &&
                   selectedAnswers[domIndex] !== undefined
                 }
-                onClick={() => handleClick(domIndex, index, dom)}
+                onClick={() =>
+                  handleClick(domIndex, index, dom, risposta.risposta)
+                }
               >
                 {risposta.risposta}
               </Button>

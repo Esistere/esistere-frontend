@@ -10,7 +10,6 @@ import {
   InputAdornment,
   Snackbar,
   TextField,
-  ThemeProvider,
   Typography,
 } from '@mui/material';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -26,7 +25,7 @@ import {
   numeroTelefonoStudioRegex,
   passwordRegex,
 } from 'app/regex';
-import { theme } from 'app/components/gestione_app/FormTheme';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrazioneMedico: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -145,7 +144,7 @@ const RegistrazioneMedico: React.FC = () => {
       isValid || confermaPasswd === '' ? '' : 'Le password non corrispondono.'
     );
   }, [formData.passwd, confermaPasswd]);
-  
+
   const [isStudioValid, setIsStudioValid] = useState<boolean>(true);
   const [studioError, setStudioError] = useState('');
   const handleStudioChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -235,6 +234,7 @@ const RegistrazioneMedico: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     const medico: Medico = {
@@ -265,6 +265,9 @@ const RegistrazioneMedico: React.FC = () => {
         .then(() => {
           setSuccess(true);
           setOpen(true);
+          setTimeout(() => {
+            navigate('/login');
+          }, 1000);
         })
         .catch(() => {
           setSuccess(false);
@@ -321,385 +324,382 @@ const RegistrazioneMedico: React.FC = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="lg">
-          <CssBaseline />
-          <Card
+      <Container component="main" maxWidth="lg">
+        <CssBaseline />
+        <Card
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            alignItems: 'center',
+            padding: (theme) => theme.spacing(3),
+            backgroundColor: 'white',
+            boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
+            color: '#5E35#1',
+          }}
+        >
+          <CardContent
             sx={{
-              marginTop: 8,
+              width: '100%',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              padding: (theme) => theme.spacing(3),
-              backgroundColor: 'white',
-              boxShadow: '0 3px 5px 2px rgba(155, 105, 135, .3)',
-              color: '#5E35#1',
             }}
           >
-            <CardContent
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
+            <Typography
+              component="h1"
+              variant="h5"
+              color="primary"
+              id="med-title"
+              sx={{ mt: 2, fontWeight: 'bold' }}
             >
-              <Typography
-                component="h1"
-                variant="h5"
-                color="primary"
-                id="med-title"
-                sx={{ mt: 2, fontWeight: 'bold' }}
+              Diventa uno dei nostri Medici!
+            </Typography>
+
+            <form method="post" className="formflex" onSubmit={handleSubmit}>
+              <div className="riga">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap,',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="nome"
+                    id="outlined-nome-input"
+                    required
+                    label="Nome"
+                    error={!isNomeValid}
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleNomeChange}
+                  />
+                  {nomeError && (
+                    <div style={{ color: '#D32F2F' }}>{nomeError}</div>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="cognome"
+                    id="outlined-cognome-input"
+                    required
+                    label="Cognome"
+                    error={!isCognomeValid}
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleCognomeChange}
+                  />
+                  {cognomeError && (
+                    <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="riga">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap,',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="indirizzo_studio"
+                    id="outlined-indirizzo-input"
+                    required
+                    label="Indirizzo Studio"
+                    error={
+                      !isStudioValid && formData.indirizzo_studio.length > 0
+                    }
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleStudioChange}
+                  />
+                  {studioError && (
+                    <div style={{ color: '#D32F2F' }}>{studioError}</div>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="numero_civico"
+                    id="outlined-num-civico-input"
+                    required
+                    label="Numero Civico"
+                    error={
+                      !isNumCivStudioValid && formData.numero_civico.length > 0
+                    }
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleNumCivStudioChange}
+                  />
+
+                  {numCivStudioError && (
+                    <div style={{ color: '#D32F2F', width: '16em' }}>
+                      {numCivStudioError}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="riga">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="citta"
+                    id="outlined-citta-input"
+                    required
+                    error={!isCittaStudioValid}
+                    label="Città"
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={HandleCittaStudioChange}
+                  />
+                  {cittaStudioError && (
+                    <div style={{ color: '#D32F2F' }}>{cittaStudioError}</div>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 'wrap',
+                  }}
+                >
+                  <TextField
+                    type="text"
+                    name="numero_telefono_studio"
+                    id="outlined-num-telefono-input"
+                    required
+                    label="Telefono Studio"
+                    error={!isNumStudioValid}
+                    style={{
+                      width: '16.15em',
+                      margin: '1em',
+                      boxSizing: 'border-box',
+                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                    }}
+                    onChange={handleNumStudioChange}
+                  />
+                  {numStudioError && (
+                    <div style={{ color: '#D32F2F' }}>{numStudioError}</div>
+                  )}
+                </div>
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
               >
-                Diventa uno dei nostri Medici!
-              </Typography>
-
-              <form method="post" className="formflex" onSubmit={handleSubmit}>
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap,',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="nome"
-                      id="outlined-nome-input"
-                      required
-                      label="Nome"
-                      error={!isNomeValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleNomeChange}
-                    />
-                    {nomeError && (
-                      <div style={{ color: '#D32F2F' }}>{nomeError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="cognome"
-                      id="outlined-cognome-input"
-                      required
-                      label="Cognome"
-                      error={!isCognomeValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleCognomeChange}
-                    />
-                    {cognomeError && (
-                      <div style={{ color: '#D32F2F' }}>{cognomeError}</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap,',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="indirizzo_studio"
-                      id="outlined-indirizzo-input"
-                      required
-                      label="Indirizzo Studio"
-                      error={
-                        !isStudioValid && formData.indirizzo_studio.length > 0
-                      }
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleStudioChange}
-                    />
-                    {studioError && (
-                      <div style={{ color: '#D32F2F' }}>{studioError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="numero_civico"
-                      id="outlined-num-civico-input"
-                      required
-                      label="Numero Civico"
-                      error={
-                        !isNumCivStudioValid &&
-                        formData.numero_civico.length > 0
-                      }
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleNumCivStudioChange}
-                    />
-
-                    {numCivStudioError && (
-                      <div style={{ color: '#D32F2F', width: '16em' }}>
-                        {numCivStudioError}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="riga">
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="citta"
-                      id="outlined-citta-input"
-                      required
-                      error={!isCittaStudioValid}
-                      label="Città"
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={HandleCittaStudioChange}
-                    />
-                    {cittaStudioError && (
-                      <div style={{ color: '#D32F2F' }}>{cittaStudioError}</div>
-                    )}
-                  </div>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      flex: 'wrap',
-                    }}
-                  >
-                    <TextField
-                      type="text"
-                      name="numero_telefono_studio"
-                      id="outlined-num-telefono-input"
-                      required
-                      label="Telefono Studio"
-                      error={!isNumStudioValid}
-                      style={{
-                        width: '16.15em',
-                        margin: '1em',
-                        boxSizing: 'border-box',
-                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                      }}
-                      onChange={handleNumStudioChange}
-                    />
-                    {numStudioError && (
-                      <div style={{ color: '#D32F2F' }}>{numStudioError}</div>
-                    )}
-                  </div>
-                </div>
-                <div
+                <TextField
+                  type="email"
+                  name="email"
+                  id="outlined-email-input"
+                  required
+                  value={formData.email}
+                  onChange={handleEmailChange}
+                  label="Email"
+                  error={!isEmailValid && formData.email.length > 0}
                   style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                    flexBasis: 'calc(26 em)',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    marginLeft: '20%',
+                    marginRight: '20%',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
                   }}
-                >
-                  <TextField
-                    type="email"
-                    name="email"
-                    id="outlined-email-input"
-                    required
-                    value={formData.email}
-                    onChange={handleEmailChange}
-                    label="Email"
-                    error={!isEmailValid && formData.email.length > 0}
-                    style={{
-                      flexBasis: 'calc(26 em)',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      marginLeft: '20%',
-                      marginRight: '20%',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton edge="end" disabled>
-                            <Visibility style={{ opacity: '0' }} />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  {emailError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {emailError}
-                    </div>
-                  )}
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton edge="end" disabled>
+                          <Visibility style={{ opacity: '0' }} />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
-                >
-                  <TextField
-                    type={showPassword ? 'text' : 'password'}
-                    name="passwd"
-                    id="outlined-passwd-input"
-                    required
-                    value={formData.passwd}
-                    label="Password"
-                    error={!isPassValid && formData.passwd.length > 0}
+                />
+                {emailError && (
+                  <div
                     style={{
-                      flexBasis: '26em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
                     }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    onChange={handlePasswordChange}
-                  />
-                  {passwordError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {passwordError}
-                    </div>
-                  )}
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <TextField
-                    type={showPassword ? 'text' : 'password'}
-                    name="conferma-passwd"
-                    id="conferma-passwd"
-                    required
-                    value={confermaPasswd}
-                    label="Conferma Password"
-                    error={!isConfermaPassValid && confermaPasswd.length > 0}
-                    style={{
-                      flexBasis: '26em',
-                      margin: '1em',
-                      boxSizing: 'border-box',
-                      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
-                    }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    onChange={handleConfermaPasswordChange}
-                  />
-                  {confermaPasswordError && (
-                    <div
-                      style={{
-                        color: '#D32F2F',
-                        whiteSpace: 'pre-wrap',
-                      }}
-                    >
-                      {confermaPasswordError}
-                    </div>
-                  )}
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                  }}
-                >
-                  <Button
-                    style={{
-                      background: coloreBottone,
-                    }}
-                    type="submit"
-                    variant="contained"
-                    onMouseEnter={() => gestisciHover(true)}
-                    onMouseLeave={() => gestisciHover(false)}
-                    endIcon={<CheckIcon />}
                   >
-                    Registrati
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </Container>
-      </ThemeProvider>
+                    {emailError}
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  name="passwd"
+                  id="outlined-passwd-input"
+                  required
+                  value={formData.passwd}
+                  label="Password"
+                  error={!isPassValid && formData.passwd.length > 0}
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={handlePasswordChange}
+                />
+                {passwordError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {passwordError}
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  name="conferma-passwd"
+                  id="conferma-passwd"
+                  required
+                  value={confermaPasswd}
+                  label="Conferma Password"
+                  error={!isConfermaPassValid && confermaPasswd.length > 0}
+                  style={{
+                    flexBasis: '26em',
+                    margin: '1em',
+                    boxSizing: 'border-box',
+                    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={handleConfermaPasswordChange}
+                />
+                {confermaPasswordError && (
+                  <div
+                    style={{
+                      color: '#D32F2F',
+                      whiteSpace: 'pre-wrap',
+                    }}
+                  >
+                    {confermaPasswordError}
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  textAlign: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
+              >
+                <Button
+                  style={{
+                    background: coloreBottone,
+                  }}
+                  type="submit"
+                  variant="contained"
+                  onMouseEnter={() => gestisciHover(true)}
+                  onMouseLeave={() => gestisciHover(false)}
+                  endIcon={<CheckIcon />}
+                >
+                  Registrati
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
       <div id="test">
         <Snackbar
           open={open}

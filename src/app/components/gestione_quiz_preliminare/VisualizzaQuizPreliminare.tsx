@@ -25,14 +25,19 @@ function VisualizzaQuizPreliminare(): JSX.Element {
   const [paziente, setPaziente] = React.useState<Paziente>();
 
   const fetchData = async (): Promise<void> => {
-    const quizPreliminareControl: QuizPreliminareControl =
-      new QuizPreliminareControl();
-    const response = quizPreliminareControl.visualizzaQuizPreliminareByPaz(cf);
-    setData(await response);
-    console.log(data);
-    const paziente: PazienteControl = new PazienteControl();
-    const response2 = paziente.fetchDatiPaziente(cf);
-    setPaziente(await response2);
+    try {
+      const quizPreliminareControl: QuizPreliminareControl =
+        new QuizPreliminareControl();
+      const response =
+        quizPreliminareControl.visualizzaQuizPreliminareByPaz(cf);
+      setData(await response);
+      console.log(data);
+      const paziente: PazienteControl = new PazienteControl();
+      const response2 = paziente.fetchDatiPaziente(cf);
+      setPaziente(await response2);
+    } catch (e) {
+      console.error('Errore durante il recupero dei dati', e);
+    }
   };
 
   useEffect(() => {
@@ -63,8 +68,8 @@ function VisualizzaQuizPreliminare(): JSX.Element {
             </Typography>
             {data?.domandeRisposte &&
               Object.keys(data.domandeRisposte).map((domande: string) => (
-                <Card key={domande} sx={{ width: '25em' }}>
-                  <CardContent sx={{ width: '22em' }}>
+                <Card key={domande} sx={{ width: '25em', marginBottom: '2em' }}>
+                  <CardContent sx={{ width: '24em' }}>
                     <Typography variant="h6">
                       Domanda: {data.domandeRisposte[domande]?.domanda}
                     </Typography>

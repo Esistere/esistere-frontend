@@ -21,8 +21,7 @@ import {
 } from '@mui/material';
 import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import { ResponseObject } from 'app/interfaces/gestione_autenticazione/utils/ResponseObject';
-import { useLocation, useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 338;
 interface Props {
@@ -33,32 +32,29 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
   const [quizAllenamento, setQuizAllenamento] = useState<
     QuizAllenamentoGiornaliero[]
   >([]);
-
-  const navigate = useNavigate();
-  const handleGoBack = (): void => {
-    navigate(-1);
-  };
-
   const location = useLocation();
-
   const [isLoading, setIsLoading] = useState(true);
   const [selectedQuizAllenamento, setSelectedQuizAllenamento] =
     useState<ResponseObject | null>(null);
   const { userType, loading } = useUser();
 
-  const quizAllenamentoControl = new QuizAllenamentoControl();
-
-  const fetchData = async (): Promise<void> => {
-    try {
-      const id = location.state;
-      const data = await quizAllenamentoControl.fetchQuizAllenamentoByCgFam(id);
-      setQuizAllenamento(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching quiz', error);
-    }
-  };
   useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const quizAllenamentoControl = new QuizAllenamentoControl();
+        const id = location.state;
+        const data = await quizAllenamentoControl.fetchQuizAllenamentoByCgFam(
+          id
+        );
+        console.log(data);
+
+        setQuizAllenamento(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching quiz', error);
+      }
+    };
+
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -67,11 +63,12 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
     corretta: boolean | undefined,
     selezionata: boolean | undefined
   ): string => {
-    if (corretta && selezionata) {
-      setPunteggio_totale(punteggio_totale + 1);
+    if (corretta === true && selezionata === true) {
       return 'forestgreen';
-    } else if (selezionata && !corretta) {
+    } else if (selezionata === true && corretta === false) {
       return 'crimson';
+    } else if (selezionata === false && corretta === true) {
+      return 'blueviolet';
     } else {
       return 'black';
     }
@@ -80,9 +77,15 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
   const handleQuizAllenamentoClick = async (
     quizAllenamento: QuizAllenamentoGiornaliero
   ): Promise<void> => {
+    const quizAllenamentoControl = new QuizAllenamentoControl();
     const quiz = await quizAllenamentoControl.visualizzaQuizAllenamento(
       Number(quizAllenamento.id)
     );
+    Object.values(quiz.domandeRisposte).map((domandaRisposta) => {
+      domandaRisposta.corretta === true
+        ? setPunteggio_totale(punteggio_totale + 1)
+        : null;
+    });
     setSelectedQuizAllenamento(quiz);
   };
   const { window } = props;
@@ -122,19 +125,6 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
     return (
       <div>
         <Navbar />
-        <ArrowBackIcon
-          onClick={handleGoBack}
-          style={{
-            color: 'blueviolet',
-            position: 'absolute',
-            zIndex: 9999,
-            bottom: '1.5em',
-            left: '1.5em',
-            height: '2.5em',
-            width: '2.5em',
-            cursor: 'pointer',
-          }}
-        />
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
           <AppBar
@@ -212,7 +202,8 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
               <>
                 <Typography variant="h4">
                   Punteggio totale:&nbsp;{' '}
-                  {selectedQuizAllenamento.quizAllenamento.punteggio_totale}
+                  {selectedQuizAllenamento.quizAllenamento.punteggio_totale ??
+                    '0'}
                 </Typography>
 
                 <Typography variant="h6">
@@ -226,9 +217,10 @@ function ListaQuizAllenamentoMedico(props: Props): JSX.Element {
                         <Typography
                           variant="h6"
                           style={{
-                            color: domandaRisposta.corretta
-                              ? 'forestgreen'
-                              : 'crimson',
+                            color:
+                              domandaRisposta.corretta === true
+                                ? 'forestgreen'
+                                : 'crimson',
                           }}
                         >
                           Domanda: {domandaRisposta.domanda}

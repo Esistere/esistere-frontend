@@ -50,7 +50,7 @@ function Filastrocca(): JSX.Element {
             />
           </div>
 
-          <div className="option ">
+          <div className="option">
             <div className="optionIcon">
               <PreviewIcon style={{ fontSize: '5rem' }} />
             </div>

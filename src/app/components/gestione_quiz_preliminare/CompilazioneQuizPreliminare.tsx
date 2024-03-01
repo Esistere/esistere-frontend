@@ -5,6 +5,8 @@ import {
   CardContent,
   TextField,
   Typography,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObjectQP';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import 'app/css/gestione_app/FormElements.css';
 import QuizPreliminareControl from 'app/control/gestione_quiz_preliminare/QuizPreliminareControl';
 import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
+
+let open = false;
 
 function CompilaQuiz(): JSX.Element {
   const [data, setData] = useState<ResponseObjectQP>();
@@ -21,17 +25,22 @@ function CompilaQuiz(): JSX.Element {
   const [avvia, setAvvia] = useState<boolean>(true);
 
   const fetchData = async (): Promise<void> => {
-    const pazienteControl: PazienteControl = new PazienteControl();
-    const cf = await pazienteControl.fetchCodicePaziente(
-      Number(localStorage.getItem('id'))
-    );
-    console.log(cf);
-    const quizPreliminareControl: QuizPreliminareControl =
-      new QuizPreliminareControl();
-    const risultato =
-      await quizPreliminareControl.visualizzaQuizPreliminareByPaz(cf);
-    setData(risultato);
-    setAvvia(false);
+    try {
+      const pazienteControl: PazienteControl = new PazienteControl();
+      const cf = await pazienteControl.fetchCodicePaziente(
+        Number(localStorage.getItem('id'))
+      );
+      console.log(cf);
+      const quizPreliminareControl: QuizPreliminareControl =
+        new QuizPreliminareControl();
+      const risultato =
+        await quizPreliminareControl.visualizzaQuizPreliminareByPaz(cf);
+      setData(risultato);
+      setAvvia(false);
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati:', error);
+      open = true;
+    }
   };
 
   useEffect(() => {
@@ -88,8 +97,31 @@ function CompilaQuiz(): JSX.Element {
     }
   };
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      navigate('/');
+    }
+
+    open = false;
+    navigate('/');
+  };
+
   return (
     <>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        style={{ marginTop: '47%' }}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          Errore nel recupero dei dati
+        </Alert>
+      </Snackbar>
       {data &&
         Object.keys(data.domandeRisposte).map((dom) => (
           <Card

@@ -35,9 +35,10 @@ class SalvaRisposte {
   }
 
   addRisposta(risposta: RispostaQuizAllenamento): void {
-    risposta.corretta ? this.corrette++ : null;
-    risposta.corretta ? (this.lastCorretta = true) : null;
-    console.log(this.risposte, this.cont);
+    risposta.corretta && risposta.selezionata ? this.corrette++ : this.corrette;
+    risposta.corretta && risposta.selezionata
+      ? (this.lastCorretta = true)
+      : null;
     this.risposte.push(risposta);
   }
 

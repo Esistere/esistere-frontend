@@ -4,16 +4,8 @@ import 'app/css/gestione_app/FormElements.css';
 import LineaGuidaControl from 'app/control/gestione_autenticazione/LineaGuidaControl';
 import { LineaGuida } from 'app/interfaces/gestione_autenticazione/LineaGuida';
 import Button from '@mui/material/Button';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Navbar from '../Navbar';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
 interface LineaGuidaFormProps {
   onClose: () => void;
 }
@@ -58,7 +50,7 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Navbar />
       <div className="riga" style={{ marginTop: '3.5em' }}>
         <Typography variant="h4" style={{ color: 'blueviolet' }}>
@@ -74,8 +66,8 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
               setLineaGuida({ ...lineaGuida, linea_guida: e.target.value })
             }
             multiline
-            rows={20}
-            style={{ width: '60%', marginRight: '20px', height: '70%' }}
+            rows={15}
+            style={{ width: '50%', marginRight: '20px', height: '100%' }}
           />
         </div>
         <div className="riga" style={{ marginTop: '0.60em' }}>
@@ -95,7 +87,7 @@ const LineaGuidaForm: React.FC<LineaGuidaFormProps> = (props): JSX.Element => {
           </Button>
         </div>
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 

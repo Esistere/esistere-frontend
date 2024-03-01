@@ -13,7 +13,6 @@ import Caricamento from 'app/components/gestione_app/Caricamento';
 import { Paziente } from 'app/interfaces/gestione_autenticazione/Paziente';
 import React, { useEffect, useState } from 'react';
 import ElementoLista from './ElementoLista';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
@@ -40,9 +39,6 @@ function ListaPazienti(props: Props): JSX.Element {
   const [selectedPaziente, setSelectedPaziente] = useState<Paziente | null>(
     null
   );
-  const handleGoBack = (): void => {
-    navigate(-1);
-  };
 
   const fetchData = async (): Promise<void> => {
     const medicoControl = new MedicoControl();
@@ -169,19 +165,6 @@ function ListaPazienti(props: Props): JSX.Element {
             </Typography>
           </Toolbar>
         </AppBar>
-        <ArrowBackIcon
-          onClick={handleGoBack}
-          style={{
-            color: 'blueviolet',
-            position: 'absolute',
-            zIndex: 9999,
-            bottom: '1.5em',
-            left: '1.5em',
-            height: '2.5em',
-            width: '2.5em',
-            cursor: 'pointer',
-          }}
-        />
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

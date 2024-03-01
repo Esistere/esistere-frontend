@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography, Grid, Paper } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Paper,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 import { QuizPreliminare } from 'app/interfaces/gestione_quiz_preliminare/QuizPreliminare';
 import { DomandaRispostaQP } from 'app/interfaces/gestione_quiz_preliminare/DomandaRispostaQP';
 import { ResponseObjectQP } from 'app/interfaces/utils/ResponseObjectQP';
 import QuizPreliminareControl from 'app/control/gestione_quiz_preliminare/QuizPreliminareControl';
 import 'app/css/gestione_app/FormElements.css';
 import Navbar from '../Navbar';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#8A2BE2',
-    },
-  },
-});
+let success: boolean | null = null;
+let open = false;
 
 function CreaQuizPreliminare(): JSX.Element {
-  const navigate = useNavigate();
   const location = useLocation();
   const cf = location.state;
   const [quizPreliminare, setQuizPreliminare] = useState<QuizPreliminare>({
@@ -32,6 +33,17 @@ function CreaQuizPreliminare(): JSX.Element {
   const [domandeRisposte, setDomandeRisposte] = useState<DomandaRispostaQP[]>(
     []
   );
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ): void => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    open = false;
+  };
 
   const handleNumberOfQuestionsChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -135,86 +147,102 @@ function CreaQuizPreliminare(): JSX.Element {
     const risultato = await quizPreliminareControl.inviaQuizPreliminare(domRes);
     console.log(risultato);
     if (risultato) {
-      navigate('/');
+      success = true;
+      open = true;
+    } else {
+      success = false;
+      open = true;
     }
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <Navbar />
-        <form className="formflex">
-          <Typography
-            variant="h4"
-            style={{
-              color: 'blueviolet',
-              marginTop: '2em',
-              marginBottom: '1.25em',
-            }}
-          >
-            Creazione Quiz Preliminare
-          </Typography>
-          <TextField
-            label="Numero di domande"
-            type="number"
-            value={quizPreliminare.numero_domande}
-            onChange={handleNumberOfQuestionsChange}
-          />
-          <Grid container spacing={2} style={{ marginTop: '2em' }}>
-            {domandeRisposte.map((question, questionIndex) => (
-              <Grid item xs={12} key={questionIndex}>
-                <Paper
-                  elevation={3}
-                  style={{ padding: '16px', width: '25em', margin: 'auto' }}
-                >
-                  <Typography variant="h6">
-                    Domanda {questionIndex + 1}
-                  </Typography>
-                  <TextField
-                    label="Domanda"
-                    fullWidth
-                    value={question.domanda}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      handleQuestionChange(questionIndex, event)
-                    }
-                    style={{ width: '20em', margin: 'auto' }}
-                  />
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
-        </form>
+    <div>
+      <Navbar />
+      <form className="formflex">
+        <Typography
+          variant="h4"
+          style={{
+            color: 'blueviolet',
+            marginTop: '2em',
+            marginBottom: '1.25em',
+          }}
+        >
+          Creazione Quiz Preliminare
+        </Typography>
+        <TextField
+          label="Numero di domande"
+          type="number"
+          value={quizPreliminare.numero_domande}
+          onChange={handleNumberOfQuestionsChange}
+        />
+        <Grid container spacing={2} style={{ marginTop: '2em' }}>
+          {domandeRisposte.map((question, questionIndex) => (
+            <Grid item xs={12} key={questionIndex}>
+              <Paper
+                elevation={3}
+                style={{ padding: '16px', width: '25em', margin: 'auto' }}
+              >
+                <Typography variant="h6">
+                  Domanda {questionIndex + 1}
+                </Typography>
+                <TextField
+                  label="Domanda"
+                  fullWidth
+                  value={question.domanda}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    handleQuestionChange(questionIndex, event)
+                  }
+                  style={{ width: '20em', margin: 'auto' }}
+                />
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </form>
 
-        <div className="riga">
-          <Button
-            style={{
-              background: coloreAggBottone,
-              margin: '1em',
-            }}
-            type="submit"
-            variant="contained"
-            onMouseEnter={() => gestisciAggHover(true)}
-            onMouseLeave={() => gestisciAggHover(false)}
-            onClick={handleAddQuestion}
-          >
-            Aggiungi Domanda
-          </Button>
-          <Button
-            style={{
-              background: coloreBottone,
-              margin: '1em',
-            }}
-            type="submit"
-            variant="contained"
-            onMouseEnter={() => gestisciHover(true)}
-            onMouseLeave={() => gestisciHover(false)}
-            onClick={handleQuizCreation}
-          >
-            Crea Quiz
-          </Button>
-        </div>
+      <div className="riga">
+        <Button
+          style={{
+            background: coloreAggBottone,
+            margin: '1em',
+          }}
+          type="submit"
+          variant="contained"
+          onMouseEnter={() => gestisciAggHover(true)}
+          onMouseLeave={() => gestisciAggHover(false)}
+          onClick={handleAddQuestion}
+        >
+          Aggiungi Domanda
+        </Button>
+        <Button
+          style={{
+            background: coloreBottone,
+            margin: '1em',
+          }}
+          type="submit"
+          variant="contained"
+          onMouseEnter={() => gestisciHover(true)}
+          onMouseLeave={() => gestisciHover(false)}
+          onClick={handleQuizCreation}
+        >
+          Crea Quiz
+        </Button>
       </div>
-    </ThemeProvider>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={success ? 'success' : 'error'}
+          sx={{ width: '100%' }}
+        >
+          {success ? 'Creazione effettuata con successo!' : 'Creazione fallita'}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }
 export default CreaQuizPreliminare;

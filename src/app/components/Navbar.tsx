@@ -20,6 +20,48 @@ import logonavbar from 'app/assets/logonavbar.png';
 import PazienteControl from 'app/control/gestione_autenticazione/PazienteControl';
 
 function Navbar(): JSX.Element {
+  const fixDivToBottomLeft = (): unknown => {
+    const targetDiv = document.getElementById('vai-indietro');
+
+    if (targetDiv) {
+      const updatePosition = (): void => {
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        const divHeight = targetDiv.offsetHeight;
+        const divWidth = targetDiv.offsetWidth;
+
+        const bottomPosition = windowHeight - divHeight;
+        const rightPosition = windowWidth - divWidth;
+
+        targetDiv.style.position = 'fixed';
+        targetDiv.style.bottom = '0';
+        targetDiv.style.left = '0';
+
+        if (window.scrollY > bottomPosition) {
+          targetDiv.style.bottom = `${window.scrollY - bottomPosition}px`;
+        }
+
+        if (window.scrollX > rightPosition) {
+          targetDiv.style.right = `${window.scrollX - rightPosition}px`;
+        }
+      };
+
+      window.addEventListener('scroll', updatePosition);
+      window.addEventListener('resize', updatePosition);
+
+      // Inizializza la posizione
+      updatePosition();
+
+      // Pulisci l'eventuale listener quando il componente viene smontato
+      return (): void => {
+        window.removeEventListener('scroll', updatePosition);
+        window.removeEventListener('resize', updatePosition);
+      };
+    } else {
+      console.error('Element with id vai-indietro not found.');
+    }
+  };
+
   const handleGoBack = (): void => {
     window.history.back();
   };
@@ -72,9 +114,12 @@ function Navbar(): JSX.Element {
     window.addEventListener('resize', handleResize);
 
     fetchCodice();
+    fixDivToBottomLeft();
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', fixDivToBottomLeft);
+      window.removeEventListener('resize', fixDivToBottomLeft);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -533,19 +578,31 @@ function Navbar(): JSX.Element {
       </AppBar>
       <div style={{ height: '3.5em' }}></div>
       {path !== '/' && path !== '/caregiver' && path !== '/medico' && (
-        <ArrowBackIcon
-          onClick={handleGoBack}
+        <div
+          id="vai-indietro"
           style={{
             color: 'blueviolet',
             position: 'fixed',
-            zIndex: 1100,
-            bottom: '1.5em',
-            left: '1.5em',
-            height: '2.5em',
-            width: '2.5em',
+            zIndex: 9999,
+            marginBottom: '1.5em',
+            marginLeft: '1.5em',
             cursor: 'pointer',
           }}
-        />
+        >
+          <ArrowBackIcon
+            onClick={handleGoBack}
+            style={{
+              color: 'blueviolet',
+              position: 'fixed',
+              zIndex: 9999,
+              bottom: '1.5em',
+              left: '1.5em',
+              height: '2.5em',
+              width: '2.5em',
+              cursor: 'pointer',
+            }}
+          />
+        </div>
       )}
     </div>
   );

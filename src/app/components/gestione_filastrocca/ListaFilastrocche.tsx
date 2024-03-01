@@ -16,8 +16,6 @@ import AccessoNegato from '../gestione_autenticazione/AccessoNegato';
 import FilastroccaControl from 'app/control/gestione_filastrocca/FilastroccaControl';
 import 'app/css/gestione_app/FormElements.css';
 import ElementoListaFilastrocca from './ElementoListaFilastrocca';
-import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const drawerWidth = 338;
 
@@ -49,11 +47,6 @@ function ListaFilastrocche(props: Props): JSX.Element {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const navigate = useNavigate();
-  const handleGoBack = (): void => {
-    navigate(-1);
-  };
 
   const handleFilastroccaClick = (filastrocca: Filastrocca): void => {
     setSelecteFilastrocca(filastrocca);
@@ -90,19 +83,6 @@ function ListaFilastrocche(props: Props): JSX.Element {
     return (
       <div>
         <Navbar />
-        <ArrowBackIcon
-          onClick={handleGoBack}
-          style={{
-            color: 'blueviolet',
-            position: 'absolute',
-            zIndex: 9999,
-            bottom: '1.5em',
-            left: '1.5em',
-            height: '2.5em',
-            width: '2.5em',
-            cursor: 'pointer',
-          }}
-        />
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
           <AppBar

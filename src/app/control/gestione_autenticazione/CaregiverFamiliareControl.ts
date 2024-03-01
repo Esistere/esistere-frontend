@@ -58,7 +58,7 @@ class CaregiverFamiliareControl {
   async modificaCaregiverFamiliare(
     datiCaregiverFamiliare: CaregiverFamiliare
   ): Promise<boolean> {
-    const url = `${this.baseUrl}/modifica_caregiver_camiliare`;
+    const url = `${this.baseUrl}/modifica_caregiver_familiare`;
 
     try {
       const response = await fetch(url, {

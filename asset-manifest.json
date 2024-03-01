@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/esistere-frontend/static/css/main.1128c696.css",
-    "main.js": "/esistere-frontend/static/js/main.54e7e438.js",
-    "static/js/592.d9aa51a5.chunk.js": "/esistere-frontend/static/js/592.d9aa51a5.chunk.js",
+    "main.js": "/esistere-frontend/static/js/main.b4c3e843.js",
+    "static/js/453.82cb47b5.chunk.js": "/esistere-frontend/static/js/453.82cb47b5.chunk.js",
     "static/media/storia.png": "/esistere-frontend/static/media/storia.facf558f9fe23e88d6bc.png",
     "static/media/logonavbar.png": "/esistere-frontend/static/media/logonavbar.7fabad46dcb5af59dac1.png",
     "static/media/cgpaziente.png": "/esistere-frontend/static/media/cgpaziente.550446d7a360136bb218.png",
@@ -24,11 +24,11 @@
     "static/media/famiglia.jpg": "/esistere-frontend/static/media/famiglia.6afa2a4a5a5869e15e0b.jpg",
     "index.html": "/esistere-frontend/index.html",
     "main.1128c696.css.map": "/esistere-frontend/static/css/main.1128c696.css.map",
-    "main.54e7e438.js.map": "/esistere-frontend/static/js/main.54e7e438.js.map",
-    "592.d9aa51a5.chunk.js.map": "/esistere-frontend/static/js/592.d9aa51a5.chunk.js.map"
+    "main.b4c3e843.js.map": "/esistere-frontend/static/js/main.b4c3e843.js.map",
+    "453.82cb47b5.chunk.js.map": "/esistere-frontend/static/js/453.82cb47b5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1128c696.css",
-    "static/js/main.54e7e438.js"
+    "static/js/main.b4c3e843.js"
   ]
 }

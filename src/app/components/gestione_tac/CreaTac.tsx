@@ -179,7 +179,7 @@ function CreaTac(): JSX.Element {
               <div className="riga">
                 <Typography variant="h5" color="black" textAlign="center">
                   {predizione !== ''
-                    ? predizione === 'Demented'
+                    ? predizione === 'Risultato Positivo'
                       ? 'Test risultato positivo'
                       : 'Test risultato negativo'
                     : ''}
